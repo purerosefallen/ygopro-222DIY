@@ -6,7 +6,7 @@ solution "ygo"
     configurations { "Debug", "Release" }
 
     configuration "windows"
-        defines { "WIN32", "_WIN32", "WINVER=0x0501" }
+        defines { "WIN32", "_WIN32" }
 
     configuration "bsd"
         defines { "LUA_USE_POSIX" }
@@ -18,7 +18,7 @@ solution "ygo"
         includedirs { "/usr/local/include/*" }
         libdirs { "/usr/local/lib", "/usr/X11/lib" }
         buildoptions { "-stdlib=libc++" }
-        links { "OpenGL.framework", "Cocoa.framework", "IOKit.framework" }
+        links {"OpenGL.framework","Cocoa.framework","IOKit.framework"}
 
     configuration "linux"
         defines { "LUA_USE_LINUX" }
@@ -47,7 +47,7 @@ solution "ygo"
     configuration "vs*"
         flags "EnableSSE2"
         defines { "_CRT_SECURE_NO_WARNINGS" }
-    
+
     configuration "not vs*"
         buildoptions { "-fno-strict-aliasing", "-Wno-multichar" }
 
@@ -60,8 +60,6 @@ solution "ygo"
     include "gframe"
     if os.is("windows") then
     include "event"
-    include "freetype"
-    include "irrlicht"
     include "lua"
     include "sqlite3"
     end
