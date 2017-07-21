@@ -104,9 +104,6 @@ public:
 	public:
 		void addcard(card* pcard);
 	};
-	//222DIY
-	uint32 set_entity_code(uint32 entity_code);
-	
 	int32 scrtype;
 	int32 ref_handle;
 	duel* pduel;

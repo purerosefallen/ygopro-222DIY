@@ -16,11 +16,6 @@
 #include "interpreter.h"
 
 static const struct luaL_Reg cardlib[] = {
-	//222DIY
-	{ "GetAffectingEffect", scriptlib::card_get_affecting_effect },
-	{ "FilterEffect", scriptlib::card_filter_effect },
-	{ "SetEntityCode", scriptlib::card_set_entity_code },
-	
 	{ "GetCode", scriptlib::card_get_code },
 	{ "GetOriginalCode", scriptlib::card_get_origin_code },
 	{ "GetOriginalCodeRule", scriptlib::card_get_origin_code_rule },
@@ -251,9 +246,6 @@ static const struct luaL_Reg cardlib[] = {
 };
 
 static const struct luaL_Reg effectlib[] = {
-	//222DIY
-	{ "SetOwner", scriptlib::effect_set_owner },
-	
 	{ "CreateEffect", scriptlib::effect_new },
 	{ "GlobalEffect", scriptlib::effect_newex },
 	{ "Clone", scriptlib::effect_clone },
@@ -342,12 +334,6 @@ static const struct luaL_Reg grouplib[] = {
 };
 
 static const struct luaL_Reg duellib[] = {
-	//222DIY
-	{ "SelectField", scriptlib::duel_select_field },
-	{ "GetMasterRule", scriptlib::duel_get_master_rule },
-	{ "FilterPlayerEffect", scriptlib::duel_filter_player_effect },
-	{ "ReadCard", scriptlib::duel_read_card },
-	
 	{ "EnableGlobalFlag", scriptlib::duel_enable_global_flag },
 	{ "GetLP", scriptlib::duel_get_lp },
 	{ "SetLP", scriptlib::duel_set_lp },

@@ -16,15 +16,6 @@
 #include <iostream>
 #include <algorithm>
 
-//222DIY
-uint32 card::set_entity_code(uint32 entity_code) {
-	card_data dat;
-	::read_card(entity_code, &dat);
-	uint32 code = data.code;
-	data = dat;
-	return code;
-}
-
 bool card_sort::operator()(void* const & p1, void* const & p2) const {
 	card* c1 = (card*)p1;
 	card* c2 = (card*)p2;

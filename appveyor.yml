@@ -42,7 +42,7 @@ test: off
 
 artifacts:
   - path: ygopro.exe
-    name: ygopro(server)
+    name: ygopro server build
 
 cache:
   - premake-5.0.0-alpha10-windows.zip

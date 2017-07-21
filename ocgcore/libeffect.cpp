@@ -10,16 +10,6 @@
 #include "field.h"
 #include "card.h"
 #include "effect.h"
-//222DIY
-int32 scriptlib::effect_set_owner(lua_State *L) {
-	check_param_count(L, 2);
-	check_param(L, PARAM_TYPE_EFFECT, 1);
-	check_param(L, PARAM_TYPE_CARD, 2);
-	effect* peffect = *(effect**) lua_touserdata(L, 1);
-	card* pcard = *(card**) lua_touserdata(L, 2);
-	peffect->owner = pcard;
-	return 0;
-}
 
 int32 scriptlib::effect_new(lua_State *L) {
 	check_param_count(L, 1);
