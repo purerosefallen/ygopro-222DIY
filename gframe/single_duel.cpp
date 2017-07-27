@@ -682,8 +682,8 @@ int SingleDuel::Analyze(char* msgbuffer, unsigned int len) {
 					NetServer::ReSendToPlayer(*oit);
 				break;
 			}
-			case 10:
 			//modded
+			case 10:
 			case 11:
 			case 12: {
 				NetServer::SendBufferToPlayer(players[0], STOC_GAME_MSG, offset, pbuf - offset);
