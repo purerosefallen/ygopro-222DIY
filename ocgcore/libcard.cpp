@@ -48,7 +48,11 @@ int32 scriptlib::card_set_entity_code(lua_State *L) {
 	check_param(L, PARAM_TYPE_CARD, 1);
 	card* pcard = *(card**) lua_touserdata(L, 1);
 	uint32 trace = lua_tointeger(L, 2);
-	lua_pushinteger(L, pcard->set_entity_code(trace));
+	bool remove_alias = false;
+	int32 enable = lua_toboolean(L, 3);
+	if (enable)
+		remove_alias = true;
+	lua_pushinteger(L, pcard->set_entity_code(trace, remove_alias));
 	return 1;
 }
 
@@ -701,7 +705,7 @@ int32 scriptlib::card_get_destination(lua_State *L) {
 	check_param_count(L, 1);
 	check_param(L, PARAM_TYPE_CARD, 1);
 	card* pcard = *(card**) lua_touserdata(L, 1);
-	lua_pushinteger(L, (pcard->operation_param >> 8) & 0xff);
+	lua_pushinteger(L, pcard->sendto_param.location);
 	return 1;
 }
 int32 scriptlib::card_get_leave_field_dest(lua_State *L) {

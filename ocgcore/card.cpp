@@ -17,10 +17,14 @@
 #include <algorithm>
 
 //222DIY
-uint32 card::set_entity_code(uint32 entity_code) {
+uint32 card::set_entity_code(uint32 entity_code, bool remove_alias) {
 	card_data dat;
 	::read_card(entity_code, &dat);
-	uint32 code = data.code;
+	uint32 code = dat.code;
+	if (!code)
+		return 0;
+	if (remove_alias && dat.alias)
+		dat.alias = 0;
 	data = dat;
 	return code;
 }
@@ -74,7 +78,7 @@ card::card(duel* pd) {
 	ref_handle = 0;
 	pduel = pd;
 	owner = PLAYER_NONE;
-	operation_param = 0;
+	sendto_param.clear();
 	release_param = 0;
 	sum_param = 0;
 	position_param = 0;
@@ -3174,7 +3178,50 @@ effect* card::check_indestructable_by_effect(effect* peffect, uint8 playerid) {
 	return 0;
 }
 int32 card::is_destructable_by_effect(effect* peffect, uint8 playerid) {
-	return !check_indestructable_by_effect(peffect, playerid);
+	if(!is_affect_by_effect(peffect))
+		return FALSE;
+	if(check_indestructable_by_effect(peffect, playerid))
+		return FALSE;
+	effect_set eset;
+	eset.clear();
+	filter_effect(EFFECT_INDESTRUCTABLE, &eset);
+	for(int32 i = 0; i < eset.size(); ++i) {
+		pduel->lua->add_param(peffect, PARAM_TYPE_EFFECT);
+		pduel->lua->add_param(REASON_EFFECT, PARAM_TYPE_INT);
+		pduel->lua->add_param(playerid, PARAM_TYPE_INT);
+		if(eset[i]->check_value_condition(3)) {
+			return FALSE;
+			break;
+		}
+	}
+	eset.clear();
+	filter_effect(EFFECT_INDESTRUCTABLE_COUNT, &eset);
+	for(int32 i = 0; i < eset.size(); ++i) {
+		if(eset[i]->is_flag(EFFECT_FLAG_COUNT_LIMIT)) {
+			if((eset[i]->reset_count & 0xf00) == 0)
+				continue;
+			pduel->lua->add_param(peffect, PARAM_TYPE_EFFECT);
+			pduel->lua->add_param(REASON_EFFECT, PARAM_TYPE_INT);
+			pduel->lua->add_param(playerid, PARAM_TYPE_INT);
+			if(eset[i]->check_value_condition(3)) {
+				return FALSE;
+				break;
+			}
+		} else {
+			pduel->lua->add_param(peffect, PARAM_TYPE_EFFECT);
+			pduel->lua->add_param(REASON_EFFECT, PARAM_TYPE_INT);
+			pduel->lua->add_param(playerid, PARAM_TYPE_INT);
+			int32 ct;
+			if(ct = eset[i]->get_value(3)) {
+				auto it = indestructable_effects.insert(std::make_pair(eset[i]->id, 0));
+				if(it.first->second + 1 <= ct) {
+					return FALSE;
+					break;
+				}
+			}
+		}
+	}
+	return TRUE;
 }
 int32 card::is_removeable(uint8 playerid) {
 	if(!pduel->game_field->is_player_can_remove(playerid, this))
@@ -3287,14 +3334,14 @@ int32 card::is_capable_cost_to_grave(uint8 playerid) {
 		return FALSE;
 	if(!is_capable_send_to_grave(playerid))
 		return FALSE;
-	uint32 op_param = operation_param;
-	operation_param = dest << 8;
+	auto op_param = sendto_param;
+	sendto_param.location = dest;
 	if(current.location & LOCATION_ONFIELD)
 		redirect = leave_field_redirect(REASON_COST) & 0xffff;
 	if(redirect) dest = redirect;
 	redirect = destination_redirect(dest, REASON_COST) & 0xffff;
 	if(redirect) dest = redirect;
-	operation_param = op_param;
+	sendto_param = op_param;
 	if(dest != LOCATION_GRAVE)
 		return FALSE;
 	return TRUE;
@@ -3310,14 +3357,14 @@ int32 card::is_capable_cost_to_hand(uint8 playerid) {
 		return FALSE;
 	if(!is_capable_send_to_hand(playerid))
 		return FALSE;
-	uint32 op_param = operation_param;
-	operation_param = dest << 8;
+	auto op_param = sendto_param;
+	sendto_param.location = dest;
 	if(current.location & LOCATION_ONFIELD)
 		redirect = leave_field_redirect(REASON_COST) & 0xffff;
 	if(redirect) dest = redirect;
 	redirect = destination_redirect(dest, REASON_COST) & 0xffff;
 	if(redirect) dest = redirect;
-	operation_param = op_param;
+	sendto_param = op_param;
 	if(dest != LOCATION_HAND)
 		return FALSE;
 	return TRUE;
@@ -3333,14 +3380,14 @@ int32 card::is_capable_cost_to_deck(uint8 playerid) {
 		return FALSE;
 	if(!is_capable_send_to_deck(playerid))
 		return FALSE;
-	uint32 op_param = operation_param;
-	operation_param = dest << 8;
+	auto op_param = sendto_param;
+	sendto_param.location = dest;
 	if(current.location & LOCATION_ONFIELD)
 		redirect = leave_field_redirect(REASON_COST) & 0xffff;
 	if(redirect) dest = redirect;
 	redirect = destination_redirect(dest, REASON_COST) & 0xffff;
 	if(redirect) dest = redirect;
-	operation_param = op_param;
+	sendto_param = op_param;
 	if(dest != LOCATION_DECK)
 		return FALSE;
 	return TRUE;
@@ -3356,14 +3403,14 @@ int32 card::is_capable_cost_to_extra(uint8 playerid) {
 		return FALSE;
 	if(!is_capable_send_to_deck(playerid))
 		return FALSE;
-	uint32 op_param = operation_param;
-	operation_param = dest << 8;
+	auto op_param = sendto_param;
+	sendto_param.location = dest;
 	if(current.location & LOCATION_ONFIELD)
 		redirect = leave_field_redirect(REASON_COST) & 0xffff;
 	if(redirect) dest = redirect;
 	redirect = destination_redirect(dest, REASON_COST) & 0xffff;
 	if(redirect) dest = redirect;
-	operation_param = op_param;
+	sendto_param = op_param;
 	if(dest != LOCATION_DECK)
 		return FALSE;
 	return TRUE;
