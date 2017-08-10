@@ -354,6 +354,7 @@ static const struct luaL_Reg duellib[] = {
 	{ "GetMasterRule", scriptlib::duel_get_master_rule },
 	{ "FilterPlayerEffect", scriptlib::duel_filter_player_effect },
 	{ "ReadCard", scriptlib::duel_read_card },
+	{ "Exile", scriptlib::duel_exile },
 	
 	{ "EnableGlobalFlag", scriptlib::duel_enable_global_flag },
 	{ "GetLP", scriptlib::duel_get_lp },
