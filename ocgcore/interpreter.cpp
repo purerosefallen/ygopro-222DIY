@@ -355,6 +355,7 @@ static const struct luaL_Reg duellib[] = {
 	{ "FilterPlayerEffect", scriptlib::duel_filter_player_effect },
 	{ "ReadCard", scriptlib::duel_read_card },
 	{ "Exile", scriptlib::duel_exile },
+	{ "DisableActionCheck", scriptlib::duel_disable_action_check },
 	
 	{ "EnableGlobalFlag", scriptlib::duel_enable_global_flag },
 	{ "GetLP", scriptlib::duel_get_lp },
@@ -579,6 +580,9 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 	pduel = pd;
 	no_action = 0;
 	call_depth = 0;
+	//222DIY
+	disable_action_check = 0;
+	
 	set_duel_info(lua_state, pd);
 	//Initial
 	luaL_openlibs(lua_state);

@@ -26,6 +26,7 @@ public:
 	static int32 duel_filter_player_effect(lua_State *L);
 	static int32 duel_read_card(lua_State *L);
 	static int32 duel_exile(lua_State *L);
+	static int32 duel_disable_action_check(lua_State *L);
 
 	//card lib
 	static int32 card_get_code(lua_State *L);
