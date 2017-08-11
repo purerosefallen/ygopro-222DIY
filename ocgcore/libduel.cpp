@@ -147,7 +147,7 @@ int32 scriptlib::duel_exile(lua_State *L) {
 	pduel->game_field->core.subunits.back().type = PROCESSOR_SENDTO_S;
 	return lua_yield(L, 0);
 }
-int32 scriptlib::duel_exile(lua_State *L) {
+int32 scriptlib::duel_disable_action_check(lua_State *L) {
 	check_param_count(L, 1);
 	int32 dis = lua_toboolean(L, 1);
 	duel* pduel = interpreter::get_duel_info(L);
