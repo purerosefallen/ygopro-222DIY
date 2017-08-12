@@ -29,6 +29,7 @@ void chain::set_triggering_place(card* pcard) {
 	else
 		triggering_location = pcard->current.location;
 	triggering_sequence = pcard->current.sequence;
+	triggering_position = pcard->current.position;
 }
 bool tevent::operator< (const tevent& v) const {
 	return memcmp(this, &v, sizeof(tevent)) < 0;
@@ -1900,10 +1901,10 @@ void field::remove_unique_card(card* pcard) {
 		core.unique_cards[1 - con].erase(pcard);
 }
 // return: pcard->unique_effect or 0
-effect* field::check_unique_onfield(card* pcard, uint8 controler, uint8 location) {
+effect* field::check_unique_onfield(card* pcard, uint8 controler, uint8 location, card* icard) {
 	for(auto iter = core.unique_cards[controler].begin(); iter != core.unique_cards[controler].end(); ++iter) {
 		card* ucard = *iter;
-		if((ucard != pcard) && ucard->is_position(POS_FACEUP) && ucard->get_status(STATUS_EFFECT_ENABLED)
+		if((ucard != pcard) && (ucard != icard) && ucard->is_position(POS_FACEUP) && ucard->get_status(STATUS_EFFECT_ENABLED)
 			&& !ucard->get_status(STATUS_DISABLED | STATUS_FORBIDDEN)
 			&& ucard->unique_fieldid && ucard->check_unique_code(pcard) && (ucard->unique_location & location))
 			return ucard->unique_effect;
@@ -1911,7 +1912,7 @@ effect* field::check_unique_onfield(card* pcard, uint8 controler, uint8 location
 	if(!pcard->unique_code || !(pcard->unique_location & location) || pcard->get_status(STATUS_DISABLED | STATUS_FORBIDDEN))
 		return 0;
 	card_set cset;
-	pcard->get_unique_target(&cset, controler);
+	pcard->get_unique_target(&cset, controler, icard);
 	if(pcard->check_unique_code(pcard))
 		cset.insert(pcard);
 	if(cset.size() >= 2)
