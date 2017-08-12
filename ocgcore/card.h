@@ -104,6 +104,7 @@ public:
 	public:
 		void addcard(card* pcard);
 	};
+	//222DIY
 	uint32 set_entity_code(uint32 entity_code, bool remove_alias = false);
 	
 	struct sendto_param_t {
@@ -292,7 +293,7 @@ public:
 	int32 check_fusion_substitute(card* fcard);
 
 	int32 check_unique_code(card* pcard);
-	void get_unique_target(card_set* cset, int32 controler);
+	void get_unique_target(card_set* cset, int32 controler, card* icard = 0);
 	int32 check_cost_condition(int32 ecode, int32 playerid);
 	int32 check_cost_condition(int32 ecode, int32 playerid, int32 sumtype);
 	int32 is_summonable_card();
