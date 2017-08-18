@@ -1677,14 +1677,14 @@ int32 card::add_effect(effect* peffect) {
 	if (get_status(STATUS_COPYING_EFFECT)) {
 		peffect->copy_id = pduel->game_field->infos.copy_id;
 		peffect->reset_flag |= pduel->game_field->core.copy_reset;
-		peffect->reset_count = (peffect->reset_count & 0xffffff00) | pduel->game_field->core.copy_reset_count;
+		peffect->reset_count = pduel->game_field->core.copy_reset_count;
 	}
 	effect* reason_effect = pduel->game_field->core.reason_effect;
 	if(peffect->is_flag(EFFECT_FLAG_COPY_INHERIT) && reason_effect && reason_effect->copy_id) {
 		peffect->copy_id = reason_effect->copy_id;
 		peffect->reset_flag |= reason_effect->reset_flag;
-		if((peffect->reset_count & 0xff) > (reason_effect->reset_count & 0xff))
-			peffect->reset_count = (peffect->reset_count & 0xffffff00) | (reason_effect->reset_count & 0xff);
+		if(peffect->reset_count > reason_effect->reset_count)
+			peffect->reset_count = reason_effect->reset_count;
 	}
 	indexer.insert(std::make_pair(peffect, eit));
 	peffect->handler = this;
@@ -1699,7 +1699,7 @@ int32 card::add_effect(effect* peffect) {
 	}
 	if(peffect->reset_flag & RESET_PHASE) {
 		pduel->game_field->effects.pheff.insert(peffect);
-		if((peffect->reset_count & 0xff) == 0)
+		if(peffect->reset_count == 0)
 			peffect->reset_count += 1;
 	}
 	if(peffect->reset_flag & RESET_CHAIN)
@@ -1830,7 +1830,7 @@ int32 card::copy_effect(uint32 code, uint32 reset, uint32 count) {
 		peffect->value = TYPE_EFFECT;
 		peffect->flag[0] = EFFECT_FLAG_CANNOT_DISABLE;
 		peffect->reset_flag = reset;
-		peffect->reset_count |= count & 0xff;
+		peffect->reset_count = count;
 		this->add_effect(peffect);
 	}
 	return pduel->game_field->infos.copy_id - 1;
@@ -1874,7 +1874,7 @@ int32 card::replace_effect(uint32 code, uint32 reset, uint32 count) {
 		peffect->value = TYPE_EFFECT;
 		peffect->flag[0] = EFFECT_FLAG_CANNOT_DISABLE;
 		peffect->reset_flag = reset;
-		peffect->reset_count |= count & 0xff;
+		peffect->reset_count = count;
 		this->add_effect(peffect);
 	}
 	return pduel->game_field->infos.copy_id - 1;
@@ -2405,16 +2405,15 @@ int32 card::filter_summon_procedure(uint8 playerid, effect_set* peset, uint8 ign
 		effect_set eset;
 		filter_effect(EFFECT_EXTRA_SUMMON_COUNT, &eset);
 		for(int32 i = 0; i < eset.size(); ++i) {
-			int32 val = eset[i]->get_value();
-			int32 new_min = val & 0xff;
-			int32 new_zone = (val >> 16) & 0x1f;
+			std::vector<int32> retval;
+			eset[i]->get_value(this, 0, &retval);
+			int32 new_min = retval.size() > 0 ? retval[0] : 0;
+			int32 new_zone = retval.size() > 1 ? retval[1] : 0x1f;
+			int32 releasable = retval.size() > 2 ? (retval[2] < 0 ? 0xff00ff + retval[2] : retval[2]) : 0xff00ff;
 			if(new_min < min)
 				new_min = min;
-			if(new_zone)
-				new_zone &= zone;
-			else
-				new_zone = zone;
-			if(pduel->game_field->check_tribute(this, new_min, max, 0, current.controler, new_zone))
+			new_zone &= zone;
+			if(pduel->game_field->check_tribute(this, new_min, max, 0, current.controler, new_zone, releasable))
 				return TRUE;
 		}
 	} else
@@ -2439,16 +2438,15 @@ int32 card::check_summon_procedure(effect* peffect, uint8 playerid, uint8 ignore
 		effect_set eset;
 		filter_effect(EFFECT_EXTRA_SUMMON_COUNT, &eset);
 		for(int32 i = 0; i < eset.size(); ++i) {
-			int32 val = eset[i]->get_value();
-			int32 new_min_tribute = val & 0xff;
-			int32 new_zone = (val >> 16) & 0x1f;
+			std::vector<int32> retval;
+			eset[i]->get_value(this, 0, &retval);
+			int32 new_min_tribute = retval.size() > 0 ? retval[0] : 0;
+			int32 new_zone = retval.size() > 1 ? retval[1] : 0x1f;
+			int32 releasable = retval.size() > 2 ? (retval[2] < 0 ? 0xff00ff + retval[2] : retval[2]) : 0xff00ff;
 			if(new_min_tribute < (int32)min_tribute)
 				new_min_tribute = min_tribute;
-			if(new_zone)
-				new_zone &= zone;
-			else
-				new_zone = zone;
-			if(is_summonable(peffect, new_min_tribute, new_zone))
+			new_zone &= zone;
+			if(is_summonable(peffect, new_min_tribute, new_zone, releasable))
 				return TRUE;
 		}
 	} else
@@ -2490,16 +2488,15 @@ int32 card::filter_set_procedure(uint8 playerid, effect_set* peset, uint8 ignore
 		effect_set eset;
 		filter_effect(EFFECT_EXTRA_SET_COUNT, &eset);
 		for(int32 i = 0; i < eset.size(); ++i) {
-			int32 val = eset[i]->get_value();
-			int32 new_min = val & 0xff;
-			int32 new_zone = (val >> 16) & 0x1f;
+			std::vector<int32> retval;
+			eset[i]->get_value(this, 0, &retval);
+			int32 new_min = retval.size() > 0 ? retval[0] : 0;
+			int32 new_zone = retval.size() > 1 ? retval[1] : 0x1f;
+			int32 releasable = retval.size() > 2 ? (retval[2] < 0 ? 0xff00ff + retval[2] : retval[2]) : 0xff00ff;
 			if(new_min < min)
 				new_min = min;
-			if(new_zone)
-				new_zone &= zone;
-			else
-				new_zone = zone;
-			if(pduel->game_field->check_tribute(this, new_min, max, 0, current.controler, new_zone))
+			new_zone &= zone;
+			if(pduel->game_field->check_tribute(this, new_min, max, 0, current.controler, new_zone, releasable))
 				return TRUE;
 		}
 	} else
@@ -2521,16 +2518,15 @@ int32 card::check_set_procedure(effect* peffect, uint8 playerid, uint8 ignore_co
 		effect_set eset;
 		filter_effect(EFFECT_EXTRA_SET_COUNT, &eset);
 		for(int32 i = 0; i < eset.size(); ++i) {
-			int32 val = eset[i]->get_value();
-			int32 new_min_tribute = val & 0xff;
-			int32 new_zone = (val >> 16) & 0x1f;
+			std::vector<int32> retval;
+			eset[i]->get_value(this, 0, &retval);
+			int32 new_min_tribute = retval.size() > 0 ? retval[0] : 0;
+			int32 new_zone = retval.size() > 1 ? retval[1] : 0x1f;
+			int32 releasable = retval.size() > 2 ? (retval[2] < 0 ? 0xff00ff + retval[2] : retval[2]) : 0xff00ff;
 			if(new_min_tribute < (int32)min_tribute)
 				new_min_tribute = min_tribute;
-			if(new_zone)
-				new_zone &= zone;
-			else
-				new_zone = zone;
-			if(is_summonable(peffect, new_min_tribute, new_zone))
+			new_zone &= zone;
+			if(is_summonable(peffect, new_min_tribute, new_zone, releasable))
 				return TRUE;
 		}
 	} else
@@ -2848,7 +2844,7 @@ int32 card::is_spsummonable(effect* peffect) {
 	return result;
 }
 // check the condition of summon/set procedure peffect
-int32 card::is_summonable(effect* peffect, uint8 min_tribute, uint32 zone) {
+int32 card::is_summonable(effect* peffect, uint8 min_tribute, uint32 zone, uint32 releasable) {
 	effect* oreason = pduel->game_field->core.reason_effect;
 	uint8 op = pduel->game_field->core.reason_player;
 	pduel->game_field->core.reason_effect = peffect;
@@ -2859,7 +2855,8 @@ int32 card::is_summonable(effect* peffect, uint8 min_tribute, uint32 zone) {
 	pduel->lua->add_param(this, PARAM_TYPE_CARD);
 	pduel->lua->add_param(min_tribute, PARAM_TYPE_INT);
 	pduel->lua->add_param(zone, PARAM_TYPE_INT);
-	if(pduel->lua->check_condition(peffect->condition, 4))
+	pduel->lua->add_param(releasable, PARAM_TYPE_INT);
+	if(pduel->lua->check_condition(peffect->condition, 5))
 		result = TRUE;
 	pduel->game_field->restore_lp_cost();
 	pduel->game_field->core.reason_effect = oreason;
@@ -2935,7 +2932,7 @@ int32 card::get_summon_tribute_count() {
 				minul = dec & 0xffff;
 			if(maxul < (dec >> 16))
 				maxul = dec >> 16;
-		} else if((eset[i]->reset_count & 0xf00) > 0) {
+		} else if(eset[i]->count_limit > 0) {
 			min -= dec & 0xffff;
 			max -= dec >> 16;
 		}
@@ -3181,7 +3178,7 @@ int32 card::is_destructable_by_effect(effect* peffect, uint8 playerid) {
 	filter_effect(EFFECT_INDESTRUCTABLE_COUNT, &eset);
 	for(int32 i = 0; i < eset.size(); ++i) {
 		if(eset[i]->is_flag(EFFECT_FLAG_COUNT_LIMIT)) {
-			if((eset[i]->reset_count & 0xf00) == 0)
+			if(eset[i]->count_limit == 0)
 				continue;
 			pduel->lua->add_param(peffect, PARAM_TYPE_EFFECT);
 			pduel->lua->add_param(REASON_EFFECT, PARAM_TYPE_INT);
