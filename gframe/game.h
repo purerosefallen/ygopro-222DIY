@@ -2,15 +2,20 @@
 #define GAME_H
 
 #include "config.h"
-//#include "client_field.h"
-//#include "deck_con.h"
-//#include "menu_handler.h"
+#ifndef YGOPRO_SERVER_MODE
+#include "client_field.h"
+#include "deck_con.h"
+#include "menu_handler.h"
+#else
+#include "netserver.h"
+#endif //YGOPRO_SERVER_MODE
 #include <unordered_map>
 #include <vector>
 #include <list>
 
 namespace ygo {
 
+#ifndef YGOPRO_SERVER_MODE
 struct Config {
 	bool use_d3d;
 	unsigned short antialias;
@@ -65,7 +70,7 @@ struct DuelInfo {
 	unsigned short time_limit;
 	unsigned short time_left[2];
 };
-/*
+
 struct FadingUnit {
 	bool signalAction;
 	bool isFadein;
@@ -77,14 +82,18 @@ struct FadingUnit {
 	irr::core::vector2di fadingLR;
 	irr::core::vector2di fadingDiff;
 };
-*/
+#endif //YGOPRO_SERVER_MODE
+
 class Game {
 
 public:
 	bool Initialize();
-	//void MainLoop();
-	void MainServerLoop(int bDuel_mode, int lflist);
-	/*
+#ifdef YGOPRO_SERVER_MODE
+	void MainServerLoop();
+	void LoadExpansionDB();
+	void AddDebugMsg(char* msgbuf);
+#else
+	void MainLoop();
 	void BuildProjectionMatrix(irr::core::matrix4& mProjection, f32 left, f32 right, f32 bottom, f32 top, f32 znear, f32 zfar);
 	void InitStaticText(irr::gui::IGUIStaticText* pControl, u32 cWidth, u32 cHeight, irr::gui::CGUITTFont* font, const wchar_t* text);
 	void SetStaticText(irr::gui::IGUIStaticText* pControl, u32 cWidth, irr::gui::CGUITTFont* font, const wchar_t* text, u32 pos = 0);
@@ -116,19 +125,17 @@ public:
 	void AddDebugMsg(char* msgbuf);
 	void ClearTextures();
 	void CloseDuelWindow();
-	*/
+
 	int LocalPlayer(int player);
 	const wchar_t* LocalName(int local_player);
 
-	/*
 	bool HasFocus(EGUI_ELEMENT_TYPE type) const {
-		//irr::gui::IGUIElement* focus = env->getFocus();
+		irr::gui::IGUIElement* focus = env->getFocus();
 		return focus && focus->hasType(type);
 	}
-	
- 	void SetWindowsIcon();
+
+	void SetWindowsIcon();
 	void FlashWindow();
-   */
 
 	Mutex gMutex;
 	Mutex gBuffer;
@@ -141,7 +148,7 @@ public:
 	Config gameConf;
 	DuelInfo dInfo;
 
-	/*std::list<FadingUnit> fadingList;
+	std::list<FadingUnit> fadingList;
 	std::vector<int> logParam;
 	std::wstring chatMsg[8];
 
@@ -174,8 +181,7 @@ public:
 
 	bool is_building;
 	bool is_siding;
-	*/
-	/*
+
 	ClientField dField;
 	DeckBuilder deckBuilder;
 	MenuHandler menuHandler;
@@ -428,22 +434,15 @@ public:
 	irr::gui::IGUIButton* btnChainWhenAvail;
 	//cancel or finish
 	irr::gui::IGUIButton* btnCancelOrFinish;
-	*/
+#endif //YGOPRO_SERVER_MODE
 };
 
 extern Game* mainGame;
+#ifdef YGOPRO_SERVER_MODE
 extern unsigned short aServerPort;
-extern unsigned int lflist;
-extern unsigned char rule;
-extern unsigned char mode;
-extern unsigned char duel_rule;
-extern bool no_check_deck;
-extern bool no_shuffle_deck;
-extern unsigned int start_lp;
-extern unsigned short time_limit;
 extern unsigned short replay_mode;
-extern unsigned char start_hand;
-extern unsigned char draw_count;
+extern HostInfo game_info;
+#endif
 
 }
 
