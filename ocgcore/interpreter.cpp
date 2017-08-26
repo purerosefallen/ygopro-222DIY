@@ -262,6 +262,8 @@ static const struct luaL_Reg cardlib[] = {
 static const struct luaL_Reg effectlib[] = {
 	//222DIY
 	{ "SetOwner", scriptlib::effect_set_owner },
+	{ "GetRange", scriptlib::effect_get_range },
+	{ "GetCountLimit", scriptlib::effect_get_count_limit },
 	
 	{ "CreateEffect", scriptlib::effect_new },
 	{ "GlobalEffect", scriptlib::effect_newex },
