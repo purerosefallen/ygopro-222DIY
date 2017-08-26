@@ -20,6 +20,8 @@ public:
 	static int32 card_get_affecting_effect(lua_State *L);
 	static int32 card_set_entity_code(lua_State *L);
 	static int32 card_filter_effect(lua_State *L);
+	static int32 card_is_link_below(lua_State *L);
+	static int32 card_is_link_above(lua_State *L);
 	static int32 effect_set_owner(lua_State *L);
 	static int32 duel_select_field(lua_State *L);
 	static int32 duel_get_master_rule(lua_State *L);
