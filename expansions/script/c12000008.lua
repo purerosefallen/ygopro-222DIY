@@ -65,5 +65,6 @@ function c12000008.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		token:RegisterEffect(e1,true)
+		Duel.SpecialSummonComplete()
 	end
 end
