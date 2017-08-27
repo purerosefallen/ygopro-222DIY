@@ -2,7 +2,7 @@
 function c12000048.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetCategory(CATEGORY_HANDES+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCost(c12000048.cost)
@@ -22,7 +22,7 @@ function c12000048.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_HAND,0,e:GetHandler())
 	if chk==0 then return Duel.GetFlagEffect(tp,12000048)==0
 		and g:GetCount()>1 and g:GetCount()==g:FilterCount(Card.IsAbleToGraveAsCost,nil) end
-	Duel.SendtoGrave(g,REASON_COST)
+	Duel.SendtoGrave(g,REASON_DISCARD)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
@@ -56,13 +56,13 @@ function c12000048.aclimit(e,re,tp)
 end
 function c12000048.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,12000011,0,0x4011,800,800,3,RACE_ZOMBIE,ATTRIBUTE_FIRE,POS_FACEUP_DEFENSE,tp) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,12000011,0,0x4011,800,800,3,RACE_ZOMBIE,ATTRIBUTE_FIRE,POS_FACEUP,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
-function c12000048.tgop(e,tp,eg,ep,ev,re,r,rp)
+function c12000048.thop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,12000011,0,0x4011,800,800,3,RACE_ZOMBIE,ATTRIBUTE_FIRE,POS_FACEUP_DEFENSE,tp) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,12000011,0,0x4011,800,800,3,RACE_ZOMBIE,ATTRIBUTE_FIRE,POS_FACEUP,tp) then
 		local token=Duel.CreateToken(tp,12000011)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
