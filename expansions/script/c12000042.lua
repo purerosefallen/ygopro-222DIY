@@ -1,0 +1,132 @@
+--奇迹糕点 水果冻糕
+function c12000042.initial_effect(c)
+	--Activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCost(c12000042.spcost)
+	e1:SetTarget(c12000042.sptg)
+	e1:SetOperation(c12000042.spop)
+	c:RegisterEffect(e1)
+	
+end
+function c12000042.tgfilter(c)
+	local atk=c:GetAttack()
+	local def=c:GetDefense()
+	local lv=c:GetLevel()
+	local race=c:GetRace()
+	local att=c:GetAttribute()
+	return c:IsSetCard(0xfbe) and c:IsType(TYPE_MONSTER) and Duel.IsPlayerCanSpecialSummonMonster(tp,12000019,0xfbe,0x5011,atk,def,lv,race,att) and c:IsAbleToGrave()
+end
+function c12000042.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c12000042.tgfilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectTarget(tp,c12000042.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
+	Duel.SendtoGrave(g,REASON_COST)
+	e:SetLabelObject(g:GetFirst())
+end
+function c12000042.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
+end
+function c12000042.spop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tc=e:GetLabelObject()
+	local atk=tc:GetAttack()
+	local def=tc:GetDefense()
+	local lv=tc:GetLevel()
+	local race=tc:GetRace()
+	local att=tc:GetAttribute()
+	if c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,12000019,0xfbe,0x5011,atk,def,lv,race,att) then
+		local token=Duel.CreateToken(tp,12000019)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SET_ATTACK)
+		e1:SetValue(atk)
+		e1:SetReset(RESET_EVENT+0xfe0000)
+		token:RegisterEffect(e1)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_SET_DEFENSE)
+		e2:SetValue(def)
+		e2:SetReset(RESET_EVENT+0xfe0000)
+		token:RegisterEffect(e2)
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_CHANGE_LEVEL)
+		e3:SetValue(lv)
+		e3:SetReset(RESET_EVENT+0xfe0000)
+		token:RegisterEffect(e3)
+		local e4=Effect.CreateEffect(c)
+		e4:SetType(EFFECT_TYPE_SINGLE)
+		e4:SetCode(EFFECT_CHANGE_RACE)
+		e4:SetValue(race)
+		e4:SetReset(RESET_EVENT+0xfe0000)
+		token:RegisterEffect(e4)
+		local e5=Effect.CreateEffect(c)
+		e5:SetType(EFFECT_TYPE_SINGLE)
+		e5:SetCode(EFFECT_CHANGE_ATTRIBUTE)
+		e5:SetValue(att)
+		e5:SetReset(RESET_EVENT+0xfe0000)
+		token:RegisterEffect(e5)
+		if Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)>0 then
+			Duel.Equip(tp,c,token)
+			c:CancelToGrave()
+			--Equip limit
+			local e6=Effect.CreateEffect(c)
+			e6:SetType(EFFECT_TYPE_SINGLE)
+			e6:SetCode(EFFECT_EQUIP_LIMIT)
+			e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e6:SetValue(c12000042.eqlimit)
+			e6:SetReset(RESET_EVENT+0x1fe0000)
+			c:RegisterEffect(e6)
+			local e7=Effect.CreateEffect(c)
+			e7:SetDescription(aux.Stringid(12000042,0))
+			e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+			e7:SetCode(EVENT_ATTACK_ANNOUNCE)
+			e7:SetRange(LOCATION_SZONE)
+			e7:SetCountLimit(1,12000142)
+			e7:SetReset(RESET_EVENT+0xfe0000)
+			e7:SetCost(c12000042.atkcost)
+			e7:SetCondition(c12000042.atkcon)
+			e7:SetTarget(c12000042.atktg)
+			e7:SetOperation(c12000042.atkop)
+			c:RegisterEffect(e7)
+		end
+	end
+end
+function c12000042.eqlimit(e,c)
+	return c:GetControler()==e:GetOwnerPlayer()
+end
+function c12000042.atkcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetAttacker()==e:GetHandler():GetEquipTarget()
+end
+function c12000042.tgfilter1(c)
+	return c:IsSetCard(0xfbe) and c:IsAbleToGrave()
+end
+function c12000042.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c12000042.tgfilter1,tp,LOCATION_DECK,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectTarget(tp,c12000042.tgfilter1,tp,LOCATION_DECK,0,1,1,nil)
+	Duel.SendtoGrave(g,REASON_COST)
+end
+function c12000042.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local ec=e:GetHandler():GetEquipTarget()
+	if chk==0 then return ec and ec:GetEffectCount(EFFECT_EXTRA_ATTACK)==0 end
+end
+function c12000042.atkop(e,tp,eg,ep,ev,re,r,rp)
+	local ec=e:GetHandler():GetEquipTarget()
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) and ec and ec:IsFaceup() then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetCode(EFFECT_EXTRA_ATTACK)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetValue(1)
+		ec:RegisterEffect(e1)
+	end
+end

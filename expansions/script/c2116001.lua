@@ -1,0 +1,60 @@
+--囚鸟之影
+function c2116001.initial_effect(c)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetCode(EFFECT_CHANGE_CODE)
+	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e1:SetValue(2116000)
+	c:RegisterEffect(e1)
+	
+	local e4=Effect.CreateEffect(c)
+	e4:SetCategory(CATEGORY_LVCHANGE)
+	e4:SetType(EFFECT_TYPE_IGNITION)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e4:SetCountLimit(1)
+	e4:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+		local fil=function(c,lv) return c:IsRace(RACE_SPELLCASTER) and c:GetLevel()>0 and c:GetLevel()~=lv end
+		if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and fil(chkc,e:GetHandler():GetLevel()) end
+		if chk==0 then return Duel.IsExistingTarget(fil,tp,LOCATION_MZONE,0,1,nil,e:GetHandler():GetLevel()) end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+		Duel.SelectTarget(tp,fil,tp,LOCATION_MZONE,0,1,1,nil,e:GetHandler():GetLevel())
+	end)
+	e4:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
+		local c=e:GetHandler()
+		local tc=Duel.GetFirstTarget()
+		if c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) then
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_CHANGE_LEVEL)
+			e1:SetValue(tc:GetLevel())
+			e1:SetReset(RESET_EVENT+0x1ff0000)
+			c:RegisterEffect(e1)
+		end
+	end)
+	c:RegisterEffect(e4)
+	
+	local e2=Effect.CreateEffect(c)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_SUMMON_SUCCESS)
+	e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
+		e:GetHandler():RegisterFlagEffect(2116001,RESET_EVENT+0x1fc0000+RESET_PHASE+PHASE_END,0,1)
+	end)
+	c:RegisterEffect(e2)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCondition(function(e)
+		local ph=Duel.GetCurrentPhase()
+		if not (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL) then return false end
+		local c=e:GetHandler()
+		if c:GetFlagEffect(2116001)==0 then return false end
+		return c:GetBattleTarget()
+	end)
+	e1:SetValue(1200)
+	c:RegisterEffect(e1)
+end
