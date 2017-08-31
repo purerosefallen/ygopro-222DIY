@@ -1122,10 +1122,18 @@ uint32 card::get_rscale() {
 	temp.rscale = 0xffffffff;
 	return rscale;
 }
+//222DIY modded by Flandre
 uint32 card::get_link_marker() {
 	if(!(data.type & TYPE_LINK))
 		return 0;
-	return data.link_marker;
+	effect_set effects;
+	uint32 link_marker = data.link_marker;
+	filter_effect(710253, &effects);
+	for (int32 i = 0; i < effects.size(); ++i) {
+		vlink = effects[i]->get_value(this);
+		link_marker = vlink;
+	}
+	return link_marker;
 }
 int32 card::is_link_marker(uint32 dir) {
 	return (int32)(get_link_marker() & dir);
