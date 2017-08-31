@@ -31,7 +31,7 @@ function c13257205.initial_effect(c)
 	c:RegisterEffect(e3)
 	--atkup
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(13257205,2))
+	e4:SetDescription(aux.Stringid(13257205,3))
 	e4:SetCategory(CATEGORY_ATKCHANGE)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
@@ -51,19 +51,37 @@ function c13257205.initial_effect(c)
 	
 end
 function c13257205.otfilter(c)
-	return c:IsSetCard(0x353) and c:IsType(TYPE_MONSTER) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(0x353) and c:IsType(TYPE_MONSTER) and c:IsReleasable()
+end
+function c13257205.otfilter1(c)
+	return c:IsSetCard(0x353) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end
 function c13257205.otcon(e,c,minc)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local mg=Duel.GetMatchingGroup(c13257205.otfilter,tp,LOCATION_MZONE+LOCATION_HAND,LOCATION_MZONE,nil)
-	return c:GetLevel()>6 and minc<=1 and Duel.CheckTribute(c,1,1,mg)
+	local mg=Duel.GetMatchingGroup(c13257205.otfilter,tp,LOCATION_HAND,0,c)
+	local mg1=Duel.GetMatchingGroup(c13257205.otfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	return c:GetLevel()>6 and minc<=2
+		and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and mg:GetCount()>=1
+			or Duel.CheckTribute(c,1,1,mg1))
+		or c:GetLevel()>4 and c:GetLevel()<=6 and minc<=1
+			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and mg:GetCount()>=1
 end
 function c13257205.otop(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg=Duel.GetMatchingGroup(c13257205.otfilter,tp,LOCATION_MZONE+LOCATION_HAND,LOCATION_MZONE,nil)
-	local sg=Duel.SelectTribute(tp,c,1,1,mg)
+	local mg=Duel.GetMatchingGroup(c13257205.otfilter,tp,LOCATION_HAND,0,c)
+	local mg1=Duel.GetMatchingGroup(c13257205.otfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local sg=Group.CreateGroup()
+	if c:GetLevel()>6 then
+		if mg:GetCount()>0 and mg1:GetCount()==0 or (mg:GetCount()>0 and mg1:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(13257205,2))) then
+			sg=mg:Select(tp,1,1,nil)
+		else
+			sg=Duel.SelectTribute(tp,c,1,1,mg1)
+		end
+	else
+		sg=mg:Select(tp,1,1,nil)
+	end
 	c:SetMaterial(sg)
-	Duel.Release(sg, REASON_SUMMON+REASON_MATERIAL)
+	Duel.Release(sg,REASON_SUMMON+REASON_MATERIAL)
 end
 function c13257205.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT+REASON_BATTLE)

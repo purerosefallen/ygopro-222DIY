@@ -69,7 +69,7 @@ function c12000006.spop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetAbsoluteRange(tp,1,0)
 			e2:SetTarget(c12000006.splimit)
 			e2:SetReset(RESET_EVENT+0x1fe0000)
-			g:GetFirst():RegisterEffect(e2,true)
+			Duel.RegisterEffect(e2,tp)
 		end
 	end
 end

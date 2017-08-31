@@ -72,7 +72,7 @@ function c13255223.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sg=eg:Filter(c13255223.spfilter,nil,e,tp)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>=sg:GetCount()
 		and sg:GetCount()>0 end
-	sg:SetTargetCard()
+	Duel.SetTargetCard(sg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_REMOVED)
 end
 function c13255223.spop(e,tp,eg,ep,ev,re,r,rp)
