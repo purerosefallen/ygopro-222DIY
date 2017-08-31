@@ -1129,10 +1129,8 @@ uint32 card::get_link_marker() {
 	effect_set effects;
 	uint32 link_marker = data.link_marker;
 	filter_effect(710253, &effects);
-	for (int32 i = 0; i < effects.size(); ++i) {
-		vlink = effects[i]->get_value(this);
-		link_marker = vlink;
-	}
+	for (int32 i = 0; i < effects.size(); ++i)
+		link_marker = effects[i]->get_value(this);
 	return link_marker;
 }
 int32 card::is_link_marker(uint32 dir) {
