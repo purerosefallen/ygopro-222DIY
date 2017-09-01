@@ -81,11 +81,14 @@ function c13254047.regop(e,tp,eg,ep,ev,re,r,rp)
 	e7:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e7)
 end
+function c13254047.costfilter1(c)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x3356)
+end
 function c13254047.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(c13254047.costfilter,tp,LOCATION_HAND,0,3,e:GetHandler()) end
+	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(c13254047.costfilter1,tp,LOCATION_HAND,0,3,e:GetHandler()) end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local cg=Duel.SelectMatchingCard(tp,c13254047.costfilter,tp,LOCATION_HAND,0,3,3,nil)
+	local cg=Duel.SelectMatchingCard(tp,c13254047.costfilter1,tp,LOCATION_HAND,0,3,3,nil)
 		Duel.ConfirmCards(1-tp,cg)
 	Duel.ShuffleHand(tp)
 end
