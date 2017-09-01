@@ -104,7 +104,7 @@ function c13257206.damcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13257206.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,13257206)
-	Duel.Damage(1-tp,500,REASON_EFFECT)
+	Duel.Damage(1-tp,200,REASON_EFFECT)
 end
 function c13257206.cfilter(c,tp)
 	return c:GetSummonPlayer()==tp
