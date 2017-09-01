@@ -4,6 +4,7 @@
 /build
 /event
 /lua
+/script
 /sqlite3
 /replay
 /deck
