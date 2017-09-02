@@ -70,17 +70,17 @@ end
 function c66612323.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c66612323.afilter,1,nil,tp)
 end
-function c66612323.cfilter(c,tp)
+function c66612323.cfilter(c,e,tp)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x666) and c:IsType(TYPE_TUNER) and c:IsAbleToGraveAsCost() and Duel.IsExistingMatchingCard(c66612323.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,Group.FromCards(c))
 end
 function c66612323.bfilter(c)
 	return c:IsAbleToGraveAsCost()
 end
 function c66612323.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c66612323.cfilter,tp,LOCATION_MZONE,0,1,nil,tp)
+	if chk==0 then return Duel.IsExistingMatchingCard(c66612323.cfilter,tp,LOCATION_MZONE,0,1,nil,e,tp)
 		and Duel.IsExistingMatchingCard(c66612323.bfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g1=Duel.SelectMatchingCard(tp,c66612323.cfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
+	local g1=Duel.SelectMatchingCard(tp,c66612323.cfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g2=Duel.SelectMatchingCard(tp,c66612323.bfilter,tp,LOCATION_HAND,0,1,1,nil)
 	g1:Merge(g2)
