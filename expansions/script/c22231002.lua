@@ -2,6 +2,7 @@
 function c22231002.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_TOGRAVE+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,222310021+EFFECT_COUNT_CODE_OATH)
@@ -33,9 +34,9 @@ function c22231002.cfilter(c)
 	return c22231002.IsDarkest(c)
 end
 function c22231002.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<3 then return end
-	local g=Duel.GetDecktopGroup(tp,3)
+	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<3 then return false end
 	Duel.ConfirmDecktop(tp,3)
+	local g=Duel.GetDecktopGroup(tp,3)
 	if g:IsExists(c22231002.cfilter,1,nil) then 
 		local sg=g:Select(tp,1,1,nil)
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)

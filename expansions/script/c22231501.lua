@@ -10,8 +10,7 @@ function c22231501.initial_effect(c)
 	e6:SetDescription(aux.Stringid(22231501,0))
 	e6:SetCategory(CATEGORY_TOGRAVE)
 	e6:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e6:SetType(EFFECT_TYPE_QUICK_O)
-	e6:SetCode(EVENT_FREE_CHAIN)
+	e6:SetType(EFFECT_TYPE_IGNITION)
 	e6:SetRange(LOCATION_FZONE)
 	e6:SetCountLimit(1)
 	e6:SetTarget(c22231501.tgtg)
@@ -20,7 +19,7 @@ function c22231501.initial_effect(c)
 	--Draw
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(22231501,2))
-	e6:SetCategory(CATEGORY_POSITION+CATEGORY_DRAW)
+	e6:SetCategory(CATEGORY_POSITION)
 	e6:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e6:SetType(EFFECT_TYPE_IGNITION)
 	e6:SetRange(LOCATION_FZONE)
@@ -74,7 +73,7 @@ function c22231501.posfilter(c)
 end
 function c22231501.dtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c22231501.posfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c22231501.posfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsPlayerCanDraw(tp,1) end
+	if chk==0 then return Duel.IsExistingTarget(c22231501.posfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,c22231501.posfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
@@ -84,9 +83,7 @@ function c22231501.dop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return false end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsCanTurnSet() then
-		if Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE) then
-			Duel.Draw(tp,1,REASON_EFFECT)
-		end
+		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
 	end
 end
 function c22231501.econ(e,tp,eg,ep,ev,re,r,rp)
