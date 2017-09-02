@@ -45,7 +45,6 @@ function c22231201.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c22231201.cfilter,1,nil) and Duel.IsExistingMatchingCard(c22231201.confilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c22231201.operation(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return false end
 	local tc=Duel.GetFieldCard(1-tp,LOCATION_GRAVE,Duel.GetFieldGroupCount(1-tp,LOCATION_GRAVE,0)-1)
 	if tc then
 		if Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)>0 then
