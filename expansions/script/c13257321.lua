@@ -35,6 +35,7 @@ function c13257321.initial_effect(c)
 	e11:SetCode(EVENT_SUMMON_SUCCESS)
 	e11:SetOperation(c13257321.bgmop)
 	c:RegisterEffect(e11)
+	c13257321[c]=e2
 	
 end
 function c13257321.eqfilter(c,ec)
@@ -124,8 +125,14 @@ end
 function c13257321.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end
+function c13257321.acfilter(c)
+	return c:IsFaceup() and (c:GetAttack()>0 or c:GetDefense()>0)
+end
+function c13257321.desfilter(c)
+	return c:IsFaceup() and (c:GetAttack()==0 or c:GetDefense()==0)
+end
 function c13257321.bombop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(c13257321.acfilter,tp,0,LOCATION_MZONE,nil)
 	if g:GetCount()>0 then
 		local sc=g:GetFirst()
 		while sc do
@@ -139,6 +146,11 @@ function c13257321.bombop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCode(EFFECT_UPDATE_DEFENSE)
 			sc:RegisterEffect(e2)
 			sc=g:GetNext()
+		end
+		g=Duel.GetMatchingGroup(c13257324.desfilter,tp,0,LOCATION_MZONE,nil)
+		if g:GetCount()>0 then
+			Duel.BreakEffect()
+			Duel.Destroy(g,REASON_EFFECT)
 		end
 	end
 end
