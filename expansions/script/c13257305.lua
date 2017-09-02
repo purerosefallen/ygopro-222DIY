@@ -37,6 +37,7 @@ function c13257305.initial_effect(c)
 	e11:SetCode(EVENT_SUMMON_SUCCESS)
 	e11:SetOperation(c13257305.bgmop)
 	c:RegisterEffect(e11)
+	c13257305[c]=e2
 	
 end
 function c13257305.necon(e,tp,eg,ep,ev,re,r,rp)

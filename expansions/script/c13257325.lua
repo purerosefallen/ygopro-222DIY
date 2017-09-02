@@ -20,7 +20,7 @@ function c13257325.initial_effect(c)
 	--atkup
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e3:SetRange(LOCATION_MZONE)
+	e3:SetRange(LOCATION_SZONE)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetCountLimit(1)
 	e3:SetCondition(c13257325.atkcon)
@@ -30,8 +30,14 @@ function c13257325.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_BATTLED)
+	e4:SetRange(LOCATION_SZONE)
 	e4:SetOperation(c13257325.retop)
 	c:RegisterEffect(e4)
+	--Pierce
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_EQUIP)
+	e5:SetCode(EFFECT_PIERCE)
+	c:RegisterEffect(e5)
 	
 end
 function c13257325.eqlimit(e,c)

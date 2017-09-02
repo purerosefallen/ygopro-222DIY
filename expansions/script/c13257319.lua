@@ -39,6 +39,7 @@ function c13257319.initial_effect(c)
 	e4:SetTarget(c13257319.pctg)
 	e4:SetOperation(c13257319.pcop)
 	c:RegisterEffect(e4)
+	c13257319[c]=e4
 	
 end
 function c13257319.cfilter(c,tp)
