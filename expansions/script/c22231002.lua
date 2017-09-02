@@ -29,14 +29,14 @@ end
 function c22231002.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>2 end
 end
-function c22231002.filter(c)
+function c22231002.cfilter(c)
 	return c22231002.IsDarkest(c)
 end
 function c22231002.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<3 then return false end
-	Duel.ConfirmDecktop(tp,3)
+	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<3 then return end
 	local g=Duel.GetDecktopGroup(tp,3)
-	if g:IsExists(c22231002.filter,1,nil) then 
+	Duel.ConfirmDecktop(tp,3)
+	if g:IsExists(c22231002.cfilter,1,nil) then 
 		local sg=g:Select(tp,1,1,nil)
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,sg)
