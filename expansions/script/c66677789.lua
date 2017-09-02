@@ -138,6 +138,6 @@ function cm.disop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.aclimit(e,re,tp)
-	local tc=e:GetLabelObject()
-	return re:GetHandler():IsCode(tc:GetCode()) and not re:GetHandler():IsImmuneToEffect(e)
+	local code=e:GetLabel()
+	return re:GetHandler():IsCode(code) and not re:GetHandler():IsImmuneToEffect(e)
 end
