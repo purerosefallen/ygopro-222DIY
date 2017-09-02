@@ -639,10 +639,7 @@ int TagDuel::Analyze(char* msgbuffer, unsigned int len) {
 			case 2:
 			case 3:
 			case 5:
-			//modded
-			case 10:
-			case 11:
-			case 12: {
+			case 10: {
 				NetServer::SendBufferToPlayer(cur_player[player], STOC_GAME_MSG, offset, pbuf - offset);
 				break;
 			}
@@ -654,6 +651,18 @@ int TagDuel::Analyze(char* msgbuffer, unsigned int len) {
 				for(int i = 0; i < 4; ++i)
 					if(players[i] != cur_player[player])
 						NetServer::SendBufferToPlayer(players[i], STOC_GAME_MSG, offset, pbuf - offset);
+				for(auto oit = observers.begin(); oit != observers.end(); ++oit)
+					NetServer::ReSendToPlayer(*oit);
+#ifdef YGOPRO_SERVER_MODE
+			NetServer::ReSendToPlayers(cache_recorder, replay_recorder);
+#endif
+				break;
+			}
+			//modded
+			case 11:
+			case 12: {
+				for(int i = 0; i < 4; ++i)
+					NetServer::SendBufferToPlayer(players[i], STOC_GAME_MSG, offset, pbuf - offset);
 				for(auto oit = observers.begin(); oit != observers.end(); ++oit)
 					NetServer::ReSendToPlayer(*oit);
 #ifdef YGOPRO_SERVER_MODE

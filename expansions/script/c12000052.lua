@@ -1,6 +1,5 @@
 --奇迹糕点 誓言皇后
 function c12000052.initial_effect(c)
-	c:EnableReviveLimit()
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
