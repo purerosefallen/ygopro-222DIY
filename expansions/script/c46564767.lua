@@ -69,7 +69,7 @@ function c46564767.xyzcon(e,c,og,min,max)
 		minc=math.max(minc,min)
 		maxc=math.min(maxc,max)
 	end
-	return min<=max and mg:IsExists(c46564767.xyzfilter,1,sg,mg,sg,min,max,tp,c)
+	return minc<=maxc and mg:IsExists(c46564767.xyzfilter,1,sg,mg,sg,minc,maxc,tp,c)
 end
 function c46564767.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
 	local mg=nil
@@ -98,10 +98,10 @@ function c46564767.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
 	local i=sg:GetCount()
 	repeat
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-		local g=mg:FilterSelect(tp,c46564767.xyzfilter,1,1,sg,mg,sg,min,max,tp,c)
+		local g=mg:FilterSelect(tp,c46564767.xyzfilter,1,1,sg,mg,sg,minc,maxc,tp,c)
 		sg:Merge(g)
 		i=sg:GetCount()
-	until i>=max or (i>=min and c46564767.xyzgoal(sg,tp,xyzc) and not (mg:IsExists(c46564767.xyzfilter,1,sg,mg,sg,min,max,tp,c) and Duel.SelectYesNo(tp,210)))
+	until i>=maxc or (i>=minc and c46564767.xyzgoal(sg,tp,xyzc) and not (mg:IsExists(c46564767.xyzfilter,1,sg,mg,sg,minc,maxc,tp,c) and Duel.SelectYesNo(tp,210)))
 	local tg=Group.CreateGroup()
 	for tc in aux.Next(sg) do
 		tg:Merge(tc:GetOverlayGroup())
