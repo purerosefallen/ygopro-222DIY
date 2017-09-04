@@ -28,8 +28,15 @@ function c13254119.filter3(c,e,tp,m,f,chkf)
 	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x356) and (not f or f(c))
 		and c:IsAbleToGrave() and c:CheckFusionMaterial(m,nil,chkf)
 end
+function c13254119.filter4(c)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave() and not c:IsImmuneToEffect(e)
+end
 function c13254119.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_EXTRA,0,1,nil) end
+	if chk==0 then
+		local chkf=tp
+		local mg1=Duel.GetFusionMaterial(tp)
+		local res=Duel.IsExistingMatchingCard(c13254119.filter3,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
+	return res end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_EXTRA)
 end
 function c13254119.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -42,7 +49,8 @@ function c13254119.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,tc)
 		local code=tc:GetCode()
 		local mat=Duel.SelectFusionMaterial(tp,tc,mg1)
-		if Duel.SendtoGrave(mat,REASON_EFFECT)~=0 then
+		tc:SetMaterial(mat)
+		if Duel.SendtoGrave(mat,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)~=0 then
 			Duel.BreakEffect()
 			if Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,true,true) then
 				Duel.BreakEffect()

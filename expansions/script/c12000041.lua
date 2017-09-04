@@ -68,7 +68,7 @@ function c12000041.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c12000041.thfilter(c)
-	return c:IsLevelAbove(7) and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsLevelAbove(7) and c:IsFaceup()
 end
 function c12000041.stfilter(c)
 	return c:IsSetCard(0xfbe) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
