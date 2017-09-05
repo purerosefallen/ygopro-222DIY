@@ -29,7 +29,7 @@ local e2=Effect.CreateEffect(c)
 	e2:SetTarget(c12000053.thgt)
 	e2:SetOperation(c12000053.thop)
 	c:RegisterEffect(e2)
-	local e4=e1:Clone()
+	local e4=e2:Clone()
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
