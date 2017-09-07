@@ -1,5 +1,8 @@
 --奇迹糕点 誓言皇后
 function c12000052.initial_effect(c)
+	--pendulum summon
+	aux.EnablePendulumAttribute(c)
+
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -15,7 +18,7 @@ function c12000052.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCountLimit(1,12000107)
+	e3:SetCountLimit(1,12000152)
 	e3:SetTarget(c12000052.destg)
 	e3:SetOperation(c12000052.desop)
 	c:RegisterEffect(e3)
@@ -58,7 +61,7 @@ function c12000052.spop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 			e2:SetAbsoluteRange(tp,1,0)
 			e2:SetTarget(c12000052.splimit)
-			e2:SetReset(RESET_EVENT+0x1fe0000)
+			e2:SetReset(RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END)
 			Duel.RegisterEffect(e2,tp)
 		end
 	end

@@ -30,7 +30,7 @@ function c13255222.initial_effect(c)
 	e3:SetDescription(aux.Stringid(13255222,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e3:SetCode(EVENT_REMOVE)
 	e3:SetCountLimit(1,13255222)
 	e3:SetTarget(c13255222.sptg1)
@@ -94,7 +94,7 @@ function c13255222.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13255222.spfilter1(c,e,tp)
-	return c:IsLevelBelow(1) and not c:IsCode(13255222) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(1) and c:IsFaceup() and not c:IsCode(13255222) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c13255222.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
