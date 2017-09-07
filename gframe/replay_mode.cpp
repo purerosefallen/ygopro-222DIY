@@ -138,6 +138,7 @@ int ReplayMode::ReplayThread(void* param) {
 	ReplayRefreshExtra(0);
 	ReplayRefreshExtra(1);
 	mainGame->dInfo.isStarted = true;
+	mainGame->dInfo.isFinished = false;
 	mainGame->dInfo.isReplay = true;
 	char engineBuffer[0x1000];
 	is_continuing = true;
@@ -174,10 +175,12 @@ int ReplayMode::ReplayThread(void* param) {
 		if(mainGame->wCardSelect->isVisible())
 			mainGame->HideElement(mainGame->wCardSelect);
 		mainGame->PopupElement(mainGame->wMessage);
+		mainGame->PlaySoundEffect(SOUND_INFO);
 		mainGame->gMutex.Unlock();
 		mainGame->actionSignal.Wait();
 		mainGame->gMutex.Lock();
 		mainGame->dInfo.isStarted = false;
+		mainGame->dInfo.isFinished = true;
 		mainGame->dInfo.isReplay = false;
 		mainGame->gMutex.Unlock();
 		mainGame->closeDoneSignal.Reset();
@@ -196,6 +199,7 @@ int ReplayMode::ReplayThread(void* param) {
 void ReplayMode::Restart(bool refresh) {
 	end_duel(pduel);
 	mainGame->dInfo.isStarted = false;
+	mainGame->dInfo.isFinished = false;
 	mainGame->dField.Clear();
 	//mainGame->device->setEventReceiver(&mainGame->dField);
 	cur_replay.Rewind();
@@ -325,6 +329,7 @@ bool ReplayMode::ReplayAnalyze(char* msg, unsigned int len) {
 			mainGame->gMutex.Lock();
 			mainGame->stMessage->setText(L"Error occurs.");
 			mainGame->PopupElement(mainGame->wMessage);
+			mainGame->PlaySoundEffect(SOUND_INFO);
 			mainGame->gMutex.Unlock();
 			mainGame->actionSignal.Reset();
 			mainGame->actionSignal.Wait();

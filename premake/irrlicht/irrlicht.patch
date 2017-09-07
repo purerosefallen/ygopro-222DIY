@@ -100,6 +100,23 @@ index f33b5a2..8375444 100644
  
  					if (MarkBegin == MarkEnd)
  					{
+@@ -664,6 +658,16 @@ bool CGUIEditBox::processKey(const SEvent& event)
+ 	case KEY_ESCAPE:
+ 	case KEY_TAB:
+ 	case KEY_SHIFT:
++	case KEY_LSHIFT:
++	case KEY_RSHIFT:
++	case KEY_MENU:
++	case KEY_LMENU:
++	case KEY_RMENU:
++	case KEY_LWIN:
++	case KEY_RWIN:
++	case KEY_CAPITAL:
++	case KEY_NUMLOCK:
++	case KEY_SCROLL:
+ 	case KEY_F1:
+ 	case KEY_F2:
+ 	case KEY_F3:
 diff --git a/irrlicht/src/CIrrDeviceWin32.cpp b/irrlicht/src/CIrrDeviceWin32.cpp
 index f96c178..2e7a9ee 100644
 --- a/irrlicht/src/CIrrDeviceWin32.cpp
@@ -309,3 +326,15 @@ index 3f633da..c0712df 100644
  
  	//! gets the processor speed in megahertz
  	//! \param Mhz:
+diff --git a/irrlicht/src/CGUIListBox.old.cpp b/irrlicht/src/CGUIListBox.cpp
+--- a/irrlicht/src/CGUIListBox.old.cpp	2017-09-05 04:20:28.619271300 +0800
++++ b/irrlicht/src/CGUIListBox.cpp	2017-09-05 04:11:37.367885500 +0800
+@@ -425,7 +425,7 @@
+ 				}
+ 
+ 				case EMIE_MOUSE_MOVED:
+-					if (Selecting || MoveOverSelect)
++					if (MoveOverSelect)
+ 					{
+ 						if (isPointInside(p))
+ 						{
