@@ -72,13 +72,6 @@ int main(int argc, char* argv[]) {
 			GetParameter(param, &argv[i][0]);
 			ygo::dataManager.LoadDB(param);
 			continue;
-		//modded
-		} else if(!strcmp(argv[i], "-v")) { // version
-			++i;
-			char param[128];
-			GetParameter(param, &argv[i][0]);
-			PRO_VERSION = atoi(param);
-			continue;
 		} else if(!strcmp(argv[i], "-n")) { // nickName
 			++i;
 			wchar_t param[128];

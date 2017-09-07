@@ -56,13 +56,12 @@ build:
 
 after_build:
   - ps: move bin\release\ygopro.exe .
-  - rename ygopro.exe ygopro_freever.exe
 
 test: off
 
 artifacts:
-  - path: ygopro_freever.exe
-    name: ygopro freever
+  - path: ygopro.exe
+    name: ygopro temp build
 
 cache:
   - premake-5.0.0-alpha12-windows.zip

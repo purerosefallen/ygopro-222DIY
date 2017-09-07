@@ -14,8 +14,7 @@
 #include <dirent.h>
 #endif
 
-//modded
-int PRO_VERSION = 0x133F;
+const unsigned short PRO_VERSION = 0x133F;
 
 namespace ygo {
 
@@ -68,8 +67,7 @@ bool Game::Initialize() {
 	guiFont = irr::gui::CGUITTFont::createTTFont(env, gameConf.textfont, gameConf.textfontsize);
 	textFont = guiFont;
 	smgr = device->getSceneManager();
-	//modded
-	device->setWindowCaption(L"YGOPro Freever");
+	device->setWindowCaption(L"YGOPro");
 	device->setResizable(false);
 #ifdef _WIN32
 	irr::video::SExposedVideoData exposedData = driver->getExposedVideoData();
@@ -88,7 +86,7 @@ bool Game::Initialize() {
 	//main menu
 	wchar_t strbuf[256];
 	//modded
-	myswprintf(strbuf, L"YGOPro Custom Version:%X.0%X.%X", PRO_VERSION >> 12, (PRO_VERSION >> 4) & 0xff, PRO_VERSION & 0xf);
+	myswprintf(strbuf, L"YGOPro Version:%X.0%X.%X", PRO_VERSION >> 12, (PRO_VERSION >> 4) & 0xff, PRO_VERSION & 0xf);
 	wMainMenu = env->addWindow(rect<s32>(370, 200, 650, 415), false, strbuf);
 	wMainMenu->getCloseButton()->setVisible(false);
 	btnLanMode = env->addButton(rect<s32>(10, 30, 270, 60), wMainMenu, BUTTON_LAN_MODE, dataManager.GetSysString(1200));
@@ -728,8 +726,7 @@ void Game::MainLoop() {
 			usleep(20000);
 #endif
 		if(cur_time >= 1000) {
-			//modded
-			myswprintf(cap, L"YGOPro Freever FPS: %d", fps);
+			myswprintf(cap, L"YGOPro FPS: %d", fps);
 			device->setWindowCaption(cap);
 			fps = 0;
 			cur_time -= 1000;
@@ -978,8 +975,7 @@ void Game::RefershBGMDir(std::wstring path, int scene) {
 #endif
 }
 void Game::LoadConfig() {
-	//modded
-	FILE* fp = fopen("system_freever.conf", "r");
+	FILE* fp = fopen("system.conf", "r");
 	if(!fp)
 		return;
 	char linebuf[256];
@@ -1025,9 +1021,6 @@ void Game::LoadConfig() {
 			gameConf.antialias = atoi(valbuf);
 		} else if(!strcmp(strbuf, "use_d3d")) {
 			gameConf.use_d3d = atoi(valbuf) > 0;
-		//modded
-		} else if(!strcmp(strbuf, "version")) {
-			PRO_VERSION = atoi(valbuf);
 		} else if(!strcmp(strbuf, "use_image_scale")) {
 			gameConf.use_image_scale = atoi(valbuf) > 0;
 		} else if(!strcmp(strbuf, "errorlog")) {
@@ -1108,13 +1101,10 @@ void Game::LoadConfig() {
 	fclose(fp);
 }
 void Game::SaveConfig() {
-	//modded
-	FILE* fp = fopen("system_freever.conf", "w");
+	FILE* fp = fopen("system.conf", "w");
 	fprintf(fp, "#config file\n#nickname & gamename should be less than 20 characters\n");
 	char linebuf[256];
 	fprintf(fp, "use_d3d = %d\n", gameConf.use_d3d ? 1 : 0);
-	//modded
-	fprintf(fp, "version = %d\n", PRO_VERSION);
 	fprintf(fp, "use_image_scale = %d\n", gameConf.use_image_scale ? 1 : 0);
 	fprintf(fp, "antialias = %d\n", gameConf.antialias);
 	fprintf(fp, "errorlog = %d\n", enable_log);
