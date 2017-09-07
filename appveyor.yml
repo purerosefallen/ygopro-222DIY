@@ -55,19 +55,26 @@ build:
     parallel: true
 
 after_build:
+  - git config --global user.name "Smile-DK"
+  - git config --global user.email "2236141431@qq.com"
+  - git checkout data
+
+  - del ygopro_222.exe
+  - del irrKlang.dll
+  - del ikpMP3.dll
+
   - mv bin\release\ygopro.exe .
   - rename ygopro.exe ygopro_222.exe
   - mv irrklang\bin\win32-visualStudio\irrKlang.dll .
   - mv irrklang\bin\win32-visualStudio\ikpMP3.dll .
-  - mkdir expansions
-  - mkdir sound
-  
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/ygopro-222DIY/archive/data.zip ; exit 0"
-  - 7z x ygopro-222DIY-data.zip
-  - xcopy /E ygopro-222DIY-data\expansions\* expansions
-  - xcopy /E ygopro-222DIY-data\sound\* sound
-  - xcopy /E ygopro-222DIY-data\lflist.conf .
+
   - 7z a ygopro-222DIY-data.7z ygopro_222.exe irrKlang.dll ikpMP3.dll lflist.conf expansions sound -xr!.git*
+  
+  - git add ygopro_222.exe
+  - git add irrKlang.dll
+  - git add ikpMP3.dll
+  - git commit -m "Builded by Appveyor"
+  - git push https://Smile-DK:qawsqaws1@github.com/purerosefallen/ygopro-222DIY data
 test: off
 
 artifacts:
