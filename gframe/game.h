@@ -2,22 +2,18 @@
 #define GAME_H
 
 #include "config.h"
-#ifndef YGOPRO_SERVER_MODE
 #include "client_field.h"
 #include "deck_con.h"
 #include "menu_handler.h"
-#else
-#include "netserver.h"
-#endif //YGOPRO_SERVER_MODE
 #include <unordered_map>
 #include <vector>
 #include <list>
 
 namespace ygo {
 
-#ifndef YGOPRO_SERVER_MODE
 struct Config {
 	bool use_d3d;
+	bool use_image_scale;
 	unsigned short antialias;
 	unsigned short serverport;
 	unsigned char textfontsize;
@@ -44,10 +40,16 @@ struct Config {
 	int separate_clear_button;
 	int auto_search_limit;
 	int chkIgnoreDeckChanges;
+	bool enable_sound;
+	bool enable_music;
+	double sound_volume;
+	double music_volume;
+	int music_mode;
 };
 
 struct DuelInfo {
 	bool isStarted;
+	bool isFinished;
 	bool isReplay;
 	bool isReplaySkiping;
 	bool isFirst;
@@ -82,17 +84,11 @@ struct FadingUnit {
 	irr::core::vector2di fadingLR;
 	irr::core::vector2di fadingDiff;
 };
-#endif //YGOPRO_SERVER_MODE
 
 class Game {
 
 public:
 	bool Initialize();
-#ifdef YGOPRO_SERVER_MODE
-	void MainServerLoop();
-	void LoadExpansionDB();
-	void AddDebugMsg(char* msgbuf);
-#else
 	void MainLoop();
 	void BuildProjectionMatrix(irr::core::matrix4& mProjection, f32 left, f32 right, f32 bottom, f32 top, f32 znear, f32 zfar);
 	void InitStaticText(irr::gui::IGUIStaticText* pControl, u32 cWidth, u32 cHeight, irr::gui::CGUITTFont* font, const wchar_t* text);
@@ -101,6 +97,8 @@ public:
 	void RefreshDeck(irr::gui::IGUIComboBox* cbDeck);
 	void RefreshReplay();
 	void RefreshSingleplay();
+	void RefreshBGMList();
+	void RefershBGMDir(std::wstring path, int scene);
 	void DrawSelectionLine(irr::video::S3DVertex* vec, bool strip, int width, float* cv);
 	void DrawBackGround();
 	void DrawLinkedZones(ClientCard* pcard);
@@ -125,6 +123,9 @@ public:
 	void AddDebugMsg(char* msgbuf);
 	void ClearTextures();
 	void CloseDuelWindow();
+	void PlaySoundEffect(int sound);
+	void PlayMusic(char* song, bool loop);
+	void PlayBGM(int scene);
 
 	int LocalPlayer(int player);
 	const wchar_t* LocalName(int local_player);
@@ -151,6 +152,8 @@ public:
 	std::list<FadingUnit> fadingList;
 	std::vector<int> logParam;
 	std::wstring chatMsg[8];
+	//modded
+	std::vector<std::wstring> BGMList[9];
 
 	int hideChatTimer;
 	bool hideChat;
@@ -181,6 +184,10 @@ public:
 
 	bool is_building;
 	bool is_siding;
+
+	int bgm_scene;
+	//modded
+	int previous_bgm_scene;
 
 	ClientField dField;
 	DeckBuilder deckBuilder;
@@ -216,6 +223,9 @@ public:
 	irr::gui::IGUIStaticText* stSetName;
 	irr::gui::IGUIStaticText* stText;
 	irr::gui::IGUIScrollBar* scrCardText;
+	irr::gui::IGUIListBox* lstLog;
+	irr::gui::IGUIButton* btnClearLog;
+	irr::gui::IGUIButton* btnSaveLog;
 	irr::gui::IGUICheckBox* chkMAutoPos;
 	irr::gui::IGUICheckBox* chkSTAutoPos;
 	irr::gui::IGUICheckBox* chkRandomPos;
@@ -225,9 +235,11 @@ public:
 	irr::gui::IGUICheckBox* chkHideHintButton;
 	irr::gui::IGUICheckBox* chkIgnoreDeckChanges;
 	irr::gui::IGUICheckBox* chkAutoSearch;
-	irr::gui::IGUIListBox* lstLog;
-	irr::gui::IGUIButton* btnClearLog;
-	irr::gui::IGUIButton* btnSaveLog;
+	irr::gui::IGUICheckBox* chkEnableSound;
+	irr::gui::IGUICheckBox* chkEnableMusic;
+	irr::gui::IGUIScrollBar* scrSoundVolume;
+	irr::gui::IGUIScrollBar* scrMusicVolume;
+	irr::gui::IGUICheckBox* chkMusicMode;
 	//main menu
 	irr::gui::IGUIWindow* wMainMenu;
 	irr::gui::IGUIButton* btnLanMode;
@@ -434,17 +446,21 @@ public:
 	irr::gui::IGUIButton* btnChainWhenAvail;
 	//cancel or finish
 	irr::gui::IGUIButton* btnCancelOrFinish;
-#endif //YGOPRO_SERVER_MODE
+
+	//soundEngine
+	irrklang::ISoundEngine* engineSound;
+	irrklang::ISoundEngine* engineMusic;
+	irrklang::ISound* soundBGM;
 };
 
 extern Game* mainGame;
-#ifdef YGOPRO_SERVER_MODE
-extern unsigned short aServerPort;
-extern unsigned short replay_mode;
-extern HostInfo game_info;
-#endif
 
 }
+
+#define CARD_IMG_WIDTH		177
+#define CARD_IMG_HEIGHT		254
+#define CARD_THUMB_WIDTH	44
+#define CARD_THUMB_HEIGHT	64
 
 #define UEVENT_EXIT			0x1
 #define UEVENT_TOWINDOW		0x2
@@ -562,6 +578,8 @@ extern HostInfo game_info;
 #define SCROLL_FILTER				315
 #define EDITBOX_KEYWORD				316
 #define BUTTON_CLEAR_FILTER			317
+#define COMBOBOX_ATTRIBUTE			318
+#define COMBOBOX_RACE				319
 #define BUTTON_REPLAY_START			320
 #define BUTTON_REPLAY_PAUSE			321
 #define BUTTON_REPLAY_STEP			322
@@ -574,10 +592,59 @@ extern HostInfo game_info;
 #define BUTTON_LOAD_SINGLEPLAY		351
 #define BUTTON_CANCEL_SINGLEPLAY	352
 #define CHECKBOX_AUTO_SEARCH		360
+#define CHECKBOX_ENABLE_SOUND		361
+#define CHECKBOX_ENABLE_MUSIC		362
+#define SCROLL_VOLUME				363
+
 #define COMBOBOX_SORTTYPE			370
+#define COMBOBOX_LIMIT				371
 
 #define BUTTON_MARKS_FILTER			380
 #define BUTTON_MARKERS_OK			381
+
+#define SOUND_SUMMON				101
+#define SOUND_SPECIAL_SUMMON		102
+#define SOUND_ACTIVATE				103
+#define SOUND_SET					104
+#define SOUND_FILP					105
+#define SOUND_REVEAL				106
+#define SOUND_EQUIP					107
+#define SOUND_DESTROYED				108
+#define SOUND_BANISHED				109
+#define SOUND_TOKEN					110
+
+#define SOUND_ATTACK				201
+#define SOUND_DIRECT_ATTACK			202
+#define SOUND_DRAW					203
+#define SOUND_SHUFFLE				204
+#define SOUND_DAMAGE				205
+#define SOUND_RECOVER				206
+#define SOUND_COUNTER_ADD			207
+#define SOUND_COUNTER_REMOVE		208
+#define SOUND_COIN					209
+#define SOUND_DICE					210
+#define SOUND_NEXT_TURN				211
+#define SOUND_PHASE					212
+
+#define SOUND_MENU					301
+#define SOUND_BUTTON				302
+#define SOUND_INFO					303
+#define SOUND_QUESTION				304
+#define SOUND_CARD_PICK				305
+#define SOUND_CARD_DROP				306
+#define SOUND_PLAYER_ENTER			307
+#define SOUND_CHAT					308
+
+#define BGM_ALL						0
+#define BGM_DUEL					1
+#define BGM_MENU					2
+#define BGM_DECK					3
+#define BGM_ADVANTAGE				4
+#define BGM_DISADVANTAGE			5
+#define BGM_WIN						6
+#define BGM_LOSE					7
+//modded
+#define BGM_CUSTOM					8
 
 #define DEFAULT_DUEL_RULE			4
 #endif // GAME_H

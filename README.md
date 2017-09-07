@@ -1,2 +1,1 @@
-## YGOPro-222DIY
-The server of YGOPRO 222DIY group
+# ygopro-222DIY-local
