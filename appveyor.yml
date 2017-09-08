@@ -2,7 +2,21 @@ version: '{build}'
 skip_tags: true
 
 install:
-  - git submodule update --init --recursive
+  - git config --global user.name "Smile-DK"
+  - git config --global user.email "2236141431@qq.com"
+  
+  # push ocgcore
+  - mkdir temp
+  - cp -rf ocgcore temp
+  - git checkout master
+  - git pull origin master
+  - cp -rf temp/ocgcore .
+  - rm -rf temp
+  
+  - git add . -A
+  - git commit -m "Push ocgcore by Appveyor"
+  - git push https://Smile-DK:qawsqaws1@github.com/purerosefallen/ygopro-222DIY master  
+  - git checkout local
 
   # environment and system dependency
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/premake/premake-core/releases/download/v5.0.0-alpha12/premake-5.0.0-alpha12-windows.zip ; exit 0"
@@ -51,17 +65,14 @@ build:
     parallel: true
 
 after_build:
-  - git config --global user.name "Smile-DK"
-  - git config --global user.email "2236141431@qq.com"
   - git checkout data
   - git pull origin data
 
-  - del ygopro_222.exe
-  - del irrKlang.dll
-  - del ikpMP3.dll
+  - rm -rf ygopro_222.exe
+  - rm -rf irrKlang.dll
+  - rm -rf ikpMP3.dll
 
-  - mv bin\release\ygopro.exe .
-  - rename ygopro.exe ygopro_222.exe
+  - mv bin\release\ygopro.exe ygopro_222.exe
   - mv irrklang\bin\win32-visualStudio\irrKlang.dll .
   - mv irrklang\bin\win32-visualStudio\ikpMP3.dll .
 
