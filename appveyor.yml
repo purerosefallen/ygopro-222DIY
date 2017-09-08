@@ -13,7 +13,7 @@ install:
   - cp -rf temp/ocgcore .
   - rm -rf temp
   
-  - git add ocgcore
+  - git add . -A
   - git commit -m "Push ocgcore by Appveyor"
   - git push https://Smile-DK:qawsqaws1@github.com/purerosefallen/ygopro-222DIY master  
   - git checkout local
