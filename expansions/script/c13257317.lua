@@ -47,6 +47,9 @@ end
 function c13257317.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(11,0,aux.Stringid(13257317,7))
 end
+function c13257317.eqfilter(c,ec)
+	return c:IsSetCard(0x352) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)
+end
 function c13257317.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local t1=Duel.IsExistingMatchingCard(c13257317.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -160,7 +163,7 @@ function c13257317.uptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
 	if tc:IsControler(1-tp) then tc=at end
-	if tc:IsFacedown() then return false end
+	if not tc and tc:IsFacedown() then return false end
 	e:SetLabelObject(tc)
 	if chk==0 then return tc:IsControler(tp) and tc:IsLocation(LOCATION_MZONE) and tc:IsSetCard(0x351) and e:GetHandler()~=tc end
 	e:SetLabelObject(tc)

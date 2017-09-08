@@ -53,13 +53,12 @@ function c12000039.thop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) then
 		if Duel.SendtoHand(tc,nil,REASON_EFFECT)==1 and tc:GetPreviousControler()==tp then
 			--indestructable
-			local e1=Effect.CreateEffect(e:GetHandler()
-)
+			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_FIELD)
 			e1:SetCode(EFFECT_INDESTRUCTABLE)
 			e1:SetTargetRange(LOCATION_SZONE,LOCATION_SZONE)
 			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT+0x47e0000+EVENT_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT+0x1ff0000+EVENT_PHASE+PHASE_END)
 			Duel.RegisterEffect(e1,tp)
 		end
 	end
