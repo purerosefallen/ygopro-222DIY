@@ -59,13 +59,18 @@ function c13254092.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(c13254092.rmfilter,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+	Duel.SetChainLimit(c13254092.limit(eg))
+end
+function c13254092.limit(eg)
+	return  function (e,lp,tp)
+				return not eg:IsContains(e:GetHandler())
+			end
 end
 function c13254092.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=eg:Filter(c13254092.rmfilter,nil)
 	if g:GetCount()>0 then
 		local sg=g:RandomSelect(tp,1)
-		if g:GetCount()>1 then sg=g:RandomSelect(tp,2) end
 		if Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)~=0 then
 			if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 or not c:IsRelateToEffect(e) then return end
 			Duel.BreakEffect()
@@ -85,7 +90,7 @@ function c13254092.rmtg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c13254092.rmop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c13254092.rmfilter1,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,2,nil)
+	local g=Duel.SelectMatchingCard(tp,c13254092.rmfilter1,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end

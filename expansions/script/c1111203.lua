@@ -55,7 +55,7 @@ function c1111203.con3(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1111203.tfilter3(c)
-	return c:IsAbleToHand() and c:IsType(TYPE_MONSTER) and (c:IsRace(RACE_FAIRY) or c:IsRace(RACE_PSYCHO)) and c:GetLevel()<4
+	return c:IsAbleToHand() and c:IsType(TYPE_MONSTER) and c:IsRace(RACE_FAIRY) and (c:GetLevel()==5 or c:GetLevel()==3)
 end
 function c1111203.tg3(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c1111203.tfilter3,tp,LOCATION_DECK,0,1,nil) end

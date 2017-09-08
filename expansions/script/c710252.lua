@@ -1,13 +1,6 @@
 --失落英魂-伏羲
 function c710252.initial_effect(c)
 	c:SetUniqueOnField(1,1,710252)
-	--spsummon condition
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_SINGLE)
-	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e0:SetValue(c710252.splimit)
-	c:RegisterEffect(e0)
 	--special summon rule
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -99,9 +92,6 @@ function c710252.IsRelic(c)
 end
 
 
-function c710252.splimit(e,se,sp,st)
-	return e:GetHandler():GetLocation()~=LOCATION_EXTRA
-end
 function c710252.rfilter(c,fc)
 	return (c710252.IsRelic(c) or c:IsType(TYPE_MONSTER))
 		and c:IsCanBeFusionMaterial(fc)

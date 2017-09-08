@@ -169,11 +169,7 @@ end
 function c1111402.op4(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsLocation(LOCATION_GRAVE) then
-		if Duel.SendtoDeck(c,nil,2,REASON_EFFECT)~=0 then
-			Duel.ShuffleDeck(tp)
-			Duel.BreakEffect()
-			Duel.Draw(tp,1,REASON_EFFECT)
-		end
+		Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
 	end
 end
 --

@@ -50,10 +50,10 @@ function c1111003.op1(e,tp,eg,ep,ev,re,r,rp)
 			local g=Duel.SelectMatchingCard(tp,c1111003.ofilter1,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 			if g:GetCount()>0 then
 				if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.IsExistingMatchingCard(c1111003.ofilter1x1,tp,LOCATION_DECK,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
-					Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(1110003,0))
-					local g2=Duel.SelectMatchingCard(tp,c1110003.ofilter1x1,tp,LOCATION_DECK,0,1,1,nil)
+					Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(1111003,0))
+					local g2=Duel.SelectMatchingCard(tp,c1111003.ofilter1x1,tp,LOCATION_DECK,0,1,1,nil)
 					if g2:GetCount()>0 then
-						local tc2=ge:GetFirst()
+						local tc2=g2:GetFirst()
 						Duel.MoveToField(tc2,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 					end
 				end

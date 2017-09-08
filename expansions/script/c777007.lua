@@ -114,7 +114,8 @@ function c777007.tdfilter(c)
 end
 
 function c777007.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToDeckAsCost() end
+	if chk==0 then return e:GetHandler():IsAbleToDeckAsCost() 
+		and Duel.IsExistingMatchingCard(c777007.tdfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.SendtoDeck(e:GetHandler(),nil,2,REASON_COST)
 end
 

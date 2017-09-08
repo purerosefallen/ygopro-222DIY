@@ -37,7 +37,7 @@ function c1111009.op1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoDeck(e:GetHandler(),nil,2,REASON_EFFECT)
 	end
 	local tc=e:GetLabelObject()
-	if tc and tc~=nil and ((c1111009.IsLd(tc) and tc:IsType(TYPE_MONSTER)) or tc:IsType(TYPE_SPELL)) then
+	if tc and tc~=nil and (c1111009.IsLd(tc) then
 		Duel.ConfirmCards(1-tp,tc)
 		if Duel.GetMatchingGroupCount(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)>0 and Duel.SelectYesNo(tp,aux.Stringid(1111009,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)

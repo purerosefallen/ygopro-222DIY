@@ -29,6 +29,7 @@ function c13257311.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1)
+	e3:SetCondition(c13257311.econ)
 	e3:SetOperation(c13257311.atkop)
 	c:RegisterEffect(e3)
 	--disable

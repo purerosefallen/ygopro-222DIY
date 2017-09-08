@@ -5,6 +5,7 @@ function c12000048.initial_effect(c)
 	e1:SetCategory(CATEGORY_HANDES+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,12000048)
 	e1:SetCost(c12000048.cost)
 	e1:SetTarget(c12000048.target)
 	e1:SetOperation(c12000048.activate)
@@ -35,8 +36,8 @@ function c12000048.filter(c)
 	return c:IsAbleToHand() and c:IsSetCard(0xfbe)
 end
 function c12000048.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c12000048.filter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	if chk==0 then return Duel.IsExistingMatchingCard(c12000048.filter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED)
 	Duel.SetChainLimit(c12000048.chlimit)
 end
 function c12000048.chlimit(e,ep,tp)
@@ -44,7 +45,7 @@ function c12000048.chlimit(e,ep,tp)
 end
 function c12000048.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c12000048.filter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c12000048.filter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)

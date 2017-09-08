@@ -36,7 +36,7 @@ function c1110142.initial_effect(c)
 	c:RegisterEffect(e3)
 --
 	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
+	e4:SetCategory(CATEGORY_TODECK)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
@@ -132,7 +132,7 @@ function c1110142.op2(e,tp,eg,ep,ev,re,r,rp)
 		local tc=e:GetLabelObject()
 		if tc:IsType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(c1110142.ofilter2x1,tp,0,LOCATION_ONFIELD,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(1110142,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-			local g=Duel.SelectMatchingCard(tp,c1110142.ofilter2x1,tp,0,LOCATION_ONFIELD,1,1,nil)	 
+			local g=Duel.SelectMatchingCard(tp,c1110142.ofilter2x1,tp,0,LOCATION_ONFIELD,1,1,nil)	
 			if g:GetCount()>0 then
 				local tc=g:GetFirst()
 				Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
@@ -169,10 +169,7 @@ function c1110142.op4(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c1110142.tfilter4,tp,LOCATION_REMOVED,0,1,3,nil)
 	if g:GetCount()>0 then
 		Duel.HintSelection(g)
-		if Duel.SendtoDeck(g,nil,2,REASON_EFFECT)~=0 then
-			Duel.ShuffleDeck(tp)
-			Duel.Draw(tp,1,REASON_EFFECT)
-		end
+		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 	end
 end
 --

@@ -12,15 +12,13 @@ function c13254107.initial_effect(c)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(13254107,0))
-	e2:SetCategory(CATEGORY_DRAW)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetCost(c13254107.cost)
-	e2:SetCondition(c13254107.drcon)
-	e2:SetTarget(c13254107.drtg)
-	e2:SetOperation(c13254107.drop)
+	e2:SetCondition(c13254107.thcon)
+	e2:SetTarget(c13254107.thtg)
+	e2:SetOperation(c13254107.thop)
 	c:RegisterEffect(e2)
 	--[local e3=Effect.CreateEffect(c)
 	--e3:SetDescription(1163)
@@ -61,6 +59,18 @@ function c13254107.initial_effect(c)
 	e7:SetTargetRange(1,0)
 	e7:SetTarget(c13254107.splimit)
 	c:RegisterEffect(e7)
+	local e8=Effect.CreateEffect(c)
+	e8:SetDescription(aux.Stringid(13254107,0))
+	e8:SetCategory(CATEGORY_DESTROY)
+	e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e8:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
+	e8:SetCode(EVENT_TO_GRAVE)
+	e8:SetRange(LOCATION_MZONE)
+	e8:SetCountLimit(1)
+	e8:SetCondition(c13254107.descon)
+	e8:SetTarget(c13254107.destg)
+	e8:SetOperation(c13254107.desop)
+	c:RegisterEffect(e8)
 	
 end
 function c13254107.lfilter(c)
@@ -69,30 +79,24 @@ end
 function c13254107.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end
-function c13254107.cfilter(c)
-	return c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) and (c:IsAbleToDeckAsCost() or c:IsAbleToExtraAsCost())
-end
-function c13254107.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c13254107.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
-	local cg=Duel.GetMatchingGroup(c13254107.cfilter,tp,LOCATION_GRAVE,0,nil)
-	local ct=cg:GetCount()
-	if ct>4 then ct=4 end
-	Duel.SendtoDeck(cg,nil,2,REASON_COST)
-	e:SetLabel(ct)
-end
 function c13254107.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK 
 end
-function c13254107.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
-	local ct=e:GetLabel()
-	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(ct)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct)
+function c13254107.thfilter(c)
+	return c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
-function c13254107.drop(e,tp,eg,ep,ev,re,r,rp)
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Draw(p,d,REASON_EFFECT)
+function c13254107.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c13254107.thfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c13254107.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectTarget(tp,c13254107.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
+end
+function c13254107.thop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) then
+		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+	end
 end
 function c13254107.spfilter(c,e,tp)
 	return c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
@@ -128,4 +132,23 @@ function c13254107.repop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13254107.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return not c:IsSetCard(0x356) or not c:IsType(TYPE_MONSTER)
+end
+function c13254107.cfilter(c,tp)
+	return c:IsSetCard(0x356) and c:GetPreviousControler()==tp
+end
+function c13254107.descon(e,tp,eg,ep,ev,re,r,rp)
+	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c13254107.cfilter,1,nil,tp)
+end
+function c13254107.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end
+	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+end
+function c13254107.desop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) then
+		Duel.Destroy(tc,REASON_EFFECT)
+	end
 end
