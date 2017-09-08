@@ -9,6 +9,7 @@ before_install:
 - git config --global user.name "Smile-DK"
 - git config --global user.email "2236141431@qq.com"
 script:
+- git pull origin data
 - mkdir temp
 - mkdir temp/expansions
 - cp -rf expansions/*.cdb temp/expansions
@@ -20,6 +21,7 @@ script:
 - cp -rf ygopro-7210srv/strings.conf temp
 - rm -rf ygopro-7210srv
 - git checkout master
+- git pull origin master
 - cp -rf temp/expansions .
 - cp -rf temp/cards.cdb .
 - cp -rf temp/lflist.conf .
