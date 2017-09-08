@@ -15,5 +15,9 @@
 /gframe/dirent.h
 ygopro
 premake5.exe
+
 /ygopro-7210srv
 /temp
+/*.tar.gz
+/*.tar.bz2
+/*.zip
