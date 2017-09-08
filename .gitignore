@@ -19,5 +19,7 @@ premake5.exe
 /ygopro-7210srv
 /temp
 *.tar.gz
+*.gz
 *.tar.bz2
+*.bz2
 *.zip
