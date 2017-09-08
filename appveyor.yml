@@ -52,18 +52,18 @@ after_build:
   - git config --global user.name "Smile-DK"
   - git config --global user.email "2236141431@qq.com"
   
-  - mkdir temp
-  - cp -rf ocgcore temp
-  - git checkout master
-  - git pull origin master
-  - cp -rf temp/ocgcore/*.cpp ocgcore
-  - cp -rf temp/ocgcore/*.h ocgcore
-  - rm -rf temp
+  # - mkdir temp
+  # - cp -rf ocgcore temp
+  # - git checkout master
+  # - git pull origin master
+  # - cp -rf temp/ocgcore/*.cpp ocgcore
+  # - cp -rf temp/ocgcore/*.h ocgcore
+  # - rm -rf temp
   
-  - git add ocgcore -A
-  - git commit -m "Pushed ocgcore by Appveyor" > dump
-  - rm -rf dump
-  - git push https://Smile-DK:qawsqaws1@github.com/purerosefallen/ygopro-222DIY master 
+  # - git add ocgcore -A
+  # - git commit -m "Pushed ocgcore by Appveyor" > dump
+  # - rm -rf dump
+  # - git push https://Smile-DK:qawsqaws1@github.com/purerosefallen/ygopro-222DIY master 
   
   - git checkout data
   - git pull origin data
