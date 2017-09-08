@@ -40,7 +40,7 @@ function c1111502.con2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c1111502.confilter2,tp,LOCATION_MZONE,0,1,nil)
 end
 function c1111502.filter2(c,e,tp)
-	return c:GetLevel()<4 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetLevel()==3 and c:IsRace(RACE_FAIRY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c1111502.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

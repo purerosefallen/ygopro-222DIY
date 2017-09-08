@@ -4,7 +4,7 @@ function c1110003.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,1110003)
 	e1:SetTarget(c1110003.tg1)
 	e1:SetOperation(c1110003.op1)
@@ -44,12 +44,12 @@ function c1110003.filter1(c,e,tp)
 end
 function c1110003.tg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(c1110003.filter1,tp,LOCATION_MZONE,0,1,nil,e,tp) and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,LOCATION_HAND+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,LOCATION_HAND)
 end
 --
 function c1110003.op1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsLocation(LOCATION_HAND+LOCATION_GRAVE) then
+	if c:IsRelateToEffect(e) and c:IsLocation(LOCATION_HAND) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 		if Duel.SelectYesNo(tp,aux.Stringid(1110003,1)) then
 			local e3=Effect.CreateEffect(c)

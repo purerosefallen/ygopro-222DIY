@@ -60,6 +60,10 @@ function c710239.initial_effect(c)
 	e7:SetCode(EFFECT_EQUIP_LIMIT)
 	e7:SetValue(1)
 	c:RegisterEffect(e7)
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_EQUIP)
+	e8:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
+	c:RegisterEffect(e8)
 end
 
 c710239.is_named_with_Relic=1
@@ -134,7 +138,7 @@ function c710239.spfilter(c)
 end
 function c710239.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,710239,c710239.spfilter,0x11,0,2400,5,RACE_WARRIOR,ATTRIBUTE_WIND) 
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,710239,c710239.spfilter,0x1011,0,2400,5,RACE_WARRIOR,ATTRIBUTE_WIND) 
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
@@ -157,3 +161,6 @@ function c710239.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
+function c710239.acon(e)
+	return e:GetOwner():IsHasCardTarget(e:GetHandler()) and e:GetHandlerPlayer()==e:GetLabel()
+end

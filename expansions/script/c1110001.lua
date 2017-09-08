@@ -58,10 +58,10 @@ function c1110001.op1(e,tp,eg,ep,ev,re,r,rp)
 			if c:IsRelateToEffect(e) then
 				if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
 					Duel.BreakEffect()
-					local g=Duel.GetMatchingGroup(c1110001.ofilter1,tp,LOCATION_GRAVE+LOCATION_DECK,0,nil)  
+					local g=Duel.GetMatchingGroup(c1110001.ofilter1,tp,LOCATION_DECK,0,nil)  
 					if g:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(1110001,0)) then  
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-						local g2=Duel.SelectMatchingCard(tp,c1110001.ofilter1,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,1,nil)
+						local g2=Duel.SelectMatchingCard(tp,c1110001.ofilter1,tp,LOCATION_DECK,0,1,1,nil)
 						if g2:GetCount()>0 then
 							if Duel.SSet(tp,g2)~=0 then
 								Duel.ConfirmCards(1-tp,g2)

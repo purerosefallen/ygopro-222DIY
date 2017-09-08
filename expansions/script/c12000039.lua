@@ -39,29 +39,20 @@ function c12000039.initial_effect(c)
 	
 end
 function c12000039.tfilter(c)
-	return c:IsSetCard(0xfbe) and c:IsType(TYPE_TOKEN)
+	return  c:IsAbleToHand()
 end
 function c12000039.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsAbleToHand() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c12000039.tfilter,tp,LOCATION_MZONE,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,c12000039.tfilter,tp,LOCATION_MZONE,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c12000039.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		if Duel.SendtoHand(tc,nil,REASON_EFFECT)==1 and tc:GetPreviousControler()==tp then
-			--indestructable
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_FIELD)
-			e1:SetCode(EFFECT_INDESTRUCTABLE)
-			e1:SetTargetRange(LOCATION_SZONE,LOCATION_SZONE)
-			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT+0x1ff0000+EVENT_PHASE+PHASE_END)
-			Duel.RegisterEffect(e1,tp)
+		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		end
-	end
 end
 function c12000039.costfilter(c,ft,tp)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsFaceup() and c:IsAbleToDeckAsCost() and (ft>0 or (c:IsControler(tp) and c:IsLocation(LOCATION_SZONE)))

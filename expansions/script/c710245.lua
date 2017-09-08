@@ -9,7 +9,7 @@ function c710245.initial_effect(c)
 	e1:SetTarget(c710245.thtg)
 	e1:SetOperation(c710245.thop)
 	c:RegisterEffect(e1)
-	--tohand
+	--epuip
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetType(EFFECT_TYPE_QUICK_O)

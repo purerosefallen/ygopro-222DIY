@@ -46,7 +46,7 @@ function c13254091.cfilter(c)
 	return c:IsSetCard(0x356) and c:IsDiscardable() and c:IsType(TYPE_MONSTER)
 end
 function c13254091.posfilter(c,tp)
-	return c:IsFaceup() and c:GetSummonPlayer()~=tp and c:IsCanTurnSet()
+	return c:IsFaceup() and c:GetSummonPlayer()~=tp and c:IsAttackPos()
 end
 function c13254091.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -63,14 +63,14 @@ function c13254091.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c13254091.postg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
-	if chk==0 then return rp==1-tp and tc:IsFaceup() and tc:IsCanTurnSet() and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return rp==1-tp and tc:IsFaceup() and tc:IsAttackPos() and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetTargetCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c13254091.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)~=0 then
+	if Duel.ChangePosition(g,POS_FACEUP_DEFENSE)~=0 then
 		--local og=Duel.GetOperatedGroup()
 		--local tc=og:GetFirst()
 		--while tc do

@@ -96,9 +96,9 @@ function c1110121.filter4(c)
 end
 function c1110121.op4(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.Remove(c,POS_FACEUP,REASON_EFFECT)~=0 and Duel.IsExistingMatchingCard(c1110121.filter4,tp,LOCATION_REMOVED+LOCATION_GRAVE,0,1,nil) then
+	if Duel.Remove(c,POS_FACEUP,REASON_EFFECT)~=0 and Duel.IsExistingMatchingCard(c1110121.filter4,tp,LOCATION_REMOVED,0,1,nil) then
 		Duel.BreakEffect()
-		local g=Duel.SelectMatchingCard(tp,c1110121.filter4,tp,LOCATION_REMOVED+LOCATION_GRAVE,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,c1110121.filter4,tp,LOCATION_REMOVED,0,1,1,nil)
 		tc=g:GetFirst()
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
