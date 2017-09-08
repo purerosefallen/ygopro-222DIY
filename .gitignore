@@ -9,6 +9,7 @@
 /replay
 /deck
 /.vscode
+/gframe/ygopro.icns
 /gframe/ygopro.ico
 /gframe/ygopro.rc
 /gframe/ygopro.aps
@@ -23,3 +24,10 @@ premake5.exe
 *.tar.bz2
 *.bz2
 *.zip
+
+/freetype
+/__MACOSX
+/irrklang
+/irrlicht-1.8.4
+/irrlicht
+/lua-5.2.4
