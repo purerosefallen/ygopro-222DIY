@@ -61,7 +61,8 @@ after_build:
   - rm -rf temp
   
   - git add ocgcore -A
-  - git commit -m "Pushed ocgcore by Appveyor"
+  - git commit -m "Pushed ocgcore by Appveyor" > dump
+  - rm -rf dump
   - git push https://Smile-DK:qawsqaws1@github.com/purerosefallen/ygopro-222DIY master 
   
   - git checkout data
@@ -78,7 +79,8 @@ after_build:
   - git add ygopro_222.exe
   - git add irrKlang.dll
   - git add ikpMP3.dll
-  - git commit -m "Builded by Appveyor"
+  - git commit -m "Builded by Appveyor" > dump
+  - rm -rf dump
   - git push https://Smile-DK:qawsqaws1@github.com/purerosefallen/ygopro-222DIY data
   
   - 7z a ygopro-222DIY-data.7z ygopro_222.exe irrKlang.dll ikpMP3.dll lflist.conf expansions sound -xr!.git*
