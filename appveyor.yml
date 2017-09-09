@@ -19,6 +19,7 @@ install:
  - rm -rf temp
  - git add . -A
  - git commit -m "Push by Appveyor"
+ - git tag NoBuild HEAD
  - git push https://Smile-DK:qawsqaws1@github.com/purerosefallen/ygopro-222DIY master
 
 after_build:
