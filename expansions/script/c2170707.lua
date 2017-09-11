@@ -8,9 +8,14 @@ function c2170707.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_END_PHASE+TIMING_EQUIP)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,2170707+EFFECT_COUNT_CODE_OATH)
+	e1:SetCost(c2170707.cost)
 	e1:SetTarget(c2170707.target)
 	e1:SetOperation(c2170707.activate)
 	c:RegisterEffect(e1)
+end
+function c2170707.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.CheckLPCost(tp,2000) end
+	Duel.PayLPCost(tp,2000)
 end
 function c2170707.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsDestructable()
@@ -20,16 +25,19 @@ function c2170707.cffilter(c)
 end
 function c2170707.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and c2170707.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c2170707.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) 
+	if chk==0 then return Duel.IsExistingTarget(c2170707.filter,tp,0,LOCATION_ONFIELD,1,nil) 
 		and Duel.IsExistingMatchingCard(c2170707.cffilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	local rt=Duel.GetTargetCount(c2170707.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local rt=Duel.GetTargetCount(c2170707.filter,tp,0,LOCATION_ONFIELD,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local cg=Duel.SelectMatchingCard(tp,c2170707.cffilter,tp,LOCATION_HAND,0,1,99,e:GetHandler())
 	Duel.ConfirmCards(1-tp,cg)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c2170707.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,0,cg:GetCount(),nil)
+	local g=Duel.SelectTarget(tp,c2170707.filter,tp,0,LOCATION_ONFIELD,0,cg:GetCount(),nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 	Duel.ShuffleHand(tp)
+	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+		Duel.SetChainLimit(aux.FALSE)
+	end
 end
 function c2170707.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
