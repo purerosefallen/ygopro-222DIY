@@ -14,7 +14,7 @@ function c2170708.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c2170708.sdfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x211)
+	return c:IsFaceup() and c:IsSetCard(0x211) and c:IsType(TYPE_SPELL)
 end
 function c2170708.sdcon(e)
 	return Duel.IsExistingMatchingCard(c2170708.sdfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,2,e:GetHandler())

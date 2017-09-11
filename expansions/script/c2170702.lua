@@ -33,9 +33,9 @@ function c2170702.spfilter(c)
 end
 function c2170702.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c2170702.spfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c2170702.spfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c2170702.spfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c2170702.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
