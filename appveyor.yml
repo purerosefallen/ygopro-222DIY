@@ -17,13 +17,12 @@ install:
  - git pull origin master
  - cp -rf temp/* .
  - rm -rf temp
-
-build:
- script:
  - git add . -A
  - git commit -m "Push by Appveyor"
  - git tag NoBuild HEAD
  - git push %Smile%purerosefallen/ygopro-222DIY master
+
+build: off
 
 after_build:
 
