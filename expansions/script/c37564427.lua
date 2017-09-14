@@ -2,6 +2,7 @@
 local m=37564427
 local cm=_G["c"..m]
 xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
+cm.Senya_name_with_prism=true
 function cm.initial_effect(c)
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_SEASERPENT),2,2)
 	c:EnableReviveLimit()

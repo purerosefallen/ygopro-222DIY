@@ -29,9 +29,9 @@ function cm.rfilter(c,e)
 	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsAbleToDeck()
 end
 function cm.sfilter(c,e,tp,g)
-	return Senya.check_set_prism(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (not g or cm.scheck(g,c))
+	return Senya.check_set_prism(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (not g or cm.scheck(g,c,tp))
 end
-function cm.scheck(g,c)
+function cm.scheck(g,c,tp)
 	if c:IsLocation(LOCATION_EXTRA) then return Duel.GetLocationCountFromEx(tp,tp,g,c)>0 end
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)+g:GetCount()>0
 end
