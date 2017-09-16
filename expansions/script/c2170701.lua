@@ -9,9 +9,6 @@ function c2170701.initial_effect(c)
 	e2:SetTarget(c2170701.shtg)
 	e2:SetOperation(c2170701.shop)
 	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e3)
 	--destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(2170701,1))
@@ -43,12 +40,12 @@ function c2170701.cfilter(c)
 	return c:IsSetCard(0x211) and c:IsDiscardable()
 end
 function c2170701.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) end
+	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) end
 	if chk==0 then return Duel.IsExistingMatchingCard(c2170701.cfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	Duel.DiscardHand(tp,c2170701.cfilter,1,1,REASON_COST+REASON_DISCARD)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g2=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local g2=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g2,1,0,0)
 end
 function c2170701.desop(e,tp,eg,ep,ev,re,r,rp)

@@ -16,35 +16,49 @@ function c10114010.initial_effect(c)
 	c:RegisterEffect(e1) 
 	--disable search
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_CANNOT_TO_HAND)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(c10114010.incon)
-	e2:SetTargetRange(0,LOCATION_DECK)
-	c:RegisterEffect(e2)  
+	e2:SetDescription(aux.Stringid(10114010,2))
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetCountLimit(1,10114010)
+	e2:SetCondition(c10114010.dscon)
+	e2:SetOperation(c10114010.dsop)
+	c:RegisterEffect(e2)
 	--fuck then condition
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetOperation(c10114010.spop2)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3) 
+	c10114010.specialsummon_effect=e2   
 end
-
+function c10114010.dscon(e,tp,eg,ep,ev,re,r,rp)
+	return re and re:GetHandler():IsSetCard(0x3331)
+end
+function c10114010.dsop(e,tp,eg,ep,ev,re,r,rp)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CANNOT_TO_HAND)
+	e1:SetTargetRange(0,LOCATION_DECK)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)  
+	local e2=Effect.CreateEffect(e:GetHandler())
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetCode(EFFECT_CANNOT_DRAW)
+	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetTargetRange(0,1)
+	Duel.RegisterEffect(e2,tp) 
+end
 function c10114010.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if re and re:GetHandler():IsSetCard(0x3331) then
 	   c:RegisterFlagEffect(10114010,RESET_EVENT+0x1ff0000,0,1)
 	end
-	c:RegisterFlagEffect(10114110,RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END,0,1)
 end
-
-function c10114010.incon(e)
-	return e:GetHandler():GetFlagEffect(10114010)>0
-end
-
 function c10114010.spcon(e)
-	return (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2) and e:GetHandler():GetFlagEffect(10114110)==0  
+	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2 
 end
 function c10114010.filter(c,e,tp,count)
 	return ((c:IsLevelBelow(7) and count==1) or ((e:GetLabel()==1 or e:GetHandler():GetFlagEffect(10114010)>0) and c:GetLevel()==4 and count==2)) and c:IsSetCard(0x3331) and not c:IsCode(10114010) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

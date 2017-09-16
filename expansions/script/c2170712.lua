@@ -17,6 +17,13 @@ function c2170712.initial_effect(c)
 	e3:SetTarget(c2170712.target)
 	e3:SetOperation(c2170712.operation)
 	c:RegisterEffect(e3)
+	--cannot special summon
+	local e1=Effect.CreateEffect(c)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e1:SetValue(aux.FALSE)
+	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(2170712,1))
@@ -77,16 +84,38 @@ end
 function c2170712.filter(c)
 	return c:IsSetCard(0x211) and c:IsType(TYPE_SPELL) and c:IsDiscardable()
 end
-function c2170712.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
-	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(2)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
+function c2170712.tgfilter(c,e)
+	return c:IsCanBeEffectTarget(e)
+end
+function c2170712.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chk==0 then
+		if chkc then return chkc:IsOnField() end
+		if e:GetLabel()==1 then
+			e:SetLabel(0)
+			local rg=Duel.GetReleaseGroup(tp)
+			local dg=Duel.GetMatchingGroup(c2170712.tgfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler(),e)
+			local res=rg:IsExists(c2170712.costfilter,1,e:GetHandler(),e,dg)
+			return res
+		else
+			return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,e:GetHandler())
+		end
+	end
+	if e:GetLabel()==1 then
+		e:SetLabel(0)
+		local rg=Duel.GetReleaseGroup(tp)
+		local dg=Duel.GetMatchingGroup(c2170712.tgfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler(),e)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+		local sg=rg:FilterSelect(tp,c2170712.costfilter,1,1,e:GetHandler(),e,dg)
+		Duel.Release(sg,REASON_COST)
+	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,2,e:GetHandler())
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function c2170712.operation(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Draw(p,d,REASON_EFFECT)
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
+	Duel.Destroy(sg,REASON_EFFECT)
 	Duel.BreakEffect()
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end

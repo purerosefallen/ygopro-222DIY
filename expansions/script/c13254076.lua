@@ -22,6 +22,10 @@ function c13254076.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCondition(c13254076.drcon1)
 	c:RegisterEffect(e3)
+	local e4=e2:Clone()
+	e4:SetCode(EVENT_LEAVE_FIELD)
+	e4:SetCondition(c13254076.drcon2)
+	c:RegisterEffect(e4)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_DELAY)
@@ -37,6 +41,9 @@ function c13254076.drcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13254076.drcon1(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_FUSION 
+end
+function c13254076.drcon2(e,tp,eg,ep,ev,re,r,rp)
+	return true
 end
 function c13254076.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

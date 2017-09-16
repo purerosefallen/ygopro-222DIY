@@ -17,14 +17,14 @@ function c10114006.initial_effect(c)
 	--Remove
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(10114006,1))
-	e2:SetCategory(CATEGORY_REMOVE)
+	e2:SetCategory(CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCountLimit(1,10114006)
-	e2:SetCondition(c10114006.rmcon)
-	e2:SetTarget(c10114006.rmtg)
-	e2:SetOperation(c10114006.rmop)
+	e2:SetCondition(c10114006.tdcon)
+	e2:SetTarget(c10114006.tdtg)
+	e2:SetOperation(c10114006.tdop)
 	c:RegisterEffect(e2)   
 	--fuck condition
 	local e0=Effect.CreateEffect(c)
@@ -32,7 +32,8 @@ function c10114006.initial_effect(c)
 	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e0:SetOperation(c10114006.spop2)
-	c:RegisterEffect(e0)   
+	c:RegisterEffect(e0)  
+	c10114006.specialsummon_effect=e2 
 end
 function c10114006.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -71,21 +72,18 @@ function c10114006.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
-function c10114006.rmcon(e,tp,eg,ep,ev,re,r,rp)
+function c10114006.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:GetHandler():IsSetCard(0x3331)
 end
-
-function c10114006.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c10114006.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,0,LOCATION_GRAVE)
 end
-
-function c10114006.rmop(e,tp,eg,ep,ev,re,r,rp,chk)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil)
+function c10114006.tdop(e,tp,eg,ep,ev,re,r,rp,chk)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(Card.IsAbleToDeck),tp,LOCATION_GRAVE,LOCATION_GRAVE,1,3,nil)
 	if g:GetCount()>0 then
 		Duel.HintSelection(g)
-		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 	end
 end

@@ -32,7 +32,8 @@ function c10114001.initial_effect(c)
 	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e0:SetOperation(c10114001.spop2)
-	c:RegisterEffect(e0)   
+	c:RegisterEffect(e0)
+	c10114001.specialsummon_effect=e2
 end
 function c10114001.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -75,7 +76,7 @@ function c10114001.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:GetHandler():IsSetCard(0x3331)
 end
 function c10114001.thfilter(c)
-	return c:IsSetCard(0x3331) and c:IsAbleToHand() 
+	return c:IsSetCard(0x3331) and (c:IsAbleToHand() or (c:IsType(TYPE_SPELL) and c:IsSSetable()))
 end
 function c10114001.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
@@ -83,9 +84,13 @@ function c10114001.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c10114001.thop(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c10114001.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
+	local tc=Duel.SelectMatchingCard(tp,c10114001.thfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
+	if not tc then return end
+	local setable=tc:IsType(TYPE_SPELL) and tc:IsSSetable()
+	if setable and (not tc:IsAbleToHand() or  Duel.SelectYesNo(tp,aux.Stringid(10114001,2))) then
+	   Duel.SSet(tp,tc)
+	else
+	   Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
+	Duel.ConfirmCards(1-tp,tc)
 end

@@ -13,45 +13,51 @@ function c10114007.initial_effect(c)
 	e1:SetCost(c10114007.spcost)
 	e1:SetTarget(c10114007.sptg)
 	e1:SetOperation(c10114007.spop)
-	c:RegisterEffect(e1) 
-	-- atkdef
+	c:RegisterEffect(e1)
+	--atkdef
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x3331))
-	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetValue(300)
+	e2:SetDescription(aux.Stringid(10114007,1))
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetCountLimit(1,10114007)
 	e2:SetCondition(c10114007.adcon)
-	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EFFECT_UPDATE_DEFENSE)
-	c:RegisterEffect(e3)
+	e2:SetOperation(c10114007.adop)
+	c:RegisterEffect(e2)  
 	--fuck then condition
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e4:SetOperation(c10114007.spop2)
-	c:RegisterEffect(e4)	  
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetOperation(c10114007.spop2)
+	c:RegisterEffect(e3) 
+	c10114007.specialsummon_effect=e2   
 end
-
+function c10114007.adcon(e,tp,eg,ep,ev,re,r,rp)
+	return re and re:GetHandler():IsSetCard(0x3331)
+end
+function c10114007.adop(e,tp,eg,ep,ev,re,r,rp)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x3331))
+	e1:SetTargetRange(LOCATION_MZONE,0)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetValue(350)
+	Duel.RegisterEffect(e1,tp)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_UPDATE_DEFENSE)
+	Duel.RegisterEffect(e2,tp)
+end
 function c10114007.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if re and re:GetHandler():IsSetCard(0x3331) then
 	   c:RegisterFlagEffect(10114007,RESET_EVENT+0x1ff0000,0,1)
 	end
-	c:RegisterFlagEffect(10114107,RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END,0,1)
 end
-
-function c10114007.adcon(e)
-	return e:GetHandler():GetFlagEffect(10114007)>0
-end
-
 function c10114007.spcon(e)
-	return (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2) and e:GetHandler():GetFlagEffect(10114107)==0  
+	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
-
 function c10114007.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
 	return true

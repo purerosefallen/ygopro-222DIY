@@ -11,13 +11,18 @@ function c2170710.initial_effect(c)
 	e1:SetDescription(aux.Stringid(2170710,0))
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_PZONE)
-	e1:SetCountLimit(1,21707121)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x1e0)
-	e1:SetTarget(c2170710.destg)
-	e1:SetOperation(c2170710.desop)
+	e1:SetCountLimit(1,21707101)
+	e1:SetTarget(c2170710.thtg)
+	e1:SetOperation(c2170710.thop)
+	c:RegisterEffect(e1)
+	--cannot special summon
+	local e1=Effect.CreateEffect(c)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
@@ -72,25 +77,37 @@ function c2170710.penop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c2170710.filter(c)
-	return c:IsSetCard(0x211) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x211) and c:IsAbleToHand()
 end
-function c2170710.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(c2170710.filter,tp,LOCATION_GRAVE,0,1,nil)
-		and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g1=Duel.SelectTarget(tp,c2170710.filter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g2=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
-	g1:Merge(g2)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,2,0,0)
+function c2170710.thfilter(c)
+	return c:IsAbleToHand()
 end
-function c2170710.desop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tg=g:Filter(Card.IsRelateToEffect,nil,e)
-	if tg:GetCount()>0 then
-		Duel.SendtoHand(tg,nil,REASON_EFFECT)
+function c2170710.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return (chkc:IsLocation(LOCATION_ONFIELD) and c2170710.thfilter(chkc)) or (chkc:IsLocation(LOCATION_GRAVE) and c2170710.filter(chkc)) end
+	if chk==0 then return Duel.IsExistingTarget(c2170710.thfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) or Duel.IsExistingTarget(c2170710.filter,tp,LOCATION_GRAVE,0,1,nil) end
+	local b1=Duel.IsExistingTarget(c2170710.thfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	local b2=Duel.IsExistingTarget(c2170710.thfilter,tp,LOCATION_GRAVE,0,1,nil)
+	local op=0
+	if b1 and b2 then
+		op=Duel.SelectOption(tp,aux.Stringid(2170710,2),aux.Stringid(2170710,1))
+	elseif b1 and not b2 then
+		op=0
+	elseif b2 and not b1 then
+		op=1
+	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+	local g=nil
+	if op==0 then
+		g=Duel.SelectTarget(tp,c2170710.thfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	elseif op==1 then
+		g=Duel.SelectTarget(tp,c2170710.filter,tp,LOCATION_GRAVE,0,1,1,nil)
+	end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
+end
+function c2170710.thop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) then
+		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.BreakEffect()
 		Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 	end

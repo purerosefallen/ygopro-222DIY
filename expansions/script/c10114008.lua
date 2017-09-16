@@ -14,39 +14,54 @@ function c10114008.initial_effect(c)
 	e1:SetTarget(c10114008.sptg)
 	e1:SetOperation(c10114008.spop)
 	c:RegisterEffect(e1) 
-	--cannot be target
+	--lv
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(c10114008.ctcon)
-	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x3331))
-	e2:SetValue(aux.tgval)
-	c:RegisterEffect(e2) 
+	e2:SetDescription(aux.Stringid(10114008,1))
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetCountLimit(1,10114008)
+	e2:SetCondition(c10114008.lvcon)
+	e2:SetTarget(c10114008.lvtg)
+	e2:SetOperation(c10114008.lvop)
+	c:RegisterEffect(e2)  
 	--fuck then condition
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetOperation(c10114008.spop2)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)  
+	c10114008.specialsummon_effect=e2   
 end
-
+function c10114008.lvcon(e,tp,eg,ep,ev,re,r,rp)
+	return re and re:GetHandler():IsSetCard(0x3331)
+end
+function c10114008.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.Hint(HINT_SELECTMSG,tp,567)
+	local lv=Duel.AnnounceNumber(tp,4,5,6,7)
+	Duel.SetTargetParam(lv)
+end
+function c10114008.lvop(e,tp,eg,ep,ev,re,r,rp)
+	local lv=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CHANGE_LEVEL_FINAL)
+	e1:SetReset(RESET_PHASE+PHASE_END,2)
+	e1:SetTargetRange(LOCATION_MZONE,0)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x3331))
+	e1:SetValue(lv)
+	Duel.RegisterEffect(e1,tp)
+end
 function c10114008.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if re and re:GetHandler():IsSetCard(0x3331) then
 	   c:RegisterFlagEffect(10114008,RESET_EVENT+0x1ff0000,0,1)
 	end
-	c:RegisterFlagEffect(10114108,RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END,0,1)
 end
-
-function c10114008.ctcon(e)
-	return e:GetHandler():GetFlagEffect(10114008)>0
-end
-
 function c10114008.spcon(e)
-	return (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2) and e:GetHandler():GetFlagEffect(10114108)==0   
+	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function c10114008.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)

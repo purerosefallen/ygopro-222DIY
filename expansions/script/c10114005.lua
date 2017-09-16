@@ -14,17 +14,17 @@ function c10114005.initial_effect(c)
 	e1:SetTarget(c10114005.sptg)
 	e1:SetOperation(c10114005.spop)
 	c:RegisterEffect(e1) 
-	--SendtoGrave
+	--remove
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(10114005,1))
-	e2:SetCategory(CATEGORY_TOGRAVE)
+	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCountLimit(1,10114005)
-	e2:SetCondition(c10114005.sgcon)
-	e2:SetTarget(c10114005.sgtg)
-	e2:SetOperation(c10114005.sgop)
+	e2:SetCondition(c10114005.rmcon)
+	e2:SetTarget(c10114005.rmtg)
+	e2:SetOperation(c10114005.rmop)
 	c:RegisterEffect(e2)   
 	--fuck condition
 	local e0=Effect.CreateEffect(c)
@@ -32,7 +32,8 @@ function c10114005.initial_effect(c)
 	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e0:SetOperation(c10114005.spop2)
-	c:RegisterEffect(e0)   
+	c:RegisterEffect(e0)
+	c10114005.specialsummon_effect=e2
 end
 function c10114005.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -71,23 +72,16 @@ function c10114005.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
-function c10114005.sgcon(e,tp,eg,ep,ev,re,r,rp)
+function c10114005.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:GetHandler():IsSetCard(0x3331)
 end
-
-function c10114005.sgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c10114005.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,3,1-tp,LOCATION_DECK)
 end
-
-function c10114005.sgfilter(c)
-	return c:IsFacedown() and c:IsAbleToGrave()
-end
-
-function c10114005.sgop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c10114005.sgfilter,tp,0,LOCATION_EXTRA,nil)
-	if g:GetCount()==0 then return end
-	local sg=g:RandomSelect(tp,1)
-	Duel.SendtoGrave(sg,REASON_EFFECT)
+function c10114005.rmop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)==0 then return end
+	local g=Duel.GetDecktopGroup(1-tp,3)
+	Duel.DisableShuffleCheck()
+	Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
 end

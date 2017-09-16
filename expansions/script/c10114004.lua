@@ -32,7 +32,8 @@ function c10114004.initial_effect(c)
 	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e0:SetOperation(c10114004.spop2)
-	c:RegisterEffect(e0)   
+	c:RegisterEffect(e0)
+	c10114004.specialsummon_effect=e2
 end
 function c10114004.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -32,7 +32,8 @@ function c10114002.initial_effect(c)
 	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e0:SetOperation(c10114002.spop2)
-	c:RegisterEffect(e0)   
+	c:RegisterEffect(e0) 
+	c10114002.specialsummon_effect=e2
 end
 function c10114002.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -84,19 +85,23 @@ function c10114002.spgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_HAND)
 end
-
 function c10114002.spgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local gc=Duel.SelectMatchingCard(tp,c10114002.spgfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,1,nil,e,tp):GetFirst()
-	if gc and not gc:IsHasEffect(EFFECT_NECRO_VALLEY) and Duel.SpecialSummon(gc,0,tp,tp,false,false,POS_FACEUP)>0 then
-		--cannot trigger
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CANNOT_TRIGGER)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
-		gc:RegisterEffect(e1,true)
+	local tc=Duel.SelectMatchingCard(tp,c10114002.spgfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
+	if tc then
+		if tc:IsHasEffect(EFFECT_NECRO_VALLEY) and Duel.IsChainDisablable(0) then
+			Duel.NegateEffect(0)
+			return
+		end
+		if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
+		   --cannot trigger
+		   local e1=Effect.CreateEffect(c)
+		   e1:SetType(EFFECT_TYPE_SINGLE)
+		   e1:SetCode(EFFECT_CANNOT_TRIGGER)
+		   e1:SetReset(RESET_EVENT+0x1fe0000)
+		   tc:RegisterEffect(e1,true)
+		end
 	end
 end
-
