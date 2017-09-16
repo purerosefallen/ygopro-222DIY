@@ -34,12 +34,12 @@ function c10113017.drop(e,tp,eg,ep,ev,re,r,rp)
     Duel.Draw(p,d,REASON_EFFECT)
 end
 function c10113017.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c10113017.cfilter2,tp,LOCATION_REMOVED,0,2,nil) end
+    if chk==0 then return Duel.IsExistingMatchingCard(c10113017.dcfilter,tp,LOCATION_REMOVED,0,2,nil) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-    local rg=Duel.SelectMatchingCard(tp,c10113017.cfilter,tp,LOCATION_REMOVED,0,2,2,nil)
+    local rg=Duel.SelectMatchingCard(tp,c10113017.dcfilter,tp,LOCATION_REMOVED,0,2,2,nil)
     Duel.SendtoDeck(rg,nil,2,REASON_COST)
 end
-function c10113017.cfilter2(c)
+function c10113017.dcfilter(c)
     return c:IsCode(10113017) and c:IsAbleToDeckAsCost() and c:IsFaceup()
 end
 function c10113017.cost(e,tp,eg,ep,ev,re,r,rp,chk)
