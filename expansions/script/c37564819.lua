@@ -24,7 +24,7 @@ function cm.effect_operation_3L(c,ctlm)
 end
 function cm.flimit(gc)
 	return function(tp,g,fc)
-		return not g:IsExists(Senya.NOT(Senya.check_set_3L),1,gc)
+		return not g:IsExists(Senya.NOT(Senya.check_fusion_set_3L),1,gc)
 	end
 end
 function cm.fcheck(c,m,gc,chkf)

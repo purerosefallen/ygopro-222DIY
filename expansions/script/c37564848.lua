@@ -50,7 +50,7 @@ function cm.mfilter(c)
 	return c:IsAbleToRemove() and Senya.check_set_3L(c)
 end
 function cm.flimit(tp,g,fc)
-	return not g:IsExists(Senya.NOT(Senya.check_set_3L),1,nil)
+	return not g:IsExists(Senya.NOT(Senya.check_fusion_set_3L),1,nil)
 end
 function cm.fcheck(c,mg,chkf)
 	aux.FCheckAdditional=cm.flimit

@@ -28,7 +28,7 @@ end
 function c13254094.filter4(c,e)
 	return c:IsFaceup() and c:IsCanBeFusionMaterial()
 end
-function c13254094.filter5(c)
+function c13254094.filter5(c,e)
 	return c:IsFaceup() and c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e)
 end
 function c13254094.target(e,tp,eg,ep,ev,re,r,rp,chk)

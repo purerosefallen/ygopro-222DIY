@@ -1739,7 +1739,7 @@ function cm.Fusion_3L(c,mf,f,min,max,myon,sub)
 	e1:SetOperation(cm.FusionOperation_3L(mf,f,min,max,myon,sub))
 	c:RegisterEffect(e1)
 end
-function cm.MyonCheckFilter(c,ec,chkfnf,myon)
+function cm.MyonCheckFilter(c,ec,myon)
 	return (c:IsHasEffect(37564841) or myon) and c:IsFaceup() and c:IsCanBeFusionMaterial(ec)
 end
 function cm.FusionFilter_3L(c,fc,mf,sub)
@@ -1747,6 +1747,7 @@ function cm.FusionFilter_3L(c,fc,mf,sub)
 end
 function cm.FusionCheck_3L(g,min,tp,fc,f,chkf,sub)
 		--check sayuri_3L
+	if not Senya.master_rule_3_flag and g:IsExists(aux.FCheckTuneMagicianX,1,nil,g) then return false end
 	if chkf~=PLAYER_NONE and Duel.GetLocationCountFromEx(chkf,tp,g,fc)<=0 then return false end
 	if aux.FCheckAdditional and not aux.FCheckAdditional(tp,g,fc) then return false end
 	local ct=g:GetCount()
@@ -1765,7 +1766,7 @@ return function(e,g,gc,chkfnf)
 		if not cm.FusionFilter_3L(gc,fc,mf,sub) then return false end
 		sg:AddCard(gc)
 	end
-	local exg=Duel.GetMatchingGroup(cm.MyonCheckFilter,tp,0,LOCATION_MZONE,nil,c,chkf,myon)
+	local exg=Duel.GetMatchingGroup(cm.MyonCheckFilter,tp,0,LOCATION_MZONE,nil,c,myon)
 	mg:Merge(exg)
 	return cm.CheckGroup(mg,cm.FusionCheck_3L,sg,1,max,min,tp,c,f,chkfnf,sub)
 end
@@ -1777,7 +1778,7 @@ return function(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
 	local mg=eg:Filter(cm.FusionFilter_3L,nil,e:GetHandler(),mf,sub)
 	local sg=Group.CreateGroup()
 	if gc then sg:AddCard(gc) end
-	local exg=Duel.GetMatchingGroup(cm.MyonCheckFilter,tp,0,LOCATION_MZONE,nil,c,chkf,myon)
+	local exg=Duel.GetMatchingGroup(cm.MyonCheckFilter,tp,0,LOCATION_MZONE,nil,c,myon)
 	mg:Merge(exg)
 	local g=cm.SelectGroup(tp,HINTMSG_FMATERIAL,mg,cm.FusionCheck_3L,sg,1,max,min,tp,c,f,chkf,sub)
 	Duel.SetFusionMaterial(g)

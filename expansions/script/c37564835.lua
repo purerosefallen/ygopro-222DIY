@@ -117,10 +117,9 @@ function cm.DiscardHandCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function cm.cfilter(c,tp)
-	local ty=c:GetSummonType()
 	if c:GetSummonPlayer()==tp or c:GetMaterialCount()<=0 then return false end
-	for i,tty in pairs({SUMMON_TYPE_FUSION+SUMMON_TYPE_SYNCHRO+SUMMON_TYPE_XYZ+SUMMON_TYPE_LINK}) do
-		if bit.band(ty,tty)==tty then return true end
+	for i,tty in pairs({SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ,SUMMON_TYPE_LINK}) do
+		if c:IsSummonType(tty) then return true end
 	end
 	return false
 end
