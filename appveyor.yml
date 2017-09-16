@@ -49,36 +49,14 @@ build:
     parallel: true
 
 after_build:
-  - git config --global user.name "Smile-DK"
-  - git config --global user.email "2236141431@qq.com"
-  
-  - git checkout data
-  - git pull origin data
 
-  - rm -rf ygopro_222.exe
-  - rm -rf irrKlang.dll
-  - rm -rf ikpMP3.dll
-
-  - mv bin\release\ygopro.exe ygopro_222.exe
-  - mv irrklang\bin\win32-visualStudio\irrKlang.dll .
-  - mv irrklang\bin\win32-visualStudio\ikpMP3.dll .
-  
-  - git add ygopro_222.exe
-  - git add irrKlang.dll
-  - git add ikpMP3.dll
-  - git commit -m "Builded by Appveyor"
-  - git tag No-Build HEAD
-  - git push %Smile%purerosefallen/ygopro-222DIY data
-  
-  - 7z a -mx=9 ygopro-222DIY-data.7z ygopro_222.exe irrKlang.dll ikpMP3.dll lflist.conf expansions sound -xr!.git*
+  - mv bin\release\ygopro.exe ygopro_thc.exe
 
 test: off
 
 artifacts:
-  - path: ygopro_222.exe
-    name: ygopro_222
-  - path: ygopro-222DIY-data.7z
-    name: ygopro-222DIY-data
+  - path: ygopro_thc.exe
+    name: ygopro_thc
 
 cache:
   - premake-5.0.0-alpha12-windows.zip
@@ -91,4 +69,4 @@ cache:
 
 branches:
   only:
-  - local
+  - local-thc

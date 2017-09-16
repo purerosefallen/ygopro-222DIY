@@ -71,7 +71,7 @@ bool Game::Initialize() {
 	textFont = guiFont;
 	smgr = device->getSceneManager();
 	//modded
-	device->setWindowCaption(L"YGOPro 222DIY");
+	device->setWindowCaption(L"YGOPro for THC");
 	device->setResizable(false);
 #ifdef _WIN32
 	irr::video::SExposedVideoData exposedData = driver->getExposedVideoData();
@@ -90,7 +90,7 @@ bool Game::Initialize() {
 	//main menu
 	wchar_t strbuf[256];
 	//modded
-	myswprintf(strbuf, L"YGOPro 222DIY Version:%X.0%X.%X", PRO_VERSION >> 12, (PRO_VERSION >> 4) & 0xff, PRO_VERSION & 0xf);
+	myswprintf(strbuf, L"YGOPro for THC Version:%X.0%X.%X", PRO_VERSION >> 12, (PRO_VERSION >> 4) & 0xff, PRO_VERSION & 0xf);
 	wMainMenu = env->addWindow(rect<s32>(370, 200, 650, 415), false, strbuf);
 	wMainMenu->getCloseButton()->setVisible(false);
 	btnLanMode = env->addButton(rect<s32>(10, 30, 270, 60), wMainMenu, BUTTON_LAN_MODE, dataManager.GetSysString(1200));
@@ -732,7 +732,7 @@ void Game::MainLoop() {
 #endif
 		if(cur_time >= 1000) {
 			//modded
-			myswprintf(cap, L"YGOPro 222DIY FPS: %d", fps);
+			myswprintf(cap, L"YGOPro for THC FPS: %d", fps);
 			device->setWindowCaption(cap);
 			fps = 0;
 			cur_time -= 1000;
