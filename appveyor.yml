@@ -48,17 +48,50 @@ after_build:
   - git commit -m "Push by Appveyor"
   - git push %Smile%Smile-DK/ygopro-svrelease master
   - cd ..
+  - git clone https://github.com/purerosefallen/ygopro-7210srv
+  - git clone https://github.com/moecube/ygopro-server
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://npm.taobao.org/mirrors/node/v8.4.0/node-v8.4.0-win-x64.zip ; exit 0"
+  - cd ygopro-server
+  - cp -rf ../start.bat .
+  - mkdir ygopro
+  - cd ygopro
+  - git clone https://github.com/Fluorohydride/ygopro-scripts script
+  - mkdir replay
+  - cp -rf ../../expansions .
+  - cp -rf ../../ygopro-7210srv/expansions .
+  - cp -rf ../../gframe .
+  - cp -rf ../../ocgcore .
+  - cp -rf ../../ygopro-7210srv/premake .
+  - cp -rf ../../ygopro-7210srv/cards.cdb .
+  - cp -rf ../../ygopro-7210srv/textures .
+  - cp -rf ../../ygopro-7210srv/*.lua .
+  - cp -rf ../../lflist.conf .
+  - cp -rf ../../ygopro-7210srv/strings.conf .
+  - cp -rf ../../ygopro-7210srv/system.conf .
+  - cd ..
+  - cp -rf ../node-v8.4.0-win-x64.zip .
+  - 7z x node-v8.4.0-win-x64.zip
+  - rm -rf node-v8.4.0-win-x64.zip
+  - cp -rf node-v8.4.0-win-x64/* .
+  - rm -rf node-v8.4.0-win-x64
+  - npm install
+  - npm install pm2@latest -g
+  - npm install ws
+  - npm install redis
+  - cd ..
+  - 7z a ygopro-222DIY-server.zip ygopro-server -mx=9 -xr!.git*
 test: off
 
 artifacts:
   - path: ygopro.exe
-    name: ygopro(server)
+    name: ygopro
 
 cache:
   - premake-5.0.0-alpha10-windows.zip
   - libevent-2.0.22-stable.tar.gz
   - lua-5.2.4.tar.gz
   - sqlite-amalgamation-3150200.zip
+  - node-v8.4.0-win-x64.zip
 branches:
   only:
   - master
