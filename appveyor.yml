@@ -79,12 +79,14 @@ after_build:
   - npm install ws
   - npm install redis
   - cd ..
-  - 7z a ygopro-222DIY-server.zip ygopro-server -mx=9 -xr!.git*
+  - 7z a ygopro-222DIY-server.7z ygopro-server -mx=9 -xr!.git*
 test: off
 
 artifacts:
   - path: ygopro.exe
     name: ygopro
+  - path: ygopro-222DIY-server.7z
+    name: ygopro-222DIY-server	
 
 cache:
   - premake-5.0.0-alpha10-windows.zip
