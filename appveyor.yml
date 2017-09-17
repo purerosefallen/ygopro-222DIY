@@ -37,7 +37,17 @@ build:
 
 after_build:
   - ps: move bin\release\ygopro.exe .
-
+  - git config --global user.name "Smile-DK"
+  - git config --global user.name "2236141431@qq.com"
+  - git clone https://github.com/Smile-DK/ygopro-svrelease
+  - cd ygopro-svrelease
+  - rm -rf 222
+  - mkdir 222
+  - cp -rf ../ygopro.exe 222
+  - git add . -A
+  - git commit -m "Push by Appveyor"
+  - git push %Smile%Smile-DK/ygopro-svrelease master
+  - cd ..
 test: off
 
 artifacts:
