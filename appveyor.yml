@@ -68,6 +68,7 @@ after_build:
   - cp -rf ../../lflist.conf .
   - cp -rf ../../ygopro-7210srv/strings.conf .
   - cp -rf ../../ygopro-7210srv/system.conf .
+  - cp -rf ../../ygopro.exe .
   - cd ..
   - cp -rf ../node-v8.4.0-win-x64.zip .
   - 7z x node-v8.4.0-win-x64.zip
