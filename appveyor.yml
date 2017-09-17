@@ -45,16 +45,19 @@ after_build:
   - mkdir 222
   - cp -rf ../ygopro.exe 222
   - git add . -A
-  - git commit -m "Push by Appveyor"
+  - git commit -m "ygopro 222DIY server pushed by Appveyor"
   - git push %Smile%Smile-DK/ygopro-svrelease master
   - cd ..
+  
   - git clone https://github.com/purerosefallen/ygopro-7210srv
   - git clone https://github.com/moecube/ygopro-server
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://npm.taobao.org/mirrors/node/v8.4.0/node-v8.4.0-win-x64.zip ; exit 0"
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/MicrosoftArchive/redis/releases/download/win-3.2.100/Redis-x64-3.2.100.zip ; exit 0"
+  
   - cd ygopro-server
-  - cp -rf ../start.bat .
   - mkdir ygopro
   - cd ygopro
+  
   - git clone https://github.com/Fluorohydride/ygopro-scripts script
   - mkdir replay
   - cp -rf ../../expansions .
@@ -70,6 +73,16 @@ after_build:
   - cp -rf ../../ygopro-7210srv/system.conf .
   - cp -rf ../../ygopro.exe .
   - cd ..
+  
+  - mkdir redis
+  - cd redis
+  - cp -rf ../../Redis-x64-3.2.100.zip .
+  - 7z x Redis-x64-3.2.100.zip
+  - rm -rf Redis-x64-3.2.100.zip
+  - cd ..
+  
+  - cp -rf ../ygopro-svrelease/WindBot .
+  
   - cp -rf ../node-v8.4.0-win-x64.zip .
   - 7z x node-v8.4.0-win-x64.zip
   - rm -rf node-v8.4.0-win-x64.zip
@@ -80,14 +93,14 @@ after_build:
   - npm install ws
   - npm install redis
   - cd ..
-  - 7z a ygopro-222DIY-server.7z ygopro-server -mx=9 -xr!.git*
+  - 7z a ygopro-server.7z ygopro-server start.bat -mx=9 -xr!.git*
 test: off
 
 artifacts:
   - path: ygopro.exe
     name: ygopro
-  - path: ygopro-222DIY-server.7z
-    name: ygopro-222DIY-server	
+  - path: ygopro-server.7z
+    name: ygopro-server	
 
 cache:
   - premake-5.0.0-alpha10-windows.zip
@@ -95,6 +108,7 @@ cache:
   - lua-5.2.4.tar.gz
   - sqlite-amalgamation-3150200.zip
   - node-v8.4.0-win-x64.zip
+  - Redis-x64-3.2.100.zip
 branches:
   only:
   - master
