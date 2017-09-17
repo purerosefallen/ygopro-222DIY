@@ -624,6 +624,7 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 	load_script((char*) "./script/utility.lua");
 	load_script((char*) "./expansions/script/nef/afi.lua");
 	load_script((char*) "./expansions/script/nef/cardList.lua");
+	load_script((char*) "./expansions/script/nef/nef.lua");
 	load_script((char*) "./expansions/script/nef/elf.lua");
 	load_script((char*) "./expansions/script/nef/ets.lua");
 	load_script((char*) "./expansions/script/nef/fus.lua");
