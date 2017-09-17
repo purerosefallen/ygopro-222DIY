@@ -37,15 +37,28 @@ build:
 
 after_build:
   - ps: move bin\release\ygopro.exe .
-
+  - git config --global user.name "Smile-DK"
+  - git config --global user.email "2236141431@qq.com"
+  - git clone https://github.com/Smile-DK/ygopro-svrelease
+  - cd ygopro-svrelease
+  - rm -rf 7210
+  - mkdir 7210
+  - cp -rf ../ygopro.exe 7210
+  - git add . -A
+  - git commit -m "Push by Appveyor"
+  - git push %Smile%Smile-DK/ygopro-svrelease master
+  - cd ..
 test: off
 
 artifacts:
   - path: ygopro.exe
-    name: ygopro server build
+    name: ygopro(server)
 
 cache:
   - premake-5.0.0-alpha10-windows.zip
   - libevent-2.0.22-stable.tar.gz
   - lua-5.2.4.tar.gz
   - sqlite-amalgamation-3150200.zip
+branches:
+  only:
+  - master
