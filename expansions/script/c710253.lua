@@ -1,5 +1,4 @@
 --失落英魂-莎士比亚
-if not pcall(function() require("expansions/script/c700000") end) then require("script/c700000") end
 function c710253.initial_effect(c)
 	c:SetUniqueOnField(1,1,710253)
 	aux.AddLinkProcedure(c,c710253.matfilter,3,3)
