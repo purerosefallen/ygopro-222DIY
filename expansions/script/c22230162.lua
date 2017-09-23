@@ -1,4 +1,4 @@
---Darkest　先祖
+--Darkest　异教司祭
 function c22230162.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_FLIP),2)
@@ -8,8 +8,7 @@ function c22230162.initial_effect(c)
 	e3:SetDescription(aux.Stringid(22230162,1))
 	e3:SetCategory(CATEGORY_TOHAND)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetCode(EVENT_FREE_CHAIN)
+	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetTarget(c22230162.thtg)
