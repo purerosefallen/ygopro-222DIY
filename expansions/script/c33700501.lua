@@ -65,6 +65,7 @@ function cm.initial_effect(c)
 		local tcode=c.dfc_back_side
 		c:SetEntityCode(tcode,true)
 		c:ReplaceEffect(tcode,0,0)
+		Duel.Hint(11,0,m*16+3)
 	end)
 	c:RegisterEffect(e4)
 end

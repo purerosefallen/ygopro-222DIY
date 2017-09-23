@@ -96,6 +96,13 @@ function c33700067.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x3442)
 end
 function c33700067.con(e)
-   local g=Duel.GetMatchingGroup(c33700067.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
-	return g:GetClassCount(Card.GetCode)==5
+	local g=Duel.GetMatchingGroup(c33700067.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
+	if g:GetClassCount(Card.GetCode)==5 then
+		if e:GetHandler():GetFlagEffect(33700067)==0 then
+			e:GetHandler():RegisterFlagEffect(33700067,0x1fe1000,0,1)
+			Duel.Hint(11,0,aux.Stringid(33700067,0))
+		end
+	else
+		return false
+	end
 end
