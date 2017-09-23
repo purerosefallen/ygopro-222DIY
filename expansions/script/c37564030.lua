@@ -94,41 +94,41 @@ function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
 		if ct==0 then return end 
 		local dr=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,dr)
-	if not (dr:IsSetCard(0x770) and dr:IsType(TYPE_MONSTER)) then return Duel.ShuffleHand(tp) end
-	Duel.Hint(HINT_CARD,0,dr:GetOriginalCode())
-	if dr:IsAttribute(ATTRIBUTE_LIGHT) then
-		c:RegisterFlagEffect(375640302,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
-	end
-	if dr:IsAttribute(ATTRIBUTE_DARK) and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,bc) then
-		if Duel.SelectYesNo(tp,aux.Stringid(37564030,3)) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-			local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,bc)
-			if g:GetCount()>0 then
-				Duel.HintSelection(g)
-				Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+		if not (Senya.check_set_elem(dr) and dr:IsType(TYPE_MONSTER)) then return Duel.ShuffleHand(tp) end
+		Duel.Hint(HINT_CARD,0,dr:GetOriginalCode())
+		if dr:IsAttribute(ATTRIBUTE_LIGHT) then
+			c:RegisterFlagEffect(375640302,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+		end
+		if dr:IsAttribute(ATTRIBUTE_DARK) and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,bc) then
+			if Duel.SelectYesNo(tp,aux.Stringid(37564030,3)) then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+				local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,bc)
+				if g:GetCount()>0 then
+					Duel.HintSelection(g)
+					Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+				end
 			end
 		end
-	end
-	if dr:IsAttribute(ATTRIBUTE_WATER) then
-		Duel.Recover(tp,2500,REASON_EFFECT)
-	end
-	if dr:IsAttribute(ATTRIBUTE_FIRE) then
-		Duel.Damage(1-tp,2000,REASON_EFFECT)
-	end
-	if dr:IsAttribute(ATTRIBUTE_WIND) then
-		Duel.Draw(tp,2,REASON_EFFECT)
-	end
-	if dr:IsAttribute(ATTRIBUTE_EARTH) and Duel.GetLocationCountFromEx(tp)>0 and Duel.IsExistingMatchingCard(cm.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) then
-		if Duel.SelectYesNo(tp,aux.Stringid(37564030,4)) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local g=Duel.SelectMatchingCard(tp,cm.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
-			if g:GetCount()>0 then
-				local tc=g:GetFirst()
-				Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+		if dr:IsAttribute(ATTRIBUTE_WATER) then
+			Duel.Recover(tp,2500,REASON_EFFECT)
+		end
+		if dr:IsAttribute(ATTRIBUTE_FIRE) then
+			Duel.Damage(1-tp,2000,REASON_EFFECT)
+		end
+		if dr:IsAttribute(ATTRIBUTE_WIND) then
+			Duel.Draw(tp,2,REASON_EFFECT)
+		end
+		if dr:IsAttribute(ATTRIBUTE_EARTH) and Duel.GetLocationCountFromEx(tp)>0 and Duel.IsExistingMatchingCard(cm.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) then
+			if Duel.SelectYesNo(tp,aux.Stringid(37564030,4)) then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+				local g=Duel.SelectMatchingCard(tp,cm.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
+				if g:GetCount()>0 then
+					local tc=g:GetFirst()
+					Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+				end
 			end
 		end
-	end
-	local val=dr:GetTextAttack()+dr:GetTextDefense()
+		local val=dr:GetTextAttack()+dr:GetTextDefense()
 		if val>0 then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
