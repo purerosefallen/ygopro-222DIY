@@ -58,7 +58,7 @@ after_build:
   - mkdir ygopro
   - cd ygopro
   
-  - git clone https://github.com/Fluorohydride/ygopro-scripts script
+  - git clone https://github.com/Smile-DK/ygopro-scripts script
   - mkdir replay
   - cp -rf ../../expansions .
   - cp -rf ../../ygopro-7210srv/expansions .
