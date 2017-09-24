@@ -84,7 +84,7 @@ function c13257319.eqfilter(c,ec)
 	return c:IsSetCard(0x3352) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)
 end
 function c13257319.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c13257319.eqfilter,tp,LOCATION_EXTRA,0,1,nil,e:GetHandler()) end
+	if chk==0 then return e:GetHandler():GetEquipCount()>0 or  Duel.IsExistingMatchingCard(c13257319.eqfilter,tp,LOCATION_EXTRA,0,1,nil,e:GetHandler()) end
 	e:SetCategory(CATEGORY_EQUIP)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_EXTRA)
 end

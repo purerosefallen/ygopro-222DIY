@@ -58,7 +58,7 @@ function c13257321.eqop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13257321.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local t1=Duel.IsExistingMatchingCard(c13257321.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c)
+	local t1=c:GetEquipCount()>0 or Duel.IsExistingMatchingCard(c13257321.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c)
 	local t2=Duel.IsCanAddCounter(tp,0x351,1,c)
 	if chk==0 then return t1 or t2 end
 	local op=0
@@ -129,7 +129,7 @@ function c13257321.acfilter(c)
 	return c:IsFaceup() and (c:GetAttack()>0 or c:GetDefense()>0)
 end
 function c13257321.desfilter(c)
-	return c:IsFaceup() and (c:GetAttack()==0 or c:GetDefense()==0)
+	return c:IsFaceup() and (c:GetAttack()==0 or (c:GetDefense()==0 and not c:IsType(TYPE_LINK)))
 end
 function c13257321.bombop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c13257321.acfilter,tp,0,LOCATION_MZONE,nil)
@@ -139,7 +139,7 @@ function c13257321.bombop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT+0x1fe0000)
 			e1:SetValue(-1000)
 			sc:RegisterEffect(e1)
 			local e2=e1:Clone()
