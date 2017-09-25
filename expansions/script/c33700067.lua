@@ -102,6 +102,7 @@ function c33700067.con(e)
 			e:GetHandler():RegisterFlagEffect(33700067,0x1fe1000,0,1)
 			Duel.Hint(11,0,aux.Stringid(33700067,0))
 		end
+		return true
 	else
 		return false
 	end
