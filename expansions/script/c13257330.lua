@@ -53,7 +53,7 @@ function c13257330.leftfilter(c,seq)
 	return c:GetSequence()>4-seq and c:GetSequence()<=5
 end
 function c13257330.rightfilter(c,seq)
-	return c:GetSequence()<4-seq or c:GetSequence()==5
+	return c:GetSequence()<4-seq
 end
 function c13257330.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ec=e:GetHandler():GetEquipTarget()

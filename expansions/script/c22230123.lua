@@ -55,7 +55,7 @@ function c22230123.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c22230123.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.ChangePosition(e:GetHandler(),POS_FACEDOWN_DEFENSE)>0 then
-		if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+		if Duel.NegateActivation(ev) then
 			Duel.SendtoHand(eg,nil,REASON_EFFECT)
 		end
 	end
@@ -75,6 +75,10 @@ end
 function c22230123.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFacedown() then
+		local og=tc:GetOverlayGroup()
+		if og:GetCount()>0 then
+			Duel.SendtoGrave(og,REASON_RULE)
+		end
 		Duel.Overlay(e:GetHandler(),tc)
 		if e:GetLabel()==1 and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) and Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(22230123,2)) then
 			e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_EFFECT)
@@ -85,7 +89,3 @@ end
 function c22230123.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(22230123,0,0,0)
 end
-
-
-
-

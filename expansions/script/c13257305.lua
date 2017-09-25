@@ -184,7 +184,7 @@ function c13257305.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not g or g:GetCount()==0 then return false end
 	local tg=g:GetFirst()
 	local c=e:GetHandler()
-	return tg~=c and tg:IsFaceup() and tg:IsSetCard(0x351) and tg:IsType(TYPE_MONSTER)
+	return tg:IsFaceup() and tg:IsSetCard(0x351) and tg:IsType(TYPE_MONSTER)
 end
 function c13257305.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
