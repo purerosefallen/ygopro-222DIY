@@ -61,14 +61,29 @@ function c10116004.activate(e,tp,eg,ep,ev,re,r,rp)
 	   g=Duel.SelectMatchingCard(tp,c10116004.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	   if g:GetCount()>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.SelectYesNo(tp,aux.Stringid(10116004,3)) then
 		  Duel.BreakEffect()
-		  local e1=Effect.CreateEffect(g:GetFirst())
-		  e1:SetType(EFFECT_TYPE_SINGLE)
-		  e1:SetCode(EFFECT_CANNOT_TRIGGER)
-		  e1:SetReset(RESET_EVENT+0x1fe0000)
+		  local tc=g:GetFirst()
+		  local fid=tc:GetFieldID()
+		  local e1=Effect.CreateEffect(e:GetHandler())
+		  e1:SetType(EFFECT_TYPE_FIELD)
+		  e1:SetCode(EFFECT_CANNOT_ACTIVATE)
+		  e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		  e1:SetTargetRange(1,1)
+		  e1:SetReset(RESET_PHASE+PHASE_END)
+		  e1:SetLabel(fid)
+		  e1:SetLabelObject(tc)
+		  e1:SetTarget(c10116004.actg)
 		  e1:SetValue(c10116004.aclimit)
-		  g:GetFirst():RegisterEffect(e1,true)
+		  Duel.RegisterEffect(e1,tp)
+		  tc:RegisterFlagEffect(10116004,RESET_EVENT+0x1fe0000,0,1,fid)
 	   end
 	end
+end
+function c10116004.actg(e,c)
+	local tc=e:GetLabelObject()
+	if tc:GetFlagEffectLabel(10116004)~=e:GetLabel() then
+		e:Reset()
+		return false
+	else return true end
 end
 function c10116004.aclimit(e,re,tp)
 	return re:GetCode()==EVENT_SPSUMMON_SUCCESS and not re:GetHandler():IsImmuneToEffect(e)

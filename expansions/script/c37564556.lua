@@ -5,6 +5,7 @@ xpcall(function() require("expansions/script/c37564765") end,function() require(
 cm.Senya_desc_with_nanahira=true
 function cm.initial_effect(c)
 	Senya.Nanahira(c)
+	Senya.AddSummonMusic(c,m*16+1,SUMMON_TYPE_LINK)
 	--link summon
 	aux.AddLinkProcedure(c,function(c) return c:GetOriginalCode()==37564765 end,1,1)
 	c:EnableReviveLimit()

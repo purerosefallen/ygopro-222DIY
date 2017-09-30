@@ -1,87 +1,89 @@
 --被侵蚀的星之援军
 function c50000504.initial_effect(c)
-	--synchro summon
-	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsType,TYPE_NORMAL),aux.FilterBoolFunction(Card.IsType,TYPE_NORMAL),1)
-	c:EnableReviveLimit()
-	--sp
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(50000504,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DELAY)
-	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(c50000504.spcon)
-	e1:SetTarget(c50000504.sptg)
-	e1:SetOperation(c50000504.spop)
-	c:RegisterEffect(e1)
-	--todeck
-	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_TOHAND)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetDescription(aux.Stringid(50000504,1))
-	e2:SetCountLimit(1)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetTarget(c50000504.tdtg)
-	e2:SetOperation(c50000504.tdop)
-	c:RegisterEffect(e2) 
-	--spsummon
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(50000504,2))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_TO_GRAVE)
-	e3:SetProperty(EFFECT_FLAG_DELAY)
-	e3:SetTarget(c50000504.sptg1)
-	e3:SetOperation(c50000504.spop1)
-	c:RegisterEffect(e3)
-end
-function c50000504.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
-end
-function c50000504.spfilter(c,e,tp)
-	return c:IsSetCard(0x50e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
-function c50000504.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c50000504.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
-end
-function c50000504.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c50000504.spfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
-	if g:GetCount()>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-	end
-end
-function c50000504.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsAbleToHand() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
-end
-function c50000504.tdop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
-	end
+    --link summon
+    aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsType,TYPE_NORMAL),3)
+    c:EnableReviveLimit()
+    --IMMUNE
+    local e1=Effect.CreateEffect(c)
+    e1:SetType(EFFECT_TYPE_FIELD)
+    e1:SetCode(EFFECT_IMMUNE_EFFECT)
+    e1:SetRange(LOCATION_MZONE)
+    e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+    e1:SetValue(c50000504.efilter)
+    e1:SetTarget(c50000504.tgtg)
+    c:RegisterEffect(e1)
+    --destroy replace
+    local e2=Effect.CreateEffect(c)
+    e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+    e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+    e2:SetCode(EFFECT_DESTROY_REPLACE)
+    e2:SetRange(LOCATION_MZONE)
+    e2:SetTarget(c50000504.desreptg)
+    e2:SetOperation(c50000504.desrepop)
+    c:RegisterEffect(e2)
+    --todeck
+    local e3=Effect.CreateEffect(c)
+    e3:SetDescription(aux.Stringid(50000504,0))
+    e3:SetCategory(CATEGORY_TODECK)
+    e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+    e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+    e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
+    e3:SetCountLimit(1,50000504)
+    e3:SetCondition(c50000504.tdcon)
+    e3:SetTarget(c50000504.tdtg)
+    e3:SetOperation(c50000504.tdop)
+    c:RegisterEffect(e3)
 end
 --
-function c50000504.spfilter1(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+
+function c50000504.tgtg(e,c)
+    return e:GetHandler():GetLinkedGroup():IsContains(c)
 end
-function c50000504.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c50000504.spfilter1,tp,LOCATION_HAND,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+function c50000504.efilter(e,te)
+    return not te:IsActiveType(TYPE_LINK)
 end
-function c50000504.spop1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c50000504.spfilter1,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-	if g:GetCount()>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-	end
+--
+function c50000504.repfilter(c,e,tp)
+    return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
+        and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
+end
+function c50000504.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
+    local c=e:GetHandler()
+    if chk==0 then
+        local g=c:GetLinkedGroup()
+        return not c:IsReason(REASON_REPLACE) and g:IsExists(c50000504.repfilter,1,nil,e,tp)
+    end
+    if Duel.SelectEffectYesNo(tp,c,96) then
+        local g=c:GetLinkedGroup()
+        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
+        local sg=g:FilterSelect(tp,c50000504.repfilter,1,1,nil,e,tp)
+        e:SetLabelObject(sg:GetFirst())
+        sg:GetFirst():SetStatus(STATUS_DESTROY_CONFIRMED,true)
+        return true
+    else return false end
+end
+function c50000504.desrepop(e,tp,eg,ep,ev,re,r,rp)
+    local tc=e:GetLabelObject()
+    tc:SetStatus(STATUS_DESTROY_CONFIRMED,false)
+    Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE)
+end
+---
+
+function c50000504.tdcon(e,tp,eg,ep,ev,re,r,rp)
+    return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+end
+function c50000504.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+    if chkc then return chkc:IsOnField() and chkc:IsAbleToDeck() end
+    local ct=e:GetHandler():GetMutualLinkedGroupCount()
+    if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToDeck,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) and ct>0 end
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+    local g=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,ct,nil)
+    Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
+end
+function c50000504.tdop(e,tp,eg,ep,ev,re,r,rp)
+    local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+    local g=tg:Filter(Card.IsRelateToEffect,nil,e)
+    if g:GetCount()>0 then
+        Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+    end
 end

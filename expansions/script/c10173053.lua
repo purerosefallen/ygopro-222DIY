@@ -58,7 +58,7 @@ function c10173053.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local g=eg:Filter(Card.IsControler,nil,tp)
 		if g:GetCount()==0 then return false end
-		local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
+		local chkf=tp
 		local res=Duel.IsExistingMatchingCard(c10173053.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,g,nil,chkf)
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)
@@ -78,7 +78,7 @@ function c10173053.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=eg:Filter(c10173053.cfilter,nil,tp,e)
 	if not c:IsRelateToEffect(e) or c:IsImmuneToEffect(e) or g:GetCount()<=0 then return end
-	local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
+	local chkf=tp
 	local sg1=Duel.GetMatchingGroup(c10173053.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp,g,nil,chkf)
 	local sg2=nil
 	local ce=Duel.GetChainMaterial(tp)
