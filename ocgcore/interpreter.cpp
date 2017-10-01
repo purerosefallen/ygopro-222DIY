@@ -59,6 +59,7 @@ static const struct luaL_Reg cardlib[] = {
 	{ "IsLinkState", scriptlib::card_is_link_state },
 	{ "GetColumnGroup", scriptlib::card_get_column_group },
 	{ "GetColumnGroupCount", scriptlib::card_get_column_group_count },
+	{ "GetColumnZone", scriptlib::card_get_column_zone },
 	{ "IsAllColumn", scriptlib::card_is_all_column },
 	{ "GetAttribute", scriptlib::card_get_attribute },
 	{ "GetOriginalAttribute", scriptlib::card_get_origin_attribute },
@@ -150,6 +151,8 @@ static const struct luaL_Reg cardlib[] = {
 	{ "GetOwnerTargetCount", scriptlib::card_get_owner_target_count },
 	{ "GetActivateEffect", scriptlib::card_get_activate_effect },
 	{ "CheckActivateEffect", scriptlib::card_check_activate_effect },
+	{ "GetTunerLimit", scriptlib::card_get_tuner_limit },
+	{ "GetHandSynchro", scriptlib::card_get_hand_synchro },
 	{ "RegisterEffect", scriptlib::card_register_effect },
 	{ "IsHasEffect", scriptlib::card_is_has_effect },
 	{ "ResetEffect", scriptlib::card_reset_effect },
@@ -624,6 +627,7 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 	load_script((char*) "./script/utility.lua");
 	load_script((char*) "./expansions/script/nef/afi.lua");
 	load_script((char*) "./expansions/script/nef/cardList.lua");
+	load_script((char*) "./expansions/script/nef/nef.lua");
 	load_script((char*) "./expansions/script/nef/elf.lua");
 	load_script((char*) "./expansions/script/nef/ets.lua");
 	load_script((char*) "./expansions/script/nef/fus.lua");
