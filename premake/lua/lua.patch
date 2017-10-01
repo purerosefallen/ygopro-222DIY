@@ -1,5 +1,4 @@
 diff --git a/lua/lbaselib.c b/lua/lbaselib.c
-index 861823d..3eebb0f 100644
 --- a/lua/lbaselib.c
 +++ b/lua/lbaselib.c
 @@ -124,11 +124,14 @@ static int luaB_getmetatable (lua_State *L) {
