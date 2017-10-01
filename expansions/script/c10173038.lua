@@ -47,7 +47,7 @@ function c10173038.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 function c10173038.adcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION and e:GetLabel()==1
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and e:GetLabel()==1
 end
 function c10173038.valcheck(e,c)
 	local g=c:GetMaterial()

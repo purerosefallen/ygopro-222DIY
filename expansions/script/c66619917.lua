@@ -62,7 +62,7 @@ function c66619917.tgval(e,c)
 	return c:IsSetCard(0x666)
 end
 function c66619917.cfilter1(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x666) and c:IsControler(tp) and (bit.band(c:GetSummonType(),SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO or bit.band(c:GetSummonType(),SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(0x666) and c:IsControler(tp) and (c:IsSummonType(SUMMON_TYPE_SYNCHRO) or c:IsSummonType(SUMMON_TYPE_XYZ))
 end
 function c66619917.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c66619917.cfilter1,1,nil,tp)

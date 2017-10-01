@@ -10,7 +10,7 @@ function c16080028.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c16080028.desfilter(c)
-	return not c:IsDisabled() and not c:IsType(TYPE_NORMAL) and bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL
+	return not c:IsDisabled() and not c:IsType(TYPE_NORMAL) and c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function c16080028.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and  c16080028.desfilter(chkc) end

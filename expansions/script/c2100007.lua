@@ -57,7 +57,7 @@ function c2100007.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function c2100007.cfilter1(c)
-	return bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL and c:IsAbleToHand()
+	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsAbleToHand()
 end
 function c2100007.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and c2100007.cfilter1(chkc) and chkc:IsAbleToHand() end

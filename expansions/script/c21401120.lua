@@ -36,7 +36,7 @@ function c21401120.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c21401120.ddcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c21401120.filter(c)
 	return c:IsFaceup() and c:GetDefense()>0 and c:GetAttack()>0

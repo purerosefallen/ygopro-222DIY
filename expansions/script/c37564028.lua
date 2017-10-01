@@ -38,7 +38,7 @@ function cm.xmcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():IsExists(cm.xmfilter,1,nil)
 end
 function cm.filter(c,tp)
-	return c:IsFaceup() and bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL and (c:IsControler(tp) or c:IsAbleToChangeControler()) and not c:IsType(TYPE_TOKEN)
+	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_SPECIAL) and (c:IsControler(tp) or c:IsAbleToChangeControler()) and not c:IsType(TYPE_TOKEN)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and cm.filter(chkc,tp) and chkc~=e:GetHandler() end

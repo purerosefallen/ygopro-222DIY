@@ -38,7 +38,7 @@ function c21401119.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c21401119.accon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c21401119.actg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanAddCounter(0xf0f,2,false) end

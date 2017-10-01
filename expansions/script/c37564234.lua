@@ -32,7 +32,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function cm.filter(c)
-	return bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL and c:IsControlerCanBeChanged()
+	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsControlerCanBeChanged()
 end
 function cm.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:GetLocation()==LOCATION_MZONE and chkc:GetControler()~=tp and chkc:IsControlerCanBeChanged() end

@@ -42,10 +42,10 @@ function c10113073.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c10113073.effcon(e)
-	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO 
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) 
 end
 function c10113073.sumcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO 
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) 
 end
 function c10113073.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,10113073)

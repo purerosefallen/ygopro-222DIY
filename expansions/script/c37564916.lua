@@ -21,7 +21,7 @@ function cm.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,m-1000)
 	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-		return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_RITUAL)==SUMMON_TYPE_RITUAL
+		return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
 	end)
 	e1:SetTarget(cm.sptg)
 	e1:SetOperation(cm.spop)

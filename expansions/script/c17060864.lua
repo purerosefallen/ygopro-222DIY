@@ -196,7 +196,7 @@ function c17060864.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c17060864.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c17060864.thfilter(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsLevelBelow(4) and c:IsAbleToHand()

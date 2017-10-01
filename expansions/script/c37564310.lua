@@ -109,7 +109,7 @@ function cm.tgfilter(e,c)
 	return c:IsFacedown() and c:IsLocation(LOCATION_MZONE)
 end
 function cm.rmfilter(c)
-	return bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL and c:IsAbleToDeck()
+	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsAbleToDeck()
 end
 function cm.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.rmfilter,tp,0,LOCATION_MZONE,1,nil) end

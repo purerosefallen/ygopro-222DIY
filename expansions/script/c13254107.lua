@@ -79,7 +79,7 @@ function c13254107.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end
 function c13254107.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK 
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) 
 end
 function c13254107.thfilter(c)
 	return c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

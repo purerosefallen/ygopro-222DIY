@@ -4,6 +4,7 @@ local cm=_G["c"..m]
 xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 cm.Senya_name_with_sayuri=true
 function cm.initial_effect(c)
+	Senya.AddSummonMusic(c,m*16,SUMMON_TYPE_LINK)
 	c:EnableReviveLimit()
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_FIELD)

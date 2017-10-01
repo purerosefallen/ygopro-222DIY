@@ -47,7 +47,7 @@ function c16063012.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) 
 end
 function c16063012.desfilter(c)
-	return  c:IsAbleToHand() and bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL
+	return  c:IsAbleToHand() and c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function  c16063012.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and  c16063012.desfilter(chkc) end

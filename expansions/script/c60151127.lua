@@ -49,7 +49,7 @@ function c60151127.filter2(c)
 	return c:IsAbleToGrave()
 end
 function c60151127.filter(c)
-	return bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL and c:IsDestructable()
+	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsDestructable()
 end
 function c60151127.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

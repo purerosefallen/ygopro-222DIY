@@ -69,5 +69,5 @@ function c10173022.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsType(TYPE_SYNCHRO) and c:IsLocation(LOCATION_EXTRA)
 end
 function c10173022.condition(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO 
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) 
 end

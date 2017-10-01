@@ -45,7 +45,7 @@ function c114100624.valcheck(e,c)
 	e:SetLabel(atk)
 end
 function c114100624.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION and e:GetHandler():GetMaterialCount()>0
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and e:GetHandler():GetMaterialCount()>0
 end
 function c114100624.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

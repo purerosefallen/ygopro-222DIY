@@ -54,7 +54,7 @@ function c16080027.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c16080027.aclimit1(e,re,tp)
-	return re:IsType(TYPE_EFFECT) and re:IsType(TYPE_MONSTER) and re:GetSummonLocation()==LOCATION_EXTRA and not re:GetHandler():IsImmuneToEffect(e) and bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL
+	return re:IsType(TYPE_EFFECT) and re:IsType(TYPE_MONSTER) and re:GetSummonLocation()==LOCATION_EXTRA and not re:GetHandler():IsImmuneToEffect(e) and c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function c16080027.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

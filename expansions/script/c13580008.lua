@@ -33,7 +33,7 @@ function cm.aclimit(e,re,tp)
 end
 --Disable Special Summon
 function cm.filter(c)
-	return bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL
+	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function cm.condition(e)
 	return not Duel.IsExistingMatchingCard(cm.filter,e:GetHandlerPlayer(),LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)

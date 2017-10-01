@@ -490,7 +490,7 @@ function cm.WindbotCommonEffect(c,tg,op,expr,ctg)
 	c:RegisterEffect(e1)
 end
 function cm.WindbotSSCost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() and bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_NORMAL)==SUMMON_TYPE_NORMAL end
+	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() and e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL) end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function cm.WindbotSSFilter(c,e,tp)

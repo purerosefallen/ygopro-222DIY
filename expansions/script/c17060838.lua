@@ -86,7 +86,7 @@ end
 function c17060838.atkcon(e)
 	local ph=Duel.GetCurrentPhase()
 	local bc=e:GetHandler():GetBattleTarget()
-	return (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL) and bc and bit.band(bc:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL
+	return (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL) and bc and bc:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function c17060838.atkval(e,c)
 	return e:GetHandler():GetAttack()*2

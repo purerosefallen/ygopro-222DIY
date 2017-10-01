@@ -100,7 +100,7 @@ function c66619918.val(e,re,rp)
 	return aux.tgoval(e,re,rp) and re:IsActiveType(TYPE_MONSTER) 
 end
 function c66619918.cfilter1(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x666) and c:IsControler(tp) and bit.band(c:GetSummonType(),SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO 
+	return c:IsFaceup() and c:IsSetCard(0x666) and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_SYNCHRO) 
 end
 function c66619918.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c66619918.cfilter1,1,nil,tp)

@@ -16,7 +16,7 @@ function cm.effect_operation_3L(c,ctlm)
 	e:SetCost(Senya.DescriptionCost())
 	local con=e:GetCondition()
 	e:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-		return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION and con(e,tp,eg,ep,ev,re,r,rp)
+		return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and con(e,tp,eg,ep,ev,re,r,rp)
 	end)
 	c:RegisterEffect(e,true)
 	return e

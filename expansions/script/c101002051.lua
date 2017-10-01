@@ -43,7 +43,7 @@ function c101002051.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c101002051.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c101002051.regop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -79,7 +79,7 @@ function c101002051.lkop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.SendtoGrave(g1,REASON_MATERIAL+REASON_LINK)
 end
 function c101002051.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c101002051.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lg=e:GetHandler():GetLinkedGroup():Filter(Card.IsAbleToHand,nil)

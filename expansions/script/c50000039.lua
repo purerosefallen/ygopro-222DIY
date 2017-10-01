@@ -10,7 +10,7 @@ function c50000039.initial_effect(c)
 	e1:SetCountLimit(1,50000039)
 	e1:SetProperty(0x14000)
 	e1:SetCondition(function(e)
-		return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO
+		return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 	end)
 	e1:SetTarget(c50000039.destg)
 	e1:SetOperation(c50000039.desop)

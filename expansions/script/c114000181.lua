@@ -37,7 +37,7 @@ function c114000181.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToDeck() 
 		and g:GetCount()>0 
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)+1>=g:GetCount() 
-		and bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
+		and e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 		and not g:IsExists(c114000181.mgfilter,1,nil,e,tp,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,g:GetCount(),0,0)

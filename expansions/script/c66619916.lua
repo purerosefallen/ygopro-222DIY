@@ -49,7 +49,7 @@ function c66619916.chainlm(e,rp,tp)
 	return tp==rp
 end 
 function c66619916.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x666) and c:IsControler(tp) and bit.band(c:GetSummonType(),SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO 
+	return c:IsFaceup() and c:IsSetCard(0x666) and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_SYNCHRO) 
 end
 function c66619916.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c66619916.cfilter,1,nil,tp)

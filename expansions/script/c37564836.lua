@@ -10,7 +10,7 @@ function cm.initial_effect(c)
 	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e0:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
-		return bit.band(c:GetSummonType(),SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
+		return c:IsSummonType(SUMMON_TYPE_FUSION)
 	end)
 	e0:SetOperation(cm.skipop)
 	c:RegisterEffect(e0)

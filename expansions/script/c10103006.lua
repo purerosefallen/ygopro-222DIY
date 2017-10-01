@@ -52,7 +52,7 @@ function c10103006.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c10103006.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO 
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) 
 end
 function c10103006.thfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:IsSetCard(0x337)

@@ -32,7 +32,7 @@ function c2177800.addcount(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do
 		local p=tc:GetSummonPlayer()
-		if bit.band(tc:GetSummonType(),SUMMON_TYPE_RITUAL)==SUMMON_TYPE_RITUAL then
+		if tc:IsSummonType(SUMMON_TYPE_RITUAL) then
 			c2177800[p]=c2177800[p]+1
 		end
 		tc=eg:GetNext()

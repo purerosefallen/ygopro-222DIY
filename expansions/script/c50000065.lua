@@ -42,7 +42,7 @@ function c50000065.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	return c:IsDualState() and Duel.GetAttacker()==c
-		and bc and bit.band(bc:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL and bc:IsAbleToRemove()
+		and bc and bc:IsSummonType(SUMMON_TYPE_SPECIAL) and bc:IsAbleToRemove()
 end
 function c50000065.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

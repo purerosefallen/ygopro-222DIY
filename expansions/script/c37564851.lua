@@ -12,7 +12,7 @@ function cm.initial_effect(c)
 	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e0:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
-		return bit.band(c:GetSummonType(),SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
+		return c:IsSummonType(SUMMON_TYPE_LINK)
 	end)
 	e0:SetOperation(cm.skipop)
 	c:RegisterEffect(e0)

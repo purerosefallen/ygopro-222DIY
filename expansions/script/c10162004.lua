@@ -65,7 +65,7 @@ function c10162004.pccon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(p)<=2000 
 end
 function c10162004.pctg(e,c)
-	return c:IsFaceup() and bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL 
+	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_SPECIAL) 
 end
 function c10162004.antarget(e,c)
 	return c~=e:GetHandler()

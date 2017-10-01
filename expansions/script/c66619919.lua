@@ -127,7 +127,7 @@ function c66619919.handcon1(e)
 	return Duel.GetTurnPlayer()==e:GetHandlerPlayer() and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
 end
 function c66619919.cfilter1(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x666) and c:IsControler(tp) and bit.band(c:GetSummonType(),SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ 
+	return c:IsFaceup() and c:IsSetCard(0x666) and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_XYZ) 
 end
 function c66619919.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c66619919.cfilter1,1,nil,tp)

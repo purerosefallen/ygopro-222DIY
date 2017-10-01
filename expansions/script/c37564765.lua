@@ -2276,7 +2276,7 @@ function cm.enable_get_all_cards()
 end
 function cm.SummonTypeCondition(t,con)
 return function(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(e:GetHandler():GetSummonType(),t)==t and (not con or con(e,tp,eg,ep,ev,re,r,rp))
+	return e:GetHandler():IsSummonType(t) and (not con or con(e,tp,eg,ep,ev,re,r,rp))
 end
 end
 function cm.NonImmuneFilter(c,e)

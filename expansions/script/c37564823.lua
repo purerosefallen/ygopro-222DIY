@@ -10,7 +10,7 @@ function cm.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-		return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
+		return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 	end)
 	e3:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()

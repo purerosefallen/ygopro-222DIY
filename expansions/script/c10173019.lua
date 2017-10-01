@@ -17,7 +17,7 @@ function c10173019.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function c10173019.desfilter1(c,e,tp)
-	return bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL and aux.disfilter1(c) and Duel.IsExistingMatchingCard(c10173019.desfilter2,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c,e)
+	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and aux.disfilter1(c) and Duel.IsExistingMatchingCard(c10173019.desfilter2,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c,e)
 end
 function c10173019.desfilter2(c,e)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsCanBeEffectTarget(e) and aux.disfilter1(c)

@@ -42,7 +42,7 @@ function c21401117.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c21401117.adcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c21401117.filter(c)
 	return c:IsFaceup() and c:GetAttack()>0 and c:GetDefense()>0

@@ -85,7 +85,7 @@ function c10113058.cfilter(c)
 	return c:GetFlagEffect(10113058)~=0
 end
 function c10113058.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO 
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) 
 end
 function c10113058.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil) end

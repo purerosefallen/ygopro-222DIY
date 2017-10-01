@@ -125,7 +125,7 @@ function cm.repfilter(c)
 	return c.prim_replace_att
 end
 function cm.destg(c,ec)
-	return bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL
+	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function cm.discon(e,tp,eg,ep,ev,re,r,rp)
 	return cm.XMaterialCountCondition(4)(e,tp,eg,ep,ev,re,r,rp) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)

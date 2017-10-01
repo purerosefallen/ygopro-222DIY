@@ -58,7 +58,7 @@ function c10129011.sumop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
 end
 function c10129011.recon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
 function c10129011.retg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

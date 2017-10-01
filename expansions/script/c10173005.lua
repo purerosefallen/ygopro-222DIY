@@ -49,7 +49,7 @@ function c10173005.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c10173005.macon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ 
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) 
 end
 function c10173005.matg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and chkc:IsType(TYPE_SPELL+TYPE_TRAP) end

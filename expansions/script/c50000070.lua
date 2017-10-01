@@ -15,7 +15,7 @@ function c50000070.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCondition(function(e)
-		return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION 
+		return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) 
 	end)
 	e2:SetTarget(c50000070.destg)
 	e2:SetOperation(c50000070.desop)

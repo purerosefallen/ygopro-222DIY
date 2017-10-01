@@ -41,7 +41,7 @@ function c60151731.initial_effect(c)
 end
 function c60151731.disfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and not c:IsDisabled() 
-		and bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL
+		and c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function c60151731.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c60151731.disfilter,tp,0,LOCATION_MZONE,1,nil) end

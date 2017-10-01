@@ -76,7 +76,7 @@ function c121053292.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c121053292.atkfilter(e,c)
-	return bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL
+	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function c121053292.effcon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler()==Duel.GetAttacker() and e:GetHandler():IsRelateToBattle()
