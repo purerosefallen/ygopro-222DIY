@@ -38,7 +38,7 @@ install:
   
   # patch irrlicht and lua
   - patch -p0 < irrlicht\irrlicht.patch
-  - patch -p0 < lua\lua.patch
+  # - patch -p0 < lua\lua.patch
   
   # premake
   - premake5 vs2015
