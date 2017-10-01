@@ -63,7 +63,7 @@ function c13257307.efilter(e,re)
 end
 function c13257307.cacon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
-	return ec and eg:IsContains(ec)
+	return ec and ec:IsRelateToBattle() and ec:IsStatus(STATUS_OPPO_BATTLE)
 end
 function c13257307.catg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
