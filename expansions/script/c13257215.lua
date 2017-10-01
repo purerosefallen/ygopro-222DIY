@@ -161,7 +161,7 @@ function c13257215.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257215.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=s:GetHandler()
+	local c=e:GetHandler()
 	return c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp
 end
 function c13257215.spfilter(c,e,tp)
