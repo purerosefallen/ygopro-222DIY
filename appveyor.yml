@@ -26,6 +26,9 @@ install:
   # let premake happy
   - xcopy /E premake\* .
   
+  # patch lua
+  - patch -p0 < lua.patch
+    
   # premake
   - premake5 vs2015
   
