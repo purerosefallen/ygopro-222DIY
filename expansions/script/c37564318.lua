@@ -62,7 +62,7 @@ function cm.filter(c,tp,l)
 	return c:IsPreviousLocation(l) and c:GetPreviousControler()==tp
 end
 function cm.drcon1(e,tp,eg,ep,ev,re,r,rp)
-	return not re:IsHasType(EFFECT_TYPE_ACTIONS) or re:IsHasType(EFFECT_TYPE_CONTINUOUS)
+	return not re or not re:IsHasType(EFFECT_TYPE_ACTIONS) or re:IsHasType(EFFECT_TYPE_CONTINUOUS)
 end
 function cm.drop1(e,tp,eg,ep,ev,re,r,rp)
 	local t=Senya.order_table[e:GetLabel()]
@@ -71,7 +71,7 @@ function cm.drop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsHasType(EFFECT_TYPE_ACTIONS) and not re:IsHasType(EFFECT_TYPE_CONTINUOUS)
+	return re and re:IsHasType(EFFECT_TYPE_ACTIONS) and not re:IsHasType(EFFECT_TYPE_CONTINUOUS)
 end
 function cm.regop(e,tp,eg,ep,ev,re,r,rp)
 	local t=Senya.order_table[e:GetLabel()]
