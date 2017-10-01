@@ -46,7 +46,7 @@ function c23330013.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c23330013.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c23330013.tdfilter(c)
 	return (c:IsType(TYPE_FUSION) or c:IsType(TYPE_XYZ)) and c:IsAbleToDeck()
@@ -61,7 +61,7 @@ function c23330013.tdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 end
 function c23330013.splimit(e,c,tp,sumtp,sumpos)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO and (bit.band(sumtp,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION or bit.band(sumtp,SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and (bit.band(sumtp,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION or bit.band(sumtp,SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ)
 end
 function c23330013.matfilter1(c,syncard)
 	return c:IsType(TYPE_TUNER) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsCanBeSynchroMaterial(syncard)

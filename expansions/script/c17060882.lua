@@ -33,7 +33,7 @@ function c17060882.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c17060882.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_LINK and e:GetLabel()==1
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) and e:GetLabel()==1
 end
 function c17060882.valcheck(e,c)
 	local g=c:GetMaterial()

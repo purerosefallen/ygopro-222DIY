@@ -81,7 +81,7 @@ function c1200050.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(g1,REASON_COST)
 end
 function c1200050.con(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_FUSION 
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) 
 end
 function c1200050.spfilter4(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsCode(1200011,1200012,1200013,1200014,1200015,1200016,1200041,1200042,1200043,1200050) and c:IsCanBeSpecialSummoned(e, 0, tp, false, false)

@@ -58,7 +58,7 @@ function c60151322.xyzop(e,tp,chk)
     Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function c60151322.regcon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ
+    return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
 function c60151322.filter2(c,e,tp)
     return not c:IsType(TYPE_XYZ) and c:IsSetCard(0xcb23) and c:IsType(TYPE_MONSTER)

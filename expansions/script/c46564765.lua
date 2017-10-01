@@ -23,7 +23,7 @@ function c46564765.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c46564765.ngcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO  
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)  
 end
 function c46564765.filter(c)
 	return c:IsFaceup() and not c:IsDisabled()

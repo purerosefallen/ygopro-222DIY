@@ -57,14 +57,14 @@ function c10123006.chainlm(e,rp,tp)
 end
 function c10123006.sumfilter(c,tp)
 	local mg=c:GetMaterial()
-	return c:GetSummonType()==SUMMON_TYPE_SYNCHRO and mg:GetCount()>0 and mg:IsExists(c10123006.effilter,1,nil,tp) 
+	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and mg:GetCount()>0 and mg:IsExists(c10123006.effilter,1,nil,tp) 
 end
 function c10123006.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetChainLimitTillChainEnd(c10123006.chainlm)
 end
 function c10123006.cdsstg(e,c)
 	local mg=c:GetMaterial()
-	return c:GetSummonType()==SUMMON_TYPE_SYNCHRO and mg:GetCount()>0 and mg:IsExists(c10123006.effilter,1,nil,e:GetHandlerPlayer())
+	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and mg:GetCount()>0 and mg:IsExists(c10123006.effilter,1,nil,e:GetHandlerPlayer())
 end
 function c10123006.effilter(c,tp)
 	return c:IsSetCard(0x5334) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp and c:IsReason(REASON_SYNCHRO)

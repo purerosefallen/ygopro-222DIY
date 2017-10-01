@@ -24,7 +24,7 @@ function c16063015.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c16063015.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c16063015.desfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsPosition(POS_FACEUP_ATTACK) and c:IsDestructable()

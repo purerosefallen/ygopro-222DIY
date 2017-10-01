@@ -56,7 +56,7 @@ function c60151614.filter(c)
 end
 function c60151614.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not (re:IsActiveType(TYPE_MONSTER) and re:IsActivated()) then return end
-	if not e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO then return end
+	if not e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) then return end
 	Duel.Hint(HINT_CARD,0,60151614)
 	Duel.Recover(tp,600,REASON_EFFECT)
 	local g=Duel.GetMatchingGroup(c60151614.filter,tp,LOCATION_MZONE,0,nil)
@@ -80,7 +80,7 @@ function c60151614.lcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
 end
 function c60151614.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO end
+	if chk==0 then return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) end
 end
 function c60151614.thop(e,tp,eg,ep,ev,re,r,rp)
 	--
@@ -108,7 +108,7 @@ function c60151614.disoperation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c60151614.setcon3(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c60151614.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsFaceup() and (Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7))

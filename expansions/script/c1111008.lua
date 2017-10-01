@@ -19,7 +19,7 @@ function c1111008.IsLd(c)
 end
 --
 function c1111008.cfilter1(c)
-	return c:GetSummonType()==SUMMON_TYPE_FUSION and c:IsFaceup()
+	return c:IsSummonType(SUMMON_TYPE_FUSION) and c:IsFaceup()
 end
 function c1111008.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -30,14 +30,14 @@ function c1111008.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 --
 function c1111008.cfilter1(c)
-	return c:IsFaceup() and c:GetLevel()<4 and c:GetSummonType()==SUMMON_TYPE_NORMAL 
+	return c:IsFaceup() and c:GetLevel()<4 and c:IsSummonType(SUMMON_TYPE_NORMAL) 
 end
 function c1111008.con1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c1111008.cfilter1,tp,LOCATION_ONFIELD,0,1,nil) and Duel.GetMatchingGroupCount(aux.TRUE,tp,LOCATION_MZONE,0,nil)==1
 end
 --
 function c1111008.tfilter0(c)
-	return c:GetSummonType()==SUMMON_TYPE_SPECIAL and c:IsFaceup()
+	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsFaceup()
 end
 function c1111008.tfilter1(c)
 	return c1111008.IsLd(c) and c:IsAbleToHand()

@@ -39,7 +39,7 @@ function c2117000.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c2117000.remcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
 function c2117000.tgfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_FIEND) and c:IsAbleToGrave()

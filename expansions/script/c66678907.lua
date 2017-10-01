@@ -7,7 +7,7 @@ function c66678907.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-		return e:GetHandler():GetSummonType()==SUMMON_TYPE_ADVANCE
+		return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE)
 	end)
 	e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		if chkc then return chkc:IsOnField() and chkc:IsAbleToGrave() end

@@ -40,7 +40,7 @@ function c710207.IsWindWheel(c)
 end
 
 function c710207.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c710207.setfilter(c,tp)
 	return c:IsType(TYPE_CONTINUOUS) and c:IsSSetable(true) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0

@@ -26,7 +26,7 @@ end
 
 function c50000038.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetSummonType()==SUMMON_TYPE_SYNCHRO and c:GetMaterial():IsExists(c50000038.pmfilter,1,nil)
+	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:GetMaterial():IsExists(c50000038.pmfilter,1,nil)
 end
 function c50000038.pmfilter(c)
 	return c:IsSetCard(0x50a) and c:IsType(TYPE_MONSTER)

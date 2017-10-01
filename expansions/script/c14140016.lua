@@ -267,7 +267,7 @@ function cm.valcheck(e,c)
 	e:GetLabelObject():SetLabel(ct)
 end
 function cm.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO and e:GetLabel()>0
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and e:GetLabel()>0
 end
 function cm.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

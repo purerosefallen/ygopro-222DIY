@@ -84,7 +84,7 @@ function c60151012.atkop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function c60151012.remcon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ
+    return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
 function c60151012.pctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chk==0 then return Duel.IsExistingMatchingCard(c60151012.filter5,tp,0,LOCATION_MZONE,1,nil) end

@@ -75,7 +75,7 @@ function c17060832.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c17060832.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c17060832.spfilter(c,e,tp)
 	return c17060832.IsMillion_Arthur(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -134,5 +134,5 @@ function c17060832.penop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c17060832.tcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end

@@ -59,7 +59,7 @@ function c17060807.IsMillion_Arthur(c)
 	return m and m.is_named_with_Million_Arthur
 end
 function c17060807.sumcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO and e:GetLabel()==1
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and e:GetLabel()==1
 end
 function c17060807.valcheck(e,c)
 	local g=c:GetMaterial()

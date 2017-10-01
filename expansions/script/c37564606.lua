@@ -55,7 +55,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function cm.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function cm.filter(c,e,tp,mg)
 	return mg and mg:IsContains(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

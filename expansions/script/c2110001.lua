@@ -37,7 +37,7 @@ function c2110001.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c2110001.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_RITUAL 
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL) 
 end
 function c2110001.filter(c)
 	return c:IsRace(RACE_DRAGON) and c:IsLevelBelow(6) and c:IsAbleToHand()

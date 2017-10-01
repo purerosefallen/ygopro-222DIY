@@ -82,7 +82,7 @@ function c60151108.spop(e,tp,eg,ep,ev,re,r,rp,c)
     end
 end
 function c60151108.sumsuccon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
+    return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)+1
 end
 function c60151108.sumsuc(e,tp,eg,ep,ev,re,r,rp)
     local ct=e:GetHandler():GetFlagEffect(60151108)

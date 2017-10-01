@@ -92,7 +92,7 @@ function c60151032.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c60151032.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:GetFirst()
-	return eg:GetCount()==1 and tg~=e:GetHandler() and tg:GetSummonType()==SUMMON_TYPE_XYZ and tg:IsSetCard(0x5b23)
+	return eg:GetCount()==1 and tg~=e:GetHandler() and tg:IsSummonType(SUMMON_TYPE_XYZ) and tg:IsSetCard(0x5b23)
 end
 function c60151032.drfilter(c)
 	return c:IsAbleToGrave()

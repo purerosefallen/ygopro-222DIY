@@ -65,7 +65,7 @@ function c60150804.efop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c60150804.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsSetCard(0x3b23) and e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsSetCard(0x3b23) and e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
 function c60150804.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0xff,0xff,1,e:GetHandler()) end

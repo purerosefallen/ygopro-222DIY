@@ -120,7 +120,7 @@ function c33700005.pencon2(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT)~=0
 end
 function c33700005.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)+1
 end
 function c33700005.operation(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(33700005,RESET_EVENT+0x1fe0000,0,1)

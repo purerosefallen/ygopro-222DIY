@@ -90,14 +90,14 @@ function cm.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()
 end
 function cm.acon(e)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_ADVANCE
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE)
 end
 function cm.regfilter(c,id)
 	return c:IsFaceup() and c:IsHasEffect(id) and c:GetFlagEffect(id)==0
 end
 function cm.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local id=e:GetLabel()
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_ADVANCE and Duel.IsExistingMatchingCard(cm.regfilter,tp,LOCATION_MZONE,0,1,nil,id)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE) and Duel.IsExistingMatchingCard(cm.regfilter,tp,LOCATION_MZONE,0,1,nil,id)
 end
 function cm.regop(e,tp,eg,ep,ev,re,r,rp)
 	local id=e:GetLabel()

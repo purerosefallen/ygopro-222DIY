@@ -46,7 +46,7 @@ function c16080031.distarget(e,c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function c16080031.spcon(e,tp,eg,ep,ev,re,r,rp,chk)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c16080031.spfilter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsSetCard(0x5ca) and c:IsCanBeSpecialSummoned(e,0,tp,false,true)

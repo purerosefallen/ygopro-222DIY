@@ -28,7 +28,7 @@ function c33700028.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c33700028.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c33700028.spfilter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

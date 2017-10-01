@@ -46,7 +46,7 @@ function c21401121.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c21401121.imcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c21401121.imfilter(e,re,r,rp)
 	return bit.band(r,REASON_EFFECT)~=0

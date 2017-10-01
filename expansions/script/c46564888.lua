@@ -46,7 +46,7 @@ function c46564888.valcheck(e,c)
 	e:SetLabel(att)
 end
 function c46564888.recon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_FUSION
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
 function c46564888.reop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -59,7 +59,7 @@ function c46564888.reop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e4)
 end
 function c46564888.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_FUSION and e:GetLabelObject():GetLabel()~=0
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and e:GetLabelObject():GetLabel()~=0
 end
 function c46564888.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

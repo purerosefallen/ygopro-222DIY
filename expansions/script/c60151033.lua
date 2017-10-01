@@ -73,7 +73,7 @@ function c60151033.splimit(e,c,tp,sumtp,sumpos)
 	return c:IsLocation(LOCATION_EXTRA) and not (c:IsType(TYPE_FUSION) or c:IsType(TYPE_XYZ))
 end
 function c60151033.cfilter(c,tp)
-	return c:IsControler(1-tp) and (c:GetSummonType()==SUMMON_TYPE_XYZ or c:GetSummonType()==SUMMON_TYPE_FUSION)
+	return c:IsControler(1-tp) and (c:IsSummonType(SUMMON_TYPE_XYZ) or c:IsSummonType(SUMMON_TYPE_FUSION))
 end
 function c60151033.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c60151033.cfilter,1,nil,tp)

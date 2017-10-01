@@ -81,7 +81,7 @@ function c66619908.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c66619908.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO 
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) 
 end
 function c66619908.filter3(c)
 	return c:IsFaceup() and c:IsAbleToHand() and c:IsCode(66619916)

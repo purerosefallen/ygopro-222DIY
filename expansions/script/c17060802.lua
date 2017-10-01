@@ -69,7 +69,7 @@ function c17060802.pcop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c17060802.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function c17060802.filter(c,e,tp)
 	return c17060802.IsMillion_Arthur(c) and not c:IsCode(17060802) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

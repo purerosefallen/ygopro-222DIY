@@ -9,7 +9,7 @@ function cm.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e0:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-		return e:GetHandler():GetSummonType()==SUMMON_TYPE_FUSION and Duel.IsPlayerCanDraw(tp,1) and Duel.GetFlagEffect(tp,m)==0
+		return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and Duel.IsPlayerCanDraw(tp,1) and Duel.GetFlagEffect(tp,m)==0
 	end)
 	e0:SetOperation(cm.skipop)
 	c:RegisterEffect(e0)

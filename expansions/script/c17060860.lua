@@ -45,7 +45,7 @@ function c17060860.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c17060860.pscon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_LINK
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c17060860.psfilter(c)
 	return c:IsFaceup() and c17060860.IsDark_Degenerate(c) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()

@@ -38,7 +38,7 @@ function c114000268.ntop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 
 function c114000268.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_NORMAL+1
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL)+1
 end
 function c114000268.filter(c)	
 	return c:IsType(TYPE_MONSTER) and ( c:IsSetCard(0x221) or c:IsCode(114000231) ) and c:IsAbleToGraveAsCost()

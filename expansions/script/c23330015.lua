@@ -50,14 +50,14 @@ function c23330015.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c23330015.lpcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO and e:GetHandler():GetMaterial():GetCount()==5
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and e:GetHandler():GetMaterial():GetCount()==5
 end
 function c23330015.lpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetLP(1-tp,2000)
 	Duel.SetLP(tp,8000)
 end
 function c23330015.splimit(e,c,tp,sumtp,sumpos)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO and (bit.band(sumtp,SUMMON_TYPE_RITUAL)==SUMMON_TYPE_RITUAL or bit.band(sumtp,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION or bit.band(sumtp,SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ or bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and (bit.band(sumtp,SUMMON_TYPE_RITUAL)==SUMMON_TYPE_RITUAL or bit.band(sumtp,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION or bit.band(sumtp,SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ or bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM)
 end
 function c23330015.matfilter1(c,syncard)
 	return c:IsType(TYPE_TUNER) and c:IsType(TYPE_SYNCHRO) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsCanBeSynchroMaterial(syncard)

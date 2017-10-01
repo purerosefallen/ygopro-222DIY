@@ -89,6 +89,6 @@ function c17060811.penop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c17060811.tcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
-	or e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	or e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
 end

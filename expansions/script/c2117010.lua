@@ -16,7 +16,7 @@ function c2117010.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c2117010.remcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_FUSION
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
 function c2117010.ffilter(c)
 	return c:IsSetCard(0x21c) and c:IsType(TYPE_MONSTER)

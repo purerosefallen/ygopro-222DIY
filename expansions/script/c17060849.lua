@@ -73,7 +73,7 @@ function c17060849.rpop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c17060849.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_FUSION
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
 function c17060849.filter(c,e,tp)
 	return c:IsType(TYPE_PENDULUM) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

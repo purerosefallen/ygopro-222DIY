@@ -45,7 +45,7 @@ function c60151321.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c60151321.regcon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ
+    return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
 function c60151321.filter2(c,e,tp)
     return not c:IsType(TYPE_XYZ) and c:IsSetCard(0xcb23) and c:IsType(TYPE_MONSTER)

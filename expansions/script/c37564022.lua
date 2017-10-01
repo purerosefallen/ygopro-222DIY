@@ -32,7 +32,7 @@ function cm.ovfilter(c)
 	return c:IsType(TYPE_XYZ) and c:GetRank()==4
 end
 function cm.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ and e:GetHandler():GetOverlayGroup():IsExists(cm.ovfilter,1,nil)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and e:GetHandler():GetOverlayGroup():IsExists(cm.ovfilter,1,nil)
 end
 function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

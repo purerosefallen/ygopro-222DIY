@@ -63,7 +63,7 @@ function c60150815.efop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c60150815.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsSetCard(0x3b23) and e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsSetCard(0x3b23) and e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
 function c60150815.filter2(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) 

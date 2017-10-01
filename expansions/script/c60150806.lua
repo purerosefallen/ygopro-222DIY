@@ -26,7 +26,7 @@ function c60150806.ntcon(e,c,minc)
 	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function c60150806.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_NORMAL+1
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL)+1
 end
 function c60150806.spfilter(c,e,tp)
 	return c:IsSetCard(0x3b23) and c:IsAttribute(ATTRIBUTE_DARK) 

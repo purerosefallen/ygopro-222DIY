@@ -80,7 +80,7 @@ function c1200051.operation2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c1200051.con(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO 
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) 
 end
 function c1200051.rfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfba) and c:IsReleasable()

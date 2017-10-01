@@ -10,7 +10,7 @@ function cm.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e4:SetProperty(0x14000+EFFECT_FLAG_CARD_TARGET)
 	e4:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-		return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ
+		return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 	end)
 	e4:SetTarget(cm.destg1)
 	e4:SetOperation(cm.desop1)

@@ -82,7 +82,7 @@ function c10119005.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c10119005.sumfilter(c)
-	return c:GetSummonType()==SUMMON_TYPE_XYZ 
+	return c:IsSummonType(SUMMON_TYPE_XYZ) 
 end
 function c10119005.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 

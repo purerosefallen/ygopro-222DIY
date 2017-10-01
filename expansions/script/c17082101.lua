@@ -216,10 +216,10 @@ function c17082101.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c17082101.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO and e:GetLabel()==1
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and e:GetLabel()==1
 end
 function c17082101.mfilter(c)
-	return c:IsType(TYPE_PENDULUM) and c:GetSummonType()==SUMMON_TYPE_PENDULUM
+	return c:IsType(TYPE_PENDULUM) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 		and (c:IsType(TYPE_TUNER) or c:GetFlagEffect(17082101)~=0)
 end
 function c17082101.valcheck(e,c)

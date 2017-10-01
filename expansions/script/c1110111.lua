@@ -50,7 +50,7 @@ function c1110111.vfilter3(c)
 end
 --
 function c1110111.con1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_FUSION 
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) 
 end
 --
 function c1110111.tg1(e,tp,eg,ep,ev,re,r,rp,chk)

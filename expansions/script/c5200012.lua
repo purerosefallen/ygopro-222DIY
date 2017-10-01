@@ -46,7 +46,7 @@ function c5200012.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c5200012.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ and e:GetLabel()==1
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and e:GetLabel()==1
 end
 function c5200012.valcheck(e,c)
 	local g=c:GetMaterial()

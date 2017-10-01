@@ -51,5 +51,5 @@ function c23330014.rmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(tp,cg)
 end
 function c23330014.splimit(e,c,tp,sumtp,sumpos)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO and (bit.band(sumtp,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION or bit.band(sumtp,SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and (bit.band(sumtp,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION or bit.band(sumtp,SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ)
 end

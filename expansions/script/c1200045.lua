@@ -88,7 +88,7 @@ function c1200045.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local mg=c:GetMaterial()
 	local ct=mg:GetCount()
-	if chk==0 then return c:GetSummonType()==SUMMON_TYPE_SYNCHRO
+	if chk==0 then return c:IsSummonType(SUMMON_TYPE_SYNCHRO)
 		and ct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>=ct
 		and mg:FilterCount(c1200045.spfilter,nil,e,tp,c)==ct end
 	Duel.SetTargetCard(mg)

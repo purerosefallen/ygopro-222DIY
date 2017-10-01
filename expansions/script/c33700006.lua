@@ -135,7 +135,7 @@ function c33700006.descon(e)
 	return e:GetHandler():GetFlagEffect(33700006)~=0 and not Duel.IsExistingMatchingCard(c33700006.actfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function c33700006.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)+1
 end
 function c33700006.operation(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(33700006,RESET_EVENT+0x1fe0000,0,1)

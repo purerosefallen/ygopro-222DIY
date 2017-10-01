@@ -26,7 +26,7 @@ function c1150032.initial_effect(c)
 end
 --
 function c1150032.cfilter1(c)
-	return c:IsFaceup() and c:IsRace(RACE_PLANT) and c:GetLevel()>7 and c:GetSummonType()==SUMMON_TYPE_ADVANCE 
+	return c:IsFaceup() and c:IsRace(RACE_PLANT) and c:GetLevel()>7 and c:IsSummonType(SUMMON_TYPE_ADVANCE) 
 end
 function c1150032.con1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c1150032.cfilter1,tp,LOCATION_ONFIELD,0,1,nil)

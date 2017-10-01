@@ -90,7 +90,7 @@ function c17060844.ntfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsRace(RACE_WARRIOR) and c:IsCanBeSynchroMaterial()
 end
 function c17060844.matfilter1(c,syncard)
-	return (c:IsType(TYPE_PENDULUM) and c17060844.IsMillion_Arthur(c)) and c:GetSummonType()==SUMMON_TYPE_PENDULUM and c:IsNotTuner() and c:IsFaceup() and c:IsCanBeSynchroMaterial(syncard)
+	return (c:IsType(TYPE_PENDULUM) and c17060844.IsMillion_Arthur(c)) and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsNotTuner() and c:IsFaceup() and c:IsCanBeSynchroMaterial(syncard)
 		and Duel.IsExistingMatchingCard(c17060844.matfilter2,0,LOCATION_MZONE,LOCATION_MZONE,1,c,syncard)
 end
 function c17060844.matfilter2(c,syncard)

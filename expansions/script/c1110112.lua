@@ -54,7 +54,7 @@ function c1110112.filter1(c,e,tp)
 	return c:IsCode(1110111) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsFaceup() 
 end
 function c1110112.con1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_FUSION 
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) 
 end
 --
 function c1110112.tg1(e,tp,eg,ep,ev,re,r,rp,chk)

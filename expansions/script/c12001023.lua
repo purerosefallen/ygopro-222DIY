@@ -43,7 +43,7 @@ function c12001023.ntfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xfb0) and c:IsCanBeSynchroMaterial()
 end
 function c12001023.matfilter1(c,syncard)
-	return c:IsType(TYPE_PENDULUM) and c:GetSummonType()==SUMMON_TYPE_PENDULUM and c:IsNotTuner() and c:IsFaceup() and c:IsCanBeSynchroMaterial(syncard)
+	return c:IsType(TYPE_PENDULUM) and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsNotTuner() and c:IsFaceup() and c:IsCanBeSynchroMaterial(syncard)
 		and Duel.IsExistingMatchingCard(c12001023.matfilter2,0,LOCATION_MZONE,LOCATION_MZONE,1,c,syncard)
 end
 function c12001023.matfilter2(c,syncard)

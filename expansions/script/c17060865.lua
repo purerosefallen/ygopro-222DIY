@@ -87,7 +87,7 @@ function c17060865.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c17060865.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_FUSION
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
 function c17060865.tdfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToDeck()

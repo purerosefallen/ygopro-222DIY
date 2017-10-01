@@ -115,7 +115,7 @@ function c33700030.ntop(e,tp,eg,ep,ev,re,r,rp,c)
 	c:RegisterEffect(e2)
 end
 function c33700030.valcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_NORMAL+1
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL)+1
 end
 function c33700030.valop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

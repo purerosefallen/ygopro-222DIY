@@ -96,7 +96,7 @@ function c17060843.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c17060843.xyzcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return tc:GetSummonType()==SUMMON_TYPE_XYZ and tc:IsControler(1-tp)
+	return tc:IsSummonType(SUMMON_TYPE_XYZ) and tc:IsControler(1-tp)
 end
 function c17060843.xyzcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

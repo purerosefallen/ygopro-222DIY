@@ -22,7 +22,7 @@ function cm.initial_effect(c)
 	e4:SetProperty(0x14000)
 	e4:SetCost(cm.rm)
 	e4:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-		return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ
+		return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 	end)
 	e4:SetTarget(cm.drtg)
 	e4:SetOperation(cm.drop)

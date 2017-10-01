@@ -43,7 +43,7 @@ function c17060801.IsMillion_Arthur(c)
 	return m and m.is_named_with_Million_Arthur
 end
 function c17060801.cfilter(c,tp)
-	return c:IsFaceup() and c17060801.IsMillion_Arthur(c) and c:IsControler(tp) and c:GetSummonType()==SUMMON_TYPE_PENDULUM
+	return c:IsFaceup() and c17060801.IsMillion_Arthur(c) and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function c17060801.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c17060801.cfilter,1,nil,tp)

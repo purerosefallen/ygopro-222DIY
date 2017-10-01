@@ -80,7 +80,7 @@ function c66678905.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c66678905.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
 function c66678905.filter(c)
 	return c:IsSetCard(0x665) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

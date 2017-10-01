@@ -53,7 +53,7 @@ function c10113087.retg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,e:GetLabel())
 end
 function c10113087.recon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)+1
 end
 --mdzz with some fuck card has 2 or more races (oh ,,,,,I have 2 card like this....XD)
 function c10113087.spcon(e,c)

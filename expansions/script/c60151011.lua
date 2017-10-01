@@ -110,7 +110,7 @@ end
 function c60151011.remcon(e,tp,eg,ep,ev,re,r,rp)
     local ct1=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
     local ct2=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ and ct1<ct2
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and ct1<ct2
 end
 function c60151011.target(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

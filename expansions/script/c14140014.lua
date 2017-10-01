@@ -10,7 +10,7 @@ function cm.initial_effect(c)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(0x14000)
 	e1:SetCondition(function(e)
-		return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ
+		return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 	end)
 	e1:SetCost(function(e)
 		e:SetLabel(1)

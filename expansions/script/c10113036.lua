@@ -21,7 +21,7 @@ function c10113036.initial_effect(c)
 	c:RegisterEffect(e2)	
 end
 function c10113036.con(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c10113036.op(e,tp,eg,ep,ev,re,r,rp)
 	--Atk up

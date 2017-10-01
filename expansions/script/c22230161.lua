@@ -95,7 +95,7 @@ end
 function c22230161.spr(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if bit.band(r,0x41)~=0x41 or not c:IsPreviousLocation(LOCATION_ONFIELD) then return end
-	if c:GetSummonType()==SUMMON_TYPE_LINK then
+	if c:IsSummonType(SUMMON_TYPE_LINK) then
 		if Duel.GetCurrentPhase()==PHASE_STANDBY then
 			c:RegisterFlagEffect(22230161,RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_STANDBY,0,2)
 		else

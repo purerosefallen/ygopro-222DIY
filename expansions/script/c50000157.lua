@@ -56,7 +56,7 @@ function c50000157.IsKensei(c)
 	return mt and mt.is_named_with_Kensei
 end
 function c50000157.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c50000157.desfilter(c)
 	return c:IsFaceup() and c50000157.IsKensei(c)

@@ -89,7 +89,7 @@ function cm.efop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
 function cm.filter(c,tp)
 	return not c:IsType(TYPE_TOKEN) and (c:IsControler(tp) or c:IsAbleToChangeControler())

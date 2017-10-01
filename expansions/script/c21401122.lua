@@ -40,7 +40,7 @@ function c21401122.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c21401122.imcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c21401122.imfilter(e,te)
 	return (te:IsActiveType(TYPE_SPELL) or (te:IsActiveType(TYPE_MONSTER) and te:GetHandler():GetRace(RACE_SPELLCASTER)))

@@ -65,10 +65,10 @@ function c50000207.IsRely(c)
 end
 --ritual effect
 function c50000207.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_RITUAL 
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL) 
 end
 function c50000207.filter(c)
-	return c:GetSummonType()==SUMMON_TYPE_SPECIAL and c:IsAbleToDeck()
+	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsAbleToDeck()
 end
 function c50000207.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c50000207.filter,tp,0,LOCATION_MZONE,1,nil) end
@@ -87,7 +87,7 @@ end
 --se or sp
 function c50000207.con(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetSummonType()==SUMMON_TYPE_RITUAL 
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_RITUAL) 
 end
 function c50000207.filter(c,ft,e,tp)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsRace(RACE_SPELLCASTER)  and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))

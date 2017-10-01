@@ -103,7 +103,7 @@ function cm.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
 	Senya.OverlayGroup(c,g,false,true)
 end
 function cm.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
 function cm.thfilter1(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsLevelBelow(4)

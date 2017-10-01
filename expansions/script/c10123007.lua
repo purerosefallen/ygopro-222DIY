@@ -26,7 +26,7 @@ function c10123007.thfilter(c,eg,e,tp)
 end
 function c10123007.thfilter2(c,mc,tp)
 	local mg=c:GetMaterial()
-	return c:GetSummonType()==SUMMON_TYPE_SYNCHRO and mc:GetReasonCard()==c and mg:GetCount()>0 and mg:IsExists(c10123007.thfilter3,1,nil,tp)
+	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and mc:GetReasonCard()==c and mg:GetCount()>0 and mg:IsExists(c10123007.thfilter3,1,nil,tp)
 end
 function c10123007.thfilter3(c,tp)
 	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsSetCard(0x5334)

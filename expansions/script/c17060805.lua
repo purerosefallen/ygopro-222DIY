@@ -78,7 +78,7 @@ function c17060805.pcop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c17060805.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ and e:GetLabel()==1
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and e:GetLabel()==1
 end
 function c17060805.filter(c)
 	return c:IsType(TYPE_MONSTER)

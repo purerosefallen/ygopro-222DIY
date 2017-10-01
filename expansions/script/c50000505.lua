@@ -86,7 +86,7 @@ function c50000505.linkop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 ---
 function c50000505.spcon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():GetSummonType()==SUMMON_TYPE_LINK 
+    return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) 
 end
 function c50000505.thfilter(c)
     return c:IsSetCard(0x50e) and c:IsAbleToHand()

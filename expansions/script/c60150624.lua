@@ -60,7 +60,7 @@ function c60150624.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ResetFlagEffect(tp,60150624)
 end
 --[[function c60150624.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c60150624.tgfilter(c)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()

@@ -10,7 +10,7 @@ function cm.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-		return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ
+		return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 	end)
 	e2:SetProperty(0x14000)
 	e2:SetCost(Senya.PrismRemoveExtraCost)

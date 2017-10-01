@@ -48,7 +48,7 @@ end
 
 function c10119008.sumfilter(c,tp)
 	local mg=c:GetMaterial()
-	return c:GetSummonType()==SUMMON_TYPE_XYZ and mg:GetCount()>0 and mg:IsExists(c10119008.effilter,1,nil,tp) 
+	return c:IsSummonType(SUMMON_TYPE_XYZ) and mg:GetCount()>0 and mg:IsExists(c10119008.effilter,1,nil,tp) 
 end
 
 function c10119008.desfilter(c)
@@ -72,7 +72,7 @@ end
 
 function c10119008.cdsstg(e,c)
 	local mg=c:GetMaterial()
-	return c:GetSummonType()==SUMMON_TYPE_XYZ and mg:GetCount()>0 and mg:IsExists(c10119008.effilter,1,nil,e:GetHandlerPlayer())
+	return c:IsSummonType(SUMMON_TYPE_XYZ) and mg:GetCount()>0 and mg:IsExists(c10119008.effilter,1,nil,e:GetHandlerPlayer())
 end
 
 function c10119008.effilter(c,tp)

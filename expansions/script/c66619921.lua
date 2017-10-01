@@ -238,7 +238,7 @@ function c66619921.desop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToBattle() then Duel.Remove(tc,POS_FACEUP,REASON_EFFECT) end
 end
 function c66619921.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
 function c66619921.tfilter(c)
 	return c:GetOriginalCode()==66619919

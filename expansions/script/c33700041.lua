@@ -22,7 +22,7 @@ function c33700041.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c33700041.cfilter(c,e,tp)
-	return  c:GetSummonPlayer()==tp and c:GetSummonType()==SUMMON_TYPE_PENDULUM
+	return  c:GetSummonPlayer()==tp and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 		and (not e or c:IsRelateToEffect(e))
 end
 function c33700041.spcon(e,tp,eg,ep,ev,re,r,rp)

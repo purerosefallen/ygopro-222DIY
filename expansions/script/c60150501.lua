@@ -50,7 +50,7 @@ function c60150501.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c60150501.descon2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)+1
 end
 function c60150501.desop2(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

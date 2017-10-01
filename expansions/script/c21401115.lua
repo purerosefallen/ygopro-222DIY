@@ -34,7 +34,7 @@ function c21401115.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c21401115.imcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c21401115.imfilter(e,te)
 	return te:IsActiveType(TYPE_MONSTER) and te:GetHandler():GetRace(RACE_DRAGON)

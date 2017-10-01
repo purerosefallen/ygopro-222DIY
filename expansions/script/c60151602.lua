@@ -40,7 +40,7 @@ function c60151602.initial_effect(c)
     c:RegisterEffect(e4)
 end
 function c60151602.spcondition(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM
+    return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function c60151602.filter(c)
     return c:IsFaceup() and c:IsSetCard(0xcb25) and c:IsType(TYPE_MONSTER)

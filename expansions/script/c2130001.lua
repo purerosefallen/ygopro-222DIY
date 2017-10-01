@@ -24,7 +24,7 @@ function c2130001.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c2130001.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO 
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) 
 end
 function c2130001.tgop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
