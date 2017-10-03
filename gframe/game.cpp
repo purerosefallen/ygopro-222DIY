@@ -735,6 +735,11 @@ void Game::MainLoop() {
 				if(dInfo.time_left[dInfo.time_player])
 					dInfo.time_left[dInfo.time_player]--;
 		}
+		//modded
+		if (DuelClient::try_needed) {
+			DuelClient::try_needed = false;
+			DuelClient::StartClient(DuelClient::temp_ip, DuelClient::temp_port, false);
+		}
 	}
 	DuelClient::StopClient(true);
 	if(mainGame->dInfo.isSingleMode)
