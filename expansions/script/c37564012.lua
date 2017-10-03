@@ -40,17 +40,20 @@ end
 function cm.spcfilter(c)
 	return Senya.check_set_rose(c) and not c:IsPublic()
 end
+function cm.spcheck(g,tp,c)
+	return Duel.GetLocationCountFromEx(tp,1-tp,g,c)>0
+end
 function cm.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local mg=Duel.GetMatchingGroup(cm.sprfilter1,tp,0,LOCATION_MZONE,nil)	
-	return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)==0 and Senya.CheckGroup(mg,Senya.CheckFieldFilter,nil,3,63,tp,c) and Duel.IsExistingMatchingCard(cm.spcfilter,tp,LOCATION_HAND,0,1,nil) and Duel.GetCustomActivityCount(m,tp,ACTIVITY_CHAIN)==0
+	return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)==0 and Senya.CheckGroup(mg,cm.spcheck,nil,3,63,tp,c) and Duel.IsExistingMatchingCard(cm.spcfilter,tp,LOCATION_HAND,0,1,nil) and Duel.GetCustomActivityCount(m,tp,ACTIVITY_CHAIN)==0
 end
 function cm.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,cm.spcfilter,tp,LOCATION_HAND,0,1,1,nil)
 	local mg=Duel.GetMatchingGroup(cm.sprfilter1,tp,0,LOCATION_MZONE,nil)
-	local g1=Senya.SelectGroup(tp,HINTMSG_TOGRAVE,mg,Senya.CheckFieldFilter,nil,3,63,tp,c)
+	local g1=Senya.SelectGroup(tp,HINTMSG_TOGRAVE,mg,cm.spcheck,nil,3,63,tp,c)
 	Duel.Hint(HINT_CARD,0,m)
 	Duel.ConfirmCards(1-tp,g)
 	Duel.Release(g1,REASON_COST)
