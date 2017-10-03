@@ -78,7 +78,7 @@ function c12001021.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 		Duel.ShuffleDeck(tp)
 	end
-	local tg=Duel.GetMatchingGroup(Card.IsAbleToDeck,p,			  LOCATION_HAND,0,nil)
+	local tg=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_HAND,0,nil)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 			local sg1=tg:Select(tp,Card.IsSetCard,1,1,nil,nil)
 			Duel.ConfirmCards(1-tp,sg1)
