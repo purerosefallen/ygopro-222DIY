@@ -1,7 +1,13 @@
 version: '{build}'
 skip_tags: true
 
+environment:
+  access_token:
+    secure: DOOS4g7CT8ctOgiMr62K56qQ1FO6s2ESpqNZlhf8F4nomemvvwxV/pRj9nbKmtjR
+
 install:
+  - git submodule update --init --recursive
+
   # environment and system dependency
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/premake/premake-core/releases/download/v5.0.0-alpha12/premake-5.0.0-alpha12-windows.zip ; exit 0"
   - 7z x premake-5.0.0-alpha12-windows.zip
@@ -36,9 +42,8 @@ install:
   # let premake happy
   - xcopy /E premake\* .
   
-  # patch irrlicht and lua
+  # patch irrlicht
   - patch -p0 < irrlicht\irrlicht.patch
-  # - patch -p0 < lua\lua.patch
   
   # premake
   - premake5 vs2015
@@ -50,36 +55,13 @@ build:
     parallel: true
 
 after_build:
-  - git config --global user.name "Smile-DK"
-  - git config --global user.email "2236141431@qq.com"
-  
-  - git checkout data
-  - git pull origin data
-
-  - rm -rf ygopro_222.exe
-  - rm -rf irrKlang.dll
-  - rm -rf ikpMP3.dll
-
-  - mv bin\release\ygopro.exe ygopro_222.exe
-  - mv irrklang\bin\win32-visualStudio\irrKlang.dll .
-  - mv irrklang\bin\win32-visualStudio\ikpMP3.dll .
-  
-  - git add ygopro_222.exe
-  - git add irrKlang.dll
-  - git add ikpMP3.dll
-  - git commit -m "Builded by Appveyor"
-  - git tag No-Build HEAD
-  - git push %Smile%purerosefallen/ygopro-222DIY data
-  
-  - 7z a -mx=9 ygopro-222DIY-data.7z ygopro_222.exe irrKlang.dll ikpMP3.dll lflist.conf expansions sound -xr!.git*
+  - ps: move bin\release\ygopro.exe .
 
 test: off
 
 artifacts:
-  - path: ygopro_222.exe
-    name: ygopro_222
-  - path: ygopro-222DIY-data.7z
-    name: ygopro-222DIY-data
+  - path: ygopro.exe
+    name: ygopro temp build
 
 cache:
   - premake-5.0.0-alpha12-windows.zip
@@ -89,7 +71,3 @@ cache:
   - lua-5.2.4.tar.gz
   - sqlite-amalgamation-3200100.zip
   - irrKlang-32bit-1.5.0.zip
-
-branches:
-  only:
-  - local
