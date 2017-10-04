@@ -1,15 +1,13 @@
 --鸟笼的提包人 美树沙耶加
 function c11200009.initial_effect(c)
-	  --xyz summon
 	c:EnableReviveLimit() 
+	 --fusion material
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e1:SetRange(LOCATION_EXTRA)
-	e1:SetCondition(c11200009.overcon)
-	e1:SetOperation(c11200009.overop)
-	e1:SetValue(SUMMON_TYPE_XYZ)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCode(EFFECT_FUSION_MATERIAL)
+	e1:SetCondition(c11200009.fuscon)
+	e1:SetOperation(c11200009.fusop)
 	c:RegisterEffect(e1)
 	--effect
 	local e2=Effect.CreateEffect(c)
@@ -31,24 +29,100 @@ function c11200009.initial_effect(c)
 	e3:SetOperation(c11200009.spop)
 	c:RegisterEffect(e3)
 end
-function c11200009.ovfilter(c,g,tp)
-   return c:IsSetCard(0x134)  and c:IsFaceup() and c:IsCanBeXyzMaterial(g) and Duel.IsExistingMatchingCard(c11200009.ovfilter2,tp,LOCATION_MZONE,0,1,c,g)
+function c11200009.ffilter(c,fc)
+	return c11200009.ffilter1(c,fc) or c11200009.ffilter2(c,fc)
 end
-function c11200009.ovfilter2(c,g)
-   return c:IsType(TYPE_RITUAL) and c:IsFaceup() and c:IsCanBeXyzMaterial(g) 
+function c11200009.ffilter1(c,fc)
+	return c:IsFusionSetCard(0x134) and c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial(fc) 
 end
-function c11200009.overcon(e,c)
-	if  Duel.IsExistingMatchingCard(c11200009.ovfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil,e:GetHandler(),e:GetHandlerPlayer()) then return true
-	else return false end
+function c11200009.ffilter2(c,fc)
+	return c:IsType(TYPE_RITUAL) and c:IsCanBeFusionMaterial(fc) 
 end
-function c11200009.overop(e,tp,eg,ep,ev,re,r,rp,c) 
+function c11200004.spfilter1(c,tp,mg,fc)
+	  return mg:IsExists(c11200009.spfilter2,1,c,tp,c,fc) 
+end
+function c11200009.spfilter2(c,tp,mc,fc)
+	return ((c11200009.ffilter1(c,fc) and c11200009.ffilter2(mc,fc))
+		or (c11200009.ffilter2(c,fc) and c11200009.ffilter1(mc,fc)))
+		and Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(c,mc))>0
+end
+function c11200009.fuscon(e,g,gc,chkf)
+	if g==nil then return true end
 	local c=e:GetHandler()
-	local g1=Duel.SelectMatchingCard(tp,c11200009.ovfilter,tp,LOCATION_MZONE,0,1,1,nil,e:GetHandler(),tp)
-	local g2=Duel.SelectMatchingCard(tp,c11200009.ovfilter2,tp,LOCATION_MZONE,0,1,1,g1:GetFirst(),e:GetHandler())
-	g1:Merge(g2)
-	if g1:GetCount()==2  then
-	Duel.Overlay(c,g1)
+	local tp=e:GetHandlerPlayer()
+	local mg=g:Filter(c11200009.ffilter,nil,c)
+	local mg1=g:Filter(c11200009.ffilter1,nil,c)
+	local mg2=g:Filter(c11200009.ffilter2,nil,c)
+	local tg=Duel.GetMatchingGroup(c11200009.ffilter,tp,LOCATION_DECK,0,nil,c)
+	local tg1=Duel.GetMatchingGroup(c11200009.ffilter1,tp,LOCATION_DECK,0,nil,c)
+	 local tg2=Duel.GetMatchingGroup(c11200009.ffilter2,tp,LOCATION_DECK,0,nil,c)
+	if gc then
+		if not mg1:IsContains(gc) and not mg2:IsContains(gc) then return false end
+	   if Duel.GetFlagEffect(tp,11200002)~=0 then
+		return mg:IsExists(c11200009.spfilter2,1,gc,tp,gc,c) or tg:IsExists(c11200009.spfilter2,1,gc,tp,gc,c)
+		else
+		return mg:IsExists(c11200009.spfilter2,gc,tp,gc,c) 
 end
+end
+	if Duel.GetFlagEffect(tp,11200002)~=0 and mg1:GetCount()==0 and
+	mg2:GetCount()~=0  then
+	 return tg1:IsExists(c11200009.spfilter1,1,nil,tp,mg2,c) 
+   elseif Duel.GetFlagEffect(tp,11200002)~=0 and mg2:GetCount()==0 and
+	mg1:GetCount()~=0  then
+	return tg2:IsExists(c11200009.spfilter1,1,nil,tp,mg1,c)
+	 elseif Duel.GetFlagEffect(tp,11200002)~=0 and mg:GetCount()==1 then
+	return tg:IsExists(c11200009.spfilter1,1,nil,tp,mg,c)
+	else
+	return mg:IsExists(c11200009.spfilter1,1,nil,tp,mg,c) 
+end
+end
+function c11200009.fusop(e,tp,eg,ep,ev,re,r,rp,gc,chkf)
+	local c=e:GetHandler()
+	local mg=eg:Filter(c11200009.ffilter,nil,c)
+	local mg1=eg:Filter(c11200009.ffilter1,nil,c)
+	local mg2=eg:Filter(c11200009.ffilter2,nil,c)
+	local tg=Duel.GetMatchingGroup(c11200009.ffilter,tp,LOCATION_DECK,0,nil,c)
+	local tg1=Duel.GetMatchingGroup(c11200009.ffilter1,tp,LOCATION_DECK,0,nil,c)
+	 local tg2=Duel.GetMatchingGroup(c11200009.ffilter2,tp,LOCATION_DECK,0,nil,c)
+	local g=nil
+	local sg
+	if gc then
+		g=Group.FromCards(gc)
+		mg:RemoveCard(gc)
+	else
+	   if Duel.GetFlagEffect(tp,11200002)~=0 and mg1:GetCount()~=0 and
+	mg2:GetCount()~=0 and tg:GetCount()>0 and mg:GetCount()>1 and Duel.SelectYesNo(tp,aux.Stringid(11200004,3)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+		g=tg:FilterSelect(tp,c11200009.spfilter1,1,1,nil,tp,mg,c)
+		Duel.ResetFlagEffect(tp,11200002)
+		elseif Duel.GetFlagEffect(tp,11200002)~=0 and mg2:GetCount()==0 and mg1:GetCount()~=0 and tg2:GetCount()>0  then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+		g=tg2:FilterSelect(tp,c11200009.spfilter1,1,1,nil,tp,mg1,c)
+		Duel.ResetFlagEffect(tp,11200002)
+	   elseif Duel.GetFlagEffect(tp,11200002)~=0 and mg2:GetCount()~=0 and mg1:GetCount()==0 and tg1:GetCount()>0  then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+		g=tg1:FilterSelect(tp,c11200009.spfilter1,1,1,nil,tp,mg2,c)
+		Duel.ResetFlagEffect(tp,11200002)
+		 elseif Duel.GetFlagEffect(tp,11200002)~=0 and mg:GetCount()==1  then
+		 Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+		g=tg:FilterSelect(tp,c11200009.spfilter1,1,1,nil,tp,mg,c)
+		Duel.ResetFlagEffect(tp,11200002)
+		else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+		g=mg:FilterSelect(tp,c11200009.spfilter1,1,1,nil,tp,mg,c)
+		mg:Sub(g)
+end
+	end
+	  if Duel.GetFlagEffect(tp,11200002)~=0 and tg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(11200004,3)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+		sg=tg:FilterSelect(tp,c11200009.spfilter2,1,1,nil,tp,g:GetFirst(),c)
+		Duel.ResetFlagEffect(tp,11200002)
+		 else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
+		sg=mg:FilterSelect(tp,c11200009.spfilter2,1,1,nil,tp,g:GetFirst(),c)
+end
+	g:Merge(sg)
+	Duel.SetFusionMaterial(g)
 end
 function c11200009.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

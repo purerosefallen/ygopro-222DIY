@@ -4,7 +4,7 @@ function c11200005.initial_effect(c)
 	c:EnableReviveLimit()
 	--atk
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(11200005,0))
+	e1:SetDescription(aux.Stringid(11200005,1))
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -18,7 +18,7 @@ function c11200005.initial_effect(c)
 	e1:SetOperation(c11200005.atkop)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(11200005,1))
+	e2:SetDescription(aux.Stringid(11200005,2))
 	e2:SetCategory(CATEGORY_DISABLE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -113,7 +113,7 @@ function c11200005.disop(e,tp,eg,ep,ev,re,r,rp)
 		mg:GetFirst():RegisterEffect(e2)
 end
 function c11200005.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Dulel.GetFlagEffect(tp,11200005)>0 
+	return Duel.GetFlagEffect(tp,11200005)>0 
 end
 function c11200005.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end

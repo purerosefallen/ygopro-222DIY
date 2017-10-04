@@ -33,7 +33,6 @@ function c11200006.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e3:SetCountLimit(1)
 	e3:SetCost(c11200006.cost)
 	e3:SetTarget(c11200006.tg)
 	e3:SetOperation(c11200006.op)
@@ -198,12 +197,12 @@ function c11200006.refilter(c)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsReleasable()
 end
 function c11200006.refilter2(c)
-	return c:IsSetCard(0x134) and c:IsReleasable()
+	return c:IsSetCard(0x134) and c:IsType(TYPE_MONSTER) and c:IsReleasable()
 end
 function c11200006.recon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local g=Duel.GetMatchingGroup(c11200006.filter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(c11200006.refilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
 		and g:GetCount()>1 and g:IsExists(c11200006.refilter2,1,nil)
 end
