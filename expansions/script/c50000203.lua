@@ -67,6 +67,7 @@ function c50000203.thcon(e,tp,eg,ep,ev,re,r,rp)
     return eg:IsExists(c50000203.thfilter,1,nil,tp)
 end
 function c50000203.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+    if not e:GetHandler():IsRelateToEffect(e) then return end
     if chk==0 then return true end
     local g=eg:Filter(c50000203.thfilter,nil,tp)
     Duel.SetTargetCard(g)
