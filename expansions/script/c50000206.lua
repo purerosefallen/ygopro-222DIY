@@ -51,7 +51,7 @@ function c50000206.IsRely(c)
 end
 --ritual effect
 function c50000206.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL) 
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_RITUAL 
 end
 function c50000206.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
@@ -69,7 +69,7 @@ end
 --tohand
 function c50000206.secon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_RITUAL) 
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetSummonType()==SUMMON_TYPE_RITUAL 
 end
 function c50000206.sefilter(c)
 	 return c:IsType(TYPE_SPELL) and c50000206.IsRely(c) and c:IsAbleToHand()

@@ -51,7 +51,7 @@ function c50000205.IsRely(c)
 end
 --ritual effect
 function c50000205.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL) 
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_RITUAL 
 end
 function c50000205.filter(c)
 	return c:GetSummonLocation()==LOCATION_EXTRA and c:IsAbleToDeck()
@@ -70,7 +70,7 @@ end
 --tohand
 function c50000205.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_RITUAL) 
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetSummonType()==SUMMON_TYPE_RITUAL 
 end
 function c50000205.thfilter(c)
 	 return c:IsType(TYPE_PENDULUM) and c:IsAttribute(ATTRIBUTE_WATER) and c:IsRace(RACE_SPELLCASTER) and c:IsAbleToHand()
