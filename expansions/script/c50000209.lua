@@ -94,7 +94,6 @@ function c50000209.filter(c)
     return c:IsAttribute(ATTRIBUTE_WATER) and c:IsRace(RACE_SPELLCASTER) and c:IsAbleToHand()
 end
 function c50000209.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if not e:GetHandler():IsRelateToEffect(e) then return end
     if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c50000209.filter(chkc) end
     if chk==0 then return Duel.IsExistingTarget(c50000209.filter,tp,LOCATION_GRAVE,0,1,nil) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -102,6 +101,7 @@ function c50000209.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c50000209.thop(e,tp,eg,ep,ev,re,r,rp)
+    if not e:GetHandler():IsRelateToEffect(e) then return end
     local tc=Duel.GetFirstTarget()
     if tc:IsRelateToEffect(e) then
         Duel.SendtoHand(tc,nil,REASON_EFFECT)
