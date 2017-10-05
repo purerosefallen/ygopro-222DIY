@@ -71,13 +71,13 @@ function c50000207.filter1(c)
     return c:GetSummonType()==SUMMON_TYPE_SPECIAL and c:IsAbleToDeck()
 end
 function c50000207.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c50000207.filter1,tp,0,LOCATION_MZONE,1,nil) end
-    local g=Duel.GetMatchingGroup(c50000207.filter1,tp,0,LOCATION_MZONE,nil)
+    if chk==0 then return Duel.IsExistingMatchingCard(c50000207.filter1,tp,0,LOCATION_ONFIELD,1,nil) end
+    local g=Duel.GetMatchingGroup(c50000207.filter1,tp,0,LOCATION_ONFIELD,nil)
     Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
     Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1500)
 end
 function c50000207.tdop(e,tp,eg,ep,ev,re,r,rp)
-    local g=Duel.GetMatchingGroup(c50000207.filter1,tp,0,LOCATION_MZONE,nil)
+    local g=Duel.GetMatchingGroup(c50000207.filter1,tp,0,LOCATION_ONFIELD,nil)
     if g:GetCount()>0 then
         Duel.SendtoDeck(g,nil,3,REASON_EFFECT)
         Duel.BreakEffect()
