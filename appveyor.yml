@@ -68,8 +68,6 @@ after_build:
   - git add irrKlang.dll
   - git add ikpMP3.dll
   - git commit -m "Builded by Appveyor"
-  - git tag No-Build HEAD
-  - git push --tag
   - git push %Smile%purerosefallen/ygopro-222DIY data
   
   - 7z a -mx=9 ygopro-222DIY-data.7z ygopro_222.exe irrKlang.dll ikpMP3.dll lflist.conf expansions sound -xr!.git*
