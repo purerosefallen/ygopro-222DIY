@@ -67,19 +67,18 @@ end
 function c50000207.tdcon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():GetSummonType()==SUMMON_TYPE_RITUAL 
 end
-function c50000207.filter1(c)
-    return c:GetSummonType()==SUMMON_TYPE_SPECIAL and c:IsAbleToDeck()
+function c50000207.tdfilter(c)
+    return bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)~=0 and c:IsAbleToDeck()
 end
 function c50000207.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c50000207.filter1,tp,0,LOCATION_ONFIELD,1,nil) end
-    local g=Duel.GetMatchingGroup(c50000207.filter1,tp,0,LOCATION_ONFIELD,nil)
+    if chk==0 then return Duel.IsExistingMatchingCard(c50000207.tdfilter,tp,0,LOCATION_ONFIELD,1,nil) end
+    local g=Duel.GetMatchingGroup(c50000207.tdfilter,tp,0,LOCATION_ONFIELD,nil)
     Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
-    Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1500)
 end
 function c50000207.tdop(e,tp,eg,ep,ev,re,r,rp)
-    local g=Duel.GetMatchingGroup(c50000207.filter1,tp,0,LOCATION_ONFIELD,nil)
+    local g=Duel.GetMatchingGroup(c50000207.tdfilter,tp,0,LOCATION_ONFIELD,nil)
     if g:GetCount()>0 then
-        Duel.SendtoDeck(g,nil,3,REASON_EFFECT)
+        Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
         Duel.BreakEffect()
         Duel.Damage(1-tp,1500,REASON_EFFECT)
     end
