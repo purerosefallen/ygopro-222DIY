@@ -52,13 +52,6 @@ function c33700004.initial_effect(c)
 	e5:SetCondition(c33700004.pencon2)
 	c:RegisterEffect(e5)
 	--destroy
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e6:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e6:SetCondition(c33700004.condition)
-	e6:SetOperation(c33700004.desop)
-	c:RegisterEffect(e6)
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_SINGLE)
 	e7:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -68,7 +61,7 @@ function c33700004.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 function c33700004.ffilter(c)
-	return c:IsFusionSetCard(0x6440) 
+	return c:IsFusionSetCard(0x6440)   and c:IsType(TYPE_MONSTER)
 end
 function c33700004.costfilter(c,tp)
 	return c:IsControler(tp) and c:IsSetCard(0x6440)
@@ -173,11 +166,5 @@ function c33700004.actfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x3440)
 end
 function c33700004.descon(e)
-	return e:GetHandler():GetFlagEffect(33700004)~=0 and not Duel.IsExistingMatchingCard(c33700004.actfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
-end
-function c33700004.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)+1
-end
-function c33700004.desop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(33700004,RESET_EVENT+0x1fe0000,0,1)
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1 and not Duel.IsExistingMatchingCard(c33700004.actfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end

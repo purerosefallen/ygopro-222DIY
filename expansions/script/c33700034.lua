@@ -23,7 +23,7 @@ function c33700034.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingTarget(c33700034.filter,tp,LOCATION_PZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,c33700034.filter,tp,LOCATIONPZONE,0,1,1,nil,e,tp)
+	local g=Duel.SelectTarget(tp,c33700034.filter,tp,LOCATION_PZONE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c33700034.activate(e,tp,eg,ep,ev,re,r,rp)
