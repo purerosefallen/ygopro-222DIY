@@ -108,6 +108,8 @@ function c13257308.desop(e,tp,eg,ep,ev,re,r,rp)
 				e2:SetCode(EFFECT_DISABLE_EFFECT)
 				e2:SetValue(RESET_EVENT+0x1fe0000)
 				tc:RegisterEffect(e2)
+				Duel.AdjustInstantly()
+				Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 			end
 			tc=g:GetNext()
 		end

@@ -1,9 +1,18 @@
 --灵装之星宿骑士
 local m=50000511
 local cm=_G["c"..m]
+xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 function cm.initial_effect(c)
     --link summon
-    aux.AddLinkProcedure(c,nil,2)
+    local e0=Effect.CreateEffect(c)
+    e0:SetType(EFFECT_TYPE_FIELD)
+    e0:SetCode(EFFECT_SPSUMMON_PROC)
+    e0:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
+    e0:SetRange(LOCATION_EXTRA)
+    e0:SetCondition(c50000511.linkcon)
+    e0:SetOperation(c50000511.linkop)
+    e0:SetValue(SUMMON_TYPE_LINK)
+    c:RegisterEffect(e0)
     c:EnableReviveLimit()
     --special summon
     local e1=Effect.CreateEffect(c)
@@ -37,6 +46,29 @@ function cm.initial_effect(c)
     e3:SetValue(c50000511.atkval)
     c:RegisterEffect(e3)
 end
+
+function c50000511.linkfilter(c,lc,tp)
+    return c:IsFaceup() and c:IsCanBeLinkMaterial(lc)
+end
+function c50000511.linkcheck(g,tp,lc)
+    return aux.LCheckGoal(tp,g,lc,2,g:GetCount()) and g:IsExists(function(c)
+        return c:IsSetCard(0x50e) and not g:IsExists(Card.IsType,1,c,TYPE_TOKEN)
+    end,1,nil)
+end
+function c50000511.linkcon(e,c)
+    if c==nil then return true end 
+    if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
+    local tp=c:GetControler()
+    local g=Duel.GetMatchingGroup(c50000511.linkfilter,tp,LOCATION_MZONE,0,nil,c)
+    return Senya.CheckGroup(g,c50000511.linkcheck,nil,2,4,tp,c)
+end
+function c50000511.linkop(e,tp,eg,ep,ev,re,r,rp,c)
+    local g=Duel.GetMatchingGroup(c50000511.linkfilter,tp,LOCATION_MZONE,0,nil,c)
+    local g1=Senya.SelectGroup(tp,0,g,c50000511.linkcheck,nil,2,4,tp,c)
+    c:SetMaterial(g1)
+    Duel.SendtoGrave(g1,REASON_MATERIAL+REASON_LINK)
+end
+---
 function c50000511.spfilter(c,e,tp,zone)
     return c:IsSetCard(0x50e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end

@@ -38,7 +38,7 @@ function c13257215.initial_effect(c)
 	c:RegisterEffect(e3)
 	--remove
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(13257203,1))
+	e4:SetDescription(aux.Stringid(13257215,2))
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)

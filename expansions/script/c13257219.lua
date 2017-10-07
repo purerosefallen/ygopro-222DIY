@@ -39,7 +39,11 @@ function c13257219.initial_effect(c)
 	local e13=e12:Clone()
 	e13:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e13)
+	Duel.AddCustomActivityCounter(13257219,ACTIVITY_SPSUMMON,c13257219.counterfilter)
 	
+end
+function c13257219.counterfilter(c)
+	return c:GetSummonLocation()~=LOCATION_EXTRA
 end
 function c13257219.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -91,7 +95,7 @@ function c13257219.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257219.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) and Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) and Duel.GetCustomActivityCount(13257219,tp,ACTIVITY_SPSUMMON)==0 end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)

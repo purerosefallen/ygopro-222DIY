@@ -1,25 +1,29 @@
 --被侵蚀的星之援军
 function c50000504.initial_effect(c)
     --link summon
-    aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsType,TYPE_NORMAL),3)
+    aux.AddLinkProcedure(c,aux.FilterBoolFunction(c50000504.linkfilter),2)
     c:EnableReviveLimit()
-    --IMMUNE
+    --move
     local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_FIELD)
-    e1:SetCode(EFFECT_IMMUNE_EFFECT)
+    e1:SetDescription(aux.Stringid(50000504,0))    
+    e1:SetType(EFFECT_TYPE_IGNITION)
     e1:SetRange(LOCATION_MZONE)
-    e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-    e1:SetValue(c50000504.efilter)
-    e1:SetTarget(c50000504.tgtg)
+    e1:SetCountLimit(1)
+    e1:SetCost(c50000504.movecost)
+    e1:SetTarget(c50000504.seqtg)
+    e1:SetOperation(c50000504.seqop)
     c:RegisterEffect(e1)
-    --destroy replace
+    --special summon
     local e2=Effect.CreateEffect(c)
-    e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-    e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-    e2:SetCode(EFFECT_DESTROY_REPLACE)
-    e2:SetRange(LOCATION_MZONE)
-    e2:SetTarget(c50000504.desreptg)
-    e2:SetOperation(c50000504.desrepop)
+    e2:SetDescription(aux.Stringid(50000504,1))
+    e2:SetCategory(CATEGORY_TOHAND)
+    e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+    e2:SetProperty(EFFECT_FLAG_DELAY)
+    e2:SetCode(EVENT_DESTROYED)
+    e2:SetCountLimit(1,50000504)
+    e2:SetCondition(c50000504.thcon)
+    e2:SetTarget(c50000504.thtg)
+    e2:SetOperation(c50000504.thop)
     c:RegisterEffect(e2)
     --todeck
     local e3=Effect.CreateEffect(c)
@@ -27,48 +31,64 @@ function c50000504.initial_effect(c)
     e3:SetCategory(CATEGORY_TODECK)
     e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
     e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-    e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-    e3:SetCountLimit(1,50000504)
+    e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
     e3:SetCondition(c50000504.tdcon)
     e3:SetTarget(c50000504.tdtg)
     e3:SetOperation(c50000504.tdop)
     c:RegisterEffect(e3)
 end
+function c50000504.cfilter(c)
+    return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGraveAsCost()
+end
+function c50000504.movecost(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return Duel.IsExistingMatchingCard(c50000504.cfilter,tp,LOCATION_ONFIELD,0,1,nil) end
+    Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+    local g=Duel.SelectMatchingCard(tp,c50000504.cfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
+    Duel.SendtoGrave(g,REASON_COST)
+end
+function c50000504.seqtg(e,tp,eg,ep,ev,re,r,rp,chk)
+    local scount=Duel.GetLocationCount(tp,LOCATION_MZONE)
+    if scount==0 then return end
+    return true
+end
+function c50000504.seqop(e,tp,eg,ep,ev,re,r,rp)
+    local c=e:GetHandler() 
+    if not c:IsRelateToEffect(e) or c:IsControler(1-tp) then return end
+    Duel.Hint(HINT_SELECTMSG,tp,571)
+    local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,nil)
+    local nseq=0
+    if s==1 then nseq=0
+    elseif s==2 then nseq=1
+    elseif s==4 then nseq=2
+    elseif s==8 then nseq=3
+    else nseq=4 end
+    Duel.MoveSequence(c,nseq)
+end
 --
-
-function c50000504.tgtg(e,c)
-    return e:GetHandler():GetLinkedGroup():IsContains(c)
-end
-function c50000504.efilter(e,te)
-    return not te:IsActiveType(TYPE_LINK)
-end
---
-function c50000504.repfilter(c,e,tp)
-    return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-        and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
-end
-function c50000504.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
-    local c=e:GetHandler()
-    if chk==0 then
-        local g=c:GetLinkedGroup()
-        return not c:IsReason(REASON_REPLACE) and g:IsExists(c50000504.repfilter,1,nil,e,tp)
-    end
-    if Duel.SelectEffectYesNo(tp,c,96) then
-        local g=c:GetLinkedGroup()
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
-        local sg=g:FilterSelect(tp,c50000504.repfilter,1,1,nil,e,tp)
-        e:SetLabelObject(sg:GetFirst())
-        sg:GetFirst():SetStatus(STATUS_DESTROY_CONFIRMED,true)
-        return true
-    else return false end
-end
-function c50000504.desrepop(e,tp,eg,ep,ev,re,r,rp)
-    local tc=e:GetLabelObject()
-    tc:SetStatus(STATUS_DESTROY_CONFIRMED,false)
-    Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE)
+function c50000504.linkfilter(c,e)
+    return c:IsFaceup() and c:IsSetCard(0x50e) and c:IsType(TYPE_MONSTER)
 end
 ---
-
+function c50000504.thfilter(c)
+    return c:IsSetCard(0x50e) and c:IsAbleToHand()
+end
+function c50000504.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return Duel.IsExistingMatchingCard(c50000504.thfilter,tp,LOCATION_REMOVED+LOCATION_GRAVE,0,1,nil) end
+    Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_REMOVED+LOCATION_GRAVE)
+end
+function c50000504.thop(e,tp,eg,ep,ev,re,r,rp)
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+    local g=Duel.SelectMatchingCard(tp,c50000504.thfilter,tp,LOCATION_REMOVED+LOCATION_GRAVE,0,1,1,nil)
+    if g:GetCount()>0 then
+        Duel.SendtoHand(g,nil,REASON_EFFECT)
+        Duel.ConfirmCards(1-tp,g)
+    end
+end
+---
+function c50000504.thcon(e,tp,eg,ep,ev,re,r,rp)
+    return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
+end
 function c50000504.tdcon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end

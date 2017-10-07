@@ -65,11 +65,11 @@ function c50000505.ad(e,c)
 end
 ---
 function c50000505.linkfilter1(c,lc,tp)
-    return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsCanBeLinkMaterial(lc) and Duel.IsExistingMatchingCard(c50000505.linkfilter2,tp,LOCATION_MZONE,0,1,c,lc,c,tp)
+    return c:IsFaceup() and c:IsType(TYPE_NORMAL) and not c:IsType(TYPE_TOKEN) and c:IsCanBeLinkMaterial(lc) and Duel.IsExistingMatchingCard(c50000505.linkfilter2,tp,LOCATION_MZONE,0,1,c,lc,c,tp)
 end
 function c50000505.linkfilter2(c,lc,mc,tp)
     local mg=Group.FromCards(c,mc)
-    return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsCanBeLinkMaterial(lc) and not c:IsAttribute(mc:GetAttribute()) and Duel.GetLocationCountFromEx(tp,tp,mg,lc)>0
+    return c:IsFaceup() and c:IsType(TYPE_EFFECT) and not c:IsType(TYPE_TOKEN) and c:IsCanBeLinkMaterial(lc) and not c:IsRace(mc:GetRace()) and not c:IsAttribute(mc:GetAttribute())  and Duel.GetLocationCountFromEx(tp,tp,mg,lc)>0
 end
 function c50000505.linkcon(e,c)
     if c==nil then return true end
@@ -86,7 +86,7 @@ function c50000505.linkop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 ---
 function c50000505.spcon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) 
+    return e:GetHandler():GetSummonType()==SUMMON_TYPE_LINK 
 end
 function c50000505.thfilter(c)
     return c:IsSetCard(0x50e) and c:IsAbleToHand()
