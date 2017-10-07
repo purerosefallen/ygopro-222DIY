@@ -139,10 +139,10 @@ function c22240123.reop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ReturnToField(e:GetLabelObject())
 end
 function c22240123.sfilter(c,e)
-	return bit.band(c:GetType(),0x81)==0x81 and bit.band(c:GetReason(),REASON_RELEASE)~=0 and c:IsCanBeEffectTarget(e) and c:GetLevel()==4
+	return bit.band(c:GetType(),0x81)==0x81 and bit.band(c:GetReason(),REASON_RELEASE)~=0 and c:IsCanBeEffectTarget(e)
 end
-function c22240123.xfilter(c,e,tp)
-	return c22240123.IsSolid(c) and c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
+function c22240123.xfilter(c,mg)
+	return c22240123.IsSolid(c) and c:IsType(TYPE_XYZ)
 end
 function c22240123.mfilter1(c,mg,exg)
 	return mg:IsExists(c22240123.mfilter2,1,c,c,exg)
@@ -153,7 +153,7 @@ end
 function c22240123.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local mg=Duel.GetMatchingGroup(c22240123.sfilter,tp,LOCATION_GRAVE,0,nil,e)
-	local exg=Duel.GetMatchingGroup(c22240123.xfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
+	local exg=Duel.GetMatchingGroup(c22240123.xfilter,tp,LOCATION_EXTRA,0,nil,mg)
 	if chk==0 then return Duel.GetLocationCountFromEx(tp,tp,e:GetHandler())>0 and mg:GetCount()>1
 		and exg:GetCount()>0 end
 	local sg1=mg:FilterSelect(tp,c22240123.mfilter1,1,1,nil,mg,exg)
@@ -170,7 +170,7 @@ function c22240123.thop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCountFromEx(tp,tp)<1 then return end
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(c22240123.filter2,nil,e)
 	if g:GetCount()<2 then return end
-	local xyzg=Duel.GetMatchingGroup(c22240123.xfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
+	local xyzg=Duel.GetMatchingGroup(c22240123.xfilter,tp,LOCATION_EXTRA,0,nil,g)
 	if xyzg:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()

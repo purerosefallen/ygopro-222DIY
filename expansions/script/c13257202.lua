@@ -63,7 +63,7 @@ end
 function c13257202.posop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAttackPos,tp,0,LOCATION_MZONE,nil)
 	if g:GetCount()>0 then
-		Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
+		if Duel.ChangePosition(g,POS_FACEUP_DEFENSE)==0 then return end
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=Duel.SelectMatchingCard(tp,c13257202.thfilter,tp,LOCATION_DECK,0,1,1,nil)

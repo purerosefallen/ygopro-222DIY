@@ -116,14 +116,14 @@ function c13257318.eqfilter(c,ec)
 end
 function c13257318.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local t1=Duel.IsExistingMatchingCard(c13257318.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c)
+	local t1=c:GetEquipCount()>0 or Duel.IsExistingMatchingCard(c13257318.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c)
 	local t2=Duel.IsPlayerCanDraw(tp,1)
 	if chk==0 then return (t1 or t2) and c:GetEquipCount()>0 end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,c:GetEquipGroup(),1,0,0)
 end
 function c13257318.pcop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local t1=Duel.IsExistingMatchingCard(c13257318.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c) and c:IsRelateToEffect(e) and c:IsFaceup()
+	local t1=c:GetEquipCount()>0 or Duel.IsExistingMatchingCard(c13257318.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c) and c:IsRelateToEffect(e) and c:IsFaceup()
 	local t2=Duel.IsPlayerCanDraw(tp,1)
 	if not (t1 or t2) or c:GetEquipCount()==0 then return end
 	local tg=c:GetEquipGroup():Select(tp,1,1,nil)
