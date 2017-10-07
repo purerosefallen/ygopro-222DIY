@@ -70,7 +70,7 @@ function c22240001.sop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c22240001.spfilter(c)
-	return c:GetOriginalLevel()>3 and c:IsReleasable()
+	return c:GetOriginalLevel()>3 and c:IsReleasable() and c22240001.IsSolid(c)
 end
 function c22240001.hspcon(e,c)
 	if c==nil then return true end
