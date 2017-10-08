@@ -27,7 +27,7 @@ function c12001025.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c12001025.filter3(c)
-	return c:IsFaceup() and not c:IsSetCard(0xfb0)
+	return c:IsFaceup() and not c:IsCode(12001025)
 end
 function c12001025.distg3(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(c12001025.filter3,1,nil) end
