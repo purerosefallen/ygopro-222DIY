@@ -17,8 +17,9 @@ function c22240124.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(22240124,1))
 	e1:SetCategory(CATEGORY_RELEASE)
-	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCost(c22240124.relcost)
@@ -85,11 +86,11 @@ end
 function c22240124.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c22240124.mafilter,tp,LOCATION_DECK,0,1,nil) end
 end
-function c22240124.xyzfilter(c,tp)
+function c22240124.xyzfilter1(c,tp)
 	return c22240124.IsSolid(c) and c:IsType(TYPE_XYZ)
 end
 function c22240124.tdop(e,tp,eg,ep,ev,re,r,rp)
-	local xyzg=Duel.GetMatchingGroup(c22240124.xyzfilter,tp,LOCATION_MZONE,0,nil)
+	local xyzg=Duel.GetMatchingGroup(c22240124.xyzfilter1,tp,LOCATION_MZONE,0,nil)
 	local m=xyzg:GetCount()
 	local mag=Duel.SelectMatchingCard(tp,c22240124.mafilter,tp,LOCATION_DECK,0,1,m,nil)
 	while mag:GetCount()>0 and xyzg:GetCount()>0 do

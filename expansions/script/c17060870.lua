@@ -48,10 +48,10 @@ function c17060870.IsMillion_Arthur(c)
 	return m and m.is_named_with_Million_Arthur
 end
 function c17060870.linkfilter1(c,tp)
-	return c:IsFaceup() and Duel.IsExistingMatchingCard(c17060870.linkfilter2,tp,LOCATION_MZONE,0,1,c,c)
+	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and Duel.IsExistingMatchingCard(c17060870.linkfilter2,tp,LOCATION_MZONE,0,1,c,c)
 end
 function c17060870.linkfilter2(c,lc)
-	return c:IsFaceup() and not c:IsAttribute(lc:GetAttribute())
+	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and not c:IsAttribute(lc:GetAttribute())
 end
 function c17060870.linkcon(e,c)
 	if c==nil then return true end

@@ -13,6 +13,7 @@ function c22240123.initial_effect(c)
 	e1:SetOperation(c22240123.xyzop)
 	e1:SetValue(SUMMON_TYPE_XYZ)
 	c:RegisterEffect(e1)
+
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(22240123,1))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -174,6 +175,8 @@ function c22240123.thop(e,tp,eg,ep,ev,re,r,rp)
 	if xyzg:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,g)
+		Duel.SpecialSummon(xyz,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
+		Duel.Overlay(xyz,g)
+		xyz:CompleteProcedure()
 	end
 end
