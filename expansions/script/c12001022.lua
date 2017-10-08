@@ -33,7 +33,7 @@ function c12001022.repfilter(c,tp)
 		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function c12001022.desfilter(c,tp)
-	return c:IsControler(tp) and c:IsType(TYPE_MONSTER)
+	return c:IsControler(tp) and c:IsType(TYPE_MONSTER) and c:IsDestructable(e) 
 		and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function c12001022.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
