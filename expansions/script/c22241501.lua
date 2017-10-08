@@ -42,7 +42,7 @@ function c22241501.filter1(c)
 	return bit.band(c:GetReason(),REASON_RELEASE)~=0 and c:IsAbleToHand()
 end
 function c22241501.filter2(c,e,tp)
-	return bit.band(c:GetOriginalType(),0x81)==0x81 and c:IsType(TYPE_SPELL) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)
+	return bit.band(c:GetOriginalType(),0x81)==0x81 and c:IsType(TYPE_SPELL) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) and not c:IsType(TYPE_PENDULUM)
 end
 function c22241501.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return (Duel.GetMatchingGroupCount(c22241501.filter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil)>0 or Duel.GetMatchingGroupCount(c22241501.filter2,tp,LOCATION_SZONE,0,nil,e,tp)>0) end

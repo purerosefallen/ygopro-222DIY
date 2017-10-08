@@ -64,7 +64,7 @@ function c22240121.xyzop(e,tp,eg,ep,ev,re,r,rp,c)
 	end
 end
 function c22240121.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev) and not bit.band(re:GetActivateLocation(),LOCATION_ONFIELD)~=0
+	return rp~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev) and bit.band(re:GetActivateLocation(),LOCATION_ONFIELD)==0
 end
 function c22240121.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckRemoveOverlayCard(tp,1,0,1,REASON_COST) end
