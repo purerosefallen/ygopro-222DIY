@@ -16,6 +16,8 @@
 #include "interpreter.h"
 
 static const struct luaL_Reg cardlib[] = {
+	//millux
+	{ "IsRitualType", scriptlib::card_is_ritual_type },
 	//222DIY
 	{ "GetAffectingEffect", scriptlib::card_get_affecting_effect },
 	{ "FilterEffect", scriptlib::card_filter_effect },
