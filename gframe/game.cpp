@@ -1379,9 +1379,6 @@ void Game::ShowCardInfo(int code) {
 				myswprintf(adBuffer, L"%d/-   ", cd.attack);
 			wcscat(formatBuffer, adBuffer);
 			wcscat(formatBuffer, dataManager.FormatLinkMarker(cd.link_marker));
-			//modded
-			if(cd.level >= 8)
-				offset = offset + 23;
 		}
 		if(cd.type & TYPE_PENDULUM) {
 			wchar_t scaleBuffer[16];
@@ -1389,9 +1386,16 @@ void Game::ShowCardInfo(int code) {
 			wcscat(formatBuffer, scaleBuffer);
 		}
 		stDataInfo->setText(formatBuffer);
-		stSetName->setRelativePosition(rect<s32>(15, 83, 296, 106));
-		stText->setRelativePosition(rect<s32>(15, 83 + offset, 287, 324));
-		scrCardText->setRelativePosition(rect<s32>(267, 83 + offset, 287, 324));
+		//modded
+		if ((cd.type & TYPE_LINK) && (cd.level == 8)) {
+			stSetName->setRelativePosition(rect<s32>(15, 106, 296, 106));
+			stText->setRelativePosition(rect<s32>(15, 106 + offset, 287, 324));
+			scrCardText->setRelativePosition(rect<s32>(267, 106 + offset, 287, 324));
+		} else {					
+			stSetName->setRelativePosition(rect<s32>(15, 83, 296, 106));
+			stText->setRelativePosition(rect<s32>(15, 83 + offset, 287, 324));
+			scrCardText->setRelativePosition(rect<s32>(267, 83 + offset, 287, 324));
+		}
 	} else {
 		myswprintf(formatBuffer, L"[%ls]", dataManager.FormatType(cd.type));
 		stInfo->setText(formatBuffer);
