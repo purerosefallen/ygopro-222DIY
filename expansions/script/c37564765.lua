@@ -175,51 +175,98 @@ function cm.CheckGroup(g,f,cg,min,max,...)
 	if ct>=min and ct<max and f(sg,...) then return true end
 	return g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params)
 end
---if Group.SelectUnselect then
-function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
-	local min=min or 1
-	local max=max or g:GetCount()
-	local ext_params={...}
-	local sg=Group.CreateGroup()
-	if cg then
+if Group.SelectUnselect then
+	function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
+		local min=min or 1
+		local max=max or g:GetCount()
+		local ext_params={...}
+		local sg=Group.CreateGroup()
+		local cg=cg or Group.CreateGroup()
 		sg:Merge(cg)
-	end
-	local ct=sg:GetCount()
-	local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
-	while ct<max and ag:GetCount()>0 do
-		local minc=1
-		local finish=(ct>=min and f(sg,...))
-		if finish then
-			minc=0
-			if cm.master_rule_3_flag and not Duel.SelectYesNo(tp,210) then break end
+		local ct=sg:GetCount()
+		local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
+		while ct<max and ag:GetCount()>0 do
+			local finish=(ct>=min and f(sg,...))
+			local seg=sg:Clone()
+			local dmin=min-cg:GetCount()
+			local dmax=math.min(max-cg:GetCount(),g:GetCount())
+			seg:Sub(cg)
+			Duel.Hint(HINT_SELECTMSG,tp,desc)
+			local tc=ag:SelectUnselect(seg,tp,finish,finish,dmin,dmax)
+			if not tc then break end
+			if sg:IsContains(tc) then
+				sg:RemoveCard(tc)
+			else
+				sg:AddCard(tc)
+			end
+			ct=sg:GetCount()
+			ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)
 		end
-		Duel.Hint(HINT_SELECTMSG,tp,desc)
-		local tg=ag:Select(tp,minc,1,nil)
-		if tg:GetCount()==0 then break end
-		sg:Merge(tg)
-		ct=sg:GetCount()
-		ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)
+		return sg
 	end
-	return sg
+	function cm.SelectGroupWithCancel(tp,desc,g,f,cg,min,max,...)
+		local min=min or 1
+		local max=max or g:GetCount()
+		local ext_params={...}
+		local sg=Group.CreateGroup()
+		local cg=cg or Group.CreateGroup()
+		sg:Merge(cg)
+		local ct=sg:GetCount()
+		local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
+		while ct<max and ag:GetCount()>0 do
+			local finish=(ct>=min and f(sg,...))
+			local cancel=finish or ct==0
+			local seg=sg:Clone()
+			local dmin=min-cg:GetCount()
+			local dmax=math.min(max-cg:GetCount(),g:GetCount())
+			seg:Sub(cg)
+			Duel.Hint(HINT_SELECTMSG,tp,desc)
+			local tc=ag:SelectUnselect(seg,tp,finish,cancel,dmin,dmax)
+			if not tc then
+				if not finish then return end
+				break
+			end
+			if sg:IsContains(tc) then
+				sg:RemoveCard(tc)
+			else
+				sg:AddCard(tc)
+			end
+			ct=sg:GetCount()
+			ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)
+		end
+		return sg
+	end
+else
+	function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
+		local min=min or 1
+		local max=max or g:GetCount()
+		local ext_params={...}
+		local sg=Group.CreateGroup()
+		if cg then
+			sg:Merge(cg)
+		end
+		local ct=sg:GetCount()
+		local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
+		while ct<max and ag:GetCount()>0 do
+			local minc=1
+			local finish=(ct>=min and f(sg,...))
+			if finish then
+				minc=0
+				if cm.master_rule_3_flag and not Duel.SelectYesNo(tp,210) then break end
+			end
+			Duel.Hint(HINT_SELECTMSG,tp,desc)
+			local tg=ag:Select(tp,minc,1,nil)
+			if tg:GetCount()==0 then break end
+			sg:Merge(tg)
+			ct=sg:GetCount()
+			ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)
+		end
+		return sg
+	end
+	function cm.SelectGroupWithCancel(tp,desc,g,f,cg,min,max,...)
+		return cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
+	end
 end
---else
---[[function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
-	local min=min or 1
-	local max=max or g:GetCount()
-	local ext_params={...}
-	local sg=Group.CreateGroup()
-	if cg then sg:Merge(cg) end
-	local ct=sg:GetCount()
-	while ct<max and not (ct>=min and f(sg,...) and not (g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params) and Duel.SelectYesNo(tp,210))) do
-		Duel.Hint(HINT_SELECTMSG,tp,desc)
-		local tg=g:FilterSelect(tp,cm.CheckGroupRecursive,1,1,sg,sg,g,f,min,max,ext_params)
-		if tg:GetCount()==0 then error("Incorrect Group Filter",2) end
-		sg:Merge(tg)
-		ct=sg:GetCount()
-	end
-	return sg
-end]]
---end
 
 --updated overlay
 function cm.OverlayCard(c,tc,xm,nchk)
@@ -260,80 +307,21 @@ function cm.OverlayGroup(c,g,xm,nchk)
 	end
 	Duel.Overlay(c,tg)
 end
---xyz summon of prim
-function cm.AddXyzProcedureRank(c,rk,f,minct,maxct,xm,...)
-	local ext_params={...}
-	c:EnableReviveLimit()
-	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetRange(LOCATION_EXTRA)
-	e1:SetCondition(cm.XyzProcedureRankCondition(rk,f,minct,maxct,ext_params))
-	e1:SetOperation(cm.XyzProcedureRankOperation(rk,f,minct,maxct,xm,ext_params))
-	e1:SetValue(SUMMON_TYPE_XYZ)
-	c:RegisterEffect(e1)
-	return e1
-end
-function cm.XyzProcedureRankFilter(c,xyzc,rk,f,ext_params)
-	return c:IsFaceup() and c:IsXyzType(TYPE_XYZ) and c:IsCanBeXyzMaterial(xyzc) and (not rk or c:GetRank()==rk) and (not f or f(c,xyzc,table.unpack(ext_params)))
-end
-function cm.XyzProcedureRankFirst(c,tp,g,xyzc,minc,maxc)
-	local tg=g:Filter(cm.XyzProcedureRankCheck,c,c:GetRank())
-	return cm.CheckGroup(tg,cm.CheckFieldFilter,Group.FromCards(c),minc,maxc,tp,xyzc)
-end
-function cm.XyzProcedureRankCheck(c,rk)
-	return c:GetRank()==rk
-end
 function cm.CheckFieldFilter(g,tp,c,f,...)
 	return Duel.GetLocationCountFromEx(tp,tp,g,c)>0 and (not f or f(g,...))
 end
-function cm.XyzProcedureRankCondition(rk,f,minct,maxct,ext_params)
-return function(e,c,og,min,max)
-	if c==nil then return true end
-	if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
-	local tp=c:GetControler()
-	local minc=minct or 2
-	local maxc=maxct or minct or 63
-	if min then
-		minc=math.max(minc,min)
-		maxc=math.min(maxc,max)
-	end
-	local mg=nil
-	if og then
-		mg=og:Filter(cm.XyzProcedureRankFilter,nil,c,rk,f,ext_params)
-	else
-		mg=Duel.GetMatchingGroup(cm.XyzProcedureRankFilter,tp,LOCATION_MZONE,0,nil,c,rk,f,ext_params)
-	end
-	return maxc>=minc and mg:IsExists(cm.XyzProcedureRankFirst,1,nil,tp,mg,c,minc,maxc)
+--xyz summon of prim
+function cm.AddXyzProcedureRank(c,rk,f,minct,maxct,xm,...)
+	local ext_params={...}
+	return cm.AddXyzProcedureCustom(c,cm.XyzProcedureRankFilter(rk,f,ext_params),cm.XyzProcedureRankCheck,minct,maxct,xm)
+end
+function cm.XyzProcedureRankFilter(rk,f,ext_params)
+return function(c,xyzc)
+	return c:IsXyzType(TYPE_XYZ) and (not rk or c:GetRank()==rk) and (not f or f(c,xyzc,table.unpack(ext_params)))
 end
 end
-function cm.XyzProcedureRankOperation(rk,f,minct,maxct,xm,ext_params)
-return function(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
-	local g=nil
-	if og and not min then
-		g=og
-	else
-		local mg=nil
-		if og then
-			mg=og:Filter(cm.XyzProcedureRankFilter,nil,c,rk,f,ext_params)
-		else
-			mg=Duel.GetMatchingGroup(cm.XyzProcedureRankFilter,tp,LOCATION_MZONE,0,nil,c,rk,f,ext_params)
-		end
-		local minc=minct or 2
-		local maxc=maxct or minct or 63
-		if min then
-			minc=math.max(minc,min)
-			maxc=math.min(maxc,max)
-		end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-		local g1=mg:FilterSelect(tp,cm.XyzProcedureRankFirst,1,1,nil,tp,mg,c,minc,maxc)
-		local tg=mg:Filter(cm.XyzProcedureRankCheck,g1:GetFirst(),g1:GetFirst():GetRank())
-		g=cm.SelectGroup(tp,HINTMSG_XMATERIAL,tg,cm.CheckFieldFilter,g1,minc,maxc,tp,c)
-	end
-	c:SetMaterial(g)
-	cm.OverlayGroup(c,g,xm,true)
-end
+function cm.XyzProcedureRankCheck(g,xyzc)
+	return g:GetClassCount(Card.GetRank)==1
 end
 function cm.AddXyzProcedureCustom(c,func,gf,minc,maxc,xm,...)
 	local ext_params={...}
@@ -345,7 +333,8 @@ function cm.AddXyzProcedureCustom(c,func,gf,minc,maxc,xm,...)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_EXTRA)
 	e1:SetCondition(cm.XyzProcedureCustomCondition(func,gf,minc,maxc,ext_params))
-	e1:SetOperation(cm.XyzProcedureCustomOperation(func,gf,minc,maxc,xm,ext_params))
+	e1:SetTarget(cm.XyzProcedureCustomTarget(func,gf,minc,maxc,ext_params))
+	e1:SetOperation(cm.XyzProcedureCustomOperation(xm))
 	e1:SetValue(SUMMON_TYPE_XYZ)
 	c:RegisterEffect(e1)
 	return e1
@@ -374,8 +363,8 @@ function cm.XyzProcedureCustomCondition(func,gf,minct,maxct,ext_params)
 		return maxc>=minc and cm.CheckGroup(mg,cm.CheckFieldFilter,nil,minc,maxc,tp,c,gf,c)
 	end
 end
-function cm.XyzProcedureCustomOperation(func,gf,minct,maxct,xm,ext_params)
-	return function(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
+function cm.XyzProcedureCustomTarget(func,gf,minct,maxct,ext_params)
+	return function(e,tp,eg,ep,ev,re,r,rp,chk,c,og,min,max)
 		local g=nil
 		if og and not min then
 			g=og
@@ -392,10 +381,21 @@ function cm.XyzProcedureCustomOperation(func,gf,minct,maxct,xm,ext_params)
 				minc=math.max(minc,min)
 				maxc=math.min(maxc,max)
 			end
-			g=cm.SelectGroup(tp,HINTMSG_XMATERIAL,mg,cm.CheckFieldFilter,nil,minc,maxc,tp,c,gf,c)
+			g=cm.SelectGroupWithCancel(tp,HINTMSG_XMATERIAL,mg,cm.CheckFieldFilter,nil,minc,maxc,tp,c,gf,c)
 		end
+		if g then
+			g:KeepAlive()
+			e:SetLabelObject(g)
+			return true
+		else return false end
+	end
+end
+function cm.XyzProcedureCustomOperation(xm)
+	return function(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
+		local g=e:GetLabelObject()
 		c:SetMaterial(g)
 		cm.OverlayGroup(c,g,xm,true)
+		g:DeleteGroup()
 	end
 end
 cm.proc_check_list={
