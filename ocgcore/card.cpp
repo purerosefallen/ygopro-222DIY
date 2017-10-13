@@ -16,6 +16,12 @@
 #include <iostream>
 #include <algorithm>
 
+//millux
+uint32 card::get_ritual_type() {
+	if(current.location == LOCATION_SZONE && (data.type & TYPE_MONSTER))
+		return data.type;
+	return get_type();
+}
 //222DIY
 uint32 card::set_entity_code(uint32 entity_code, bool remove_alias) {
 	card_data dat;
