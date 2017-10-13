@@ -2,31 +2,26 @@
 --World Legacy - "World Shield"
 --Scripted by Eerie Code
 function c101003021.initial_effect(c)
-	--Cannot activate
+	--immune
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_IMMUNE_EFFECT)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetTargetRange(1,1)
-	e1:SetValue(c101003021.aclimit)
+	e1:SetValue(c101003021.immval)
 	c:RegisterEffect(e1)
-	--cannot target
+	--cannot be target/indestructable
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetRange(LOCATION_MZONE)
+	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e2:SetCondition(c101003021.indcon)
+	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetTargetRange(LOCATION_ONFIELD,0)
+	e2:SetTarget(c101003021.tgtg)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
-	--indes
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	local e3=e2:Clone()
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(c101003021.indcon)
 	e3:SetValue(c101003021.indval)
 	c:RegisterEffect(e3)
 	--spsummon
@@ -42,19 +37,16 @@ function c101003021.initial_effect(c)
 	e4:SetOperation(c101003021.spop)
 	c:RegisterEffect(e4)
 end
-function c101003021.aclimit(e,re,tp)
-	local tc=re:GetHandler()
-	return tc:IsLocation(LOCATION_MZONE) and tc:GetSummonLocation()==LOCATION_EXTRA and re:IsActiveType(TYPE_MONSTER) and not tc:IsImmuneToEffect(e)
+function c101003021.immval(e,te)
+	local tc=te:GetHandler()
+	return te:GetOwner()~=e:GetHandler() and te:IsActiveType(TYPE_MONSTER)
+		and te:IsActivated() and tc:IsSummonType(SUMMON_TYPE_SPECIAL) and tc:GetSummonLocation()==LOCATION_EXTRA
 end
-function c101003021.indfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xfe) and c:IsControler(tp)
+function c101003021.tgtg(e,c)
+	return c:IsSetCard(0xfe) and e:GetHandler():GetColumnGroup():IsContains(c)
 end
-function c101003021.indcon(e)
-	local tp=e:GetHandlerPlayer()
-	return e:GetHandler():GetColumnGroup():IsExists(c101003021.indfilter,1,e:GetHandler(),tp)
-end
-function c101003021.indval(e,re,tp)
-	return tp~=e:GetHandlerPlayer()
+function c101003021.indval(e,re,rp)
+	return rp~=e:GetHandlerPlayer()
 end
 function c101003021.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
@@ -72,7 +64,7 @@ end
 function c101003021.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		local g=Duel.GetMatchingGroup(c101003021.spfilter,1-tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp)
+		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101003021.spfilter),1-tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp)
 		if Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 			and g:GetCount()>0 and Duel.SelectYesNo(1-tp,aux.Stringid(101003021,1)) then
 			Duel.BreakEffect()
