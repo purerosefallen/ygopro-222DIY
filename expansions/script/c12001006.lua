@@ -40,7 +40,7 @@ function c12001006.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ShuffleDeck(tp)
 	end
-	local tg=Duel.GetMatchingGroup(Card.IsAbleToDeck,p,LOCATION_HAND,0,nil)
+	local tg=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_HAND,0,nil)
 	if tg:GetCount()>1 and tg:IsExists(Card.IsSetCard,1,nil,0xfb0) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 			local sg1=tg:Select(tp,Card.IsSetCard,1,1,nil,0xfb0)
