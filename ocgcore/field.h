@@ -91,6 +91,8 @@ struct field_effect {
 	typedef std::unordered_map<effect*, effect_container::iterator> effect_indexer;
 	typedef std::unordered_map<effect*, effect*> oath_effects;
 	typedef std::unordered_set<effect*> effect_collection;
+	typedef std::unordered_map<card*, effect*> gain_effects;
+	typedef std::unordered_map<effect*, gain_effects> grant_effect_container;
 
 	effect_container aura_effect;
 	effect_container ignition_effect;
@@ -109,6 +111,8 @@ struct field_effect {
 
 	std::list<card*> disable_check_list;
 	std::unordered_set<card*> disable_check_set;
+
+	grant_effect_container grant_effect;
 };
 struct field_info {
 	int32 field_id;
@@ -167,6 +171,7 @@ struct processor {
 	processor_list subunits;
 	processor_unit reserved;
 	card_vector select_cards;
+	card_vector unselect_cards;
 	card_vector summonable_cards;
 	card_vector spsummonable_cards;
 	card_vector repositionable_cards;
@@ -399,6 +404,8 @@ public:
 	void add_to_disable_check_list(card* pcard);
 	void adjust_disable_check_list();
 	void adjust_self_destroy_set();
+	void erase_grant_effect(effect* peffect);
+	int32 adjust_grant_effect();
 	void add_unique_card(card* pcard);
 	void remove_unique_card(card* pcard);
 	effect* check_unique_onfield(card* pcard, uint8 controler, uint8 location, card* icard = 0);
@@ -567,6 +574,7 @@ public:
 	int32 select_yes_no(uint16 step, uint8 playerid, uint32 description);
 	int32 select_option(uint16 step, uint8 playerid);
 	int32 select_card(uint16 step, uint8 playerid, uint8 cancelable, uint8 min, uint8 max);
+	int32 select_unselect_card(uint16 step, uint8 playerid, uint8 cancelable, uint8 min, uint8 max, uint8 ok);
 	int32 select_chain(uint16 step, uint8 playerid, uint8 spe_count, uint8 forced);
 	int32 select_place(uint16 step, uint8 playerid, uint32 flag, uint8 count);
 	int32 select_position(uint16 step, uint8 playerid, uint32 code, uint8 positions);
@@ -757,6 +765,9 @@ public:
 #define PROCESSOR_REMOVEOL_S		160
 #define PROCESSOR_MOVETOFIELD_S		161
 
+#define PROCESSOR_SELECT_UNSELECT_CARD		180
+#define PROCESSOR_SELECT_UNSELECT_CARD_S	181
+
 //Hints
 #define HINT_EVENT				1
 #define HINT_MESSAGE			2
@@ -889,4 +900,6 @@ public:
 #define MSG_PLAYER_HINT			165
 #define MSG_MATCH_KILL			170
 #define MSG_CUSTOM_MSG			180
+
+#define MSG_SELECT_UNSELECT_CARD	190
 #endif /* FIELD_H_ */
