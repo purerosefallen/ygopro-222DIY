@@ -1379,6 +1379,9 @@ void Game::ShowCardInfo(int code) {
 				myswprintf(adBuffer, L"%d/-   ", cd.attack);
 			wcscat(formatBuffer, adBuffer);
 			wcscat(formatBuffer, dataManager.FormatLinkMarker(cd.link_marker));
+			//modded
+			if(cd.level >= 8)
+				offset = offset + 23;
 		}
 		if(cd.type & TYPE_PENDULUM) {
 			wchar_t scaleBuffer[16];
