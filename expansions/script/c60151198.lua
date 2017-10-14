@@ -40,7 +40,7 @@ end
 function c60151198.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) and Duel.SelectYesNo(tp,aux.Stringid(60151198,0)) then Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 			local g1=Duel.SelectMatchingCard(tp,c60151198.filter2,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,e:GetHandler())
