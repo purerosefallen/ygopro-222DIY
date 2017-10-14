@@ -31,7 +31,7 @@ function c22241001.IsSolid(c)
 	return m and m.named_with_Solid
 end
 function c22241001.desfilter(c)
-	return bit.band(c:GetType(),0x81)==0x81
+	return bit.band(c:GetType(),0x81)==0x81 and c22241001.IsSolid(c)
 end
 function c22241001.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and c22241001.desfilter(chkc) end

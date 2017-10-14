@@ -30,7 +30,7 @@ function c1000609.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function c1000609.sefilter(c)
-	return c:IsSetCard(0xc204) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(0xc204) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c1000609.setg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c1000609.sefilter,tp,LOCATION_DECK,0,1,nil) end

@@ -8,7 +8,6 @@ function c1000603.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,1000603)
 	e1:SetCondition(c1000603.con)
-	e1:SetCost(c1000603.cost)
 	e1:SetTarget(c1000603.setg)
 	e1:SetOperation(c1000603.seop)
 	c:RegisterEffect(e1)
@@ -59,6 +58,11 @@ end
 function c1000603.filter9(c,e,tp)
 	return c:IsSetCard(0xc204) and c:IsControler(tp) and not c:IsType(TYPE_PENDULUM) 
 end
+function c1000603.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return  Duel.IsExistingMatchingCard(c1000603.costfilter,tp,LOCATION_HAND,0,1,nil) end
+	Duel.DiscardHand(tp,c1000603.costfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
+end
 function c1000603.con(e,tp,eg,ep,ev,re,r,rp)
    local g=Duel.GetMatchingGroup(c1000603.filter9,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,e,tp)
 	local ct=g:GetClassCount(Card.GetCode)
@@ -66,11 +70,6 @@ function c1000603.con(e,tp,eg,ep,ev,re,r,rp)
 end
 function c1000603.costfilter(c)
 	return c:IsDiscardable() and c:IsSetCard(0xc204) and not c:IsType(TYPE_PENDULUM)
-end
-function c1000603.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return  Duel.IsExistingMatchingCard(c1000603.costfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,c1000603.costfilter,1,1,REASON_COST+REASON_DISCARD)
-	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function c1000603.sefilter(c)
 	return c:IsSetCard(0xc204)  and c:IsAbleToHand() and  c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_PENDULUM)

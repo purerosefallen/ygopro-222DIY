@@ -39,7 +39,7 @@ function c1000615.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c1000615.filter9(c,e,tp)
-	return c:IsSetCard(0xc204) and c:IsControler(tp) and not c:IsType(TYPE_PENDULUM) 
+	return c:IsSetCard(0xc204) and c:IsControler(tp)
 end
 function c1000615.con2(e,tp,eg,ep,ev,re,r,rp)
    local g=Duel.GetMatchingGroup(c1000615.filter9,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,e,tp)
