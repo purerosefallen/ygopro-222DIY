@@ -15,7 +15,7 @@ function c10173011.initial_effect(c)
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_REMOVE)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,10173011)
 	e2:SetTarget(c10173011.tdtg)
 	e2:SetOperation(c10173011.tdop)
@@ -60,21 +60,23 @@ end
 function c10173011.cfilter(c)
 	return bit.band(c:GetType(),0x40002)==0x40002 and c:IsFaceup() and c:IsAbleToDeckAsCost()
 end
-function c10173011.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c10173011.tdfilter,tp,LOCATION_REMOVED,0,1,nil) and Duel.IsPlayerCanDraw(tp,1) end
-	local g=Duel.GetMatchingGroup(c10173011.tdfilter,tp,LOCATION_REMOVED,0,nil)
+function c10173011.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return (chkc:IsRace(RACE_DRAGON) or bit.band(chkc:GetType(),0x40002)==0x40002) and chkc:IsFaceup() and chkc:IsLocation(LOCATION_REMOVED) and chkc:IsAbleToDeck() end
+	if chk==0 then return Duel.IsExistingTarget(c10173011.tdfilter,tp,LOCATION_REMOVED,0,1,nil) and Duel.IsPlayerCanDraw(tp,1) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectTarget(tp,c10173011.tdfilter,tp,LOCATION_REMOVED,0,1,99,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),tp,LOCATION_REMOVED)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c10173011.tdop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c10173011.tdfilter,tp,LOCATION_REMOVED,0,nil)
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if g:GetCount()>0 and Duel.SendtoDeck(g,nil,2,REASON_EFFECT)~=0 then
 	   Duel.ShuffleDeck(tp)
 	   Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
 function c10173011.tdfilter(c)
-	return c:IsRace(RACE_DRAGON) and c:IsFaceup() and c:IsAbleToDeck()
+	return (c:IsRace(RACE_DRAGON) or bit.band(c:GetType(),0x40002)==0x40002) and c:IsFaceup() and c:IsAbleToDeck()
 end
 function c10173011.spfilter(c)
 	return c:IsRace(RACE_DRAGON) and c:IsAbleToRemoveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))

@@ -25,42 +25,47 @@ function c10113048.initial_effect(c)
 end
 function c10113048.setcon(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(0)
-	if e:GetHandler():IsReason(REASON_DESTROY) then
+	if e:GetHandler():IsReason(REASON_DESTROY)then
 	   e:SetLabel(100)
 	end
 	return true
 end
-function c10113048.tffilter(c)
-	return c:IsRace(RACE_DINOSAUR) and not c:IsForbidden()
-end
-function c10113048.setfilter(c)
-	return c:IsRace(RACE_DINOSAUR) and c:IsAbleToGrave() and c:GetLevel()==8
-end
 function c10113048.settg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(c10113048.tffilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
+	local c,ft,ct=e:GetHandler(),Duel.GetLocationCount(tp,LOCATION_SZONE),e:GetLabel()
+	if chk==0 then return Duel.IsExistingMatchingCard(c10113048.setfilter,tp,LOCATION_DECK,0,1,nil,ct,ft) end
+end
+function c10113048.setfilter(c,ct,ft)
+	return c:IsRace(RACE_DINOSAUR) and not c:IsForbidden() and (ft>0 or (ct>0 and c:IsAbleToHand()))
 end
 function c10113048.setop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c10113048.tffilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil):GetFirst()
-	if tc and not tc:IsImmuneToEffect(e) then
-		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetCode(EFFECT_CHANGE_TYPE)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+0x1fc0000)
-		e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
-		tc:RegisterEffect(e1)
+	local c,ft,ct=e:GetHandler(),Duel.GetLocationCount(tp,LOCATION_SZONE),e:GetLabel()
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(10113048,4))
+	local tc=Duel.SelectMatchingCard(tp,c10113048.setfilter,tp,LOCATION_DECK,0,1,1,nil,ct,ft):GetFirst()
+	if not tc then return end
+	local th=(ct>0 and tc:IsAbleToHand())
+	if th and (ft<=0 or Duel.SelectYesNo(tp,aux.Stringid(10113048,2))) then
+	   Duel.SendtoHand(tc,nil,REASON_EFFECT)
+	   Duel.ConfirmCards(1-tp,tc)
+	else
+	   Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+	   local e1=Effect.CreateEffect(c)
+	   e1:SetCode(EFFECT_CHANGE_TYPE)
+	   e1:SetType(EFFECT_TYPE_SINGLE)
+	   e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	   e1:SetReset(RESET_EVENT+0x1fc0000)
+	   e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
+	   tc:RegisterEffect(e1)
 	end
-	local g=Duel.GetMatchingGroup(c10113048.setfilter,tp,LOCATION_DECK,0,nil)
-	if e:GetLabel()==100 and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(10113048,2)) then
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c10113048.thfilter2),tp,LOCATION_GRAVE,0,c)
+	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(10113048,3)) then
 	   Duel.BreakEffect()
-	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	   local tg=g:Select(tp,1,1,nil)
-	   Duel.SendtoGrave(tg,REASON_EFFECT)
+	   Duel.SendtoHand(tg,nil,REASON_EFFECT)
 	end
+end
+function c10113048.thfilter2(c)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xa338) and c:IsAbleToHand()
 end
 function c10113048.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
