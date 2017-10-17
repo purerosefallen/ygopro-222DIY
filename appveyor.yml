@@ -80,7 +80,7 @@ after_build:
   - rm -rf pics/thumbnail pics/*.db
   - mkdir replay
 
-  - 7z a YGOPro-by-Koishi.7z ygopro.exe LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound irrKlang.dll ikpMP3.dll
+  - 7z a -mx9 -xr!.git* YGOPro-by-Koishi.7z ygopro.exe LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound irrKlang.dll ikpMP3.dll
 
 test: off
 
