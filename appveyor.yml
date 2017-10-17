@@ -88,7 +88,7 @@ artifacts:
   - path: ygopro.exe
     name: ygopro client
   - path: YGOPro-by-Koishi.7z
-  - name: ygopro full repack
+    name: ygopro full repack
 
 cache:
   - premake-5.0.0-alpha12-windows.zip
