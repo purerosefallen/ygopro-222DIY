@@ -70,7 +70,35 @@ after_build:
   - git commit -m "Builded by Appveyor"
   - git push %Smile%purerosefallen/ygopro-222DIY data
   
-  - 7z a -mx=9 ygopro-222DIY-data.7z ygopro_222.exe irrKlang.dll ikpMP3.dll lflist.conf expansions sound -xr!.git*
+  - 7z a -mx9 -xr!.git* ygopro-222DIY-data.7z ygopro_222.exe irrKlang.dll ikpMP3.dll lflist.conf expansions sound
+  
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/ygopro-7210srv/archive/master.zip ; exit 0"
+  - 7z x ygopro-7210srv-master.zip
+  - cp -rf ygopro-7210srv-master/cards.cdb .
+  - cp -rf ygopro-7210srv-master/strings.conf .
+  - cp -rf ygopro-7210srv-master/system.conf .
+  - cp -rf ygopro-7210srv-master/textures .
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Fluorohydride/ygopro-scripts/archive/master.zip ; exit 0"
+  - 7z x ygopro-scripts-master.zip
+  - mv -f ygopro-scripts-master script
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/HuangYuNan/ygopro222-images/archive/master.zip ; exit 0"
+  - 7z x ygopro222-images-master.zip
+  - mv -f ygopro222-images-master pics
+ 
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/moecube/ygopro-images-field/archive/master.zip ; exit 0"
+  - 7z x ygopro-images-field-master.zip
+  - cp -rf ygopro-images-field-master/field pics
+  
+  - rm -rf pics/thumbnail pics/*.db expansions/pics/thumbnail expansions/pics/*.db
+  - mkdir replay
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/moecube/ygopro-starter-pack/archive/master.zip ; exit 0"
+  - 7z x ygopro-starter-pack-master.zip
+  - cp -rf ygopro-starter-pack-master/* .
+  
+  - 7z a -mx9 -xr!.git* ygopro-222DIY-full.7z ygopro_222.exe LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound irrKlang.dll ikpMP3.dll expansions
 
 test: off
 
@@ -79,6 +107,8 @@ artifacts:
     name: ygopro_222
   - path: ygopro-222DIY-data.7z
     name: ygopro-222DIY-data
+  - path: ygopro-222DIY-full.7z
+    name: ygopro-222DIY-full
 
 cache:
   - premake-5.0.0-alpha12-windows.zip
