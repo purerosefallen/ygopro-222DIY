@@ -370,6 +370,7 @@ static const struct luaL_Reg duellib[] = {
 	{ "ReadCard", scriptlib::duel_read_card },
 	{ "Exile", scriptlib::duel_exile },
 	{ "DisableActionCheck", scriptlib::duel_disable_action_check },
+	{ "SetMetatable", scriptlib::duel_setmetatable },
 
 	{ "EnableGlobalFlag", scriptlib::duel_enable_global_flag },
 	{ "GetLP", scriptlib::duel_get_lp },

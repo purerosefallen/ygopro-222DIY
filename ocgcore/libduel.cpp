@@ -154,6 +154,16 @@ int32 scriptlib::duel_disable_action_check(lua_State *L) {
 	pduel->lua->disable_action_check = dis;
 	return 0;
 }
+int32 scriptlib::duel_setmetatable(lua_State *L) {
+	check_param_count(L, 2);
+	if(!lua_isuserdata(L, 1))
+		luaL_error(L, "Parameter 1 should be \"Card\" or \"Effect\" or \"Group\".");
+	if(!lua_istable(L, 2))
+		luaL_error(L, "Parameter 2 should be \"Table\".");
+	lua_settop(L, 2);
+	lua_setmetatable(L, 1);	
+	return 0;
+}
 
 int32 scriptlib::duel_enable_global_flag(lua_State *L) {
 	check_param_count(L, 1);
