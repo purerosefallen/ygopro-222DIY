@@ -80,7 +80,7 @@ after_build:
   - cd ..
   
   - cp -rf ../ygopro-svrelease/WindBot .
-  
+  - cp -rf config.json config.user.json  
   - cp -rf ../node-v8.4.0-win-x64.zip .
   - 7z x node-v8.4.0-win-x64.zip
   - rm -rf node-v8.4.0-win-x64.zip
