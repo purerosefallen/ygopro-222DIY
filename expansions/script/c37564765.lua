@@ -2536,14 +2536,17 @@ function cm.DFCBackSideCommonEffect(c)
 	e2:SetRange(LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_HAND+LOCATION_EXTRA)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_SET_AVAILABLE)
 	e2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-		return c.dfc_front_side and c:GetOriginalCode()==c.dfc_back_side
+		local c=e:GetHandler()
+		return c.dfc_back_side
 	end)
 	e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
-		local tcode=c.dfc_front_side
+		local c=e:GetHandler()
+		local tcode=c.dfc_back_side
 		c:SetEntityCode(tcode)
 		Duel.ConfirmCards(tp,Group.FromCards(c))
 		Duel.ConfirmCards(1-tp,Group.FromCards(c))
 		c:ReplaceEffect(tcode,0,0)
+		Duel.SetMetatable(c,_G["c"..tcode])
 	end)
 	c:RegisterEffect(e2)	
 end

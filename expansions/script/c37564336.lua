@@ -2,6 +2,7 @@
 local m=37564336
 local cm=_G["c"..m]
 xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
+cm.dfc_back_side=m-1
 function cm.initial_effect(c)
 	c:EnableReviveLimit()
 	Senya.DFCBackSideCommonEffect(c)

@@ -60,7 +60,7 @@ function cm.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(function(e,tp)
 		local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
-		return g:GetClassCount()==g:GetCount()
+		return g:GetClassCount(Card.GetCode)==g:GetCount()
 	end)
 	e2:SetCost(function(e,tp,eg,ep,ev,re,r,rp,chk)
 		if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

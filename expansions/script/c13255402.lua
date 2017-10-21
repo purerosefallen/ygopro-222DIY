@@ -22,13 +22,12 @@ function c13255402.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c13255402.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	if re:GetHandler():IsLocation(LOCATION_DECK) then
-		Duel.ShuffleDeck(tp)
-		Duel.MoveSequence(tc,0)
-		Duel.ConfirmDecktop(tp,1)
-	elseif Duel.SendtoDeck(eg,nil,2,REASON_EFFECT)==0 then
-		return
+	if not re:GetHandler():IsLocation(LOCATION_DECK) then
+		if Duel.SendtoDeck(eg,nil,2,REASON_EFFECT)==0 then return end
 	end
+	Duel.ShuffleDeck(1-tp)
+	Duel.MoveSequence(tc,0)
+	Duel.ConfirmDecktop(1-tp,1)
 	local rg=Group.CreateGroup()
 	if tc:IsLocation(LOCATION_DECK) then
 		local tpe=tc:GetType()

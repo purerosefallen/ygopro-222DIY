@@ -29,15 +29,6 @@ function c12001023.initial_effect(c)
 	e3:SetTarget(c12001023.distg)
 	e3:SetOperation(c12001023.disop)
 	c:RegisterEffect(e3)
-	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(12001023,4))
-	e5:SetCategory(CATEGORY_DESTROY+CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e5:SetType(EFFECT_TYPE_IGNITION)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetCountLimit(1)
-	e5:SetTarget(c12001023.destg)
-	e5:SetOperation(c12001023.desop)
-	c:RegisterEffect(e5)
 end
 function c12001023.ntfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xfb0) and c:IsCanBeSynchroMaterial()
@@ -172,27 +163,4 @@ function c12001023.disop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
 		Duel.ShuffleDeck(nil)
 end
-end
-function c12001023.thfilter(c)
-	return c:IsSetCard(0xfb0) and c:IsType(TYPE_TRAP) and c:IsAbleToHand()
-end
-function c12001023.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,e:GetHandler())
-		and Duel.IsExistingMatchingCard(c12001023.thfilter,tp,LOCATION_DECK,0,1,nil) end
-	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_HAND+LOCATION_ONFIELD,0,e:GetHandler())
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-end
-function c12001023.desop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,e:GetHandler())
-	if g:GetCount()>0 and Duel.Destroy(g,REASON_EFFECT)~=0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,c12001023.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-		if g:GetCount()>0 then
-			Duel.SendtoHand(g,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,g)
-		end
-	end
 end

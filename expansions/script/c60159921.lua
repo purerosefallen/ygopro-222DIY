@@ -23,17 +23,14 @@ function c60159921.initial_effect(c)
 	--disable
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(60159921,0))
-	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_NEGATE+CATEGORY_SPECIAL_SUMMON)
+	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_NEGATE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,60159921)
 	e3:SetCondition(c60159921.discon)
-	e3:SetCost(function(e,tp,eg,ep,ev,re,r,rp,chk)
-		if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
-		e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
-	end)
+	e3:SetCost(c60159921.cost)
 	e3:SetTarget(c60159921.distg)
 	e3:SetOperation(c60159921.disop)
 	c:RegisterEffect(e3)
@@ -43,6 +40,10 @@ function c60159921.effcon(e)
 end
 function c60159921.discon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+end
+function c60159921.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
+	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c60159921.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

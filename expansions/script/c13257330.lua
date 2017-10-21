@@ -50,10 +50,10 @@ function c13257330.desfilter(c,ec)
 	return not ec:GetColumnGroup():IsContains(c) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsFaceup()
 end
 function c13257330.leftfilter(c,seq)
-	return c:GetSequence()>4-seq and c:GetSequence()<=5
+	return c:GetSequence()>4-seq and c:GetSequence()<5
 end
 function c13257330.rightfilter(c,seq)
-	return c:GetSequence()<4-seq
+	return c:GetSequence()<4-seq or c:GetSequence()==5
 end
 function c13257330.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ec=e:GetHandler():GetEquipTarget()
@@ -67,6 +67,8 @@ function c13257330.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c13257330.desfilter,tp,0,LOCATION_ONFIELD,nil,ec)
 	if g:GetCount()>0 then
 		local seq=ec:GetSequence()
+		if seq==5 then seq=1
+		elseif seq==6 then seq=3 end
 		local sg=Group.CreateGroup()
 		local g1=g:Filter(c13257330.leftfilter,nil,seq)
 		local g2=g:Filter(c13257330.rightfilter,nil,seq)

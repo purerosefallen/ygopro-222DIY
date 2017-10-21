@@ -1,6 +1,8 @@
 --我的朋友
 local m=33700502
 local cm=_G["c"..m]
+cm.dfc_back_side=m-1
+cm.card_code_list={33700056}
 function cm.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -13,15 +15,16 @@ function cm.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_SET_AVAILABLE)
 	e2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
-		return c.dfc_front_side and c:GetOriginalCode()==c.dfc_back_side
+		return c.dfc_back_side
 	end)
 	e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
-		local tcode=c.dfc_front_side
+		local tcode=c.dfc_back_side
 		c:SetEntityCode(tcode)
 		Duel.ConfirmCards(tp,Group.FromCards(c))
 		Duel.ConfirmCards(1-tp,Group.FromCards(c))
 		c:ReplaceEffect(tcode,0,0)
+		Duel.SetMetatable(c,_G["c"..tcode])
 	end)
 	c:RegisterEffect(e2)
 	local e2=Effect.CreateEffect(c)

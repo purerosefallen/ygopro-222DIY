@@ -52,7 +52,7 @@ function c12001008.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c12001008.efilter(e,te)
-	return te:GetOwner()~=e:GetOwner()
+	return te:GetOwner()~=e:GetOwner() and te:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
 function c12001008.cfilter(c,tp)
 	return c:GetSummonLocation()==LOCATION_EXTRA and c:GetPreviousControler()==1-tp

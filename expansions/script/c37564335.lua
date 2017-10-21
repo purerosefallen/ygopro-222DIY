@@ -2,8 +2,7 @@
 local m=37564335
 local cm=_G["c"..m]
 xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
-cm.dfc_front_side=m
-cm.dfc_back_side=m+1
+cm.dfc_front_side=m+1
 cm.fit_monster={m+1}
 function cm.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -26,7 +25,7 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(0)
 	if chk==0 then
 		local c=e:GetHandler()
-		local tcode=c.dfc_back_side
+		local tcode=c.dfc_front_side
 		if not tcode or l~=1 then return false end
 		local tempc=Senya.IgnoreActionCheck(Duel.CreateToken,tp,tcode)		
 		if not tempc:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,true) then return false end
@@ -45,7 +44,7 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	e:SetLabel(1)
 	if not cm.target(e,tp,eg,ep,ev,re,r,rp,0) or c:IsFacedown() or not c:IsRelateToEffect(e) or c:IsControler(1-tp) or c:IsImmuneToEffect(e) then return end
-	local tcode=c.dfc_back_side
+	local tcode=c.dfc_front_side
 	local tempc=Duel.CreateToken(tp,tcode)
 	local mg=Duel.GetRitualMaterial(tp):Filter(Card.IsCanBeRitualMaterial,c,tempc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -66,6 +65,7 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	c:SetEntityCode(tcode,true)
 	c:ReplaceEffect(tcode,0,0)
+	Duel.SetMetatable(c,_G["c"..tcode])
 	Duel.Hint(11,0,m*16)
 	Duel.Hint(HINT_CARD,0,m+1)
 	Duel.ConfirmCards(tp,Group.FromCards(c))

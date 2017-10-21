@@ -24,6 +24,7 @@ function c13257317.initial_effect(c)
 	e3:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e3:SetCountLimit(1)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetCondition(c13257317.upcon)
 	e3:SetCost(c13257317.upcost)
 	e3:SetTarget(c13257317.uptg)
 	e3:SetOperation(c13257317.upop)
@@ -149,6 +150,12 @@ function c13257317.tokenatt(e,c)
 end
 function c13257317.tokendes(e)
 	return not e:GetOwner():IsRelateToCard(e:GetHandler())
+end
+function c13257317.upcon(e,tp,eg,ep,ev,re,r,rp)
+	local a=Duel.GetAttacker()
+	local d=Duel.GetAttackTarget()
+	return d~=nil and d:IsFaceup() and ((a:GetControler()==tp and a:IsSetCard(0x351) and a:IsRelateToBattle())
+		or (d:GetControler()==tp and d:IsSetCard(0x351) and d:IsRelateToBattle()))
 end
 function c13257317.upcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0 end

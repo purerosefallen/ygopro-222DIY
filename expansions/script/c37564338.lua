@@ -6,6 +6,7 @@ function cm.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.TRUE,4)
 	c:EnableReviveLimit()
+	Senya.AddSummonMusic(c,m*16+1,SUMMON_TYPE_LINK)
 	--atk
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

@@ -9,9 +9,8 @@ function c13257220.initial_effect(c)
 	c:RegisterEffect(e11)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(13257220,0))
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_TO_HAND)
-	e1:SetCondition(c13257220.regcon)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_HAND)
 	e1:SetCost(c13257220.regcost)
 	e1:SetOperation(c13257220.regop)
 	c:RegisterEffect(e1)
@@ -50,14 +49,9 @@ end
 function c13257220.counterfilter(c)
 	return c:IsSetCard(0x353)
 end
-function c13257220.regcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return Duel.GetFlagEffect(tp,13257220)==0 and Duel.GetCurrentPhase()==PHASE_DRAW
-		and c:IsReason(REASON_DRAW) and c:IsReason(REASON_RULE)
-end
 function c13257220.regcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:GetLocation()==LOCATION_HAND and Duel.GetCustomActivityCount(13257220,tp,ACTIVITY_SPSUMMON)==0 and Duel.GetCustomActivityCount(13257220,tp,ACTIVITY_NORMALSUMMON)==0 end
+	if chk==0 then return c:GetLocation()==LOCATION_HAND and Duel.GetCustomActivityCount(13257220,tp,ACTIVITY_SPSUMMON)==0 and Duel.GetCustomActivityCount(13257220,tp,ACTIVITY_NORMALSUMMON)==0 and not c:IsPublic() end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_PUBLIC)
@@ -110,16 +104,17 @@ function c13257220.dreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not e:GetHandler():IsDisabled() end
 	if Duel.SelectYesNo(tp,aux.Stringid(13257220,1)) then
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetCode(EFFECT_DISABLE)
-		e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e3)
 		local e4=Effect.CreateEffect(c)
 		e4:SetType(EFFECT_TYPE_SINGLE)
-		e4:SetCode(EFFECT_DISABLE_EFFECT)
+		e4:SetCode(EFFECT_DISABLE)
 		e4:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e4)
+		c:RegisterEffect(e4,true)
+		local e5=Effect.CreateEffect(c)
+		e5:SetType(EFFECT_TYPE_SINGLE)
+		e5:SetCode(EFFECT_DISABLE_EFFECT)
+		e5:SetValue(RESET_TURN_SET)
+		e5:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		c:RegisterEffect(e5,true)
 		return true
 	else return false end
 end

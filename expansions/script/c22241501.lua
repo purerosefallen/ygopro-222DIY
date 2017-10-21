@@ -10,7 +10,7 @@ function c22241501.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_FZONE)
-	e1:SetCountLimit(1)
+	e1:SetCountLimit(1,22241501)
 	e1:SetCost(c22241501.cost)
 	e1:SetTarget(c22241501.target)
 	e1:SetOperation(c22241501.operation)
@@ -33,21 +33,25 @@ function c22241501.IsSolid(c)
 	local m=_G["c"..c:GetCode()]
 	return m and m.named_with_Solid
 end
-function c22241501.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsReleasable,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) end
-	local g=Duel.SelectMatchingCard(tp,Card.IsReleasable,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
-	Duel.Release(g,REASON_COST)
+function c22241501.cfilter1(c)
+	return c22241501.IsSolid(c) and c:IsReleasable()
 end
-function c22241501.filter1(c)
-	return bit.band(c:GetReason(),REASON_RELEASE)~=0 and c:IsAbleToHand()
+function c22241501.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c22241501.cfilter1,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) end
+	local g=Duel.SelectMatchingCard(tp,c22241501.cfilter1,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
+	Duel.Release(g,REASON_COST)
+	e:SetLabelObject(g:GetFirst())
+end
+function c22241501.filter1(c,e)
+	return c~=e:GetLabelObject() and bit.band(c:GetReason(),REASON_RELEASE)~=0 and c:IsAbleToHand()
 end
 function c22241501.filter2(c,e,tp)
 	return bit.band(c:GetOriginalType(),0x81)==0x81 and c:IsType(TYPE_SPELL) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) and not c:IsType(TYPE_PENDULUM)
 end
 function c22241501.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return (Duel.GetMatchingGroupCount(c22241501.filter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil)>0 or Duel.GetMatchingGroupCount(c22241501.filter2,tp,LOCATION_SZONE,0,nil,e,tp)>0) end
+	if chk==0 then return (Duel.GetMatchingGroupCount(c22241501.filter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e)>0 or Duel.GetMatchingGroupCount(c22241501.filter2,tp,LOCATION_SZONE,0,nil,e,tp)>0) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-	local g1=Duel.GetMatchingGroup(c22241501.filter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil)
+	local g1=Duel.GetMatchingGroup(c22241501.filter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e)
 	local g2=Duel.GetMatchingGroup(c22241501.filter2,tp,LOCATION_SZONE,0,nil,e,tp)
 	if g1:GetCount()>0 and g2:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		op=Duel.SelectOption(tp,aux.Stringid(22241501,0),aux.Stringid(22241501,1))
@@ -69,7 +73,7 @@ function c22241501.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if e:GetLabel()==0 then
-		local g=Duel.SelectMatchingCard(tp,c22241501.filter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,c22241501.filter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e)
 		if g:GetCount()>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
