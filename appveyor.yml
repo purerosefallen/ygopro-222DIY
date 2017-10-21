@@ -86,11 +86,7 @@ after_build:
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/HuangYuNan/ygopro222-images/archive/master.zip ; exit 0"
   - 7z x ygopro222-images-master.zip
   - mv -f ygopro222-images-master pics
- 
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/moecube/ygopro-images-field/archive/master.zip ; exit 0"
-  - 7z x ygopro-images-field-master.zip
-  - cp -rf ygopro-images-field-master/field pics
-  
+
   - rm -rf pics/thumbnail pics/*.db expansions/pics/thumbnail expansions/pics/*.db
   - mkdir replay
 
