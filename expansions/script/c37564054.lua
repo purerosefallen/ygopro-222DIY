@@ -19,16 +19,17 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_EXTRA)
 end
 function cm.sfilter(c)
-	return c:IsFaceup() and c:IsCanBeXyzMaterial()
+	return c:IsFaceup() and c:IsCanBeXyzMaterial(nil)
 end
 function cm.filter(c,tg,tp)
-	return Duel.IsExistingMatchingCard(cm.xfilter,tp,LOCATION_EXTRA,0,1,nil,tg,tc)
+	return Duel.IsExistingMatchingCard(cm.xfilter,tp,LOCATION_EXTRA,0,1,nil,tg,c)
+end
+function cm.gcheck(g,xyzc)
+	local ct=g:GetCount()
+	return xyzc:IsXyzSummonable(g,ct,ct)
 end
 function cm.xfilter(c,tg,tc)
-	return tg:IsExists(cm.mfilter,1,nil,c,tc)
-end
-function cm.mfilter(c,xyzc,exc)
-	return c:IsCanBeXyzMaterial(xyzc) and exc:IsCanBeXyzMaterial(xyzc) and xyzc:IsXyzSummonable(Group.FromCards(c,exc),2,2)
+	return Senya.CheckGroup(tg,cm.gcheck,Group.FromCards(tc),2,63,c)
 end
 function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
@@ -36,15 +37,14 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(p,0,LOCATION_HAND)
 	if g:GetCount()>0 then
 		Duel.ConfirmCards(p,g)
-		if g:IsExists(cm.filter,1,nil,tg,p) and Duel.SelectYesNo(p,37564007*16) then
+		if g:IsExists(cm.filter,1,nil,tg,p) and Duel.SelectYesNo(p,m*16) then
 			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_XMATERIAL)
 			local g1=g:FilterSelect(p,cm.filter,1,1,nil,tg,p)
 			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_SPSUMMON)
 			local xyzc=Duel.SelectMatchingCard(p,cm.xfilter,p,LOCATION_EXTRA,0,1,1,nil,tg,g1:GetFirst()):GetFirst()
-			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_XMATERIAL)
-			local g2=tg:FilterSelect(p,cm.mfilter,1,1,nil,xyzc,g1:GetFirst())
-			g1:Merge(g2)
-			Duel.XyzSummon(p,xyzc,g1)
+			local mg=Senya.SelectGroup(tp,HINTMSG_XMATERIAL,tg,cm.gcheck,g1,2,63,xyzc)
+			Duel.XyzSummon(p,xyzc,mg)
 		end
 	end
+	Duel.ShuffleHand(1-p)
 end

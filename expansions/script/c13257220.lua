@@ -102,8 +102,8 @@ function c13257220.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13257220.dreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return not e:GetHandler():IsDisabled() end
-	if Duel.SelectYesNo(tp,aux.Stringid(13257220,1)) then
+	if chk==0 then return true end
+	if not c:IsDisabled() and Duel.SelectYesNo(tp,aux.Stringid(13257220,1)) then
 		local e4=Effect.CreateEffect(c)
 		e4:SetType(EFFECT_TYPE_SINGLE)
 		e4:SetCode(EFFECT_DISABLE)

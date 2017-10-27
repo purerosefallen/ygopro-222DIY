@@ -79,7 +79,7 @@ function c13254107.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end
 function c13254107.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) 
+	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK 
 end
 function c13254107.thfilter(c)
 	return c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
@@ -102,11 +102,11 @@ function c13254107.spfilter(c,e,tp)
 end
 function c13254107.spcon(e,c,sg,og)
 	local tp=e:GetHandlerPlayer()
-	return Duel.GetMZoneCount(tp)>0
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c13254107.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
 end
 function c13254107.spop(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
-	if Duel.GetMZoneCount(tp)<=0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c13254107.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	sg:Merge(g)
@@ -133,7 +133,7 @@ function c13254107.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return not c:IsSetCard(0x356) or not c:IsType(TYPE_MONSTER)
 end
 function c13254107.cfilter(c,tp)
-	return c:IsSetCard(0x356) and c:GetPreviousControler()==tp
+	return c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) and c:GetPreviousControler()==tp
 end
 function c13254107.descon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c13254107.cfilter,1,nil,tp)

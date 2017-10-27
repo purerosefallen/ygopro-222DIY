@@ -96,13 +96,6 @@ end
 function c17060845.splimit(e,se,sp,st)
 	return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
-function c17060845.spfilter1(c,tp,fc)
-	return c:IsType(TYPE_PENDULUM) and c:IsCanBeFusionMaterial(fc) and c:IsAbleToDeckOrExtraAsCost()
-end
-function c17060845.spfilter2(c,fc)
-	return c:IsType(TYPE_FUSION) and c:IsRace(RACE_WARRIOR) and c:IsCanBeFusionMaterial(fc) and c:IsAbleToDeckOrExtraAsCost()
-end
-
 function c17060845.spfilter1(c,tp,g)
 	return g:IsExists(c17060845.spfilter2,1,c,tp,c)
 end
@@ -112,7 +105,7 @@ function c17060845.spfilter2(c,tp,mc)
 		and Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(c,mc))>0
 end
 function c17060845.matfilter(c)
-	return((c:IsType(TYPE_FUSION) and c:IsRace(RACE_WARRIOR)) or c:IsFusionType(TYPE_PENDULUM) and c:IsAbleToDeckOrExtraAsCost()
+	return((c:IsType(TYPE_FUSION) and c:IsRace(RACE_WARRIOR)) or c:IsFusionType(TYPE_PENDULUM)) and c:IsAbleToDeckOrExtraAsCost()
 end
 function c17060845.spcon(e,c)
 	if c==nil then return true end
@@ -176,7 +169,7 @@ function c17060845.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c17060845.spop1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetMZoneCount(tp)<=0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c17060845.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
