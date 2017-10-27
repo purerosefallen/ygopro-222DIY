@@ -75,12 +75,13 @@ function cm.mtop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Overlay(c,g)
 	end
 end
-function cm.filter1(c,e,tp,og,ft)
+function cm.filter1(c,e,tp,og)
 	if ft==0 and c:GetSequence()>4 then return false end
 	return c:IsFaceup() and Duel.IsExistingTarget(cm.filter2,tp,0,LOCATION_MZONE,1,nil,e,tp,og,c)
 end
 function cm.filter2(c,e,tp,og,mc)
-	return c:IsFaceup() and c:IsAbleToChangeControler() and og:IsExists(cm.filter3,1,nil,e,tp,Group.FromCards(c,mc))
+	local g=Group.FromCards(c,mc)
+	return c:IsFaceup() and c:IsAbleToChangeControler() and og:IsExists(cm.filter3,1,nil,e,tp,g) and Duel.GetMZoneCount(tp,g,tp)>0
 end
 function cm.filter3(c,e,tp,mg)
 	return c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,true) and Senya.CheckFusionMaterialExact(c,mg,PLAYER_NONE)
@@ -88,9 +89,8 @@ end
 function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	local og=e:GetHandler():GetOverlayGroup()
-	local ft=Duel.GetMZoneCount(tp)
 	if chkc then return false end
-	if chk==0 then return ft>=-1 and Duel.IsExistingTarget(cm.filter1,tp,LOCATION_MZONE,0,1,c,e,tp,og,ft) end
+	if chk==0 then return Duel.IsExistingTarget(cm.filter1,tp,LOCATION_MZONE,0,1,c,e,tp,og) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
 	local g1=Duel.SelectTarget(tp,cm.filter1,tp,LOCATION_MZONE,0,1,1,c,e,tp,og,ft)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
@@ -107,11 +107,9 @@ function cm.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() or c:IsControler(1-tp) then return end
 	local og=e:GetHandler():GetOverlayGroup()
-	local ft=Duel.GetMZoneCount(tp)
-	if ft<0 then return end
 	local mg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if mg:IsExists(cm.counterfilter,1,nil,e) then return end
-	if ft==0 and not mg:IsExists(cm.checklocationfilter,1,nil,tp) then return end
+	if Duel.GetMZoneCount(tp,mg,tp)<=0 then return end
 	local fg=og:Filter(cm.filter3,nil,e,tp,mg)
 	if fg:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

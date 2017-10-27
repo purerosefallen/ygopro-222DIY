@@ -494,10 +494,10 @@ function cm.WindbotSSCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function cm.WindbotSSFilter(c,e,tp)
-	return cm.IsWindbot(c) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(e:GetHandler():GetCode())
+	return cm.IsWindbot(c) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(e:GetHandler():GetCode()) and Duel.GetMZoneCount(tp,c,tp)>0
 end
 function cm.WindbotSSTarget(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp)>-1 and Duel.IsExistingMatchingCard(cm.WindbotSSFilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(cm.WindbotSSFilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_DECK)
 end
 function cm.WindbotSSOperation(e,tp,eg,ep,ev,re,r,rp)

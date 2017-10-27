@@ -33,7 +33,7 @@ function cm.sfilter(c,e,tp,g)
 end
 function cm.scheck(g,c,tp)
 	if c:IsLocation(LOCATION_EXTRA) then return Duel.GetLocationCountFromEx(tp,tp,g,c)>0 end
-	return Duel.GetMZoneCount(tp)+g:GetCount()>0
+	return Duel.GetMZoneCount(tp,g,tp)>0
 end
 function cm.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(cm.rfilter,tp,LOCATION_MZONE,0,e:GetHandler())

@@ -33,7 +33,7 @@ function cm.battlecheck(c,tp)
 end
 function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then	  
-		if rp==tp or eg:GetCount()~=1 or Duel.GetMZoneCount(tp)<=0 then return false end
+		if rp==tp or eg:GetCount()~= then return false end
 		local tc=eg:GetFirst()
 		if not Senya.check_set_3L(tc) or not tc:IsType(TYPE_MONSTER) or not tc:IsLocation(LOCATION_GRAVE) or not tc:IsAbleToRemove() or not cm.battlecheck(tc,tp) then return false end
 		local mg=Duel.GetMatchingGroup(cm.mfilter,tp,LOCATION_DECK,0,nil)
@@ -44,7 +44,7 @@ function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function cm.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	if Duel.GetMZoneCount(tp)<=0 or not tc:IsRelateToEffect(e) or not tc:IsAbleToRemove() or tc:IsImmuneToEffect(e) then return end
+	if not tc:IsRelateToEffect(e) or not tc:IsAbleToRemove() or tc:IsImmuneToEffect(e) then return end
 	local mg=Duel.GetMatchingGroup(cm.mfilter,tp,LOCATION_DECK,0,nil,e)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,cm.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,mg,tc)

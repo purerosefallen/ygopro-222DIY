@@ -52,18 +52,18 @@ end
 function cm.spfilter(c)
 	return Senya.check_set_prism(c) and (c:IsAbleToHandAsCost() or c:IsAbleToExtraAsCost())
 end
-function cm.spgcheck(g,ft)
-	return g:FilterCount(function(c) return c:GetSequence()<4 end,nil)+ft>0
+function cm.spgcheck(g,tp)
+	return Duel.GetMZoneCount(tp,g,tp)>0
 end
 function cm.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local mg=Duel.GetMatchingGroup(cm.spfilter,tp,LOCATION_MZONE,0,nil)
-	return Senya.CheckGroup(mg,cm.spgcheck,nil,3,3,Duel.GetMZoneCount(tp))
+	return Senya.CheckGroup(mg,cm.spgcheck,nil,3,3,tp)
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mg=Duel.GetMatchingGroup(cm.spfilter,tp,LOCATION_MZONE,0,nil)
-	local g=Senya.SelectGroup(tp,HINTMSG_RTOHAND,mg,cm.spgcheck,nil,3,3,Duel.GetMZoneCount(tp))
+	local g=Senya.SelectGroup(tp,HINTMSG_RTOHAND,mg,cm.spgcheck,nil,3,3,tp)
 	c:SetMaterial(g)
 	Duel.SendtoHand(g,nil,REASON_COST+REASON_FUSION+REASON_MATERIAL)
 end

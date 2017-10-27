@@ -28,17 +28,19 @@ function cm.initial_effect(c)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
 end
-function cm.sfilter(c,e,tp,z)
-	if z then
-		return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,z)
-	else
-		return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-	end
+function cm.sfilter(c,e,tp)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
+function cm.thgcheck(g,tp,z)
+	return Duel.GetMZoneCount(tp,g,tp,LOCATION_REASON_TOFIELD,z)>0
 end
 function cm.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=e:GetHandler():GetLinkedGroup()
+	local g=e:GetHandler():GetLinkedGroup():Filter(Card.IsAbleToHand,nil)
 	local z=e:GetHandler():GetLinkedZone()
-	if chk==0 then return z~=0 and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,z)>-1 and g:IsExists(Card.IsAbleToHand,1,nil) and Duel.IsExistingMatchingCard(cm.sfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	local sg=Duel.GetMatchingGroup(cm.sfilter,tp,LOCATION_HAND,0,nil,e,tp)
+	local ct=sg:GetCount()
+	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=math.min(ct,1) end
+	if chk==0 then return z~=0 and ct>0 and Senya.CheckGroup(g,cm.thgcheck,nil,1,ct,tp,z) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,g:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,g:GetCount(),tp,LOCATION_HAND)
 end
@@ -48,17 +50,18 @@ function cm.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(cm.sfilter,tp,LOCATION_HAND,0,nil,e,tp)
 	local tg=e:GetHandler():GetLinkedGroup():Filter(Card.IsAbleToHand,nil)
 	local ct=sg:GetCount()
-	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g1=tg:Select(tp,1,ct,nil)
+	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=math.min(ct,1) end
+	local g1=Senya.SelectGroup(tp,HINTMSG_RTOHAND,g,cm.thgcheck,nil,1,ct,tp,z)
 	local rct=Duel.SendtoHand(g1,nil,REASON_EFFECT)
-	local tsg=Duel.GetMatchingGroup(cm.sfilter,tp,LOCATION_HAND,0,nil,e,tp,z)
-	if math.min(tsg:GetCount(),rct)==0 or Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,z)<=0 then return end
+	local tsg=Duel.GetMatchingGroup(cm.sfilter,tp,LOCATION_HAND,0,nil,e,tp)
+	local minct=math.min(tsg:GetCount(),rct)
+	minct=math.min(minct,Duel.GetMZoneCount(tp,nil,tp,LOCATION_REASON_TOFIELD,z))
+	if minct<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g2=tsg:Select(tp,1,rct,nil)
+	local g2=tsg:Select(tp,1,minct,nil)
 	local sct=Duel.SpecialSummon(g2,0,tp,tp,false,false,POS_FACEUP,z)
 	local og=Duel.GetOperatedGroup()
-	if og:FilterCount(Senya.check_set_prism,nil)>1 then
+	if og:FilterCount(Senya.check_set_prism,nil)==2 then
 		local rg=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
 		if rg:GetCount()>0 and Duel.SelectYesNo(tp,m*16+1) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)

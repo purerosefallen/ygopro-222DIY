@@ -21,17 +21,7 @@ function cm.filter(c,e,tp,m1,m2,ft)
 	if c.mat_filter then
 		mg=mg:Filter(c.mat_filter,nil)
 	end
-	if ft>0 then
-		return mg:CheckWithSumEqual(Card.GetRitualLevel,c:GetLevel(),1,99,c)
-	else
-		return ft>-1 and mg:IsExists(cm.mfilterf,1,nil,tp,mg,c)
-	end
-end
-function cm.mfilterf(c,tp,mg,rc)
-	if c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then
-		Duel.SetSelectedCard(c)
-		return mg:CheckWithSumEqual(Card.GetRitualLevel,rc:GetLevel(),0,99,rc)
-	else return false end
+	return Senya.CheckRitualMaterial(c,mg,tp,c:GetLevel())
 end
 function cm.mfilter(c)
 	return c:GetLevel()>0 and Senya.check_set_sayuri(c) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
@@ -64,18 +54,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 			if tc.mat_filter then
 				mg=mg:Filter(tc.mat_filter,nil)
 			end
-			local mat=nil
-			if ft>0 then
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-				mat=mg:SelectWithSumEqual(tp,Card.GetRitualLevel,tc:GetLevel(),1,99,tc)
-			else
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-				mat=mg:FilterSelect(tp,cm.mfilterf,1,1,nil,tp,mg,tc)
-				Duel.SetSelectedCard(mat)
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-				local mat2=mg:SelectWithSumEqual(tp,Card.GetRitualLevel,tc:GetLevel(),0,99,tc)
-				mat:Merge(mat2)
-			end
+			local mat=mat=Senya.CheckRitualMaterial(tc,mg,tp,tc:GetLevel())
 			tc:SetMaterial(mat)
 			Senya.SayuriCheckTrigger(tc,e,tp,eg,ep,ev,re,r,rp)
 			Duel.ReleaseRitualMaterial(mat)

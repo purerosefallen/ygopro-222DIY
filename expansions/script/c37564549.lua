@@ -94,7 +94,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.f2(c,e,tp,tc)
-	return c.Senya_desc_with_nanahira and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationFromEx(tp,tp,Group.FromCards(tc),c)>0
+	return c.Senya_desc_with_nanahira and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationFromEx(tp,tp,tc,c)>0
 end
 function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local te=e:GetLabelObject()
@@ -102,9 +102,6 @@ function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		if not te then return false end
 		local tc=te:GetLabelObject()
 		if not tc or tc:GetFlagEffect(m)==0 or not tc:IsAbleToExtra() then return false end
-		local ft=0
-		if tc:IsControler(tp) then ft=-1 end
-		if Duel.GetMZoneCount(tp)<=ft then return false end
 		if not Duel.IsExistingMatchingCard(cm.f2,tp,LOCATION_EXTRA,0,1,tc,e,tp,tc) then return false end
 		return tc==Duel.GetAttacker() or tc==Duel.GetAttackTarget()
 	end

@@ -9,38 +9,7 @@ aux.BeginPuzzle=aux.TRUE
 cm.delay=0x14000
 cm.fix=0x40400
 cm.m=37564765
---supporting mr3
-if not Duel.GetLocationCountFromEx then
-	cm.master_rule_3_flag=true
-	Card.IsSynchroType=Card.IsFusionType
-	Card.IsXyzType=Card.IsFusionType
-	Card.IsLinkType=Card.IsFusionType
-	Duel.FilterPlayerEffect=Duel.IsPlayerAffectedByEffect
-	TYPE_LINK=bit.lshift(TYPE_SPSUMMON,1)
-	SUMMON_TYPE_LINK=0x4c000000
-	EFFECT_CANNOT_BE_LINK_MATERIAL=0
-	function Duel.GetLocationCountFromEx(tp,p,sg,c)		
-		local ft=Duel.GetMZoneCount(tp)
-		if sg then ft=ft+sg:FilterCount(aux.FConditionCheckF,nil,tp) end
-		return ft
-	end
-	function Duel.GetUsableMZoneCount(tp)
-		return Duel.GetMZoneCount(tp)
-	end
-	local pz=LOCATION_PZONE
-	LOCATION_PZONE=LOCATION_SZONE
-	local effect_set_range=Effect.SetRange
-	function Effect.SetRange(e,r)
-		local r=r
-		if e:GetOwner():IsType(TYPE_PENDULUM) and r==LOCATION_SZONE then
-			r=pz
-		end
-		return effect_set_range(e,r)
-	end
-	function Card.IsSummonType(c,t)
-		return bit.band(c:GetSummonType(),t)==t
-	end
-end
+
 function cm.DescriptionInNanahira(id)
 	id=id or 0
 	return 37564765*16+id
@@ -308,7 +277,11 @@ function cm.OverlayGroup(c,g,xm,nchk)
 	Duel.Overlay(c,tg)
 end
 function cm.CheckFieldFilter(g,tp,c,f,...)
-	return Duel.GetLocationCountFromEx(tp,tp,g,c)>0 and (not f or f(g,...))
+	if c:IsLocation(LOCATION_EXTRA) then
+		return Duel.GetLocationCountFromEx(tp,tp,g,c)>0 and (not f or f(g,...))
+	else
+		return Duel.GetMZoneCount(tp,g,tp)>0 and (not f or f(g,...))
+	end
 end
 --xyz summon of prim
 function cm.AddXyzProcedureRank(c,rk,f,minct,maxct,xm,...)
@@ -772,9 +745,8 @@ function cm.PrismCommonEffect(c,tg,op,istg,ctg)
 	end
 	return e1
 end
-function cm.PrismSpsummonFilter(c,ft)
-	if ft==0 and c:GetSequence()>4 then return false end
-	return c:IsAbleToHand() and cm.CheckPrism(c) and c:IsFaceup()
+function cm.PrismSpsummonFilter(c,tp)
+	return c:IsAbleToHand() and cm.CheckPrism(c) and c:IsFaceup() and Duel.GetMZoneCount(tp,c,tp)>0
 end
 function cm.PrismSpsummonCost(cd)
 return function(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -784,12 +756,10 @@ return function(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 end
 function cm.PrismSpsummonTarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local ft=Duel.GetMZoneCount(tp)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and cm.PrismSpsummonFilter(chkc,ft) end
-	if chk==0 then return ft>-1
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingTarget(cm.PrismSpsummonFilter,tp,LOCATION_MZONE,0,1,nil,ft) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and cm.PrismSpsummonFilter(chkc,tp) end
+	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingTarget(cm.PrismSpsummonFilter,tp,LOCATION_MZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,cm.PrismSpsummonFilter,tp,LOCATION_MZONE,0,1,1,nil,ft)
+	local g=Duel.SelectTarget(tp,cm.PrismSpsummonFilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,tp,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
@@ -934,19 +904,16 @@ function cm.PrismAdvanceCommonEffect(c,fr)
 	end
 	return e1
 end
-function cm.PrismProcFilter(c,ft)
-	if ft==0 and c:GetSequence()>4 then return false end
-	return cm.CheckPrism(c)
+function cm.PrismProcFilter(c,tp)
+	return cm.CheckPrism(c) and Duel.GetMZoneCount(tp,c,tp)>0
 end
 function cm.PrismProcCondition(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local ft=Duel.GetMZoneCount(tp)
-	return ft>-1 and Duel.CheckReleaseGroup(tp,cm.PrismProcFilter,1,nil,ft)
+	return Duel.CheckReleaseGroup(tp,cm.PrismProcFilter,1,nil,tp)
 end
 function cm.PrismProcOperation(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft=Duel.GetMZoneCount(tp)
-	local g=Duel.SelectReleaseGroup(tp,cm.PrismProcFilter,1,1,nil,ft)
+	local g=Duel.SelectReleaseGroup(tp,cm.PrismProcFilter,1,1,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
 --prism xyz multi-count xyz proc
@@ -2429,13 +2396,10 @@ function cm.CheckPendulum(c)
 	local tp=c:GetControler()
 	return cm.GetPendulumCard(tp,0)==c or cm.GetPendulumCard(tp,1)==c
 end
-function cm.CheckMFilter(c)
-	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 and c:IsControler(tp)
-end
 function cm.CheckSummonLocation(c,tp,g)
 	local g=g or Group.CreateGroup()
 	if c:IsLocation(LOCATION_EXTRA) then return Duel.GetLocationCountFromEx(tp,tp,g,c)>0 end
-	return Duel.GetMZoneCount(tp)+g:FilterCount(cm.CheckMFilter,nil)>0
+	return Duel.GetMZoneCount(tp,g,tp)>0
 end
 function cm.AND(...)
 	local t={...}
@@ -2549,4 +2513,17 @@ function cm.DFCBackSideCommonEffect(c)
 		Duel.SetMetatable(c,_G["c"..tcode])
 	end)
 	c:RegisterEffect(e2)	
+end
+--for ritual update
+function cm.CheckRitualMaterialGoal(g,c,tp,lv,f)
+	local ct=g:GetCount()
+	return cm.CheckSummonLocation(c,tp,g) and g:CheckWithSumEqual(f,lv,ct,ct,c)
+end
+function cm.CheckRitualMaterial(c,g,tp,lv,f)
+	local f=f or Card.GetRitualLevel
+	return cm.CheckGroup(g,cm.CheckRitualMaterialGoal,nil,1,99,c,tp,lv,f)
+end
+function cm.SelectRitualMaterial(c,g,tp,lv,f)
+	local f=f or Card.GetRitualLevel
+	return cm.SelectGroup(tp,HINTMSG_RELEASE,g,cm.CheckRitualMaterialGoal,nil,1,99,c,tp,lv,f)
 end
