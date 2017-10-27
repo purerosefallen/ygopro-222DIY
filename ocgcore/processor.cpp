@@ -3377,6 +3377,12 @@ int32 field::process_battle_command(uint16 step) {
 				pduel->write_buffer8(HINT_CARD);
 				pduel->write_buffer8(0);
 				pduel->write_buffer32(indestructable_effect->owner->data.code);
+				if(indestructable_effect->description) {
+					pduel->write_buffer8(MSG_HINT);
+					pduel->write_buffer8(12);
+					pduel->write_buffer8(0);
+					pduel->write_buffer32(indestructable_effect->description);
+				}
 				bd[0] = FALSE;
 			} else
 				core.attacker->set_status(STATUS_BATTLE_RESULT, TRUE);
@@ -3388,6 +3394,12 @@ int32 field::process_battle_command(uint16 step) {
 				pduel->write_buffer8(HINT_CARD);
 				pduel->write_buffer8(0);
 				pduel->write_buffer32(indestructable_effect->owner->data.code);
+				if(indestructable_effect->description) {
+					pduel->write_buffer8(MSG_HINT);
+					pduel->write_buffer8(12);
+					pduel->write_buffer8(0);
+					pduel->write_buffer32(indestructable_effect->description);
+				}
 				bd[1] = FALSE;
 			} else
 				core.attack_target->set_status(STATUS_BATTLE_RESULT, TRUE);
