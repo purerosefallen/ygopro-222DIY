@@ -84,14 +84,14 @@ end
 function c50000201.target(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then
         local mg=Duel.GetRitualMaterial(tp)
-        local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+        local ft=Duel.GetMZoneCount(tp)
         return ft>-1 and Duel.IsExistingMatchingCard(c50000201.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,mg,ft)
     end
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c50000201.operation(e,tp,eg,ep,ev,re,r,rp)
     local mg=Duel.GetRitualMaterial(tp)
-    local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+    local ft=Duel.GetMZoneCount(tp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
     local tg=Duel.SelectMatchingCard(tp,c50000201.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,mg,ft)
     local tc=tg:GetFirst()
@@ -173,12 +173,12 @@ function c50000201.sdfilter(c,e,tp)
     return c:IsType(TYPE_RITUAL) and c:IsAttribute(ATTRIBUTE_WATER) and c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,false)
 end
 function c50000201.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+    if chk==0 then return Duel.GetMZoneCount(tp)>0
         and Duel.IsExistingMatchingCard(c50000201.sdfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c50000201.spop(e,tp,eg,ep,ev,re,r,rp)
-    if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+    if Duel.GetMZoneCount(tp)<=0 then return end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
     local g=Duel.SelectMatchingCard(tp,c50000201.sdfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
     local sc=g:GetFirst()

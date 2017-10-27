@@ -63,7 +63,7 @@ end
 function c60151013.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
+	return Duel.GetMZoneCount(tp)>-2
 		and Duel.CheckReleaseGroup(tp,c60151013.spfilter1,1,nil,tp)
 end
 function c60151013.spop(e,tp,eg,ep,ev,re,r,rp,c)
@@ -94,13 +94,13 @@ function c60151013.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
 function c60151013.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,60151014,0,0x4011,-2,-2,6,RACE_FIEND,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c60151013.thop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	local atk=bc:GetAttack()

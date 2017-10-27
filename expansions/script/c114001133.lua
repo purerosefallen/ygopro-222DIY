@@ -30,7 +30,7 @@ end
 function c114001133.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c114001133.spfilter,tp,LOCATION_HAND,0,1,c)
 end
 function c114001133.spop(e,tp,eg,ep,ev,re,r,rp,c)
@@ -49,7 +49,7 @@ end
 
 function c114001133.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c114001133.spfilter2(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingTarget(c114001133.spfilter2,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c114001133.spfilter2,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)

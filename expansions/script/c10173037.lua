@@ -35,7 +35,7 @@ function c10173037.fustg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
 		c:RegisterFlagEffect(10173037,RESET_CHAIN+RESET_EVENT+0x1fe0000,0,0)
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
+		if Duel.GetMZoneCount(tp)<=0 then return false end
 		local mg=Duel.GetMatchingGroup(c10173037.filter0,tp,LOCATION_REMOVED,0,nil)
 		local tf=Duel.IsExistingMatchingCard(c10173037.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg)
 		c:ResetFlagEffect(10173037)
@@ -45,7 +45,7 @@ function c10173037.fustg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c10173037.fusop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	if c:IsRelateToEffect(e) then c:RegisterFlagEffect(10173037,RESET_CHAIN+RESET_EVENT+0x1fe0000,0,0) end
 	local mg=Duel.GetMatchingGroup(c10173037.filter1,tp,LOCATION_REMOVED,0,nil,e)
 	local sg=Duel.GetMatchingGroup(c10173037.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg)

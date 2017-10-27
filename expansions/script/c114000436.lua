@@ -17,7 +17,7 @@ function c114000436.cfilter(c)
 end
 function c114000436.condition(c,e,tp,eg,ep,ev,re,r,rp)
 	--local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return Duel.GetMZoneCount(tp)>0
 		and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
 		and not Duel.IsExistingMatchingCard(c114000436.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
@@ -26,7 +26,7 @@ function c114000436.filter(c,e,tp)
 end
 function c114000436.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c114000436.filter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1
+	if chk==0 then return Duel.GetMZoneCount(tp)>1
 		and Duel.IsExistingTarget(c114000436.filter,tp,LOCATION_REMOVED,0,2,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c114000436.filter,tp,LOCATION_REMOVED,0,2,2,nil,e,tp)
@@ -35,7 +35,7 @@ end
 function c114000436.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if g:GetCount()==0 then return end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<g:GetCount() then return end
+	if Duel.GetMZoneCount(tp)<g:GetCount() then return end
 	local c=e:GetHandler()
 	local tc=g:GetFirst()
 	while tc do

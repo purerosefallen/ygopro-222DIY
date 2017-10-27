@@ -29,7 +29,7 @@ function cm.initial_effect(c)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCondition(function(e,c)
 		if c==nil then return true end
-		return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and c:GetFlagEffect(m)>0
+		return Duel.GetMZoneCount(c:GetControler())>0 and c:GetFlagEffect(m)>0
 	end)
 	c:RegisterEffect(e1)
 	local e1=Effect.CreateEffect(c)
@@ -55,11 +55,11 @@ end
 function cm.bmrlcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	return ft>-1 and Duel.CheckReleaseGroup(tp,cm.bmrlfilter,1,nil,ft)
 end
 function cm.bmrlop(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	local g=Duel.SelectReleaseGroup(tp,cm.bmrlfilter,1,1,nil,ft)
 	Duel.Release(g,REASON_COST)
 end

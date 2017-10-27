@@ -88,7 +88,7 @@ function c114000013.xyzcon(e,c,og)
 	local mtf=Duel.GetMatchingGroup(c114000013.xyzfilter,c:GetControler(),LOCATION_MZONE,0,nil)
 	local mtfmat=mtf:Filter(Card.IsCanBeXyzMaterial,nil,c)
 	local bd=1-mtfmat:GetCount()
-	local ft=Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(c:GetControler())
 	if ft>=bd and Duel.GetFlagEffect(tp,114000013)==0 then 
 		local lvb=c114000013.lvchk(tp)
 		local mct=0 -- count suitable monsters
@@ -154,7 +154,7 @@ function c114000013.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og)
 			mgf:Merge(xyzag1)
 			mga:Merge(xyzag2)
 			--
-			local ft=Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)
+			local ft=Duel.GetMZoneCount(c:GetControler())
 			if ft<=0 then
 				local ct=-ft
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)

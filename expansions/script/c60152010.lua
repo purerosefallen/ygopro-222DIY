@@ -43,16 +43,16 @@ end
 function c60152010.spcon2(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 then 
+	if Duel.GetMZoneCount(tp)<1 and Duel.GetMZoneCount(tp)>-2 then 
 		return Duel.IsExistingMatchingCard(c60152010.spfilter2,tp,LOCATION_HAND+LOCATION_ONFIELD,0,2,nil)
 			and Duel.IsExistingMatchingCard(c60152010.spfilter2,tp,LOCATION_ONFIELD,0,1,nil)
 	else
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+		return Duel.GetMZoneCount(tp)>0 
 			and Duel.IsExistingMatchingCard(c60152010.spfilter2,tp,LOCATION_HAND+LOCATION_ONFIELD,0,2,nil)
 	end
 end
 function c60152010.spop2(e,tp,eg,ep,ev,re,r,rp,c)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 then
+	if Duel.GetMZoneCount(tp)<1 and Duel.GetMZoneCount(tp)>-2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 		local g1=Duel.SelectMatchingCard(tp,c60152010.spfilter2,tp,LOCATION_ONFIELD,0,1,1,nil)
 		local tc=g1:GetFirst()
@@ -104,12 +104,12 @@ function c60152010.spfilter(c,e,tp)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c60152010.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c60152010.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c60152010.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c60152010.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()

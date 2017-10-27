@@ -36,13 +36,13 @@ function c8209715.filter(c,e,tp)
 end
 function c8209715.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c8209715.filter,tp,LOCATION_DECK,0,2,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK)
 end
 function c8209715.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
+	if Duel.GetMZoneCount(tp)<2 then return end
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(c8209715.filter,tp,LOCATION_DECK,0,nil,e,tp)
 	if g:GetCount()>=2 then

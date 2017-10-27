@@ -50,7 +50,7 @@ function c17060849.rpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c17060849.rpfilter(c,e,tp)
 	return c17060849.IsMillion_Arthur(c) and c:IsType(TYPE_PENDULUM) and (not c:IsForbidden()
-		or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+		or (Duel.GetMZoneCount(tp)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function c17060849.rptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c17060849.rpfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
@@ -61,7 +61,7 @@ function c17060849.rpop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c17060849.rpfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	local op=0
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
+	if Duel.GetMZoneCount(tp)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
 		op=Duel.SelectOption(tp,aux.Stringid(17060849,4),aux.Stringid(17060849,5))
 	else
 		op=Duel.SelectOption(tp,aux.Stringid(17060849,4))
@@ -80,7 +80,7 @@ function c17060849.filter(c,e,tp)
 end
 function c17060849.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_HAND+LOCATION_GRAVE) and chkc:IsControler(tp) and c17060849.filter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingTarget(c17060849.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c17060849.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp)

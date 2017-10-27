@@ -47,7 +47,7 @@ function c17060803.filter(c)
 end
 function c17060803.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c17060803.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,e:GetHandler())
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+		and Duel.GetMZoneCount(tp)>-1
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)

@@ -67,14 +67,14 @@ function c2116004.exfilter(c,e,tp,lv)
 end
 function c2116004.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToRemove() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return c:IsAbleToRemove() and Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c2116004.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c:GetLevel()) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,2,tp,LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c2116004.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or not c:IsAbleToRemove() or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if not c:IsRelateToEffect(e) or not c:IsAbleToRemove() or Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local rg=Duel.SelectMatchingCard(tp,c2116004.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,c:GetLevel())
 	local lv=rg:GetFirst():GetLevel()+c:GetLevel()

@@ -84,14 +84,14 @@ end
 function c22240123.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local mg=Duel.GetRitualMaterial(tp)
-		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		local ft=Duel.GetMZoneCount(tp)
 		return ft>-1 and e:GetHandler():GetOverlayGroup():FilterCount(c22240123.filter,nil,e,tp,mg,ft)>0
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function c22240123.operation(e,tp,eg,ep,ev,re,r,rp)
 	local mg=Duel.GetRitualMaterial(tp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=e:GetHandler():GetOverlayGroup():Filter(c22240123.filter,nil,e,tp,mg,ft)
 	local tg=sg:Select(tp,1,1,nil)

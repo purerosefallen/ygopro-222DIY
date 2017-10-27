@@ -46,14 +46,14 @@ end
 --
 function c1190101.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
+		and Duel.GetMZoneCount(tp)>1
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,1190901,0,0x4011,0,0,1,RACE_FAIRY,ATTRIBUTE_LIGHT) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,0,0)
 end
 function c1190101.op1(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>1
+	if Duel.GetMZoneCount(tp)>1
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,1190901,0,0x4011,0,0,1,RACE_WINDBEAST,ATTRIBUTE_DARK) then
 		for i=1,2 do
 			local token=Duel.CreateToken(tp,1190901)

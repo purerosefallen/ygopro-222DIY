@@ -27,7 +27,7 @@ function c16063027.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c16063027.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.GetMZoneCount(tp)>0
 		and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_CANNOT_SPECIAL_SUMMON) end
 end
 function c16063027.thop(e,tp,eg,ep,ev,re,r,rp)

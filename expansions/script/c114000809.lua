@@ -28,7 +28,7 @@ function c114000809.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and not Duel.IsExistingMatchingCard(c114000809.spfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c114000809.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end

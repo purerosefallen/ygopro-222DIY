@@ -20,7 +20,7 @@ function c5200019.spfilter(c,e,tp,code)
 end
 function c5200019.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c5200019.filter(chkc,e,tp) end
-    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+    if chk==0 then return Duel.GetMZoneCount(tp)>0
         and Duel.IsExistingTarget(c5200019.filter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
     local g=Duel.SelectTarget(tp,c5200019.filter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
@@ -28,7 +28,7 @@ function c5200019.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c5200019.operation(e,tp,eg,ep,ev,re,r,rp)
-    if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+    if Duel.GetMZoneCount(tp)<=0 then return end
     local tc=Duel.GetFirstTarget()
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
     local g=Duel.SelectMatchingCard(tp,c5200019.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc:GetCode())

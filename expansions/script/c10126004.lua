@@ -85,12 +85,12 @@ function c10126004.spfilter(c,e,tp)
 end
 function c10126004.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c10126004.spfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_SZONE)
 end
 function c10126004.spop2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c10126004.spfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,nil,e,tp)
 	if g:GetCount()>0 then
@@ -149,7 +149,7 @@ end
 function c10126004.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c10126004.spfilter1,tp,LOCATION_SZONE,LOCATION_SZONE,3,nil,tp)
 end
 function c10126004.spfilter1(c,tp)

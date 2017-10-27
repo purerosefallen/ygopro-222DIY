@@ -37,7 +37,7 @@ end
 function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	local rc=Duel.GetFirstTarget()
 	if rc:IsRelateToEffect(e) and Duel.Destroy(rc,REASON_EFFECT)~=0 and not rc:IsLocation(LOCATION_HAND+LOCATION_DECK) then
-		if rc:IsType(TYPE_MONSTER) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		if rc:IsType(TYPE_MONSTER) and Duel.GetMZoneCount(tp)>0
 			and rc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 			and Duel.SelectYesNo(tp,aux.Stringid(90809975,3)) then
 			Duel.BreakEffect()

@@ -32,7 +32,7 @@ function c114000304.cfilter(c)
 	return c:IsSetCard(0xcabb) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
 function c114000304.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c114000304.filter,tp,LOCATION_DECK,0,1,nil,e,tp) 
 		and Duel.IsExistingMatchingCard(c114000304.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE)
@@ -45,7 +45,7 @@ function c114000304.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c114000304.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	if g:GetCount()==0 then return end
 	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c114000304.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()

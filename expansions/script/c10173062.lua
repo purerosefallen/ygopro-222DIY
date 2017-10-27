@@ -45,7 +45,7 @@ function c10173062.spfilter(c,e,tp)
 end
 function c10173062.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(c10173062.spfilter,tp,LOCATION_GRAVE,0,1,c,e,tp) and c:IsAbleToRemove() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(c10173062.spfilter,tp,LOCATION_GRAVE,0,1,c,e,tp) and c:IsAbleToRemove() and Duel.GetMZoneCount(tp)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,c,2,tp,LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0x13)
 end
@@ -54,7 +54,7 @@ function c10173062.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local tc=Duel.SelectMatchingCard(tp,c10173062.spfilter,tp,LOCATION_GRAVE,0,1,1,c,e,tp):GetFirst()
-	if tc and Duel.Remove(Group.FromCards(c,tc),POS_FACEUP,REASON_EFFECT)~=0 and (tc:IsLocation(LOCATION_REMOVED) or c:IsLocation(LOCATION_REMOVED)) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if tc and Duel.Remove(Group.FromCards(c,tc),POS_FACEUP,REASON_EFFECT)~=0 and (tc:IsLocation(LOCATION_REMOVED) or c:IsLocation(LOCATION_REMOVED)) and Duel.GetMZoneCount(tp)>0 then
 	   Duel.BreakEffect()
 	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	   local g=Duel.SelectMatchingCard(tp,c10173062.spfilter2,tp,0x13,0,1,1,nil,e,tp)
@@ -70,7 +70,7 @@ function c10173062.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c10173062.cfilter,1,nil,tp)
 end
 function c10173062.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,LOCATION_GRAVE)
 end

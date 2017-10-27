@@ -47,7 +47,7 @@ function c60150607.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		if Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)>0 then
-			if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+			if Duel.GetMZoneCount(tp)<=0 then return end
 			local g=Duel.GetMatchingGroup(c60150607.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 			if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(60150607,2)) then
 				Duel.BreakEffect()

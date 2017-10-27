@@ -59,7 +59,7 @@ return function(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 end
 function prim.sesstg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
@@ -117,7 +117,7 @@ function prim.sefilter(c,at,e,tp)
 			return true
 		elseif at==ATTRIBUTE_FIRE and Duel.IsExistingMatchingCard(Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) then
 			return true
-		elseif at==ATTRIBUTE_EARTH and Duel.IsExistingMatchingCard(prim.sefilter4,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+		elseif at==ATTRIBUTE_EARTH and Duel.IsExistingMatchingCard(prim.sefilter4,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetMZoneCount(tp)>0 then
 			return true
 		elseif at==ATTRIBUTE_WATER and Duel.IsExistingMatchingCard(prim.sefilter5,tp,LOCATION_DECK,0,1,nil,e,tp) then
 			return true
@@ -187,7 +187,7 @@ return function(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(g)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
-	if at1==ATTRIBUTE_EARTH and Duel.IsExistingMatchingCard(prim.sefilter4,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if at1==ATTRIBUTE_EARTH and Duel.IsExistingMatchingCard(prim.sefilter4,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetMZoneCount(tp)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,prim.sefilter4,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		if g:GetCount()>0 then
@@ -215,7 +215,7 @@ function prim.ntcon(e,c,minc)
 	if lv<=4 then return false end
 	if lv>4 and lv<7 then ct=1 end
 	if lv>=7 then ct=2 end
-	return minc<=0 and ct>0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and Duel.IsPlayerAffectedByEffect(tp,66677708) and Duel.IsExistingMatchingCard(prim.ntfilter,tp,LOCATION_REMOVED,0,ct,nil) and Duel.GetFlagEffect(tp,66677750)==0
+	return minc<=0 and ct>0 and Duel.GetMZoneCount(c:GetControler())>0 and Duel.IsPlayerAffectedByEffect(tp,66677708) and Duel.IsExistingMatchingCard(prim.ntfilter,tp,LOCATION_REMOVED,0,ct,nil) and Duel.GetFlagEffect(tp,66677750)==0
 end
 function prim.ntop(e,tp,eg,ep,ev,re,r,rp,c)
 	local lv=c:GetLevel()
@@ -250,7 +250,7 @@ function prim.ses(c,at)
 	e2:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local spg=Duel.GetMatchingGroup(prim.sesspfilter,tp,LOCATION_DECK,0,nil,e,tp,m)
 		local rmg=Duel.GetMatchingGroup(prim.sessrfilter,tp,LOCATION_DECK,0,nil,at)
-		local sp=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and spg:GetCount()>0
+		local sp=Duel.GetMZoneCount(tp)>0 and spg:GetCount()>0
 		local dr=Duel.IsPlayerCanDraw(tp,1) and rmg:GetCount()>0
 		if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(prim.sesscfilter,tp,LOCATION_HAND,0,1,e:GetHandler(),at,sp,dr) end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
@@ -277,7 +277,7 @@ function prim.ses(c,at)
 	e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
 		local l=e:GetLabel()
 		local b=false
-		if bit.band(l,1)~=0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+		if bit.band(l,1)~=0 and Duel.GetMZoneCount(tp)>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local g=Duel.SelectMatchingCard(tp,prim.sesspfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,m)
 			local tc=g:GetFirst()

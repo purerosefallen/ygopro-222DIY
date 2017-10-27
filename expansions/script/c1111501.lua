@@ -60,7 +60,7 @@ function c1111501.limit1_1(e,c,sump,sumtype,sumpos,targetp,se)
 end
 --
 function c1111501.op1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,1110199,0,0x4011,100,100,3,RACE_FAIRY,ATTRIBUTE_LIGHT) and Duel.SelectYesNo(tp,aux.Stringid(1111501,3)) then
+	if Duel.GetMZoneCount(tp)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,1110199,0,0x4011,100,100,3,RACE_FAIRY,ATTRIBUTE_LIGHT) and Duel.SelectYesNo(tp,aux.Stringid(1111501,3)) then
 		local token=Duel.CreateToken(tp,1110199)
 		if Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)~=0 then
 			local e1_2=Effect.CreateEffect(e:GetHandler())
@@ -118,12 +118,12 @@ function c1111501.tfilter3(c,e,tp)
 	return c:IsCode(1110003) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c1111501.tg3(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c1111501.tfilter3,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetMZoneCount(tp)>0 and Duel.IsExistingMatchingCard(c1111501.tfilter3,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,LOCATION_DECK+LOCATION_GRAVE)
 end
 --
 function c1111501.op3(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c1111501.tfilter3,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then

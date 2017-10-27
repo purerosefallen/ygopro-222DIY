@@ -36,7 +36,7 @@ function c13254118.filter5(c,e)
 end
 function c13254118.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
+		local chkf=Duel.GetMZoneCount(tp)>0 and PLAYER_NONE or tp
 		local mg1=Duel.GetFusionMaterial(tp):Filter(c13254118.filter1,nil,e)
 		local mg2=Duel.GetMatchingGroup(c13254118.filter3,tp,0,LOCATION_MZONE,nil,e)
 		mg1:Merge(mg2)

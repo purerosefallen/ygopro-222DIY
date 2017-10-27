@@ -50,13 +50,13 @@ function c2170705.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c2170705.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,2170799,0x211,0x4011,2100,1500,6,RACE_DRAGON,ATTRIBUTE_LIGHT) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c2170705.thop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if Duel.GetMZoneCount(tp)>0 then
 		Duel.IsPlayerCanSpecialSummonMonster(tp,2170799,0,0x4011,2100,1500,6,RACE_DRAGON,ATTRIBUTE_LIGHT)
 	end
 	local token=Duel.CreateToken(tp,2170799)

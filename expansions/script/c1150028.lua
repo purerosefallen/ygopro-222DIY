@@ -47,8 +47,8 @@ function c1150028.op1(e,tp,eg,ep,ev,re,r,rp)
 				tc=gn:GetNext()
 			end
 		end
-		if gn:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
-			local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		if gn:GetCount()>0 and Duel.GetMZoneCount(tp)>0 then
+			local ft=Duel.GetMZoneCount(tp)
 			if Duel.IsPlayerAffectedByEffect(tp,59822133) then 
 				ft=1 
 			end
@@ -73,8 +73,8 @@ function c1150028.op1(e,tp,eg,ep,ev,re,r,rp)
 				tc2=gn2:GetNext()
 			end
 		end 
-		if gn2:GetCount()>0 and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 then
-			local ft2=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
+		if gn2:GetCount()>0 and Duel.GetMZoneCount(1-tp)>0 then
+			local ft2=Duel.GetMZoneCount(1-tp)
 			if Duel.IsPlayerAffectedByEffect(1-tp,59822133) then 
 				ft2=1 
 			end

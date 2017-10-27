@@ -66,7 +66,7 @@ function cm.op(e,tp,eg,ep,ev,re,r,rp)
 		tc=g:GetNext()
 	end
 	for i,t in pairs(tokent) do
-		if Duel.GetLocationCount(p,LOCATION_MZONE)>0 then
+		if Duel.GetMZoneCount(p)>0 then
 			local token=Duel.CreateToken(t.p,m+1)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

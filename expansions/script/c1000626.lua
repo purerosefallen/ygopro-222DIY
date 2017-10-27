@@ -105,7 +105,7 @@ function c1000626.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
 		local mg1=Duel.GetMatchingGroup(c1000626.filter0,tp,LOCATION_GRAVE,0,c)
-		local res=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		local res=Duel.GetMZoneCount(tp)>0
 			and Duel.IsExistingMatchingCard(c1000626.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,c)
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)
@@ -134,7 +134,7 @@ function c1000626.operation(e,tp,eg,ep,ev,re,r,rp)
 		local mf=ce:GetValue()
 		sg2=Duel.GetMatchingGroup(c1000626.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg2,mf,c)
 	end
-	if (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and sg1:GetCount()>0) or (sg2~=nil and sg2:GetCount()>0) then
+	if (Duel.GetMZoneCount(tp)>0 and sg1:GetCount()>0) or (sg2~=nil and sg2:GetCount()>0) then
 		local sg=sg1:Clone()
 		if sg2 then sg:Merge(sg2) end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

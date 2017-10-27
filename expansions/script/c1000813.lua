@@ -43,13 +43,13 @@ function c1000813.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c1000813.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>=1
+	if chk==0 then return Duel.GetMZoneCount(tp)>=1
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,1000804,0,0x4011,2000,2000,1,RACE_AQUA,ATTRIBUTE_WATER) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,0,0)
 end
 function c1000813.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
+	if Duel.GetMZoneCount(tp)<1 then return end
 	if Duel.IsPlayerCanSpecialSummonMonster(tp,1000804,0,0x4011,2000,2000,4,RACE_AQUA,ATTRIBUTE_WATER) then
 		local token1=Duel.CreateToken(tp,1000804)
 		Duel.SpecialSummonStep(token1,0,tp,tp,false,false,POS_FACEUP)

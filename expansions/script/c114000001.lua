@@ -38,7 +38,7 @@ function c114000001.spfilter(c,lv,e,tp)
 end
 function c114000001.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c114000001.filter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+	if chk==0 then return Duel.GetMZoneCount(tp)>-1
 		and Duel.IsExistingTarget(c114000001.filter,tp,LOCATION_MZONE,0,1,e:GetHandler(),e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,c114000001.filter,tp,LOCATION_MZONE,0,1,1,e:GetHandler(),e,tp)
@@ -46,7 +46,7 @@ function c114000001.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c114000001.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=-1 then return end
+	if Duel.GetMZoneCount(tp)<=-1 then return end
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsFacedown() or Duel.Remove(tc,0,REASON_EFFECT)==0 then return end
 	
@@ -78,13 +78,13 @@ function c114000001.spfilter2(c,e,tp)
 	return c:GetRank()==4 and c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function c114000001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c114000001.spfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c114000001.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if not c:IsRelateToEffect(e) or Duel.GetMZoneCount(tp)<=0 then return end
 	local g1=Duel.GetMatchingGroup(c114000001.filter2,tp,LOCATION_GRAVE,0,c)
 	local g2=Duel.GetMatchingGroup(c114000001.filter3,tp,LOCATION_MZONE,0,c)
 	local necro_count=g1:Filter(Card.IsHasEffect,nil,EFFECT_NECRO_VALLEY)

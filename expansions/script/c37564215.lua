@@ -31,7 +31,7 @@ function cm.op(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)==0 then return end
 	if not tc:IsLocation(LOCATION_REMOVED) then return end
 	local cp=tc:GetOwner()
-	if Duel.GetLocationCount(cp,LOCATION_MZONE)==0 or not tc:IsType(TYPE_MONSTER) then
+	if Duel.GetMZoneCount(cp)==0 or not tc:IsType(TYPE_MONSTER) then
 		Duel.SendtoGrave(tc,REASON_RULE)
 		return
 	end

@@ -91,7 +91,7 @@ function c17082101.syncon(e,c,tuner,mg)
 	if c==nil then return true end
 	if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 	local tp=c:GetControler()
-	local ct=-Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ct=-Duel.GetMZoneCount(tp)
 	local minc=2
 	if minc<ct then minc=ct end
 	local g1=nil
@@ -125,7 +125,7 @@ function c17082101.syntg(e,tp,eg,ep,ev,re,r,rp,chk,c,tuner,mg)
 		g1=Duel.GetMatchingGroup(c17082101.matfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c)
 		g2=Duel.GetMatchingGroup(c17082101.matfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c)
 	end
-	local ct=-Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ct=-Duel.GetMZoneCount(tp)
 	local minc=2
 	if minc<ct then minc=ct end
 	local pe=Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_SMATERIAL)

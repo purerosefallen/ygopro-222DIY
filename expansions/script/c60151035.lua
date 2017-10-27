@@ -30,7 +30,7 @@ function c60151035.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     local tg=Duel.GetAttacker()
     if chkc then return chkc==tg end
     if chk==0 then return tg:IsOnField() and tg:IsAbleToChangeControler() 
-		and tg:IsCanBeEffectTarget(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+		and tg:IsCanBeEffectTarget(e) and Duel.GetMZoneCount(tp)>0 
 		and Duel.IsExistingTarget(c60151035.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
     Duel.SetTargetCard(tg)
     Duel.SetOperationInfo(0,CATEGORY_CONTROL,tg,1,0,0)
@@ -45,7 +45,7 @@ function c60151035.spfilter3(c)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsSetCard(0x5b23) and c:GetLevel()==6
 end
 function c60151035.activate(e,tp,eg,ep,ev,re,r,rp)
-    if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
+    if Duel.GetMZoneCount(tp)<1 then return end
 	local tc=Duel.GetFirstTarget()
     if tc:IsRelateToEffect(e) then
 			if Duel.GetControl(tc,tp,PHASE_END,1) then

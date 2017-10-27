@@ -44,15 +44,15 @@ function c1150032.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 --
 function c1150032.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetLocationCount(tp,LOCATION_MZONE)+Duel.GetLocationCount(1-tp,LOCATION_MZONE)
+	local ct=Duel.GetMZoneCount(tp)+Duel.GetMZoneCount(1-tp)
 	if chk==0 then return ct>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,1150034,0,0x4011,0,0,1,RACE_PLANT,ATTRIBUTE_FIRE) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,ct,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,ct,0,0)
 end
 --
 function c1150032.op1(e,tp,eg,ep,ev,re,r,rp)
-	local ct1=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ct2=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
+	local ct1=Duel.GetMZoneCount(tp)
+	local ct2=Duel.GetMZoneCount(1-tp)
 	if ct1+ct2>0 then 
 		if Duel.IsPlayerCanSpecialSummonMonster(tp,1150034,0,0x4011,0,0,1,RACE_PLANT,ATTRIBUTE_FIRE) then
 			local i=0

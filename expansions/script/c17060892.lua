@@ -36,7 +36,7 @@ function c17060892.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c17060892.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return true end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 	end
 end
 function c17060892.spop(e,tp,eg,ep,ev,re,r,rp)

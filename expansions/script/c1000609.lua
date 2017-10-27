@@ -49,7 +49,7 @@ function c1000609.filter(c,e,tp)
 end
 function c1000609.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c1000609.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+		and Duel.GetMZoneCount(tp)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c1000609.spop(e,tp,eg,ep,ev,re,r,rp)

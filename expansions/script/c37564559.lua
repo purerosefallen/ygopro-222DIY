@@ -34,7 +34,7 @@ function cm.sfilter(c,e,tp)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	local g=Duel.GetMatchingGroup(cm.filter,tp,LOCATION_MZONE,0,nil,e)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.sfilter,tp,LOCATION_DECK,0,1,nil,e,tp) and Senya.CheckGroup(g,cm.gcheck,nil,3,3,ft) end
 	local tg=Senya.SelectGroup(tp,HINTMSG_TOGRAVE,g,cm.gcheck,nil,3,3,ft)
@@ -52,7 +52,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not g or g:FilterCount(cm.chkfilter,nil,e,tp)~=3 then return end
 	local v=g:GetSum(cm.val)
 	Duel.SendtoGrave(g,REASON_EFFECT)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=Duel.SelectMatchingCard(tp,cm.sfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=sg:GetFirst()

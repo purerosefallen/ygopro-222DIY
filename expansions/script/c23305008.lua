@@ -129,7 +129,7 @@ end
 function c23305008.spcon(e,c)
     if c==nil then return true end
     local tp=c:GetControler()
-    return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
+    return Duel.GetMZoneCount(tp)>-2
         and Duel.CheckReleaseGroup(tp,c23305008.spfilter,2,nil,tp,c)
 end
 function c23305008.spop(e,tp,eg,ep,ev,re,r,rp,c)

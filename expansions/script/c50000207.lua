@@ -93,12 +93,12 @@ function c50000207.filter(c,ft,e,tp)
 end
 function c50000207.tg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then
-        local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+        local ft=Duel.GetMZoneCount(tp)
         return Duel.IsExistingMatchingCard(c50000207.filter,tp,LOCATION_DECK,0,1,nil,ft,e,tp)
     end
 end
 function c50000207.op(e,tp,eg,ep,ev,re,r,rp)
-    local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+    local ft=Duel.GetMZoneCount(tp)
     Duel.Hint(HINT_SELECTMSG,tp,0)
     local g=Duel.SelectMatchingCard(tp,c50000207.filter,tp,LOCATION_DECK,0,1,1,nil,ft,e,tp)
     if g:GetCount()>0 then

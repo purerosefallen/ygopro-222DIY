@@ -50,10 +50,10 @@ function c5200011.spfilter(c,e,tp)
 end
 function c5200011.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c5200011.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingTarget(c5200011.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	local ct=e:GetLabel()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if ct>ft then ct=ft end
 	if Duel.IsPlayerAffectedByEffect(tp,5200011) then ct=1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -62,7 +62,7 @@ function c5200011.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c5200011.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if ft<=0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,5200011) then ft=1 end
 	if ft<g:GetCount() then return end

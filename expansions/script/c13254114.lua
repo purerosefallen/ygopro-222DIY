@@ -53,8 +53,8 @@ function c13254114.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local cc1=Duel.GetMatchingGroupCount(c13254114.cfilter1,tp,LOCATION_HAND,0,c,e,tp)
 	local cg2=Duel.GetMatchingGroup(c13254114.cfilter2,tp,LOCATION_HAND,0,c,e,tp)
 	local cc2=cg2:GetCount()
-	ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	ft=Duel.GetMZoneCount(tp)
+	local ft=Duel.GetMZoneCount(tp)
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c13254114.thfilter(chkc) end
 	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingTarget(c13254114.thfilter,tp,0,LOCATION_ONFIELD,1,nil) and cc2>=2 and cc2-cc1>=1+2-ft end
@@ -105,7 +105,7 @@ function c13254114.thop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=cg:Filter(c13254114.spfilter,nil,e,tp)
 		if c:IsRelateToEffect(e) then cg:AddCard(c) end
 		if c:IsCanBeSpecialSummoned(e,0,tp,false,false) then sg:AddCard(c) end
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)>=sg:GetCount() then
+		if Duel.GetMZoneCount(tp)>=sg:GetCount() then
 			Duel.BreakEffect()
 			cg:Sub(sg)
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)

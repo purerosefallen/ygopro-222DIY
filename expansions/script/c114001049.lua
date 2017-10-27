@@ -37,7 +37,7 @@ end
 function c114001049.xyzcon(e,c,og)
 	if c==nil then return true end
 	local abcount=0
-	if Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>=-1 then 
+	if Duel.GetMZoneCount(c:GetControler())>=-1 then 
 		local chkct=true
 		local lvb=c114001049.lvchk(c:GetControler())
 		local mct=0 -- count suitable monsters
@@ -58,7 +58,7 @@ function c114001049.xyzcon(e,c,og)
 		if mct>=2 then abcount=abcount+2 end
 	end
 	--if 2<=ct then return false end
-	if Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>=-2 then
+	if Duel.GetMZoneCount(c:GetControler())>=-2 then
 		if Duel.CheckXyzMaterial(c,nil,5,3,3,og) then abcount=abcount+1 end 
 	end
 	if abcount>0 then

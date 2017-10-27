@@ -26,7 +26,7 @@ function c13254045.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if Duel.IsExistingTarget(c13254045.filter1,tp,0,LOCATION_MZONE,1,nil) then 
 		selA=1
 	end
-	if Duel.IsExistingMatchingCard(c13254045.filter,tp,LOCATION_DECK,0,1,nil,e,tp) and Duel.IsExistingTarget(c13254045.filter2,tp,0,LOCATION_MZONE,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if Duel.IsExistingMatchingCard(c13254045.filter,tp,LOCATION_DECK,0,1,nil,e,tp) and Duel.IsExistingTarget(c13254045.filter2,tp,0,LOCATION_MZONE,1,nil) and Duel.GetMZoneCount(tp)>0 then
 		selB=1
 	end
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
@@ -68,7 +68,7 @@ function c13254045.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	elseif e:GetLabel()==1 and tc:IsRelateToEffect(e) and tc:IsLocation(LOCATION_MZONE) and tc:IsFaceup() then
 		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+		if Duel.GetMZoneCount(tp)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c13254045.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 		if g:GetCount()>0 then

@@ -79,14 +79,14 @@ function c10173057.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c10173057.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=1
+		and Duel.GetMZoneCount(tp)>=1
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,35268888,0,0x4011,0,0,1,RACE_FIEND,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,0,0)
 end
 function c10173057.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
+	if Duel.GetMZoneCount(tp)<2 then return end
 	if not Duel.IsPlayerCanSpecialSummonMonster(tp,35268888,0,0x4011,0,0,1,RACE_FIEND,ATTRIBUTE_DARK) then return end
 	for i=1,2 do
 		local token=Duel.CreateToken(tp,35268888)
@@ -101,7 +101,7 @@ function c10173057.fustg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
 		local mg1=Duel.GetMatchingGroup(c10173057.ffilter,tp,LOCATION_DECK,0,nil,c)
-		local res=c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,true) and c:CheckFusionMaterial(mg1) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		local res=c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,true) and c:CheckFusionMaterial(mg1) and Duel.GetMZoneCount(tp)>0
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)
 			if ce~=nil then
@@ -117,7 +117,7 @@ function c10173057.fustg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c10173057.fusop(e,tp,eg,ep,ev,re,r,rp)
 	local ce,c,mg1,mg2=Duel.GetChainMaterial(tp),e:GetHandler(),Duel.GetMatchingGroup(c10173057.ffilter,tp,LOCATION_DECK,0,nil)
-	if not c:IsRelateToEffect(e) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if not c:IsRelateToEffect(e) or Duel.GetMZoneCount(tp)<=0 then return end
 	local res=c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,true) and c:CheckFusionMaterial(mg1)
 	local res2=false
 	if ce~=nil then

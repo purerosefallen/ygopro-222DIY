@@ -83,14 +83,14 @@ end
 function c50000200.target(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then
         local mg=Duel.GetRitualMaterial(tp)
-        local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+        local ft=Duel.GetMZoneCount(tp)
         return ft>-1 and Duel.IsExistingMatchingCard(c50000200.filter,tp,LOCATION_HAND,0,1,nil,e,tp,mg,ft)
     end
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c50000200.operation(e,tp,eg,ep,ev,re,r,rp)
     local mg=Duel.GetRitualMaterial(tp)
-    local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+    local ft=Duel.GetMZoneCount(tp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
     local tg=Duel.SelectMatchingCard(tp,c50000200.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp,mg,ft)
     local tc=tg:GetFirst()
@@ -132,14 +132,14 @@ function c50000200.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
     Duel.Release(g,REASON_COST)
 end
 function c50000200.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+    if chk==0 then return Duel.GetMZoneCount(tp)>-1
         and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c50000200.spop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     if not c:IsRelateToEffect(e) then return end
-    if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+    if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 and Duel.GetMZoneCount(tp)<=0
         and c:IsCanBeSpecialSummoned(e,0,tp,false,false) then
         Duel.SendtoGrave(c,REASON_RULE)
     end
@@ -150,7 +150,7 @@ function c50000200.hspfilter(c)
 end
 function c50000200.spcon(e,c)
     if c==nil then return true end
-    return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+    return Duel.GetMZoneCount(c:GetControler())>0
         and Duel.IsExistingMatchingCard(c50000200.hspfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 --to hand

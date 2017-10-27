@@ -111,7 +111,7 @@ function c60159915.activate(e,tp,eg,ep,ev,re,r,rp)
     local tc2=Duel.GetFirstTarget()
     if tc2:IsRelateToEffect(e) then
         if Duel.SendtoHand(tc2,nil,REASON_EFFECT)>0 then
-			if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+			if Duel.GetMZoneCount(tp)<=0 then return end
 			local mg=Duel.GetRitualMaterial(tp)
 			local g=Duel.GetMatchingGroup(c60159915.filter,tp,LOCATION_HAND,0,nil,e,tp,mg)
 			if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(60159915,2)) then

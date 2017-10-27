@@ -45,7 +45,7 @@ function c1191003.op1(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.Draw(tp,1,REASON_EFFECT)
 	local dc=Duel.GetOperatedGroup():GetFirst()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	if c1191003.IsELF(dc) then
 		local g3=Duel.GetMatchingGroup(c1191003.filter1,tp,LOCATION_DECK,0,nil)
 		if g3:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(1191003,0)) then

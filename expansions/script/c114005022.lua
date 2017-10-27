@@ -99,13 +99,13 @@ end
 function c114005022.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local atk=c:GetAttack()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c114005022.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
 		and atk>=600 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c114005022.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	local c=e:GetHandler()
 	local atk=c:GetAttack()
 	if atk<600 or c:IsFacedown() or not c:IsRelateToEffect(e) then return end

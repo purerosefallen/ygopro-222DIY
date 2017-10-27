@@ -67,7 +67,7 @@ function c10114007.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 and Duel.IsExistingMatchingCard(c10114007.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp) and c:IsAbleToDeckAsCost()
+		return Duel.GetMZoneCount(tp)>-1 and Duel.IsExistingMatchingCard(c10114007.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp) and c:IsAbleToDeckAsCost()
 	end
 	if c:GetFlagEffect(10114007)>0 then e:SetLabel(1) end
 	Duel.SendtoDeck(c,nil,2,REASON_COST)
@@ -78,7 +78,7 @@ function c10114007.filter(c,e,tp)
 	return (c:IsLevelBelow(6) or ((e:GetLabel()==1 or rc:GetFlagEffect(10114007)>0) and c:GetLevel()==7)) and c:IsSetCard(0x3331) and not c:IsCode(10114007) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c10114007.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c10114007.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()

@@ -67,7 +67,7 @@ function cm.tlimit(e,c)
 end
 function cm.ttcon(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-3 and Duel.GetTributeCount(c)>=3 and Senya.CheckNoExtra(e,c:GetControler())
+	return Duel.GetMZoneCount(c:GetControler())>-3 and Duel.GetTributeCount(c)>=3 and Senya.CheckNoExtra(e,c:GetControler())
 end
 function cm.ttop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.SelectTribute(tp,c,3,3)

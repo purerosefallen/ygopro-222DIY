@@ -50,7 +50,7 @@ function c60150511.filter(c,e,tp)
 end
 function c60150511.sumtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c60150511.filter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingTarget(c60150511.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c60150511.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,e,tp)
@@ -69,7 +69,7 @@ function c60150511.actcon2(e,tp,eg,ep,ev,re,r,rp)
 		and e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,60150510)
 end
 function c60150511.disop(e,tp,eg,ep,ev,re,r,rp)
-    local a=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
+    local a=Duel.GetMZoneCount(1-tp)
     if a==0 then return end
     local c=e:GetHandler()
     local bc=c:GetBattleTarget()

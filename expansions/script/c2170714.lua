@@ -79,13 +79,13 @@ function c2170714.filter(c)
 	return c:IsFaceup()
 end
 function c2170714.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,2170798,0,0x4011,1600,1000,4,RACE_SPELLCASTER,ATTRIBUTE_WATER) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c2170714.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if Duel.GetMZoneCount(tp)>0 then
 		Duel.IsPlayerCanSpecialSummonMonster(tp,2170798,0,0x4011,1600,1000,4,RACE_SPELLCASTER,ATTRIBUTE_WATER)
 	end
 	local token=Duel.CreateToken(tp,2170798)

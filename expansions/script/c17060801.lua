@@ -67,7 +67,7 @@ function c17060801.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c17060801.spcon(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
+	return Duel.GetMZoneCount(c:GetControler())>0 and
 		Duel.IsExistingMatchingCard(c17060801.filter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function c17060801.cost(e,tp,eg,ep,ev,re,r,rp,chk)

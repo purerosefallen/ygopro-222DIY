@@ -41,14 +41,14 @@ end
 function c50008883.target(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then
         local mg=Duel.GetRitualMaterial(tp)
-        local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+        local ft=Duel.GetMZoneCount(tp)
         return ft>-1 and Duel.IsExistingMatchingCard(c50008883.filter,tp,LOCATION_HAND,0,1,nil,e,tp,mg,ft)
     end
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c50008883.activate(e,tp,eg,ep,ev,re,r,rp)
     local mg=Duel.GetRitualMaterial(tp)
-    local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+    local ft=Duel.GetMZoneCount(tp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
     local tg=Duel.SelectMatchingCard(tp,c50008883.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp,mg,ft)
     local tc=tg:GetFirst()

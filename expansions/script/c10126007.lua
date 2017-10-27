@@ -102,7 +102,7 @@ end
 function c10126007.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
+	return Duel.GetMZoneCount(tp)>-2
 		and Duel.IsExistingMatchingCard(c10126007.spfilter1,tp,LOCATION_MZONE,0,2,nil)
 end
 function c10126007.sprop(e,tp,eg,ep,ev,re,r,rp,c)

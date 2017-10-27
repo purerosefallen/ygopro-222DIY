@@ -48,7 +48,7 @@ function c114100218.xyzcon(e,c,og)
 		if Duel.CheckXyzMaterial(c,nil,i,2,2,og) then jud=true end
 		if jud then break end
 	end
-	return jud and Duel.GetLocationCount(tp,LOCATION_MZONE)>=-1
+	return jud and Duel.GetMZoneCount(tp)>=-1
 end
 
 function c114100218.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og)

@@ -74,15 +74,15 @@ function c22240002.spfilter(c)
 end
 function c22240002.hspcon(e,c)
 	if c==nil then return true end
-	return Duel.IsExistingMatchingCard(c22240002.spfilter,c:GetControler(),LOCATION_MZONE,0,1,nil) or (Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c22240002.spfilter,c:GetControler(),LOCATION_ONFIELD,0,1,nil))
+	return Duel.IsExistingMatchingCard(c22240002.spfilter,c:GetControler(),LOCATION_MZONE,0,1,nil) or (Duel.GetMZoneCount(c:GetControler())>0 and Duel.IsExistingMatchingCard(c22240002.spfilter,c:GetControler(),LOCATION_ONFIELD,0,1,nil))
 end
 function c22240002.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local g=Group.CreateGroup()
-	if Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)<1 then
+	if Duel.GetMZoneCount(c:GetControler())<1 then
 		local g=Duel.SelectMatchingCard(tp,c22240002.spfilter,c:GetControler(),LOCATION_MZONE,0,1,1,nil)
 		Duel.Release(g,REASON_COST)
-	elseif Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 then
+	elseif Duel.GetMZoneCount(c:GetControler())>0 then
 		local g=Duel.SelectMatchingCard(tp,c22240002.spfilter,c:GetControler(),LOCATION_ONFIELD,0,1,1,nil)
 		Duel.Release(g,REASON_COST)
 	end
@@ -95,7 +95,7 @@ function c22240002.filter(c,e,tp)
 end
 function c22240002.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c22240002.filter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingTarget(c22240002.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c22240002.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)

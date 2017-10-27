@@ -30,7 +30,7 @@ function c10103005.synfilter(c,tp,mc)
 end
 function c10103005.syntg(e,tp,eg,ep,ev,re,r,rp,chk) 
 	local c=e:GetHandler()
-	if chk==0 then return c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 and Duel.IsExistingMatchingCard(c10103005.synfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,c,tp,c) end
+	if chk==0 then return c:IsRelateToEffect(e) and Duel.GetMZoneCount(tp)>-1 and Duel.IsExistingMatchingCard(c10103005.synfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,c,tp,c) end
 end
 function c10103005.synop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

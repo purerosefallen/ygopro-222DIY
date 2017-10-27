@@ -24,14 +24,14 @@ function c114100417.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	tg:RegisterFlagEffect(114100417,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,2)
 end
 function c114100417.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,114100417,0,0x21,0,0,1,RACE_FAIRY,ATTRIBUTE_WIND) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c114100417.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+	if Duel.GetMZoneCount(tp)<=0
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,114100417,0,0x21,0,0,1,RACE_FAIRY,ATTRIBUTE_WIND) then return end
 	c:AddTrapMonsterAttribute(TYPE_EFFECT,ATTRIBUTE_WIND,RACE_FAIRY,1,0,0)
 	Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)
@@ -92,7 +92,7 @@ function c114100417.tgop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.SendtoGrave(c,REASON_EFFECT)~=0 then
 			--condition
 			if Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0,nil)>0 then return end
-			if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end
+			if Duel.GetMZoneCount(tp)==0 then return end
 			--sp summon
 			local tg=e:GetLabelObject()
 			if tg:GetFlagEffect(114100417)>0 and tg:IsCanBeSpecialSummoned(e,0,tp,false,false) then

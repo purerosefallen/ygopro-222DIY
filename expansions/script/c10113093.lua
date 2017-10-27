@@ -17,7 +17,7 @@ function c10113093.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c10113093.cfilter,tp,LOCATION_SZONE,0,2,nil)
 end
 function c10113093.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(c10113093.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,nil) end
 end
 function c10113093.spfilter(c,e,tp,g)
@@ -33,7 +33,7 @@ function c10113093.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(c10113093.spfilter,nil,e,tp,g)
 	if g:GetCount()>0 then
 		Duel.DisableShuffleCheck()
-		if sg:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+		if sg:GetCount()>0 and Duel.GetMZoneCount(tp)>0 then
 		   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		   sc=sg:Select(tp,1,1,nil):GetFirst()
 		   g:RemoveCard(sc)

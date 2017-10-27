@@ -52,13 +52,13 @@ function c50000210.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
     Duel.Release(g,REASON_COST)
 end
 function c50000210.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+    if chk==0 then return Duel.GetMZoneCount(tp)>0
         and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,true) end
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c50000210.spop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+    if Duel.GetMZoneCount(tp)<=0 then return end
     if c:IsRelateToEffect(e) then
         local sp=Duel.SpecialSummon(c,0,tp,tp,true,true,POS_FACEUP)
         c:CompleteProcedure()

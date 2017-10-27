@@ -105,7 +105,7 @@ function c10173066.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c10173066.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c10173066.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+	if chk==0 then return Duel.GetMZoneCount(tp)>-1
 		and Duel.IsExistingTarget(c10173066.spfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c10173066.spfilter,tp,LOCATION_REMOVED,0,1,1,nil,e,tp)
@@ -115,7 +115,7 @@ end
 function c10173066.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	if tc:IsRelateToEffect(e) then
 		if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 and c:GetFlagEffect(10173066)~=0 and Duel.SelectYesNo(tp,aux.Stringid(10173066,3)) then 
 		   Duel.Equip(tp,c,tc)

@@ -58,7 +58,7 @@ function c60151108.spcon(e,c)
     if c==nil then return true end
     local tp=c:GetControler()
     local g=Duel.GetMatchingGroup(c60151108.cfilter2,tp,LOCATION_GRAVE,0,nil)
-    return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:GetCount()>0
+    return Duel.GetMZoneCount(tp)>0 and g:GetCount()>0
         and not g:IsExists(c60151108.cfilter,1,nil)
 end
 function c60151108.spop(e,tp,eg,ep,ev,re,r,rp,c)

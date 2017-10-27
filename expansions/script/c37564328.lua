@@ -48,7 +48,7 @@ function cm.nfilter(c,g,t)
 	return true
 end
 function cm.fieldcheck(tp,mgf,sgf,co)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)-sgf:GetCount()+mgf:FilterCount(cm.ffilter,nil,tp)
+	local ft=Duel.GetMZoneCount(tp)-sgf:GetCount()+mgf:FilterCount(cm.ffilter,nil,tp)
 	for fc,mg in pairs(co) do
 		ft=ft+mg:FilterCount(cm.ffilter,nil,tp)
 	end

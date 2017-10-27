@@ -36,7 +36,7 @@ end
 function c114100590.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
+	if Duel.GetMZoneCount(tp)<=0 then return false end
 	local g=Duel.GetMatchingGroup(c114100590.spfilter,tp,LOCATION_GRAVE,0,nil)
 	return g:CheckWithSumGreater(Card.GetLevel,10)
 end

@@ -30,7 +30,7 @@ function c10113027.recon(e)
 end
 function c10113027.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and c10113027.rmfilter(chkc,e,tp) end
-	if chk==0 then return eg:IsExists(c10113027.rmfilter,1,nil,e,tp) and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	if chk==0 then return eg:IsExists(c10113027.rmfilter,1,nil,e,tp) and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetMZoneCount(tp)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=eg:FilterSelect(tp,c10113027.rmfilter,1,1,nil,e,tp)
 	Duel.SetTargetCard(g)
@@ -43,7 +43,7 @@ end
 function c10113027.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc,c=Duel.GetFirstTarget(),e:GetHandler()
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 then
-	   if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+	   if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)==0 and Duel.GetMZoneCount(tp)<=0
 		   and c:IsCanBeSpecialSummoned(e,0,tp,true,false) then
 		   Duel.SendtoGrave(c,REASON_RULE)
 	   return

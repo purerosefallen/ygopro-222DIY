@@ -62,7 +62,7 @@ function c1150039.op2(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and c:IsLocation(LOCATION_SZONE) then
 		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 		if g:GetCount()==2 then
-			if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 and Duel.IsExistingMatchingCard(c1150039.ofilter2,tp,LOCATION_HAND,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(1150039,0)) then
+			if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 and Duel.IsExistingMatchingCard(c1150039.ofilter2,tp,LOCATION_HAND,0,1,nil,e,tp) and Duel.GetMZoneCount(tp)>0 and Duel.SelectYesNo(tp,aux.Stringid(1150039,0)) then
 				local g2=Duel.SelectMatchingCard(tp,c1150039.ofilter2,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 				if g2:GetCount()>0 then
 					local tc2=g2:GetFirst()

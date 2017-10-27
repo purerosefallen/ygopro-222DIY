@@ -43,7 +43,7 @@ end
 function c10126009.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g1,g2,tg1,tg2,tc=Duel.GetMatchingGroup(c10126009.eqfilter,tp,0,LOCATION_GRAVE,nil,c),Duel.GetFieldGroup(c10126009.eqfilter,tp,0,LOCATION_ONFIELD,nil,c)
-	if c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.GetLocationCount(1-tp,LOCATION_SZONE)>0 and g1:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and g2:GetCount()>0 then
+	if c:IsRelateToEffect(e) and Duel.GetMZoneCount(tp)>0 and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.GetLocationCount(1-tp,LOCATION_SZONE)>0 and g1:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and g2:GetCount()>0 then
 	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	   tg1=g2:Select(tp,1,1,nil)
 	   Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_EQUIP)   
@@ -115,7 +115,7 @@ end
 function c10126009.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
+	return Duel.GetMZoneCount(tp)>-2
 		and Duel.IsExistingMatchingCard(c10126009.spfilter1,tp,LOCATION_MZONE,0,2,nil)
 end
 function c10126009.sprop(e,tp,eg,ep,ev,re,r,rp,c)

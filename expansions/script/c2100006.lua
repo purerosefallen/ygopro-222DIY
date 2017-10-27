@@ -23,7 +23,7 @@ end
 function c2100006.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0,nil)==0
-		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+		and Duel.GetMZoneCount(c:GetControler())>0
 end
 function c2100006.tdfilter(c)
 	return c:IsSetCard(0x3219) and c:IsAbleToDeck()

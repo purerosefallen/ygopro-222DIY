@@ -31,7 +31,7 @@ function c60150801.rmcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c60150801.cfilter2,1,nil,tp)
 end
 function c60150801.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end

@@ -56,7 +56,7 @@ end
 function c10113088.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(c10113088.tdfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingTarget(c10113088.tfilter,tp,0,LOCATION_MZONE,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+		and Duel.IsExistingTarget(c10113088.tfilter,tp,0,LOCATION_MZONE,1,nil) and Duel.GetMZoneCount(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
 	local g1=Duel.SelectTarget(tp,c10113088.tdfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	e:SetLabelObject(g1:GetFirst())
@@ -73,7 +73,7 @@ function c10113088.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc1==tc2 then tc2=tg:GetNext() end
 	if tc1:IsRelateToEffect(e) and tc1:IsControler(tp) and Duel.SendtoHand(tc1,nil,REASON_EFFECT)~=0 and tc1:IsLocation(LOCATION_HAND) and tc2:IsRelateToEffect(e) and tc2:IsControler(1-tp) and tc2:IsFaceup() and Duel.ChangePosition(tc2,POS_FACEDOWN_DEFENSE)~=0 and c:IsRelateToEffect(e) then
 	   Duel.BreakEffect()
-	   if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+	   if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 and Duel.GetMZoneCount(tp)<=0
 		   and c:IsCanBeSpecialSummoned(e,0,tp,false,false) then
 		   Duel.SendtoGrave(c,REASON_RULE)
 	   end

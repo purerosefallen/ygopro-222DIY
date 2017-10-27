@@ -45,7 +45,7 @@ function c10113033.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c10113033.cfilter,1,nil,1-tp)
 end
 function c10113033.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsPlayerCanDraw(tp,1) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
@@ -55,7 +55,7 @@ function c10113033.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 	   Duel.Draw(tp,1,REASON_EFFECT)
-	elseif Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+	elseif Duel.GetMZoneCount(tp)<=0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) then
 		Duel.SendtoGrave(c,REASON_RULE)
 	end

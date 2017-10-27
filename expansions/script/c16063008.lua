@@ -31,7 +31,7 @@ function c16063008.filter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsSetCard(0x5c5)   and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c16063008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c16063008.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end

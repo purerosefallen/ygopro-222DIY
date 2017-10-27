@@ -61,7 +61,7 @@ function c10113087.spcon(e,c)
 	local tp=c:GetControler()
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	local exc=(c:IsLocation(LOCATION_HAND) and not c:IsAbleToGraveAsCost()) and c or nil
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:GetCount()>0 and g:GetClassCount(Card.GetRace)>=3
+	return Duel.GetMZoneCount(tp)>0 and g:GetCount()>0 and g:GetClassCount(Card.GetRace)>=3
 		and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,exc)
 end
 function c10113087.spop(e,tp,eg,ep,ev,re,r,rp,c)

@@ -18,7 +18,7 @@ function c10122002.initial_effect(c)
 	c:RegisterEffect(e2) 
 end
 function c10122002.tktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return tp~=Duel.GetTurnPlayer() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return tp~=Duel.GetTurnPlayer() and Duel.GetMZoneCount(tp)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,10122011,0xc333,0x4011,0,0,1,RACE_SPELLCASTER,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
@@ -26,7 +26,7 @@ end
 function c10122002.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ac=Duel.GetAttacker()
-	if not c:IsRelateToEffect(e) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+	if not c:IsRelateToEffect(e) or Duel.GetMZoneCount(tp)<=0
 	or not Duel.IsPlayerCanSpecialSummonMonster(tp,10122011,0xc333,0x4011,0,0,1,RACE_SPELLCASTER,ATTRIBUTE_DARK) then return end
 	local token=Duel.CreateToken(tp,10122011)
 	if Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)~=0 then

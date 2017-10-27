@@ -57,12 +57,12 @@ function c13257316.spfilter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c13257316.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 end
+	if chk==0 then return Duel.GetMZoneCount(1-tp)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,1-tp,LOCATION_HAND)
 end
 function c13257316.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(1-tp,LOCATION_MZONE)<=0 or not c:IsRelateToEffect(e) then return end
+	if Duel.GetMZoneCount(1-tp)<=0 or not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(1-tp,c13257316.spfilter,tp,0,LOCATION_HAND,1,1,nil,e,1-tp)
 	if g:GetCount()>0 then

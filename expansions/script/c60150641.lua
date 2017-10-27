@@ -69,7 +69,7 @@ function c60150641.filter(c,e,tp)
 end
 function c60150641.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c60150641.filter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingTarget(c60150641.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) 
 		and Duel.IsExistingTarget(c60150641.filter2,tp,LOCATION_EXTRA,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

@@ -14,12 +14,12 @@ function c10173003.spfilter(c,e,tp)
 	return c:IsCode(10173003) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c10173003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c10173003.spfilter,tp,0x13,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0x13)
 end
 function c10173003.spop(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if ft<=0 then return end
 	if ft>2 then ft=2 end
 	if Duel.IsPlayerAffectedByEffect(tp,10173003) then ft=1 end

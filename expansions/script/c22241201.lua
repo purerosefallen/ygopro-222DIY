@@ -52,11 +52,11 @@ function c22241201.trfilter(c,e,tp)
 	return bit.band(c:GetType(),0x81)==0x81 and c22241201.IsSolid(c) and c:IsReleasableByEffect() and Duel.IsExistingMatchingCard(c22241201.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,olv)
 end
 function c22241201.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c22241201.trfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetMZoneCount(tp)>0 and Duel.IsExistingMatchingCard(c22241201.trfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 end
 function c22241201.drop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
+	if Duel.GetMZoneCount(tp)<1 then return end
 	local rg=Duel.SelectMatchingCard(tp,c22241201.trfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local rc=rg:GetFirst()
 	if rc then

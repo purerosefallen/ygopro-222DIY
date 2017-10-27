@@ -35,7 +35,7 @@ function cm.rfilter(c)
 end
 function cm.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(cm.rfilter,tp,LOCATION_MZONE,0,nil)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	local minct=math.max(1,-ft+1)
 	if chk==0 then
 		if minct>1 and Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
@@ -48,7 +48,7 @@ function cm.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(cm.rfilter,tp,LOCATION_MZONE,0,nil)
 	if g:GetCount()==0 then return end
 	local ct=Duel.SendtoHand(g,nil,REASON_RULE)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	local sct=math.min(ft,ct)
 	if sct==0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then sct=1 end

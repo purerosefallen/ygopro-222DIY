@@ -127,7 +127,7 @@ end
 function c60150818.xyzcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
+	return Duel.GetMZoneCount(tp)>-2
 		and Duel.IsExistingMatchingCard(c60150818.spfilter,tp,LOCATION_MZONE,0,3,nil)
 end
 function c60150818.xyzop(e,tp,eg,ep,ev,re,r,rp,c)

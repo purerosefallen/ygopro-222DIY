@@ -91,14 +91,14 @@ end
 function c10163005.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if ft>0 then return Duel.CheckReleaseGroupEx(tp,c10163005.rfilter,2,c,tp,0,c)
 	else return Duel.CheckReleaseGroup(tp,c10163005.rfilter2,1,c,tp,1,c)
 	end
 	return false
 end
 function c10163005.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if ft>0 then
 	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	   local g1=Duel.SelectReleaseGroupEx(tp,c10163005.rfilter,2,2,c,tp,0,c)

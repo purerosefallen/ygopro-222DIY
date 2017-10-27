@@ -131,14 +131,14 @@ function c710237.spfilter2(c)
 	return c:IsType(TYPE_EQUIP)
 end
 function c710237.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c710237.spfilter2,tp,LOCATION_HAND,0,1,nil) 
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,710237,c710237.spfilter1,0x1001,500,0,2,RACE_WARRIOR,ATTRIBUTE_EARTH)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c710237.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,710237,c710237.spfilter1,0x11,500,0,2,RACE_WARRIOR,ATTRIBUTE_EARTH) then
 		c:AddMonsterAttribute(TYPE_NORMAL)

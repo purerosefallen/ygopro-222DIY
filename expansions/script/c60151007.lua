@@ -151,7 +151,7 @@ function c60151007.spop2(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetLabel(e:GetHandler():GetCode())
 				e1:SetReset(RESET_PHASE+PHASE_END)
 				Duel.RegisterEffect(e1,tp)
-				if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+				if Duel.GetMZoneCount(tp)<=0 then return end
 				local g=Duel.GetMatchingGroup(c60151007.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
 				if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(60151007,3)) then
 					Duel.BreakEffect()

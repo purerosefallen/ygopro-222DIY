@@ -26,7 +26,7 @@ end
 function c1150018.tg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c1150018.cfilter1(chkc,e,tp) end
 	if chk==0 then 
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)~=4 then return false end
+		if Duel.GetMZoneCount(tp)~=4 then return false end
 		return Duel.IsExistingMatchingCard(c1150018.cfilter1,tp,LOCATION_MZONE,0,1,nil,e,tp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
@@ -34,7 +34,7 @@ function c1150018.tg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 --
 function c1150018.op1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)==4 then
+	if Duel.GetMZoneCount(tp)==4 then
 		local tc=Duel.GetFirstTarget()
 		if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

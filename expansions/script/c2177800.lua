@@ -51,11 +51,11 @@ function c2177800.droperation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,2177800)
 	Duel.Draw(tp,c2177800[tp],REASON_EFFECT)
 	local mg=Duel.GetRitualMaterial(tp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if 
 		Duel.IsExistingMatchingCard(c2177800.filter,tp,LOCATION_DECK,0,1,nil,e,tp,mg,ft) and Duel.SelectYesNo(tp,aux.Stringid(2177800,0)) then
 			local mg=Duel.GetRitualMaterial(tp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tg=Duel.SelectMatchingCard(tp,c2177800.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp,mg,ft)
 	local tc=tg:GetFirst()

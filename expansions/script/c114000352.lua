@@ -39,7 +39,7 @@ function c114000352.activate(e,tp,eg,ep,ev,re,r,rp)
 	local code=tc:GetCode()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_HAND) then
 		Duel.ShuffleHand(tc:GetControler())
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+		if Duel.GetMZoneCount(tp)>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local g=Duel.SelectMatchingCard(tp,c114000352.spfilter,tp,LOCATION_HAND,0,1,1,nil,code,e,tp)
 			Duel.SpecialSummon(g,202,tp,tp,false,false,POS_FACEUP)

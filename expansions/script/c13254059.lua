@@ -51,7 +51,7 @@ function c13254059.smop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SendtoGrave(c,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_GRAVE) then
 		sg=Duel.GetMatchingGroup(c13254059.smfilter,tp,LOCATION_HAND,0,nil)
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and sg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(13254059,0)) then
+		if Duel.GetMZoneCount(tp)>0 and sg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(13254059,0)) then
 			local g=sg:Select(tp,1,1,nil)
 			local tc=g:GetFirst()
 			if tc then

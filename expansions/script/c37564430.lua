@@ -33,7 +33,7 @@ function cm.sfilter(c,e,tp,g)
 end
 function cm.scheck(g,c,tp)
 	if c:IsLocation(LOCATION_EXTRA) then return Duel.GetLocationCountFromEx(tp,tp,g,c)>0 end
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)+g:GetCount()>0
+	return Duel.GetMZoneCount(tp)+g:GetCount()>0
 end
 function cm.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(cm.rfilter,tp,LOCATION_MZONE,0,e:GetHandler())
@@ -78,7 +78,7 @@ function cm.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
 	local sg=Duel.GetMatchingGroup(cm.sfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,nil,e,tp)
 	local ft=math.min(Duel.GetUsableMZoneCount(tp),ct)
-	local mft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local mft=Duel.GetMZoneCount(tp)
 	local eft=c29724053 and Duel.IsPlayerAffectedByEffect(tp,29724053) and math.min(c29724053[tp],Duel.GetLocationCountFromEx(tp)) or Duel.GetLocationCountFromEx(tp)
 	local tg=Senya.SelectGroup(tp,HINTMSG_SPSUMMON,sg,cm.gcheck,nil,1,ft,mft,eft)
 	local etg=tg:Filter(Card.IsLocation,nil,LOCATION_EXTRA)

@@ -142,7 +142,7 @@ function c13254082.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
 	local g1=g:Select(1-tp,3,3,nil)
 	local sg=Duel.GetMatchingGroup(c13254082.spfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,e,tp)
-	if Duel.SendtoGrave(g1,REASON_EFFECT)==3 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and sg:GetCount()>0 then
+	if Duel.SendtoGrave(g1,REASON_EFFECT)==3 and Duel.GetMZoneCount(tp)>0 and sg:GetCount()>0 then
 		if Duel.SelectYesNo(tp,aux.Stringid(13254082,4)) then
 			local tc=sg:Select(tp,1,1,nil)
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)

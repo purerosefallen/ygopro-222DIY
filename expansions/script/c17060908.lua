@@ -47,14 +47,14 @@ function c17060908.matfilter(c)
 end
 function c17060908.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
+		if Duel.GetMZoneCount(tp)<=0 then return false end
 		local mg=Duel.GetMatchingGroup(c17060908.matfilter,tp,LOCATION_DECK,0,nil)
 		return Duel.IsExistingMatchingCard(c17060908.filter,tp,LOCATION_PZONE,0,1,nil,e,tp,mg)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_PZONE)
 end
 function c17060908.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	local mg=Duel.GetMatchingGroup(c17060908.matfilter,tp,LOCATION_DECK,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tg=Duel.SelectMatchingCard(tp,c17060908.filter,tp,LOCATION_PZONE,0,1,1,nil,e,tp,mg)

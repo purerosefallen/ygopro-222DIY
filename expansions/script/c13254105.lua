@@ -109,13 +109,13 @@ function c13254105.spfilter(c,e,tp)
 end
 function c13254105.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local p=1-(Duel.GetTurnPlayer())
-	if chk==0 then return Duel.GetLocationCount(p,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c13254105.spfilter,p,LOCATION_GRAVE,0,1,nil,e,p) end
+	if chk==0 then return Duel.GetMZoneCount(p)>0 and Duel.IsExistingMatchingCard(c13254105.spfilter,p,LOCATION_GRAVE,0,1,nil,e,p) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c13254105.spop(e,tp,eg,ep,ev,re,r,rp)
 	local p=1-(Duel.GetTurnPlayer())
 	local sg=Duel.GetMatchingGroup(c13254105.spfilter,p,LOCATION_GRAVE,0,nil,e,p)
-	if Duel.GetLocationCount(p,LOCATION_MZONE)>0 and sg:GetCount()>0 then
+	if Duel.GetMZoneCount(p)>0 and sg:GetCount()>0 then
 		local tc=sg:Select(p,1,1,nil)
 		Duel.SpecialSummon(tc,0,p,p,false,false,POS_FACEDOWN_DEFENSE)
 	end

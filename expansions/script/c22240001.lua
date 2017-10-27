@@ -74,15 +74,15 @@ function c22240001.spfilter(c)
 end
 function c22240001.hspcon(e,c)
 	if c==nil then return true end
-	return Duel.IsExistingMatchingCard(c22240001.spfilter,c:GetControler(),LOCATION_MZONE,0,1,nil) or (Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c22240001.spfilter,c:GetControler(),LOCATION_ONFIELD,0,1,nil))
+	return Duel.IsExistingMatchingCard(c22240001.spfilter,c:GetControler(),LOCATION_MZONE,0,1,nil) or (Duel.GetMZoneCount(c:GetControler())>0 and Duel.IsExistingMatchingCard(c22240001.spfilter,c:GetControler(),LOCATION_ONFIELD,0,1,nil))
 end
 function c22240001.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local g=Group.CreateGroup()
-	if Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)<1 then
+	if Duel.GetMZoneCount(c:GetControler())<1 then
 		local g=Duel.SelectMatchingCard(tp,c22240001.spfilter,c:GetControler(),LOCATION_MZONE,0,1,1,nil)
 		Duel.Release(g,REASON_COST)
-	elseif Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 then
+	elseif Duel.GetMZoneCount(c:GetControler())>0 then
 		local g=Duel.SelectMatchingCard(tp,c22240001.spfilter,c:GetControler(),LOCATION_ONFIELD,0,1,1,nil)
 		Duel.Release(g,REASON_COST)
 	end

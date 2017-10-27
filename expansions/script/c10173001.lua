@@ -21,7 +21,7 @@ function c10173001.tdfilter(c,e,sc)
 end
 function c10173001.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c10173001.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingTarget(c10173001.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=Duel.SelectTarget(tp,c10173001.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
@@ -38,7 +38,7 @@ function c10173001.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ex,tg=Duel.GetOperationInfo(0,CATEGORY_TOHAND)
 	local ex,dg=Duel.GetOperationInfo(0,CATEGORY_TODECK)
 	dg=dg:Filter(Card.IsRelateToEffect,nil,e)
-	if sg:GetFirst():IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)~=0 and tg:GetFirst():IsRelateToEffect(e) and Duel.SendtoHand(tg,nil,REASON_EFFECT)~=0 and dg:GetCount()>0 then
+	if sg:GetFirst():IsRelateToEffect(e) and Duel.GetMZoneCount(tp)>0 and Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)~=0 and tg:GetFirst():IsRelateToEffect(e) and Duel.SendtoHand(tg,nil,REASON_EFFECT)~=0 and dg:GetCount()>0 then
 	   Duel.SendtoDeck(dg,nil,2,REASON_EFFECT)
 	end
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then

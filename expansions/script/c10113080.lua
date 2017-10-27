@@ -20,14 +20,14 @@ function c10113080.refilter(c,e,tp,ft)
 	return c:IsType(TYPE_MONSTER) and c:IsReleasableByEffect(e) and not c:IsType(TYPE_TOKEN) and (ft>0 or c:IsLocation(LOCATION_MZONE)) and Duel.IsPlayerCanSpecialSummonMonster(tp,10113081,0,0x4011,c:GetBaseAttack(),c:GetBaseDefense(), c:GetOriginalLevel(),c:GetOriginalRace(),c:GetOriginalAttribute())
 end
 function c10113080.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if chk==0 then return Duel.IsExistingMatchingCard(c10113080.refilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,e,tp,ft) end
 	Duel.SetOperationInfo(0,CATEGORY_RELEASE,nil,1,tp,LOCATION_HAND+LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c10113080.tkop(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local ec=Duel.SelectMatchingCard(tp,c10113080.refilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,e,tp,ft):GetFirst()

@@ -95,7 +95,7 @@ function c13254081.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function c13254081.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return (c:IsLocation(LOCATION_GRAVE) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)) or (c:IsLocation(LOCATION_MZONE) and c:IsAbleToGrave()) end
+	if chk==0 then return (c:IsLocation(LOCATION_GRAVE) and Duel.GetMZoneCount(tp)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)) or (c:IsLocation(LOCATION_MZONE) and c:IsAbleToGrave()) end
 end
 function c13254081.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

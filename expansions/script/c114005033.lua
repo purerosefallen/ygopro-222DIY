@@ -36,7 +36,7 @@ function c114005033.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ( ph==PHASE_MAIN1 or ph==PHASE_MAIN2 ) and Duel.IsExistingMatchingCard(c114005033.filter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function c114005033.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetMZoneCount(tp)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end

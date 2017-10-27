@@ -21,7 +21,7 @@ function c2116005.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local v={
 		Duel.IsExistingMatchingCard(c2116005.filter1,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)
 			and Duel.IsExistingMatchingCard(c2116005.filter2,tp,LOCATION_GRAVE,0,1,nil,e,tp)
-			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0,
+			and Duel.GetMZoneCount(tp)>0,
 		Duel.IsExistingMatchingCard(c2116005.filter3,tp,LOCATION_HAND,0,1,nil) and Duel.IsPlayerCanDraw(tp,2)
 	}
 	if chk==0 then return v[1] or v[2] end
@@ -46,7 +46,7 @@ function c2116005.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c2116005.activate(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+		if Duel.GetMZoneCount(tp)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,c2116005.filter2,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		if sg:GetFirst():IsHasEffect(EFFECT_NECRO_VALLEY) then return end

@@ -45,7 +45,7 @@ function c60151404.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c60151404.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToDeck,tp,LOCATION_ONFIELD,0,1,nil)
-        and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+        and Duel.GetMZoneCount(tp)>0 
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
     local g1=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,LOCATION_ONFIELD,0,1,1,nil)
@@ -55,7 +55,7 @@ end
 function c60151404.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
     if not c:IsRelateToEffect(e) then return end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
     if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 		Duel.BreakEffect()
         local tc=Duel.GetFirstTarget()
@@ -73,7 +73,7 @@ function c60151404.spcon2(e,tp,eg,ep,ev,re,r,rp)
     return g and g:IsExists(c60151404.tfilter,1,nil,tp)
 end
 function c60151404.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+    if chk==0 then return Duel.GetMZoneCount(tp)>-1
         and e:GetHandler():IsFaceup() 
 		and e:GetHandler():IsAbleToDeck() 
 		and Duel.GetFlagEffect(tp,60151404)==0 
@@ -91,7 +91,7 @@ function c60151404.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c60151404.spop2(e,tp,eg,ep,ev,re,r,rp)
-    if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+    if Duel.GetMZoneCount(tp)<=0 then return end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
     local g=Duel.SelectMatchingCard(tp,c60151404.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
     if g:GetCount()>0 then

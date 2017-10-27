@@ -63,13 +63,13 @@ function c1151203.splimit1_1(e,c)
 end
 --
 function c1151203.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,1151996,0,0x4011,200,200,1,RACE_FIEND,ATTRIBUTE_DARK) end
+	if chk==0 then return Duel.GetMZoneCount(tp)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,1151996,0,0x4011,200,200,1,RACE_FIEND,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 --
 function c1151203.op1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,1151996,0,0x4011,200,200,1,RACE_FIEND,ATTRIBUTE_DARK) then
+	if Duel.GetMZoneCount(tp)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,1151996,0,0x4011,200,200,1,RACE_FIEND,ATTRIBUTE_DARK) then
 		local token=Duel.CreateToken(tp,1151996)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end

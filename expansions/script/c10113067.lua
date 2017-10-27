@@ -46,7 +46,7 @@ function c10113067.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_EXTRA) then
 	   local g=Duel.GetMatchingGroup(c10113067.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)   
-	   if g:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(10113067,1))  then
+	   if g:GetCount()>0 and Duel.GetMZoneCount(tp)>0 and Duel.SelectYesNo(tp,aux.Stringid(10113067,1))  then
 		  Duel.BreakEffect()
 		  Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		  local sg=g:Select(tp,1,1,nil)
@@ -62,6 +62,6 @@ function c10113067.sprfilter(c)
 end
 function c10113067.spcon(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return Duel.GetMZoneCount(c:GetControler())>0
 		and Duel.IsExistingMatchingCard(c10113067.sprfilter,c:GetControler(),LOCATION_MZONE,0,2,nil)
 end

@@ -42,13 +42,13 @@ function c121000003.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsContains(e:GetHandler())
 end
 function c121000003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
+	if chk==0 then return Duel.GetMZoneCount(tp)>1 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,121000006,0,0x4011,1500,1500,3,RACE_SPELLCASTER,ATTRIBUTE_WIND) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c121000003.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
-		if Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)>0 and  Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	if Duel.GetMZoneCount(tp)<1 then return end
+		if Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)>0 and  Duel.GetMZoneCount(tp)>0 
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,121000006,0,0x4011,1500,1500,3,RACE_SPELLCASTER,ATTRIBUTE_WIND) then
 		Duel.BreakEffect()
 		local token=Duel.CreateToken(tp,121000006)

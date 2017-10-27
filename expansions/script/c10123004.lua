@@ -26,7 +26,7 @@ function c10123004.spfilter(c)
 end
 function c10123004.spcon(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
+	return Duel.GetMZoneCount(c:GetControler())>0 and
 		Duel.IsExistingMatchingCard(c10123004.spfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function c10123004.drcon(e,tp,eg,ep,ev,re,r,rp)

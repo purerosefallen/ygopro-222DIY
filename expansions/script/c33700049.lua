@@ -20,7 +20,7 @@ function c33700049.initial_effect(c)
 end
 function c33700049.ntcon(e,c,minc)
 	if c==nil then return true end
-	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return minc==0 and c:GetLevel()>4 and Duel.GetMZoneCount(c:GetControler())>0
 		and Duel.GetCounter(c:GetControler(),LOCATION_ONFIELD,0,0x1021)>0
 end
 function c33700049.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)

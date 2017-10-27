@@ -40,7 +40,7 @@ function c1150040.ofilter1(c,e,slv)
 	return c:IsFaceup() and c1150040.lr(c)>=slv
 end
 function c1150040.tfilter1(c,e,tp)
-	return c:IsType(TYPE_SPIRIT) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c1150040.ofilter1,tp,LOCATION_MZONE,0,1,nil,e,c:GetLevel())
+	return c:IsType(TYPE_SPIRIT) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetMZoneCount(tp)>0 and Duel.IsExistingMatchingCard(c1150040.ofilter1,tp,LOCATION_MZONE,0,1,nil,e,c:GetLevel())
 end
 --
 function c1150040.tg1(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -56,7 +56,7 @@ function c13254110.operation(e,tp,eg,ep,ev,re,r,rp)
 	local seq=0
 	local sg=Group.CreateGroup()
 	local des=1
-	if Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 or Duel.GetLocationCount(1-tp,LOCATION_SZONE)>0 then i=i+1 end
+	if Duel.GetMZoneCount(1-tp)>0 or Duel.GetLocationCount(1-tp,LOCATION_SZONE)>0 then i=i+1 end
 	if Duel.GetMatchingGroupCount(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)>0 then i=i+2 end
 	if i~=0 and Duel.SelectYesNo(tp,aux.Stringid(13254110,0)) then
 		Duel.BreakEffect()
@@ -107,7 +107,7 @@ function c13254110.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return tc
 end
 function c13254110.target2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE) or Duel.GetLocationCount(1-tp,LOCATION_SZONE) end
+	if chk==0 then return Duel.GetMZoneCount(1-tp) or Duel.GetLocationCount(1-tp,LOCATION_SZONE) end
 	local seq=Duel.SelectDisableField(tp,1,0,LOCATION_ONFIELD,0)
 	e:SetLabel(seq)
 end

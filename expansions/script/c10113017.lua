@@ -58,7 +58,7 @@ end
 function c10113017.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
 	   e:SetLabel(0)
-	return Duel.IsExistingMatchingCard(c10113017.cfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	return Duel.IsExistingMatchingCard(c10113017.cfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetMZoneCount(tp)>0 
 	end
 	e:SetLabel(0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
@@ -69,7 +69,7 @@ function c10113017.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0x13)
 end
 function c10113017.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c10113017.filter),tp,0x13,0,1,1,nil,e,tp,nil)
 	if sg:GetCount()>0 then

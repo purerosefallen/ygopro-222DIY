@@ -52,11 +52,11 @@ function c1191002.op1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(tp,1)
 	local g=Duel.GetDecktopGroup(tp,1)
 	local tc=g:GetFirst()
-	if c1191002.IsELF(tc) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if c1191002.IsELF(tc) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and Duel.GetMZoneCount(tp)>0 then
 --  Duel.DisableShuffleCheck()
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 --
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+		if Duel.GetMZoneCount(tp)<=0 then return end
 		local g3=Duel.GetMatchingGroup(c1191002.filter,tp,LOCATION_GRAVE,0,nil)
 		if g3:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(1191002,0)) then
 		Duel.BreakEffect()

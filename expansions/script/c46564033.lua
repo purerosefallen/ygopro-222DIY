@@ -35,7 +35,7 @@ end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
-		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		local ft=Duel.GetMZoneCount(tp)
 		local mg=Duel.GetRitualMaterial(tp):Filter(Card.IsAttribute,c,ATTRIBUTE_WATER)
 		local mg2=Duel.GetMatchingGroup(cm.mfilter,tp,LOCATION_GRAVE,0,nil)
 		mg:Merge(mg2)
@@ -52,7 +52,7 @@ function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local mg1=Duel.GetRitualMaterial(tp):Filter(Card.IsAttribute,c,ATTRIBUTE_WATER)

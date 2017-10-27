@@ -70,10 +70,10 @@ function c60150613.sprcon(e,c)
 	local tp=c:GetControler()
     local g=Duel.GetMatchingGroup(c60150613.filter,tp,LOCATION_ONFIELD,0,nil)
 	if g:GetCount()>0 then
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+		return Duel.GetMZoneCount(tp)>-1
 			and Duel.IsExistingMatchingCard(c60150613.spfilter1,tp,LOCATION_ONFIELD,0,1,nil,tp,c)
 	else
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
+		return Duel.GetMZoneCount(tp)>-2
 			and Duel.IsExistingMatchingCard(c60150613.spfilter1,tp,LOCATION_ONFIELD,0,1,nil,tp,c)
 	end
 end

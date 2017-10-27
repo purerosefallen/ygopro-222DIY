@@ -88,7 +88,7 @@ function c10113091.spcon(e,c)
 	local tp=c:GetControler()
 	local t=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD+LOCATION_HAND)
 	local s=Duel.GetFieldGroupCount(tp,LOCATION_HAND+LOCATION_ONFIELD,0)
-	return t-s>=3 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return t-s>=3 and Duel.GetMZoneCount(tp)>0
 end
 function c10113091.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))

@@ -139,12 +139,12 @@ function c114000761.p3cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c114000761.p3tar(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	if chk==0 then return Duel.GetMZoneCount(tp)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c114000761.p3op(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end --field existance check
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	local slv=e:GetLabel()*2
 	local sg=Duel.GetMatchingGroup(c114000761.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
 	sg:Remove(Card.IsLevelAbove,nil,slv+1)

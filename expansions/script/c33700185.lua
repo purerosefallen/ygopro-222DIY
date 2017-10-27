@@ -161,7 +161,7 @@ end
 function cm.filter(c,e,tp)
 	if not c:IsSetCard(0x442) or c:IsHasEffect(EFFECT_NECRO_VALLEY) then return false end
 	local rc=c
-	if rc:IsType(TYPE_MONSTER) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if rc:IsType(TYPE_MONSTER) and Duel.GetMZoneCount(tp)>0
 		and (not rc:IsLocation(LOCATION_EXTRA) or Duel.GetLocationCountFromEx(tp)>0)
 		and rc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) then return true end
 	if (rc:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0)

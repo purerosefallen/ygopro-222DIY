@@ -19,7 +19,7 @@ end
 function c46564013.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		return Duel.GetMZoneCount(tp)>0
 			and Duel.IsExistingTarget(c46564013.cfilter,tp,LOCATION_MZONE,0,1,nil,e,tp)
 	end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
@@ -27,7 +27,7 @@ function c46564013.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c46564013.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

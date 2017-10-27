@@ -96,13 +96,13 @@ function c60151033.filter(c,e,tp)
 	return c:IsSetCard(0x5b23) and c:IsType(TYPE_MONSTER)
 end
 function c60151033.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c60151033.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c60151033.operation2(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or Duel.IsExistingMatchingCard(c60151033.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp)==0 then 
+	if Duel.GetMZoneCount(tp)<=0 or Duel.IsExistingMatchingCard(c60151033.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp)==0 then 
 		local c=e:GetHandler()
 		Duel.Destroy(c,REASON_EFFECT)
 	end

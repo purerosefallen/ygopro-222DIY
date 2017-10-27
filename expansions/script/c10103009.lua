@@ -48,13 +48,13 @@ function c10103009.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:GetLocation()~=LOCATION_DECK
 end
 function c10103009.spfilter(c,e,tp)
-	return ((c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) or c:IsAbleToHand()) and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x337)
+	return ((c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetMZoneCount(tp)>0) or c:IsAbleToHand()) and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x337)
 end
 function c10103009.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c10103009.spfilter,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,nil,e,tp) end
 end
 function c10103009.spop(e,tp,eg,ep,ev,re,r,rp)
-	local g,ft,op,c=Duel.GetMatchingGroup(c10103009.spfilter,tp,LOCATION_GRAVE+LOCATION_DECK,0,nil,e,tp),Duel.GetLocationCount(tp,LOCATION_MZONE),0,e:GetHandler()
+	local g,ft,op,c=Duel.GetMatchingGroup(c10103009.spfilter,tp,LOCATION_GRAVE+LOCATION_DECK,0,nil,e,tp),Duel.GetMZoneCount(tp),0,e:GetHandler()
 	if g:GetCount()<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(10103009,1))
 	local tc=Duel.SelectMatchingCard(tp,c10103009.spfilter,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()

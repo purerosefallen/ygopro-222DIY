@@ -27,7 +27,7 @@ function c33700052.activate(e,tp,eg,ep,ev,re,r,rp)
 	if opt==0 then
 	if Duel.IsExistingMatchingCard(c33700052.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) then
 	   local g=Duel.SelectMatchingCard(tp,c33700052.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	   if Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 and g:GetCount()>0 and Duel.SpecialSummon(g,0,tp,1-tp,false,false,POS_FACEUP)>0 then
+	   if Duel.GetMZoneCount(1-tp)>0 and g:GetCount()>0 and Duel.SpecialSummon(g,0,tp,1-tp,false,false,POS_FACEUP)>0 then
 		 if g:GetFirst():IsSetCard(0x441) and Duel.IsExistingMatchingCard(c33700052.pfilter,tp,LOCATION_DECK,0,1,nil) 
 		   and (Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7)) then 
 		 local pg=Duel.SelectMatchingCard(tp,c33700052.pfilter,tp,LOCATION_DECK,0,1,1,nil)
@@ -36,7 +36,7 @@ function c33700052.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 		end
 	 elseif g:GetFirst():IsSetCard(0x3440) and Duel.IsExistingMatchingCard(c33700052.spfilter,tp,LOCATION_DECK, 0,1,nil,e,tp) 
-	 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then 
+	 and Duel.GetMZoneCount(tp)>0 then 
 	   local sg=Duel.SelectMatchingCard(tp,c33700052.spfilter,tp,LOCATION_DECK,1,1,nil,e,tp)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 		sg:GetFirst():AddCounter(0x1021,2)

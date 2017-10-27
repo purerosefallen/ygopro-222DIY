@@ -68,14 +68,14 @@ end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local exg=Duel.GetMatchingGroup(cm.filter,tp,LOCATION_EXTRA,0,nil,e,tp)
 	if chkc then return false end
-	if chk==0 then return Duel.IsPlayerCanSpecialSummonCount(tp,2) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetLocationCountFromEx(tp)>0 and Duel.IsExistingTarget(cm.mfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp,exg,e:GetHandler()) end
+	if chk==0 then return Duel.IsPlayerCanSpecialSummonCount(tp,2) and Duel.GetMZoneCount(tp)>0 and Duel.GetLocationCountFromEx(tp)>0 and Duel.IsExistingTarget(cm.mfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp,exg,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,cm.mfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,e,tp,exg,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function cm.operation(e,tp,eg,ep,ev,re,r,rp)
-	if not (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetLocationCountFromEx(tp)>0) then return end
+	if not (Duel.GetMZoneCount(tp)>0 and Duel.GetLocationCountFromEx(tp)>0) then return end
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsImmuneToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()

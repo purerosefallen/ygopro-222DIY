@@ -90,7 +90,7 @@ function c22230121.spfilter(c)
 end
 function c22230121.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetHandler():GetOverlayGroup()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:IsExists(c22230121.spfilter,1,nil) end
+	if chk==0 then return Duel.GetMZoneCount(tp)>0 and g:IsExists(c22230121.spfilter,1,nil) end
 	if e:GetHandler():GetFlagEffect(22230121)~=0 then
 		e:SetLabel(1)
 		e:GetHandler():ResetFlagEffect(22230121)

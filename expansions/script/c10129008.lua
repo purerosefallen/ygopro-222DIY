@@ -40,13 +40,13 @@ function c10129008.confilter2(c,tp)
 	return c:IsPreviousLocation(LOCATION_GRAVE+LOCATION_ONFIELD+LOCATION_HAND) and c:GetPreviousControler()==tp and c:IsRace(RACE_ZOMBIE) and c:IsFaceup()
 end
 function c10129008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,10129012,0,0x4011,0,0,1,RACE_ZOMBIE,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c10129008.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+	if Duel.GetMZoneCount(tp)<=0
 	or not Duel.IsPlayerCanSpecialSummonMonster(tp,10129012,0,0x4011,0,0,1,RACE_ZOMBIE,ATTRIBUTE_DARK) or not e:GetHandler():IsRelateToEffect(e) then return end
 	local token=Duel.CreateToken(tp,10129012)
 	if Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)~=0 then

@@ -142,7 +142,7 @@ function cm.spptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local sumtype=c:GetSummonType()
 	if chk==0 then   
 		return not (bit.band(sumtype,SUMMON_TYPE_FUSION)~=SUMMON_TYPE_FUSION or mg:GetCount()==0
-		or mg:GetCount()>Duel.GetLocationCount(tp,LOCATION_MZONE)
+		or mg:GetCount()>Duel.GetMZoneCount(tp)
 		or mg:IsExists(cm.mgfilter,1,nil,e,tp,c))
 	end
 	mg:KeepAlive()
@@ -163,7 +163,7 @@ function cm.sppop(e,tp,eg,ep,ev,re,r,rp)
 	local g=mg:Clone()
 	mg:DeleteGroup()
 	if not (g:GetCount()==0
-		or g:GetCount()>Duel.GetLocationCount(tp,LOCATION_MZONE)
+		or g:GetCount()>Duel.GetMZoneCount(tp)
 		or g:IsExists(cm.mgfilterx,1,nil,e,tp,c)) then
 		local tc=g:GetFirst()
 		while tc do

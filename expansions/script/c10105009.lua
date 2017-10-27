@@ -34,7 +34,7 @@ function c10105009.drop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xc330) then
 			if tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
-				and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+				and Duel.GetMZoneCount(tp)>0
 				and Duel.SelectYesNo(tp,aux.Stringid(10102001,2)) then
 				Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 			end

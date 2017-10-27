@@ -150,7 +150,7 @@ function cm.disop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_REMOVED)
 	e1:SetReset(0x1fe1000+RESET_PHASE+PHASE_END)
 	e1:SetCondition(function(e,tp)
-		return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,true) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,true) and Duel.GetMZoneCount(tp)>0
 	end)
 	e1:SetOperation(function(e,tp)
 		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,true,true,POS_FACEUP)

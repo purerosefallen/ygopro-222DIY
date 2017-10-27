@@ -43,7 +43,7 @@ end
 function cm.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
-		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		local ft=Duel.GetMZoneCount(tp)
 		local mg=Duel.GetRitualMaterial(tp):Filter(cm.matfilter,c,c)
 		if c.mat_filter then
 			mg=mg:Filter(c.mat_filter,nil)
@@ -64,7 +64,7 @@ function cm.mfilterf(c,tp,mg,rc)
 	else return false end
 end
 function cm.spop2(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local mg=Duel.GetRitualMaterial(tp):Filter(cm.matfilter,c,c)
@@ -97,12 +97,12 @@ function cm.sfilter1(c,e,tp)
 	return c:IsLevelBelow(8) and Senya.check_set_sayuri(c) and c:IsCanBeSpecialSummoned(e,0,tp,true,true) and bit.band(c:GetType(),0x81)==0x81
 end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(cm.sfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,cm.sfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
@@ -116,7 +116,7 @@ function cm.filter(c)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and cm.filter(chkc) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(cm.sfilter1,tp,LOCATION_DECK,0,1,nil,e,tp) and Duel.IsExistingTarget(cm.filter,tp,LOCATION_GRAVE,0,2,e:GetHandler()) end
+	if chk==0 then return Duel.GetMZoneCount(tp)>0 and Duel.IsExistingMatchingCard(cm.sfilter1,tp,LOCATION_DECK,0,1,nil,e,tp) and Duel.IsExistingTarget(cm.filter,tp,LOCATION_GRAVE,0,2,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,cm.filter,tp,LOCATION_GRAVE,0,2,2,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,3,0,0)
@@ -130,7 +130,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetOperatedGroup()
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
 	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
-	if ct==3 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if ct==3 and Duel.GetMZoneCount(tp)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,cm.sfilter1,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 		local tc=g:GetFirst()

@@ -70,7 +70,7 @@ function cm.dop(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.checkfield(tp)
 	if Duel.GetLocationCountFromEx then return Duel.GetLocationCountFromEx(tp)>0 end
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return Duel.GetMZoneCount(tp)>0
 end
 function cm.filtergoal(g,xyzc)
 	local ct=g:GetCount()

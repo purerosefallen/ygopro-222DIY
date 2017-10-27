@@ -26,7 +26,7 @@ function cm.initial_effect(c)
 end
 function cm.filter(c,e,tp)
 	if c:IsSetCard(0x65c) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable(ignore) and c:IsFaceup() and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then return true end
-	return c:IsSetCard(0x65c) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsFaceup() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return c:IsSetCard(0x65c) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsFaceup() and Duel.GetMZoneCount(tp)>0
 end
 function cm.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsFaceup() end
@@ -65,11 +65,11 @@ function cm.activate3(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(tp,5)
 	local g=Duel.GetDecktopGroup(tp,5)
 	if g:GetCount()>0 then
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then  Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL) return end
+		if Duel.GetMZoneCount(tp)<=0 then  Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL) return end
 		Duel.DisableShuffleCheck()
 		if g:IsExists(cm.spfilter,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(m,3)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local ct=math.min(2,Duel.GetLocationCount(tp,LOCATION_MZONE))
+			local ct=math.min(2,Duel.GetMZoneCount(tp))
 			if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
 			local sg=g:FilterSelect(tp,cm.spfilter,1,ct,nil,e,tp)
 			local tc=sg:GetFirst()

@@ -54,14 +54,14 @@ function c1000617.spfilter(c,e,tp)
 end
 function c1000617.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc==0 then return false end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingTarget(c1000617.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c1000617.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,LOCATION_GRAVE)
 end
 function c1000617.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	local g=Duel.GetFirstTarget()
 	if g and g:IsRelateToEffect(e) then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)

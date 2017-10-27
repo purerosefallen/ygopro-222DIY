@@ -27,13 +27,13 @@ function c10103001.spfilter(c,e,tp)
 	return c:IsSetCard(0x337) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c10103001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c10103001.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function c10103001.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c10103001.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if g:GetCount()>0 and not g:GetFirst():IsHasEffect(EFFECT_NECRO_VALLEY) and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
@@ -53,11 +53,11 @@ function c10103001.xyzfilter(c,tp,mc,ft)
 	return c:IsSetCard(0x337) and c:IsType(TYPE_MONSTER) and (c:IsFaceup() or not c:IsOnField()) and Duel.IsExistingMatchingCard(Card.IsXyzSummonable,tp,LOCATION_EXTRA,0,1,nil,Group.FromCards(c,mc),2,2) and (ft>0 or (c:IsOnField() or mc:IsOnField()))
 end
 function c10103001.xyztg(e,tp,eg,ep,ev,re,r,rp,chk) 
-	local c,ft=e:GetHandler(),Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local c,ft=e:GetHandler(),Duel.GetMZoneCount(tp)
 	if chk==0 then return Duel.IsExistingMatchingCard(c10103001.xyzfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,c,tp,c,ft) end
 end
 function c10103001.xyzop(e,tp,eg,ep,ev,re,r,rp)
-	local c,ft=e:GetHandler(),Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local c,ft=e:GetHandler(),Duel.GetMZoneCount(tp)
 	if not c:IsRelateToEffect(e) then return end
 	local mg=Duel.GetMatchingGroup(c10103001.xyzfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,c,tp,c,ft)
 	if mg:GetCount()<=0 then return end

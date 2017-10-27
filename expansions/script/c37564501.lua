@@ -48,13 +48,13 @@ function cm.ssfilter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,true) and c:GetOwner()==1-tp
 end
 function cm.xmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():GetOverlayGroup():IsExists(cm.ssfilter,1,nil,e,tp) and e:GetHandler():IsType(TYPE_XYZ) end
+	if chk==0 then return Duel.GetMZoneCount(tp)>0 and e:GetHandler():GetOverlayGroup():IsExists(cm.ssfilter,1,nil,e,tp) and e:GetHandler():IsType(TYPE_XYZ) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_MZONE)
 end
 function cm.xmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local gg=c:GetOverlayGroup()
-	if not (c:IsRelateToEffect(e) and c:IsFaceup() and c:IsControler(tp) and not c:IsImmuneToEffect(e) and gg:IsExists(cm.ssfilter,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) then return end
+	if not (c:IsRelateToEffect(e) and c:IsFaceup() and c:IsControler(tp) and not c:IsImmuneToEffect(e) and gg:IsExists(cm.ssfilter,1,nil,e,tp) and Duel.GetMZoneCount(tp)>0) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=gg:FilterSelect(tp,cm.ssfilter,1,1,nil,e,tp):GetFirst()
 	if sg and Duel.SpecialSummonStep(sg,0,tp,tp,true,true,POS_FACEUP) then

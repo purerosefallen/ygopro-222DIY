@@ -119,7 +119,7 @@ end
 function c1151005.con2_3(e,c,og)
 	local tp=e:GetHandlerPlayer()
 	local c=e:GetHandler()
-	return Duel.IsExistingMatchingCard(c1151005.cfilter2_3,tp,LOCATION_HAND,0,1,nil,e,tp) and c:IsFaceup() and not c:IsDisabled() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return Duel.IsExistingMatchingCard(c1151005.cfilter2_3,tp,LOCATION_HAND,0,1,nil,e,tp) and c:IsFaceup() and not c:IsDisabled() and Duel.GetMZoneCount(tp)>0
 end
 --
 function c1151005.op2_3(e,tp,eg,ep,ev,re,r,rp,c,sg,og)  

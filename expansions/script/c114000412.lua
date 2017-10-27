@@ -51,7 +51,7 @@ end
 function c114000412.xyzcon(e,c,og)
 	if c==nil then return true end
 	local abcount=0
-	if Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>=0 and Duel.GetFlagEffect(tp,114000412)==0 then 
+	if Duel.GetMZoneCount(c:GetControler())>=0 and Duel.GetFlagEffect(tp,114000412)==0 then 
 		local check=false
 		local lvb=c114000412.lvchk(c:GetControler())
 		for i=1,lvb do
@@ -62,7 +62,7 @@ function c114000412.xyzcon(e,c,og)
 		end
 		if check then abcount=abcount+2 end
 	end
-	local ft=Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(c:GetControler())
 	local ct=-ft
 	--if 2<=ct then return false end
 	if ct<2 then if Duel.CheckXyzMaterial(c,nil,2,2,2,og) then abcount=abcount+1 end end

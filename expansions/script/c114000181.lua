@@ -36,7 +36,7 @@ function c114000181.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetHandler():GetMaterial()
 	if chk==0 then return e:GetHandler():IsAbleToDeck() 
 		and g:GetCount()>0 
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)+1>=g:GetCount() 
+		and Duel.GetMZoneCount(tp)+1>=g:GetCount() 
 		and e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 		and not g:IsExists(c114000181.mgfilter,1,nil,e,tp,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,e:GetHandler(),1,0,0)
@@ -47,7 +47,7 @@ function c114000181.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local g=e:GetHandler():GetMaterial()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>=g:GetCount()
+	if Duel.GetMZoneCount(tp)>=g:GetCount()
 		and not g:IsExists(c114000181.mgfilter,1,nil,e,tp,e:GetHandler()) then
 		Duel.SendtoDeck(c,nil,0,REASON_EFFECT)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)

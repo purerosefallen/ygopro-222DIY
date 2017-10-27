@@ -43,7 +43,7 @@ function c10113042.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c10113042.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 and Duel.SpecialSummon(c,0,tp,1-tp,false,false,POS_FACEDOWN_DEFENSE)~=0 then
+	if c:IsRelateToEffect(e) and Duel.GetMZoneCount(1-tp)>0 and Duel.SpecialSummon(c,0,tp,1-tp,false,false,POS_FACEDOWN_DEFENSE)~=0 then
 	   local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_ONFIELD,e:GetHandler())
 	   if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(10113042,2)) then
 		  Duel.BreakEffect()

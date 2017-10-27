@@ -122,7 +122,7 @@ function c33700078.spfilter(c,e,tp)
 end
 function c33700078.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c33700078.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+		and Duel.GetMZoneCount(tp)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c33700078.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -141,13 +141,13 @@ function c33700078.filter(c,e,tp,id)
 end
 function c33700078.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
-		return  Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and
+		return  Duel.GetMZoneCount(tp)>0 and
 	 Duel.IsExistingMatchingCard(c33700078.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,Duel.GetTurnCount())
 	end 
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_GRAVE)
 end
 function c33700078.spop2(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	local tg=Duel.GetMatchingGroup(c33700078.filter,tp,LOCATION_GRAVE,0,nil,e,tp,Duel.GetTurnCount())
 	if ft<=0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end

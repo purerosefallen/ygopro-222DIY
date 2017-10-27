@@ -99,7 +99,7 @@ end
 function c23330015.syncon(e,c,tuner,mg)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<-2 then return false end
+	if Duel.GetMZoneCount(tp)<-2 then return false end
 	local g1=nil
 	local g2=nil
 	local g3=nil

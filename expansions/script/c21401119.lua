@@ -59,13 +59,13 @@ function c21401119.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c21401119.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,21401131,0,0x4011,300,300,1,RACE_SPELLCASTER,ATTRIBUTE_LIGHT) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c21401119.tkop(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if ft<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,21401131,0,0x4011,300,300,1,RACE_SPELLCASTER,ATTRIBUTE_LIGHT) then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	for i=1,ft do

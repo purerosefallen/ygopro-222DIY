@@ -118,14 +118,14 @@ function c17060866.sptcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonLocation()==LOCATION_SZONE
 end
 function c17060866.spttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,17060867,0,0x4011,0,0,1,RACE_PSYCHO,ATTRIBUTE_FIRE) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c17060866.sptop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e)
-		or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+		or Duel.GetMZoneCount(tp)<=0
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,17060867,0,0x4011,0,0,1,RACE_PSYCHO,ATTRIBUTE_FIRE) then return end
 	local token=Duel.CreateToken(tp,17060867)
 	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)

@@ -38,7 +38,7 @@ end
 function c50000035.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c50000035.filter(chkc,e,tp) end
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,50000035)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingTarget(c50000035.filter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c50000035.filter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
@@ -46,7 +46,7 @@ function c50000035.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c50000035.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	local g=Duel.GetMatchingGroup(c50000035.filter2,tp,LOCATION_DECK,0,nil,e,tp,tc)
 	if not Duel.IsPlayerAffectedByEffect(tp,50000035)
 		and ft>0 and g:GetClassCount(Card.GetCode)>0 and tc:IsRelateToEffect(e) and tc:IsFaceup() then
@@ -64,13 +64,13 @@ function c50000035.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_DECK)
 end
 function c50000035.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,500000352,0x50a,0x4011,0,0,1,RACE_SPELLCASTER,ATTRIBUTE_FIRE) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c50000035.tkop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	if Duel.IsPlayerCanSpecialSummonMonster(tp,500000352,0x50a,0x4011,0,0,1,RACE_SPELLCASTER,ATTRIBUTE_FIRE) then
 		local token=Duel.CreateToken(tp,500000352)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)

@@ -44,14 +44,14 @@ function c10116003.tfilter(c)
 	return c:IsSetCard(0x3331) and c:IsFaceup()
 end
 function c10116003.costfilter(c,e,tp)
-	return c:IsAbleToDeckOrExtraAsCost() and c:IsSetCard(0x3331) and c:IsType(TYPE_MONSTER) and ((c:IsLocation(LOCATION_HAND) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) or (c:IsFaceup() and c:IsLocation(LOCATION_MZONE))) and Duel.IsExistingMatchingCard(c10116003.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,c)
+	return c:IsAbleToDeckOrExtraAsCost() and c:IsSetCard(0x3331) and c:IsType(TYPE_MONSTER) and ((c:IsLocation(LOCATION_HAND) and Duel.GetMZoneCount(tp)>0) or (c:IsFaceup() and c:IsLocation(LOCATION_MZONE))) and Duel.IsExistingMatchingCard(c10116003.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,c)
 end
 function c10116003.filter(c,e,tp,rc)
 	local lv=rc:GetOriginalLevel()
 	if rc:IsType(TYPE_XYZ) then
 	   lv=rc:GetOriginalRank()
 	end
-	return c:IsSetCard(0x3331) and ((c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or rc:IsLocation(LOCATION_MZONE))) or c:IsAbleToHand()) and not c:IsCode(rc:GetCode()) and c:IsLevelBelow(lv)
+	return c:IsSetCard(0x3331) and ((c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (Duel.GetMZoneCount(tp)>0 or rc:IsLocation(LOCATION_MZONE))) or c:IsAbleToHand()) and not c:IsCode(rc:GetCode()) and c:IsLevelBelow(lv)
 end
 function c10116003.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
@@ -74,7 +74,7 @@ function c10116003.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,c10116003.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,e,tp,rc):GetFirst()
 	if not tc then return end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and (not tc:IsAbleToHand() or Duel.SelectYesNo(tp,aux.Stringid(10116003,2))) then
+	if Duel.GetMZoneCount(tp)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and (not tc:IsAbleToHand() or Duel.SelectYesNo(tp,aux.Stringid(10116003,2))) then
 	   Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	else
 	   Duel.SendtoHand(tc,nil,REASON_EFFECT)

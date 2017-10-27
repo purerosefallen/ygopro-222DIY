@@ -69,7 +69,7 @@ function c114100502.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local spcheck=0
 	if chk==0 then 
 		if Duel.GetFieldCard(tp,LOCATION_SZONE,5)~=nil then
-			return Duel.IsExistingMatchingCard(c114100502.fdfilter,tp,LOCATION_DECK,0,1,nil,tp) or ( Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c114100502.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) )
+			return Duel.IsExistingMatchingCard(c114100502.fdfilter,tp,LOCATION_DECK,0,1,nil,tp) or ( Duel.GetMZoneCount(tp)>0 and Duel.IsExistingMatchingCard(c114100502.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) )
 		else
 			return Duel.IsExistingMatchingCard(c114100502.fdfilter,tp,LOCATION_DECK,0,1,nil,tp)
 		end
@@ -83,7 +83,7 @@ function c114100502.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c114100502.spop(e,tp,eg,ep,ev,re,r,rp)
 	local fdcheck=0
-	if Duel.GetFieldCard(tp,LOCATION_SZONE,5)~=nil and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c114100502.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) then
+	if Duel.GetFieldCard(tp,LOCATION_SZONE,5)~=nil and Duel.GetMZoneCount(tp)>0 and Duel.IsExistingMatchingCard(c114100502.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) then
 		local opt=Duel.SelectOption(tp,aux.Stringid(114100502,0),aux.Stringid(114100502,1))
 		if opt==0 then
 			fdcheck=1

@@ -79,7 +79,7 @@ function c777009.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then
 		if Duel.IsExistingMatchingCard(c777009.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) then return true end
 		if c:GetFlagEffect(777009)~=0 then return false end
-		local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
+		local ft=Duel.GetMZoneCount(1-tp)
 		if ft<0 then return false
 		elseif ft>0 then
 			return Duel.IsExistingTarget(nil,tp,0,LOCATION_ONFIELD,1,nil)
@@ -87,7 +87,7 @@ function c777009.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 			return Duel.IsExistingTarget(c777009.desfilter,tp,0,LOCATION_ONFIELD,1,nil)
 		end
 	end
-	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(1-tp)
 	local g=nil
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	if ft>0 then
@@ -105,7 +105,7 @@ function c777009.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=tg:GetFirst()
 	if tc then
 		if Duel.Destroy(tc,REASON_EFFECT)~=0 then
-			if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+			if Duel.GetMZoneCount(tp)<=0 then return end
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local g=Duel.SelectMatchingCard(tp,c777009.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 			if g:GetCount()>0 then

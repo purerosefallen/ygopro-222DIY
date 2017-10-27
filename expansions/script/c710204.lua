@@ -26,7 +26,7 @@ function c710204.spfilter(c,e,tp)
 end
 function c710204.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c710204.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingTarget(c710204.filter,tp,LOCATION_ONFIELD,0,1,nil)
 		and Duel.IsExistingTarget(c710204.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
@@ -43,7 +43,7 @@ function c710204.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc2=g2:GetFirst()
 	if tc1 and tc1:IsRelateToEffect(e) then
 		if Duel.SendtoDeck(tc1,nil,0,REASON_EFFECT)~=0 and  
-		tc2:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then 
+		tc2:IsRelateToEffect(e) and Duel.GetMZoneCount(tp)>0 then 
 			Duel.SpecialSummon(tc2,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end

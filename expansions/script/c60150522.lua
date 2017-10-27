@@ -73,7 +73,7 @@ function c60150522.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		if Duel.Release(tc,REASON_EFFECT)~=0 then
-			if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+			if Duel.GetMZoneCount(tp)<=0
 				or not Duel.IsPlayerCanSpecialSummonMonster(tp,60150523,0,0x4011,1000,1000,12,RACE_FIEND,ATTRIBUTE_LIGHT) then return end
 			local token=Duel.CreateToken(tp,60150523)
 			Duel.SpecialSummon(token,0,tp,1-tp,false,false,POS_FACEUP_ATTACK)

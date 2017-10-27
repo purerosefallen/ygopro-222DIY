@@ -52,7 +52,7 @@ function c1190012.filter2(c,e,tp)
 	return c1190012.IsELF(c) and c:IsType(TYPE_MONSTER) and c:GetLevel()==1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c1190012.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1
+	if chk==0 then return Duel.GetMZoneCount(tp)>1
 		and Duel.IsExistingMatchingCard(c1190012.filter2,tp,LOCATION_GRAVE+LOCATION_HAND,0,2,nil,e,tp) and e:GetHandler():IsAbleToDeck() end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_GRAVE+LOCATION_HAND)
 end
@@ -61,7 +61,7 @@ function c1190012.op2(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
 	end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c1190012.filter2,tp,LOCATION_GRAVE+LOCATION_HAND,0,2,2,nil,e,tp)
 	if g:GetCount()>1 then

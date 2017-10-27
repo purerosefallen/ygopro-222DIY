@@ -23,7 +23,7 @@ function c10116005.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c10116005.netg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingTarget(c10116005.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)  end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c10116005.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)

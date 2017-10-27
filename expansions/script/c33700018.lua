@@ -18,12 +18,12 @@ function c33700018.filter(c,tp)
 end
 function c33700018.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(c33700018.filter,nil,tp)
-	if chk==0 then return g:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>=g:GetCount()-1 end
+	if chk==0 then return g:GetCount()>0 and Duel.GetMZoneCount(tp)>=g:GetCount()-1 end
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,g:GetCount(),0,0)
 end
 function c33700018.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<g:GetCount() then return end
+	if Duel.GetMZoneCount(tp)<g:GetCount() then return end
 	Duel.GetControl(g,tp)
 end

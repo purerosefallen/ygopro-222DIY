@@ -49,7 +49,7 @@ function c10173014.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+		return Duel.GetMZoneCount(tp)>-1
 		and Duel.IsExistingMatchingCard(c10173014.cfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) 
 	end
 	e:SetLabel(0)
@@ -62,7 +62,7 @@ end
 function c10173014.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(c10173014.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp,e:GetLabel())
-	if not c:IsRelateToEffect(e) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or g:GetCount()<2 then return end
+	if not c:IsRelateToEffect(e) or Duel.GetMZoneCount(tp)<=0 or g:GetCount()<2 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:Select(tp,2,2,nil)
 	if sg:IsExists(Card.IsHasEffect,1,nil,EFFECT_NECRO_VALLEY) then return end

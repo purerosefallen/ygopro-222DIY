@@ -70,7 +70,7 @@ function c13255223.spfilter(c,e,tp)
 end
 function c13255223.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sg=eg:Filter(c13255223.spfilter,nil,e,tp)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>=sg:GetCount()
+	if chk==0 then return Duel.GetMZoneCount(tp)>=sg:GetCount()
 		and sg:GetCount()>0 end
 	Duel.SetTargetCard(sg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_REMOVED)
@@ -78,7 +78,7 @@ end
 function c13255223.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(c13255223.spfilter,nil,e,tp)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<sg:GetCount() then return end
+	if Duel.GetMZoneCount(tp)<sg:GetCount() then return end
 	if sg:GetCount()>0 then
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end

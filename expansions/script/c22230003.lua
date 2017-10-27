@@ -58,7 +58,7 @@ function c22230003.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 		if e:GetLabel()==1 and Duel.IsExistingMatchingCard(c22230003.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(22230003,1)) then
+		and Duel.GetMZoneCount(tp)>0 and Duel.SelectYesNo(tp,aux.Stringid(22230003,1)) then
 			local g=Duel.SelectMatchingCard(tp,c22230003.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 			Duel.ConfirmCards(1-tp,g)
@@ -77,7 +77,7 @@ function c22230003.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return g and g:IsExists(c22230003.cfilter,1,nil) and Duel.IsChainNegatable(ev)
 end
 function c22230003.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) end
+	if chk==0 then return Duel.GetMZoneCount(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end

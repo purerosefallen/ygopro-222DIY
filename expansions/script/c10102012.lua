@@ -46,7 +46,7 @@ function c10102012.spfilter(c,e,tp,lv)
 end
 function c10102012.syntg(e,tp,eg,ep,ev,re,r,rp,chk,chkc,rc)
 	if chkc then return false end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+	if chk==0 then return Duel.GetMZoneCount(tp)>-1
 		and Duel.IsExistingTarget(c10102012.filter1,tp,LOCATION_GRAVE,0,1,nil,e,tp,rc) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g1=Duel.SelectTarget(tp,c10102012.filter1,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,nil)
@@ -61,7 +61,7 @@ function c10102012.synop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if g:GetCount()~=2 then return end
 	local lv=g:GetFirst():GetLevel()+g:GetNext():GetLevel()
-	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=2 or Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
+	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=2 or Duel.GetMZoneCount(tp)<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=Duel.SelectMatchingCard(tp,c10102012.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,lv)
 	if sg:GetCount()>0 and Duel.SpecialSummon(sg,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP)~=0 then
@@ -77,14 +77,14 @@ function c10102012.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function c10102012.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c10102012.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 and Duel.GetMZoneCount(tp)<=0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLocation(LOCATION_HAND) then
 		Duel.SendtoGrave(c,REASON_RULE)
 	end

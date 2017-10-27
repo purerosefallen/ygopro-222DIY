@@ -65,7 +65,7 @@ function c33700147.op(e,tp,eg,ep,ev,re,r,rp)
 elseif tc:GetRank()>0 then
 	lv=tc:GetRank()
 end
-	if not tc:IsRelateToEffect(e) or tc:IsFacedown() or not e:GetHandler():IsRelateToEffect(e) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,33700169,0,0x4011,tc:GetAttack(),tc:GetDefense(),
+	if not tc:IsRelateToEffect(e) or tc:IsFacedown() or not e:GetHandler():IsRelateToEffect(e) or Duel.GetMZoneCount(tp)<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,33700169,0,0x4011,tc:GetAttack(),tc:GetDefense(),
 			lv,tc:GetRace(),tc:GetAttribute()) then return end
    local token=Duel.CreateToken(tp,33700169)
 	local e1=Effect.CreateEffect(e:GetHandler())

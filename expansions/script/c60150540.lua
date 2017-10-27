@@ -40,7 +40,7 @@ end
 function c60150540.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c60150540.spfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil)
 end
 function c60150540.spop(e,tp,eg,ep,ev,re,r,rp,c)
@@ -85,7 +85,7 @@ function c60150540.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c60150540.spop2(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<0 then return end
+	if Duel.GetMZoneCount(tp)<0 then return end
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsFacedown() or not (tc:IsRelateToEffect(e) and c:IsRelateToEffect(e)) 

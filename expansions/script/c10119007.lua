@@ -38,7 +38,7 @@ function c10119007.filter(c,e,tp)
 end
 function c10119007.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c10119007.filter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingTarget(c10119007.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c10119007.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
@@ -46,7 +46,7 @@ function c10119007.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c10119007.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 and c:IsRelateToEffect(e) and not c:IsImmuneToEffect(e) and tc:IsType(TYPE_XYZ) and Duel.SelectYesNo(tp,aux.Stringid(10119007,0)) then
 	   c:CancelToGrave()

@@ -86,7 +86,7 @@ function c11200011.filter2(c,e,tp,m,f,chkf)
 end
 function c11200011.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
+		local chkf=Duel.GetMZoneCount(tp)>0 and PLAYER_NONE or tp
 		local mg=Duel.GetMatchingGroup(c11200011.filter1,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,e)
 		local res=Duel.IsExistingMatchingCard(c11200011.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg,nil,chkf)
 		if not res then

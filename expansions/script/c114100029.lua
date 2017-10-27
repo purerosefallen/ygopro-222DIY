@@ -52,7 +52,7 @@ function c114100029.xyzfilter(c,slf)
 end
 function c114100029.xyzcon(e,c,og)
 	if c==nil then return true end
-	local ft=Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(c:GetControler())
 	local abcount=0
 	if ft>0 and Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE,nil)>0 and Duel.IsExistingMatchingCard(c114100029.xyzfilter,c:GetControler(),LOCATION_GRAVE,0,1,nil,c) then abcount=abcount+2 end
 	if ft>=-1 then if Duel.CheckXyzMaterial(c,nil,3,2,2,og) then abcount=abcount+1 end end

@@ -34,7 +34,7 @@ function c16063004.spfilter(c,e,tp)
 end
 function c16063004.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return c16063004.desfilter(chkc) and chkc:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+	if chk==0 then return Duel.GetMZoneCount(tp)>-1
 		and Duel.IsExistingTarget(c16063004.desfilter,tp,LOCATION_ONFIELD,0,1,nil)
 		and Duel.IsExistingMatchingCard(c16063004.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

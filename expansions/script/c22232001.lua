@@ -41,7 +41,7 @@ function c22232001.posop(e,tp,eg,ep,ev,re,r,rp)
 	local code=tc:GetCode()
 	if tc:IsRelateToEffect(e) and tc:IsFacedown() then
 		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
-		if c22232001.IsDarkest(tc) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c22232001.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,code) then
+		if c22232001.IsDarkest(tc) and Duel.GetMZoneCount(tp)>0 and Duel.IsExistingMatchingCard(c22232001.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,code) then
 			local sg=Duel.SelectMatchingCard(tp,c22232001.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,code)
 			if sg:GetCount()>0 then
 				Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)

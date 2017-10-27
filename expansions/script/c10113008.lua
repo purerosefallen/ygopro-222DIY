@@ -13,7 +13,7 @@ function c10113008.initial_effect(c)
 	c:RegisterEffect(e1)	
 end
 function c10113008.costfilter(c,tp)
-	local ft=Duel.GetLocationCount(c:GetOwner(),LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(c:GetOwner())
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and (c:GetRank()>0 or c:GetLevel()>0) and c:IsAbleToDeckOrExtraAsCost() and Duel.IsPlayerCanSpecialSummonMonster(tp,10113009,0,0x4011,0,0,1,RACE_MACHINE,ATTRIBUTE_EARTH,POS_FACEUP_DEFENSE,c:GetOwner()) and ((c:GetControler()==c:GetOwner() and ft>-1) or (c:GetControler()~=c:GetOwner() and ft>0))
 end
 function c10113008.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -35,7 +35,7 @@ function c10113008.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c10113008.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	local ft,ft2=Duel.GetLocationCount(tc:GetOwner(),LOCATION_MZONE),0
+	local ft,ft2=Duel.GetMZoneCount(tc:GetOwner()),0
 	if ft<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,10113009,0,0x4011,0,0,1,RACE_MACHINE,ATTRIBUTE_EARTH,POS_FACEUP_DEFENSE,tc:GetOwner()) then return end
 	local rc=0
 	if tc:IsType(TYPE_XYZ) then rc=tc:GetOriginalRank()

@@ -82,12 +82,12 @@ function cm.fffilter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,true) and not c:IsCode(m)
 end
 function cm.spptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(cm.fffilter,tp,LOCATION_EXTRA,LOCATION_EXTRA,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function cm.sppop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	local g=Duel.GetMatchingGroup(cm.fffilter,tp,LOCATION_EXTRA,LOCATION_EXTRA,nil,e,tp)
 	if g:GetCount()>0 then
 		for i=0,9 do

@@ -100,7 +100,7 @@ end
 function c10163009.spcon(e,c)
 	if c==nil then return true end 
 	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if ft<-4 then return false end
 	local g1=Duel.GetMatchingGroup(c10163009.sprfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
 	local g2=g1:Filter(c10163009.sprfilter2,nil,tp,g1)
@@ -110,7 +110,7 @@ function c10163009.spcon(e,c)
 	end
 end
 function c10163009.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	local g1=Duel.GetMatchingGroup(c10163009.sprfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
 	local g2=g1:Filter(c10163009.sprfilter2,nil,tp,g1)
 	local g3=g1:Filter(Card.IsRace,nil,RACE_WYRM)

@@ -36,7 +36,7 @@ function cm.filter2(c,e,tp)
 end
 function cm.op(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(cm.filter2,nil,e,tp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<g:GetCount() then return end
+	if Duel.GetMZoneCount(tp)<g:GetCount() then return end
 	local tc=g:GetFirst()
 	while tc do
 		if Duel.GetControl(tc,tp) then

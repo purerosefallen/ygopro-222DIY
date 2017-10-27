@@ -46,7 +46,7 @@ function c60150513.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterFlagEffect(tp,EFFECT_SPSUM_EFFECT_ACTIVATED,RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
 end
 function c60150513.thop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	local c=e:GetHandler()
 	if not Duel.IsPlayerCanSpecialSummonMonster(tp,60150512,0,0x4011,-2,-2,10,RACE_FIEND,ATTRIBUTE_LIGHT) then return end
 	local token=Duel.CreateToken(tp,60150512)

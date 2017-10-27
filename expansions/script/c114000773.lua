@@ -67,7 +67,7 @@ end
 --summon without tribute
 function c114000773.ntcon(e,c)
 	if c==nil then return true end
-	return c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return c:GetLevel()>4 and Duel.GetMZoneCount(c:GetControler())>0
 		and Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
 		and Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)>0
 end

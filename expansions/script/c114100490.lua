@@ -95,7 +95,7 @@ function c114100490.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	--check space
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	local ct=-ft
 	if ct<0 then ct=-1 end
 	--create remove group
@@ -105,7 +105,7 @@ function c114100490.spcon(e,c)
 end
 function c114100490.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	--check space
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	local ct=-ft
 	if ct<0 then ct=-1 end
 	--

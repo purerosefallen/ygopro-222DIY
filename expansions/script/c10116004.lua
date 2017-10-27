@@ -56,7 +56,7 @@ function c10116004.activate(e,tp,eg,ep,ev,re,r,rp)
 		  Duel.ConfirmCards(1-tp,g)
 	   end
 	else
-	   if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	   if Duel.GetMZoneCount(tp)<=0 then return end
 	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	   g=Duel.SelectMatchingCard(tp,c10116004.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	   if g:GetCount()>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.SelectYesNo(tp,aux.Stringid(10116004,3)) then

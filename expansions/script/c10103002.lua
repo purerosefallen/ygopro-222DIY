@@ -45,7 +45,7 @@ function c10103002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if e:GetLabel()==1 then loc=LOCATION_HAND+LOCATION_GRAVE 
 	else loc=LOCATION_DECK 
 	end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c10103002.spfilter,tp,loc,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,loc)
 end
@@ -54,7 +54,7 @@ function c10103002.spop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then loc=LOCATION_HAND+LOCATION_GRAVE 
 	else loc=LOCATION_DECK 
 	end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,c10103002.spfilter,tp,loc,0,1,1,nil,e,tp):GetFirst()
 	if tc and not tc:IsHasEffect(EFFECT_NECRO_VALLEY) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then

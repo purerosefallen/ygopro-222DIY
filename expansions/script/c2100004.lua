@@ -23,7 +23,7 @@ function c2100004.filter(c)
 	return c:IsSetCard(0x3219) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 end
 function c2100004.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingMatchingCard(c2100004.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) and Duel.IsExistingMatchingCard(c2100004.filter1,tp,LOCATION_DECK,0,1,nil)end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g1=Duel.SelectMatchingCard(tp,c2100004.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)

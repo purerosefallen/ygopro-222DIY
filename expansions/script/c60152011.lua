@@ -53,7 +53,7 @@ function c60152011.cfilter(c)
 end
 function c60152011.spcon(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-3
+	return Duel.GetMZoneCount(c:GetControler())>-3
 		and Duel.CheckReleaseGroup(c:GetControler(),c60152011.cfilter,3,nil)
 end
 function c60152011.spop(e,tp,eg,ep,ev,re,r,rp,c)
@@ -83,7 +83,7 @@ function c60152011.atkup(e,c)
 	return Duel.GetMatchingGroupCount(c60152011.atkfilter,0,LOCATION_MZONE,0,nil)*400
 end
 function c60152011.spop2(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
+	if Duel.GetMZoneCount(tp)<1 then return end
 	if Duel.IsPlayerCanSpecialSummonMonster(tp,60152098,0,0x4011,0,0,12,RACE_PYRO,ATTRIBUTE_FIRE) then
 		local ct=e:GetLabel()
 		local atk=Duel.GetMatchingGroupCount(c60152011.filter,e:GetHandler():GetControler(),LOCATION_GRAVE,0,nil)*400

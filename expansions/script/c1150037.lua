@@ -33,7 +33,7 @@ end
 function c1150037.con1(e,c,og)
 	local tp=e:GetHandlerPlayer()
 	local c=e:GetHandler()
-	return Duel.IsExistingMatchingCard(c1150037.cfilter1,tp,LOCATION_HAND,0,1,nil,e,tp) and c:IsFaceup() and not c:IsDisabled() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return Duel.IsExistingMatchingCard(c1150037.cfilter1,tp,LOCATION_HAND,0,1,nil,e,tp) and c:IsFaceup() and not c:IsDisabled() and Duel.GetMZoneCount(tp)>0
 end
 --
 function c1150037.op1(e,tp,eg,ep,ev,re,r,rp,c,sg,og)  
@@ -52,7 +52,7 @@ function c1150037.op1(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
 end
 --
 function c1150037.con2(e,c)
-	return e:GetHandler():GetFlagEffect(1150037)~=0 and e:GetHandler():IsType(TYPE_SPELL) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return e:GetHandler():GetFlagEffect(1150037)~=0 and e:GetHandler():IsType(TYPE_SPELL) and Duel.GetMZoneCount(tp)>0
 end
 --
 function c1150037.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -64,14 +64,14 @@ function c1150037.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()==0 then return false end
 		e:SetLabel(0)
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		return Duel.GetMZoneCount(tp)>0
 			and Duel.IsPlayerCanSpecialSummonMonster(tp,1150037,0,0x11,0,0,3,RACE_AQUA,ATTRIBUTE_WATER) end
 	e:SetLabel(0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 --
 function c1150037.op2(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if Duel.GetMZoneCount(tp)>0 then
 		local c=e:GetHandler()
 		if c:IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,1150037,0,0x11,0,0,3,RACE_AQUA,ATTRIBUTE_WATER) then
 			c:AddMonsterAttribute(TYPE_NORMAL)

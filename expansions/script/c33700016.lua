@@ -53,7 +53,7 @@ function c33700016.refilter2(c,e,tp,cg)
 end
 function c33700016.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local cg=Duel.GetMatchingGroup(c33700016.refilter,tp,LOCATION_GRAVE,0,nil)
-	if chk==0 then return  Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c33700016.refilter2,tp,LOCATION_HAND,0,1,nil,e,tp,cg:GetCount()) end
+	if chk==0 then return  Duel.GetMZoneCount(tp)>0 and Duel.IsExistingMatchingCard(c33700016.refilter2,tp,LOCATION_HAND,0,1,nil,e,tp,cg:GetCount()) end
 	 Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_GRAVE) 
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
@@ -82,7 +82,7 @@ function c33700016.spop(e,tp,eg,ep,ev,re,r,rp)
 		local rg2=cg:Select(tp,lv,lv,nil)
 		rg1:Merge(rg2)
 	end
-	if Duel.Remove(rg1,POS_FACEUP,REASON_EFFECT)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if Duel.Remove(rg1,POS_FACEUP,REASON_EFFECT)>0 and Duel.GetMZoneCount(tp)>0 then
 	Duel.BreakEffect()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c33700016.refilter2,tp,LOCATION_HAND,0,1,1,nil,e,tp,lv)

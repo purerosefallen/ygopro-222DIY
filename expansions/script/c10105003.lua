@@ -46,5 +46,5 @@ end
 function c10105003.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetCustomActivityCount(10105003,tp,ACTIVITY_SUMMON)~=0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	return Duel.GetCustomActivityCount(10105003,tp,ACTIVITY_SUMMON)~=0 and Duel.GetMZoneCount(tp)>0 
 end

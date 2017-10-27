@@ -31,12 +31,12 @@ end
 function c114100309.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local opt=-1
 	local check=0
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and ( Duel.IsExistingMatchingCard(c114100309.filter,tp,LOCATION_DECK,0,1,nil,e,tp)
 			or Duel.IsExistingMatchingCard(c114100309.filter2,tp,LOCATION_HAND,0,1,nil,e,tp) ) end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c114100309.filter,tp,LOCATION_DECK,0,1,nil,e,tp) then check=check+1 end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c114100309.filter2,tp,LOCATION_HAND,0,1,nil,e,tp) then check=check+2 end
-	if check==3 and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 then check=check+3 end
+	if Duel.GetMZoneCount(tp)>0 and Duel.IsExistingMatchingCard(c114100309.filter,tp,LOCATION_DECK,0,1,nil,e,tp) then check=check+1 end
+	if Duel.GetMZoneCount(tp)>0 and Duel.IsExistingMatchingCard(c114100309.filter2,tp,LOCATION_HAND,0,1,nil,e,tp) then check=check+2 end
+	if check==3 and Duel.GetMZoneCount(tp)>1 then check=check+3 end
 	if ( check==1 or check==2 ) then opt=check-1 end
 	if check==3 then opt=Duel.SelectOption(tp,aux.Stringid(114100309,0),aux.Stringid(114100309,1)) end
 	if check==6 then opt=Duel.SelectOption(tp,aux.Stringid(114100309,0),aux.Stringid(114100309,1),aux.Stringid(114100309,2)) end
@@ -45,7 +45,7 @@ function c114100309.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(opt)
 end
 function c114100309.spop(e,tp,eg,ep,ev,re,r,rp)
-	local slot=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local slot=Duel.GetMZoneCount(tp)
 	if slot<=0 then return end
 	local opt=e:GetLabel()
 	if opt==0 or opt==2 then

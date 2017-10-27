@@ -49,7 +49,7 @@ function c1000601.filter1(c)
 end
 function c1000601.spcon(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
+	return Duel.GetMZoneCount(c:GetControler())>0 and
 		Duel.IsExistingMatchingCard(c1000601.filter1,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function c1000601.filter9(c)
@@ -65,7 +65,7 @@ function c1000601.filter(c,e,tp)
 end
 function c1000601.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c1000601.filter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingTarget(c1000601.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c1000601.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
@@ -112,12 +112,12 @@ function c1000601.filter2(c,e,tp)
 	return c:IsSetCard(0xc204) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsType(TYPE_PENDULUM)
 end
 function c1000601.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c1000601.filter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,2,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
 function c1000601.spop1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
+	if Duel.GetMZoneCount(tp)<2 then return end
 	local g=Duel.GetMatchingGroup(c1000601.filter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp)
 	if g:GetCount()>=2 then
 		local fid=e:GetHandler():GetFieldID()

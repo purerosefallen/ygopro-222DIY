@@ -38,7 +38,7 @@ function c10163001.damtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0x13)
 end
 function c10163001.damop2(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c10163001.spfilter,tp,0x13,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
@@ -62,7 +62,7 @@ function c10163001.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c10163001.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
-	   if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
+	   if Duel.GetMZoneCount(tp)<=0 then return false end
 	   local t={}
 	   local p=1
 	   for i=4,9 do 
@@ -89,7 +89,7 @@ function c10163001.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 
 function c10163001.damop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+	if Duel.GetMZoneCount(tp)<=0
 	or not Duel.IsPlayerCanSpecialSummonMonster(tp,10163007,0x9333,0x4011,0,3000,e:GetLabel(),RACE_DRAGON,ATTRIBUTE_DARK) then return end
 	local token=Duel.CreateToken(tp,10163007)
 	if Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)~=0 then
@@ -109,14 +109,14 @@ end
 function c10163001.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if ft>0 then return Duel.CheckReleaseGroupEx(tp,c10163001.rfilter,2,c,tp,0,c)
 	else return Duel.CheckReleaseGroup(tp,c10163001.rfilter2,1,c,tp,1,c)
 	end
 	return false
 end
 function c10163001.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if ft>0 then
 	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	   local g1=Duel.SelectReleaseGroupEx(tp,c10163001.rfilter,2,2,c,tp,0,c)

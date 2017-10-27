@@ -39,12 +39,12 @@ function c114001109.cfilter(c)
 end
 function c114001109.ntcon(e,c)
 	if c==nil then return true end
-	return c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return c:GetLevel()>4 and Duel.GetMZoneCount(c:GetControler())>0
 		and Duel.IsExistingMatchingCard(c114001109.cfilter,c:GetControler(),LOCATION_GRAVE+LOCATION_REMOVED,0,2,nil)
 end
 function c114001109.spcon(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return Duel.GetMZoneCount(c:GetControler())>0
 		and	Duel.IsExistingMatchingCard(c114001109.cfilter,c:GetControler(),LOCATION_GRAVE+LOCATION_REMOVED,0,2,nil)
 end
 

@@ -31,8 +31,8 @@ function c10102009.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b0=Duel.IsExistingMatchingCard(c10102009.cfilter,tp,LOCATION_GRAVE,0,5,nil)
 	local b1=Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
 	local b2=Duel.IsExistingMatchingCard(Card.IsType,tp,0,LOCATION_ONFIELD,1,nil,TYPE_SPELL+TYPE_TRAP)
-	local b3=c10102009.cfilter3(e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-	local b4=Duel.IsExistingMatchingCard(c10102009.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,TYPE_SYNCHRO,SUMMON_TYPE_SYNCHRO) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	local b3=c10102009.cfilter3(e,tp) and Duel.GetMZoneCount(tp)>1
+	local b4=Duel.IsExistingMatchingCard(c10102009.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,TYPE_SYNCHRO,SUMMON_TYPE_SYNCHRO) and Duel.GetMZoneCount(tp)>0
 	if chk==0 then 
 		if e:GetLabel()==1 then
 		   e:SetLabel(0)
@@ -105,7 +105,7 @@ function c10102009.activate(e,tp,eg,ep,ev,re,r,rp)
 		dg=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
 		Duel.Destroy(dg,REASON_EFFECT)
 	elseif sel==3 then
-		if not c10102009.cfilter3(e,tp) or Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
+		if not c10102009.cfilter3(e,tp) or Duel.GetMZoneCount(tp)<2 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg1=Duel.SelectMatchingCard(tp,c10102009.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,TYPE_MONSTER,0)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -115,7 +115,7 @@ function c10102009.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.SpecialSummon(sg1,0,tp,tp,false,false,POS_FACEUP)
 	else
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
+		if Duel.GetMZoneCount(tp)<1 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,c10102009.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,TYPE_SYNCHRO,SUMMON_TYPE_SYNCHRO)
 		if sg:GetCount()>0 and Duel.SpecialSummon(sg,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP)~=0 then

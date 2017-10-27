@@ -28,14 +28,14 @@ function c10113019.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c10113019.cfilter,1,nil,tp)
 end
 function c10113019.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c10113019.filter,tp,0,LOCATION_EXTRA,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(c10113019.filter,tp,0,LOCATION_EXTRA,1,nil,e,tp) and Duel.GetMZoneCount(tp)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,1-tp,LOCATION_EXTRA)
 end
 function c10113019.filter(c,e,tp)
 	return c:IsFacedown() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function c10113019.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if not e:GetHandler():IsRelateToEffect(e) or Duel.GetMZoneCount(tp)<=0 then return end
 	local g=Duel.GetMatchingGroup(c10113019.filter,tp,0,LOCATION_EXTRA,nil,e,tp)
 	if g:GetCount()>0 then
 	   local tc=g:RandomSelect(tp,1):GetFirst()

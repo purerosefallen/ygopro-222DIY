@@ -60,7 +60,7 @@ end
 --sp summon part 1
 function c114000243.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return --e:GetHandler():IsRelateToEffect(e) and 
-		Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		Duel.GetMZoneCount(tp)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
@@ -93,7 +93,7 @@ function c114000243.con(e,tp,eg,ep,ev,re,r,rp)
 end
 function c114000243.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove()
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+		and Duel.GetMZoneCount(tp)>0 end
 	local c=e:GetHandler()
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
@@ -101,7 +101,7 @@ function c114000243.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	--c:ResetFlagEffect(114000243)
 end
 function c114000243.op(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	if Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)~=0
 	and Duel.IsPlayerCanSpecialSummonMonster(tp,114000244,0x223,0x4011,2300,2300,6,RACE_SPELLCASTER,ATTRIBUTE_DARK) then
 		local token=Duel.CreateToken(tp,114000244) --0x4011=TYPE_TOKEN(4000)+TYPE_NORMAL(10)+TYPE_MONSTER(1)

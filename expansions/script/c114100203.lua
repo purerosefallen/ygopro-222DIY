@@ -47,7 +47,7 @@ function c114100203.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c114100203.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+		return Duel.GetMZoneCount(tp)>0 
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)

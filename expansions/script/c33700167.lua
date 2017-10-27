@@ -39,7 +39,7 @@ function c33700167.filter2(c,e,tp,g,rk,og)
 end
 function c33700167.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c33700167.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c33700167.filter,tp,LOCATION_MZONE,0,1,nil,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	if chk==0 then return Duel.IsExistingTarget(c33700167.filter,tp,LOCATION_MZONE,0,1,nil,tp) and Duel.GetMZoneCount(tp)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c33700167.filter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
 	 Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,g:GetFirst():GetOverlayCount()*1000)
@@ -51,7 +51,7 @@ function c33700167.activate(e,tp,eg,ep,ev,re,r,rp)
 	local mg=tc:GetOverlayGroup()
 	Duel.SendtoGrave(mg,REASON_EFFECT)
    if mg:GetCount()>0 and Duel.Recover(tp,mg:GetCount()*1000,REASON_EFFECT)>0 then
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c33700167.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	if g:GetCount()>0 and  Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 then

@@ -104,7 +104,7 @@ function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		if not tc or tc:GetFlagEffect(m)==0 or not tc:IsAbleToExtra() then return false end
 		local ft=0
 		if tc:IsControler(tp) then ft=-1 end
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=ft then return false end
+		if Duel.GetMZoneCount(tp)<=ft then return false end
 		if not Duel.IsExistingMatchingCard(cm.f2,tp,LOCATION_EXTRA,0,1,tc,e,tp,tc) then return false end
 		return tc==Duel.GetAttacker() or tc==Duel.GetAttackTarget()
 	end

@@ -97,7 +97,7 @@ function c5200001.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
 		and Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)>0
-		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+		and Duel.GetMZoneCount(c:GetControler())>0
 end
 function c5200001.splimit(e,c)
 	if not c then return false end

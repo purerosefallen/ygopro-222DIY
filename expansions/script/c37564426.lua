@@ -59,11 +59,11 @@ function cm.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local mg=Duel.GetMatchingGroup(cm.spfilter,tp,LOCATION_MZONE,0,nil)
-	return Senya.CheckGroup(mg,cm.spgcheck,nil,3,3,Duel.GetLocationCount(tp,LOCATION_MZONE))
+	return Senya.CheckGroup(mg,cm.spgcheck,nil,3,3,Duel.GetMZoneCount(tp))
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mg=Duel.GetMatchingGroup(cm.spfilter,tp,LOCATION_MZONE,0,nil)
-	local g=Senya.SelectGroup(tp,HINTMSG_RTOHAND,mg,cm.spgcheck,nil,3,3,Duel.GetLocationCount(tp,LOCATION_MZONE))
+	local g=Senya.SelectGroup(tp,HINTMSG_RTOHAND,mg,cm.spgcheck,nil,3,3,Duel.GetMZoneCount(tp))
 	c:SetMaterial(g)
 	Duel.SendtoHand(g,nil,REASON_COST+REASON_FUSION+REASON_MATERIAL)
 end

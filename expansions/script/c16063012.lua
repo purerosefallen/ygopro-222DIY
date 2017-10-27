@@ -28,7 +28,7 @@ function c16063012.cfilter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x5c5) and c:IsAbleToGraveAsCost()
 end
 function c16063012.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	if chk==0 then return Duel.GetMZoneCount(tp)>0 
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false) and 
 	Duel.IsExistingMatchingCard(c16063012.cfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

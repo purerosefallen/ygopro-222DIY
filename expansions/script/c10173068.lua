@@ -57,7 +57,7 @@ function c10173068.cfilter(c,code)
 end
 function c10173068.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:GetFlagEffect(10173068)>0 and Duel.GetFlagEffect(tp,10173068)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0 and c:GetFlagEffect(10173068)>0 and Duel.GetFlagEffect(tp,10173068)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
@@ -80,7 +80,7 @@ function c10173068.aop(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(ac)
 	e:GetHandler():RegisterFlagEffect(10173068,RESET_EVENT+0x1fe0000,0,0)
 	local g=Duel.GetMatchingGroup(c10173068.spfilter,tp,LOCATION_REMOVED,0,nil,e,tp,ac)
-	if g:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(10173068,2)) then
+	if g:GetCount()>0 and Duel.GetMZoneCount(tp)>0 and Duel.SelectYesNo(tp,aux.Stringid(10173068,2)) then
 	   Duel.BreakEffect()
 	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	   local tc=g:Select(tp,1,1,nil):GetFirst()

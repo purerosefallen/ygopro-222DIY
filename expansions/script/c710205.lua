@@ -28,7 +28,7 @@ function c710205.filter(c)
 end
 function c710205.thfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_WIND) and (c:IsAbleToHand()
-		or Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
+		or Duel.GetMZoneCount(tp)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function c710205.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c710205.thfilter(chkc,e,tp) end
@@ -47,7 +47,7 @@ function c710205.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc2=g2:GetFirst()
 	if tc1 and tc1:IsRelateToEffect(e) then
 		if Duel.SendtoDeck(tc1,nil,0,REASON_EFFECT)~=0 and tc2:IsRelateToEffect(e) then
-			local v1,v2=tc2:IsAbleToHand(),Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc2:IsCanBeSpecialSummoned(e,0,tp,false,false)
+			local v1,v2=tc2:IsAbleToHand(),Duel.GetMZoneCount(tp)>0 and tc2:IsCanBeSpecialSummoned(e,0,tp,false,false)
 			local sel=0
 			if v1 and v2 then
 				sel=Duel.SelectOption(tp,aux.Stringid(710205,0),aux.Stringid(710205,1))+1

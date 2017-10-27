@@ -43,7 +43,7 @@ function c10103004.filter(c,e,tp)
 end
 function c10103004.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and c10103004.filter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and eg:IsExists(c10103004.filter,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=eg:FilterSelect(tp,c10103004.filter,1,1,nil,e,tp)
@@ -76,7 +76,7 @@ function c10103004.thop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
 	   Duel.ConfirmCards(1-tp,g)
 	   local sg=Duel.GetMatchingGroup(c10103004.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
-	   if sg:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(10103004,2)) then
+	   if sg:GetCount()>0 and Duel.GetMZoneCount(tp)>0 and Duel.SelectYesNo(tp,aux.Stringid(10103004,2)) then
 		  Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON) 
 		  local sg2=sg:Select(tp,1,1,nil)
 		  Duel.SpecialSummon(sg2,0,tp,tp,false,false,POS_FACEUP)

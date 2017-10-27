@@ -71,7 +71,7 @@ function cm.op(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetOperation(function(e,tp)
 		local c=e:GetHandler()
 		local p=e:GetOwnerPlayer()
-		if Duel.GetLocationCount(p,LOCATION_MZONE)>0 and c:IsType(TYPE_MONSTER) then
+		if Duel.GetMZoneCount(p)>0 and c:IsType(TYPE_MONSTER) then
 			Duel.MoveToField(c,p,p,LOCATION_MZONE,e:GetLabel(),true)
 		else
 			Duel.SendtoGrave(c,REASON_RULE)

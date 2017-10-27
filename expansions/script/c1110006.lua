@@ -44,7 +44,7 @@ function c1110006.tfilter1(c,e,tp)
 	return c:IsCode(1110002) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c1110006.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c1110006.tfilter1,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_DECK)
 end
@@ -53,7 +53,7 @@ function c1110006.ofilter1(c)
 	return c:IsType(TYPE_CONTINUOUS) and c1110006.IsLd(c)
 end
 function c1110006.op1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c1110006.tfilter1,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then

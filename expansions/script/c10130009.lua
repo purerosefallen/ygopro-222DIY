@@ -43,7 +43,7 @@ function c10130009.sscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ChangePosition(e:GetHandler(),POS_FACEDOWN_DEFENSE)
 end
 function c10130009.ssfilter(c,e,tp)
-	return c:IsSetCard(0xa336) and ((c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) or c:IsAbleToHand())
+	return c:IsSetCard(0xa336) and ((c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) and Duel.GetMZoneCount(tp)>0) or c:IsAbleToHand())
 end
 function c10130009.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c10130009.ssfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end

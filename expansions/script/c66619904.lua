@@ -41,7 +41,7 @@ function c66619904.cfilter(c)
 	return c:IsFaceup() and c:IsCode(66619916) and c:IsAbleToGrave()
 end
 function c66619904.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_DECK+LOCATION_GRAVE) and chkc:IsControler(tp) and c66619904.filter1(chkc) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	if chkc then return chkc:IsLocation(LOCATION_DECK+LOCATION_GRAVE) and chkc:IsControler(tp) and c66619904.filter1(chkc) and Duel.GetMZoneCount(tp)>0 end
 	local b1=Duel.IsExistingTarget(c66619904.filter1,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil)
 	local b2=Duel.IsExistingTarget(c66619904.filter2,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.IsExistingTarget(c66619904.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 	if chk==0 then return b1 or b2 and Duel.IsExistingTarget(c66619904.filter2,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
@@ -70,7 +70,7 @@ function c66619904.thop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-tp,g)
 		end
 	else
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+		if Duel.GetMZoneCount(tp)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectTarget(tp,c66619904.filter2,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		local tc=Duel.GetFirstTarget()

@@ -46,7 +46,7 @@ function c1191001.op1(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 	local dc=Duel.GetOperatedGroup()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	local sg=dc:Filter(c1191001.ofilter1,nil)
 	if sg:GetCount()==2 then
 		local g3=Duel.GetMatchingGroup(c1191001.filter1,tp,LOCATION_HAND+LOCATION_GRAVE,0,nil)

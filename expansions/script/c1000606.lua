@@ -49,7 +49,7 @@ function c1000606.spfilter(c,e,tp)
 	return c:IsSetCard(0xc204) and c:IsType(TYPE_FUSION+TYPE_SYNCHRO) and not c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function c1000606.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c1000606.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 	Duel.SetChainLimit(c1000606.chlimit)
@@ -58,7 +58,7 @@ function c1000606.chlimit(e,ep,tp)
 	return tp==ep
 end
 function c1000606.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c1000606.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
@@ -84,13 +84,13 @@ function c1000606.syncost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c1000606.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	if chk==0 then return Duel.GetMZoneCount(tp)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c1000606.op(e,tp,eg,ep,ev,re,r,rp)
 	local lv=e:GetLabel()
 	local c=e:GetHandler()
-	if  Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if  Duel.GetMZoneCount(tp)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,c1000606.exfilter,tp,LOCATION_EXTRA,0,1,1,nil,lv+3,e,tp)
 		local sc=sg:GetFirst()
@@ -104,6 +104,6 @@ function c1000606.filter1(c)
 end
 function c1000606.spcon(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
+	return Duel.GetMZoneCount(c:GetControler())>0 and
 		Duel.IsExistingMatchingCard(c1000606.filter1,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end

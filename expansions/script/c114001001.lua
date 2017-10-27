@@ -35,7 +35,7 @@ function c114001001.spcon(e,c)
 	local g2=Duel.GetMatchingGroup(c114001001.spfilter2,c:GetControler(),LOCATION_EXTRA,0,nil)
 	local c1=g1:GetCount()
 	local c2=g2:GetCount()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c1+c2>=2
+	return Duel.GetMZoneCount(tp)>0 and c1+c2>=2
 end
 function c114001001.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g1=Duel.GetMatchingGroup(c114001001.spfilter,c:GetControler(),LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,c)

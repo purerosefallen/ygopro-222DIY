@@ -55,7 +55,7 @@ function c10173021.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c10173021.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c10173021.spfilter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_EXTRA+LOCATION_GRAVE)
 end
@@ -66,7 +66,7 @@ function c10173021.tdfilter(c)
 	return c:IsRace(RACE_DRAGON) and c:IsAbleToDeck()
 end
 function c10173021.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,c10173021.spfilter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)~=0 then
@@ -98,7 +98,7 @@ end
 function c10173021.sprcon(e,c)
 	if c==nil then return true end 
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
+	return Duel.GetMZoneCount(tp)>-2
 		and Duel.IsExistingMatchingCard(c10173021.spfilter1,tp,LOCATION_MZONE+LOCATION_HAND,0,1,nil,tp)
 end
 function c10173021.sprop(e,tp,eg,ep,ev,re,r,rp,c)

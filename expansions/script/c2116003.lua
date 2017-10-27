@@ -9,7 +9,7 @@ function c2116003.initial_effect(c)
 	e1:SetCountLimit(1,2116003)
 	e1:SetCondition(function(e,c)
 		if c==nil then return true end
-		return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
+		return Duel.GetMZoneCount(c:GetControler())>0 and
 			Duel.IsExistingMatchingCard(Card.IsCode,c:GetControler(),LOCATION_GRAVE,0,1,nil,2116000)
 	end)
 	c:RegisterEffect(e1)

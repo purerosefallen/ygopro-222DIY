@@ -47,7 +47,7 @@ function c13257322.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c13257322.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c13257322.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(1-tp)
 	if chk==0 then return ft>0 and not (ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133))
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,13257323,0,0x4011,400,400,1,RACE_MACHINE,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE,1-tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,ft,0,0)
@@ -55,7 +55,7 @@ function c13257322.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c13257322.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(1-tp)
 	if ft>0 and not (ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133))
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,13257323,0,0x4011,400,400,1,RACE_MACHINE,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE,1-tp) then
 		local g=Group.CreateGroup()

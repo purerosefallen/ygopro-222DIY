@@ -21,13 +21,13 @@ function c1150002.tfilter01(c,e,tp,tc)
 end
 function c1150002.tg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c1150002.tfilter1(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(c1150002.tfilter1,tp,LOCATION_MZONE,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	if chk==0 then return Duel.IsExistingTarget(c1150002.tfilter1,tp,LOCATION_MZONE,0,1,nil,e,tp) and Duel.GetMZoneCount(tp)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,c1150002.tfilter1,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
 end
 --
 function c1150002.op1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if Duel.GetMZoneCount(tp)>0 then
 		local tc=Duel.GetFirstTarget()
 		if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

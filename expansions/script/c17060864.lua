@@ -99,7 +99,7 @@ function c17060864.syncon(e,c,tuner,mg)
 	if c==nil then return true end
 	if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 	local tp=c:GetControler()
-	local ct=-Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ct=-Duel.GetMZoneCount(tp)
 	local minc=2
 	if minc<ct then minc=ct end
 	local g1=nil
@@ -133,7 +133,7 @@ function c17060864.syntg(e,tp,eg,ep,ev,re,r,rp,chk,c,tuner,mg)
 		g1=Duel.GetMatchingGroup(c17060864.matfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c)
 		g2=Duel.GetMatchingGroup(c17060864.matfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c)
 	end
-	local ct=-Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ct=-Duel.GetMZoneCount(tp)
 	local minc=2
 	if minc<ct then minc=ct end
 	local pe=Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_SMATERIAL)
@@ -181,7 +181,7 @@ end
 function c17060864.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c17060864.pcfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c17060864.pcfilter,tp,LOCATION_MZONE,0,1,nil)
-	and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	and Duel.GetMZoneCount(tp)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local g=Duel.SelectTarget(tp,c17060864.pcfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
@@ -260,7 +260,7 @@ function c17060864.penfilter(c,e,tp)
 end
 function c17060864.pentg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(tp) and c17060864.penfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingTarget(c17060864.penfilter,tp,LOCATION_PZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c17060864.penfilter,tp,LOCATION_PZONE,0,1,1,nil,e,tp)

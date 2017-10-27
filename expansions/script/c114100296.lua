@@ -95,7 +95,7 @@ function c114100296.filter(c)
 	return c:IsSetCard(0x221) and c:IsLevelBelow(4) and c:IsRace(RACE_SPELLCASTER) and c:IsSummonable(true,nil)
 end
 function c114100296.stg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c114100296.filter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
 end

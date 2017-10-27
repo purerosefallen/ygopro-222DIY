@@ -58,7 +58,7 @@ function c114000941.hspcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c114000941.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
@@ -87,7 +87,7 @@ end
 function c114000941.spcon0(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>=0
+	return Duel.GetMZoneCount(tp)>=0
 		and Duel.IsExistingMatchingCard(c114000941.spfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c114000941.spop0(e,tp,eg,ep,ev,re,r,rp,c)

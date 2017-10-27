@@ -62,10 +62,10 @@ function c13257205.otcon(e,c,minc)
 	local mg=Duel.GetMatchingGroup(c13257205.otfilter,tp,LOCATION_HAND,0,c)
 	local mg1=Duel.GetMatchingGroup(c13257205.otfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	return c:GetLevel()>6 and minc<=2
-		and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and mg:GetCount()>=1
+		and (Duel.GetMZoneCount(tp)>0 and mg:GetCount()>=1
 			or Duel.CheckTribute(c,1,1,mg1))
 		or c:GetLevel()>4 and c:GetLevel()<=6 and minc<=1
-			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and mg:GetCount()>=1
+			and Duel.GetMZoneCount(tp)>0 and mg:GetCount()>=1
 end
 function c13257205.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mg=Duel.GetMatchingGroup(c13257205.otfilter,tp,LOCATION_HAND,0,c)

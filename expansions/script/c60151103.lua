@@ -39,7 +39,7 @@ function c60151103.sfilter(c)
 end
 function c60151103.spcon2(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
+	return Duel.GetMZoneCount(c:GetControler())>0 and
 		Duel.IsExistingMatchingCard(c60151103.sfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function c60151103.cointg(e,tp,eg,ep,ev,re,r,rp,chk)

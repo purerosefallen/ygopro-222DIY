@@ -50,7 +50,7 @@ function c66678912.initial_effect(c)
 	end)
 	e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
 		local g=eg:Filter(c66678912.filter2,nil,e,tp)
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<g:GetCount() then return end
+		if Duel.GetMZoneCount(tp)<g:GetCount() then return end
 		local tc=g:GetFirst()
 		while tc do
 			if Duel.GetControl(tc,tp,PHASE_END,1) then

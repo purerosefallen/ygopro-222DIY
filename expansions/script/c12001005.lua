@@ -32,7 +32,7 @@ function c12001005.filter1(c,e,tp)
 	return c:IsCode(12001000) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c12001005.target1(e,tp,eg,ep,ev,re,r,rp,chk)
-	 if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	 if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c12001005.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end

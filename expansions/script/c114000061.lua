@@ -29,7 +29,7 @@ end
 function c114000061.ntcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c114000061.conremfilter,tp,LOCATION_REMOVED,0,1,nil)
 		and ( Duel.IsExistingMatchingCard(c114000061.con1filter,tp,LOCATION_MZONE,0,1,nil)
 		or Duel.IsExistingMatchingCard(c114000061.con2filter,tp,LOCATION_GRAVE,0,1,nil) )

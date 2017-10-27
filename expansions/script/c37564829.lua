@@ -93,12 +93,12 @@ end,
 }
 function cm.spcon(e,c)
 	if c==nil then return true end
-	local ft=Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(c:GetControler())
 	local ct=math.max(1,-ft)
 	return Duel.CheckReleaseGroup(c:GetControler(),Senya.check_set_3L,ct,nil)
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft=Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(c:GetControler())
 	local ct=math.max(1,-ft)
 	local g=Duel.SelectReleaseGroup(c:GetControler(),Senya.check_set_3L,ct,63,nil)
 	c:SetMaterial(g)

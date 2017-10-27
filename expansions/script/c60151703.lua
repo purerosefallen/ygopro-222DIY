@@ -28,13 +28,13 @@ function c60151703.initial_effect(c)
 end
 function c60151703.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) 
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+		and Duel.GetMZoneCount(tp)>0 
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,60151783,0,0x4011,-2,-2,4,RACE_SPELLCASTER,ATTRIBUTE_WIND) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c60151703.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+	if Duel.GetMZoneCount(tp)<=0
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,60151783,0,0x4011,-2,-2,4,RACE_SPELLCASTER,ATTRIBUTE_WIND) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
@@ -72,7 +72,7 @@ function c60151703.filter2(c,ft)
 	end
 end
 function c60151703.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if chk==0 then return Duel.IsExistingMatchingCard(c60151703.filter2,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,ft)
 		and Duel.IsExistingTarget(c60151703.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -83,7 +83,7 @@ function c60151703.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c60151703.operation2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then
+	if Duel.GetMZoneCount(tp)==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g=Duel.SelectMatchingCard(tp,c60151703.filter2,tp,LOCATION_MZONE,0,1,1,nil,ft)
 		if g:GetCount()>0 then

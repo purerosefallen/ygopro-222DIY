@@ -132,7 +132,7 @@ function c60150809.xyzcon(e,c,og)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local mg=Duel.GetMatchingGroup(c60150809.mfilter,tp,LOCATION_MZONE,0,nil)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+	return Duel.GetMZoneCount(tp)>-1
 		and mg:IsExists(c60150809.xyzfilter1,1,nil,mg)
 end
 function c60150809.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og)

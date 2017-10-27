@@ -30,7 +30,7 @@ function c33700140.spfilter(c,e,tp)
 end
 function c33700140.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c33700140.spfilter(chkc,e,tp) and chkc:IsControler(1-tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingTarget(c33700140.spfilter,tp,0,LOCATION_GRAVE,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c33700140.spfilter,tp,0,LOCATION_GRAVE,1,1,nil,e,tp)

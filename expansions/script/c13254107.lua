@@ -102,11 +102,11 @@ function c13254107.spfilter(c,e,tp)
 end
 function c13254107.spcon(e,c,sg,og)
 	local tp=e:GetHandlerPlayer()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c13254107.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
 end
 function c13254107.spop(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c13254107.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	sg:Merge(g)

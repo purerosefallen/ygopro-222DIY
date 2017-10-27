@@ -35,7 +35,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function cm.spfilter1(c,e,tp)
-	return c:IsSetCard(0x360) and c:IsType(TYPE_MONSTER) and (c:IsAbleToHand() or (c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0))
+	return c:IsSetCard(0x360) and c:IsType(TYPE_MONSTER) and (c:IsAbleToHand() or (c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetMZoneCount(tp)>0))
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -64,7 +64,7 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 		local tc=tg:GetFirst()
 		Duel.Hint(HINT_CARD,0,tc:GetOriginalCode())
 		local b1=tc:IsAbleToHand()
-		local b2=tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		local b2=tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetMZoneCount(tp)>0
 		local op
 		if b1 and b2 then
 			op=Duel.SelectOption(tp,m*16,m*16+1)

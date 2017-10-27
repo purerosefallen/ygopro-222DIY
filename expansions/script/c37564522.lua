@@ -47,7 +47,7 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 		if g:GetCount()>0 then
 			Duel.SSet(tp,g:GetFirst())
 			Duel.ConfirmCards(1-tp,g)
-			--[[if tc:GetOriginalCode()==37564765 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) then
+			--[[if tc:GetOriginalCode()==37564765 and Duel.GetMZoneCount(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) then
 				Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 			end]]
 		end

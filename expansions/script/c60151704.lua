@@ -38,7 +38,7 @@ function c60151704.operation(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.HintSelection(g)
 		local tc=g:GetFirst()
-		local mt=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
+		local mt=Duel.GetMZoneCount(1-tp)
 		local st=Duel.GetLocationCount(1-tp,LOCATION_SZONE)
 		if tc:IsType(TYPE_MONSTER) then
 			if tc:IsMSetable(true,nil) then
@@ -76,7 +76,7 @@ function c60151704.filter2(c,ft)
 	end
 end
 function c60151704.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if chk==0 then return Duel.IsExistingMatchingCard(c60151704.filter2,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,ft)
 		and Duel.IsExistingTarget(c60151704.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -87,7 +87,7 @@ function c60151704.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c60151704.operation2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then
+	if Duel.GetMZoneCount(tp)==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g=Duel.SelectMatchingCard(tp,c60151704.filter2,tp,LOCATION_MZONE,0,1,1,nil,ft)
 		if g:GetCount()>0 then

@@ -48,7 +48,7 @@ function c114000460.operation(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT+REASON_RETURN)
 		if Duel.IsExistingMatchingCard(c114000460.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+		and Duel.GetMZoneCount(tp)>0 
 		and Duel.SelectYesNo(tp,aux.Stringid(114000460,0)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

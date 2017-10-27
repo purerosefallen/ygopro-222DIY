@@ -49,7 +49,7 @@ end
 --sp summon
 function c114000085.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
-	if chk==0 then return tc:IsAbleToRemove() and Duel.GetLocationCount(tp,LOCATION_MZONE)>=0
+	if chk==0 then return tc:IsAbleToRemove() and Duel.GetMZoneCount(tp)>=0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetTargetCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tc,1,0,0)

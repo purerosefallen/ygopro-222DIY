@@ -127,11 +127,11 @@ function c17060819.neop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c17060819.penon(e,tp,eg,ep,ev,re,r,rp)
 	return not (Duel.IsExistingMatchingCard(aux.FilterEqualFunction(Card.GetSummonLocation,LOCATION_EXTRA),tp,0,LOCATION_MZONE,1,nil)
-	and Duel.GetLocationCount(tp,LOCATION_MZONE)>0)
+	and Duel.GetMZoneCount(tp)>0)
 end
 function c17060819.penon1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterEqualFunction(Card.GetSummonLocation,LOCATION_EXTRA),tp,0,LOCATION_MZONE,1,nil)
-	and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	and Duel.GetMZoneCount(tp)>0
 end
 function c17060819.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1) end

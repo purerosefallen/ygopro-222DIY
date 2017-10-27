@@ -22,7 +22,7 @@ function c10113089.spfilter(c,e,tp,lv,race,att)
 end
 function c10113089.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and (c10113089.filter1(chkc,e,tp) or c10113089.filter2(chkc,e,tp)) end
-	if chk==0 then return (Duel.IsExistingTarget(c10113089.filter1,tp,LOCATION_MZONE,0,1,nil,e,tp) or Duel.IsExistingTarget(c10113089.filter2,tp,LOCATION_MZONE,0,1,nil,e,tp)) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	if chk==0 then return (Duel.IsExistingTarget(c10113089.filter1,tp,LOCATION_MZONE,0,1,nil,e,tp) or Duel.IsExistingTarget(c10113089.filter2,tp,LOCATION_MZONE,0,1,nil,e,tp)) and Duel.GetMZoneCount(tp)>0 end
 	local op,g=0
 	Duel.Hint(HINT_SELECTMSG,tp,550)
 	if Duel.IsExistingTarget(c10113089.filter1,tp,LOCATION_MZONE,0,1,nil,e,tp) and Duel.IsExistingTarget(c10113089.filter2,tp,LOCATION_MZONE,0,1,nil,e,tp) then
@@ -44,7 +44,7 @@ function c10113089.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c10113089.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c,tc,op,g=e:GetHandler(),Duel.GetFirstTarget(),e:GetLabel()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	if op==0 then
 	   g=Duel.SelectMatchingCard(tp,c10113089.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc:GetLevel(),tc:GetRace(),ATTRIBUTE_DARK)
 	else

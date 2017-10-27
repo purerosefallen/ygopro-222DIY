@@ -63,7 +63,7 @@ function c114001073.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		if Duel.IsExistingMatchingCard(c114001073.mgspfilter,tp,LOCATION_HAND+LOCATION_REMOVED,0,1,nil,e,tp,mglv) and mglv>0 then sel=sel+1 end
 		if Duel.IsExistingMatchingCard(c114001073.mjspfilter,tp,LOCATION_HAND+LOCATION_REMOVED,0,1,nil,e,tp,mjlv) then sel=sel+2 end
 		e:SetLabel(sel)
-		return sel~=0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		return sel~=0 and Duel.GetMZoneCount(tp)>0
 	end
 	local sel=e:GetLabel()
 		if sel==3 then
@@ -88,7 +88,7 @@ function c114001073.markchk(c)
 	return c:GetFlagEffect(114001073)~=0
 end
 function c114001073.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local sel=e:GetLabel()

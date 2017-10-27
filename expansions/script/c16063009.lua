@@ -80,7 +80,7 @@ end
 function c16063009.syncon(e,c,tuner,mg)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<-2 then return false end
+	if Duel.GetMZoneCount(tp)<-2 then return false end
 	local g1=nil
 	local g2=nil
 	local g3=nil
@@ -228,7 +228,7 @@ function c16063009.spfilter(c,e,tp)
 	return c:IsCode(16063005)  and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c16063009.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c16063009.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end

@@ -49,7 +49,7 @@ end
 function c33700093.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
-		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+		and Duel.GetMZoneCount(c:GetControler())>0
 end
 function c33700093.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

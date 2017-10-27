@@ -48,7 +48,7 @@ end
 function c10130012.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	local ct=-ft+1
 	local g=Duel.GetMatchingGroup(c10130012.spfilter1,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_GRAVE,0,nil)
 	if g:GetCount()<2 then return false end
@@ -56,7 +56,7 @@ function c10130012.spcon(e,c)
 end
 function c10130012.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	local ct=-ft+1
 	local mg=Duel.GetMatchingGroup(c10130012.spfilter1,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,nil)
 	local g,tc=Group.CreateGroup()

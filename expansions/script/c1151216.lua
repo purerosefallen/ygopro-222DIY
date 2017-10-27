@@ -64,19 +64,19 @@ function c1151216.splimit1_1(e,c)
 end
 --
 function c1151216.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,1151998,0,0x4011,200,200,1,RACE_FIEND,ATTRIBUTE_DARK) end
+	if chk==0 then return Duel.GetMZoneCount(tp)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,1151998,0,0x4011,200,200,1,RACE_FIEND,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 --
 function c1151216.op1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,1151998,0,0x4011,200,200,1,RACE_FIEND,ATTRIBUTE_DARK) then
+	if Duel.GetMZoneCount(tp)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,1151998,0,0x4011,200,200,1,RACE_FIEND,ATTRIBUTE_DARK) then
 		local ft=2
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then
 			ft=1
 		end
 		for i=1,ft do
-			if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+			if Duel.GetMZoneCount(tp)>0 then
 				local token=Duel.CreateToken(tp,1151998)
 				Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 			end

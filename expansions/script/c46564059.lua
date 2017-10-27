@@ -90,7 +90,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
     local ct=mg:GetCount()
     local sumtype=tc:GetSummonType()
     if Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)~=0 and bit.band(sumtype,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
-        and ct>0 and ct<=Duel.GetLocationCount(tp,LOCATION_MZONE)
+        and ct>0 and ct<=Duel.GetMZoneCount(tp)
         and mg:FilterCount(aux.NecroValleyFilter(cm.mgfilter),nil,e,tp,tc,mg)==ct
         and not Duel.IsPlayerAffectedByEffect(tp,59822133)
         and Duel.SelectYesNo(tp,aux.Stringid(m,2)) then

@@ -88,7 +88,7 @@ end
 function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	local og=e:GetHandler():GetOverlayGroup()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if chkc then return false end
 	if chk==0 then return ft>=-1 and Duel.IsExistingTarget(cm.filter1,tp,LOCATION_MZONE,0,1,c,e,tp,og,ft) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
@@ -107,7 +107,7 @@ function cm.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() or c:IsControler(1-tp) then return end
 	local og=e:GetHandler():GetOverlayGroup()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if ft<0 then return end
 	local mg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if mg:IsExists(cm.counterfilter,1,nil,e) then return end

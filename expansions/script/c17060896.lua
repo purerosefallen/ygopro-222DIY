@@ -122,7 +122,7 @@ function c17060896.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local mg1=Duel.GetRitualMaterial(tp)
 		mg1:RemoveCard(e:GetHandler())
 		local mg2=Duel.GetMatchingGroup(c17060896.mfilter,tp,LOCATION_GRAVE,0,nil)
-		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		local ft=Duel.GetMZoneCount(tp)
 		if e:GetHandler():IsLocation(LOCATION_MZONE) then ft=ft+1 end
 		return ft>-1 and Duel.IsExistingMatchingCard(c17060896.filter,tp,LOCATION_PZONE,0,1,nil,e,tp,mg1,mg2,ft)
 	end
@@ -131,7 +131,7 @@ end
 function c17060896.activate(e,tp,eg,ep,ev,re,r,rp)
 	local mg1=Duel.GetRitualMaterial(tp)
 	local mg2=Duel.GetMatchingGroup(c17060896.mfilter,tp,LOCATION_GRAVE,0,nil)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c17060896.filter,tp,LOCATION_PZONE,0,1,1,nil,e,tp,mg1,mg2,ft)
 	local tc=g:GetFirst()

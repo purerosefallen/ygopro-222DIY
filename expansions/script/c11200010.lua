@@ -48,7 +48,7 @@ end
 function c11200010.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local mg1=Duel.GetRitualMaterial(tp)
-		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		local ft=Duel.GetMZoneCount(tp)
 		local mg2=Duel.GetMatchingGroup(c11200010.mfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
 		return  Duel.IsExistingMatchingCard(c11200010.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp,mg1,mg2,ft)
 	end
@@ -57,7 +57,7 @@ end
 function c11200010.activate(e,tp,eg,ep,ev,re,r,rp)
 	local mg1=Duel.GetRitualMaterial(tp)
 	local mg2=Duel.GetMatchingGroup(c11200010.mfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tg=Duel.SelectMatchingCard(tp,c11200010.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp,mg1,mg2,ft)
    local tc=tg:GetFirst()

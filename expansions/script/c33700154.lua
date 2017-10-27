@@ -27,7 +27,7 @@ function c33700154.target(e,tp,eg,ep,ev,re,r,rp,chk)
    local rc=e:GetHandler():GetReasonCard()
    if chk==0 then return rc:GetAttack()>0 end
 	local op
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c33700154.filter,tp,LOCATION_DECK,0,1,nil,e,tp,rc:GetAttack()) then
+	if Duel.GetMZoneCount(tp)>0 and Duel.IsExistingMatchingCard(c33700154.filter,tp,LOCATION_DECK,0,1,nil,e,tp,rc:GetAttack()) then
 	 op=Duel.SelectOption(tp,aux.Stringid(33700154,0),aux.Stringid(33700154,1))
 	 else
 	  op=Duel.SelectOption(tp,aux.Stringid(33700154,0))
@@ -44,7 +44,7 @@ function c33700154.operation(e,tp,eg,ep,ev,re,r,rp)
 	 if e:GetLabel()==0 then 
 		Duel.Recover(tp,rc:GetAttack(),REASON_EFFECT)
 	 else
-   if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+   if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c33700154.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp,rc:GetAttack())
 	if g:GetCount()>0 then

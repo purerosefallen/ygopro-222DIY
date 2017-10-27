@@ -20,14 +20,14 @@ function c99600010.filter2(c,e,tp,b1,setcode)
 end
 function c99600010.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7)
-	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	local b2=Duel.GetMZoneCount(tp)>0
 	if chk==0 then return (b1 or b2)
 		and Duel.IsExistingMatchingCard(c99600010.filter,tp,LOCATION_DECK,0,1,nil,e,tp,b1,nil)
 		and Duel.IsExistingMatchingCard(c99600010.filter2,tp,LOCATION_DECK,0,1,nil,e,tp,b1,nil) end
 end
 function c99600010.activate(e,tp,eg,ep,ev,re,r,rp)
 	local b1=Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7)
-	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	local b2=Duel.GetMZoneCount(tp)>0
 	if not b1 and not b2 then return end
 	local g1=Duel.GetMatchingGroup(c99600010.filter,tp,LOCATION_DECK,0,nil,e,tp,b1,nil)
 	local g2=Duel.GetMatchingGroup(c99600010.filter2,tp,LOCATION_DECK,0,nil,e,tp,b1,nil)

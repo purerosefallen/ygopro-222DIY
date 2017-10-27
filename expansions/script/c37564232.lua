@@ -49,7 +49,7 @@ function cm.spfilter(c)
 end
 function cm.spcon(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return Duel.GetMZoneCount(c:GetControler())>0
 		and Duel.IsExistingMatchingCard(cm.spfilter,c:GetControler(),LOCATION_HAND,0,3,c) and Senya.CheckNoExtra(e,c:GetControler())
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp,c)

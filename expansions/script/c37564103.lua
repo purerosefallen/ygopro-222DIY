@@ -68,7 +68,7 @@ end
 function c37564103.spcon1(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
+	return Duel.GetMZoneCount(tp)>-2
 		and Duel.CheckReleaseGroup(tp,c37564103.spfilter1,1,nil,tp,c)
 end
 function c37564103.spop1(e,tp,eg,ep,ev,re,r,rp,c)
@@ -117,7 +117,7 @@ function c37564103.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c37564103.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or Duel.Destroy(c,REASON_EFFECT)==0 or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if not c:IsRelateToEffect(e) or Duel.Destroy(c,REASON_EFFECT)==0 or Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c37564103.tfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
 	local tc=g:GetFirst()

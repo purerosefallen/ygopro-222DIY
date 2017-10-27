@@ -28,7 +28,7 @@ function cm.ssfilter(c,e,tp)
 end
 function cm.xmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and cm.xmfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(cm.xmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,e,tp) end
+	if chk==0 then return Duel.GetMZoneCount(tp)>0 and Duel.IsExistingTarget(cm.xmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g1=Duel.SelectTarget(tp,cm.xmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_MZONE)
@@ -36,7 +36,7 @@ end
 function cm.xmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local gg=tc:GetOverlayGroup()
-	if not (gg:IsExists(cm.ssfilter,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc:IsRelateToEffect(e)) or tc:IsImmuneToEffect(e) then return end
+	if not (gg:IsExists(cm.ssfilter,1,nil,e,tp) and Duel.GetMZoneCount(tp)>0 and tc:IsRelateToEffect(e)) or tc:IsImmuneToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=gg:FilterSelect(tp,cm.ssfilter,1,1,nil,e,tp)
 	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)~=0 then

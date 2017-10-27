@@ -26,7 +26,7 @@ function c10123002.filter(c,e,tp)
 end
 function c10123002.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c10123002.filter(chkc,e,tp) and chkc~=e:GetHandler() end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingTarget(c10123002.filter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c10123002.filter,tp,LOCATION_GRAVE,0,1,1,e:GetHandler(),e,tp)
@@ -47,6 +47,6 @@ function c10123002.spfilter(c)
 end
 function c10123002.spcon(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
+	return Duel.GetMZoneCount(c:GetControler())>0 and
 		Duel.IsExistingMatchingCard(c10123002.spfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end

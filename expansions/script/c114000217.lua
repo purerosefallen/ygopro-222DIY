@@ -43,7 +43,7 @@ end
 function c114000217.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return Duel.GetMZoneCount(tp)>0
 		and Duel.GetMatchingGroupCount(c114000217.cfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil)>=4
 end
 --update attack and level for others

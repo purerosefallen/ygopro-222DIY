@@ -91,7 +91,7 @@ function c10129010.retop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(c10129010.retfilter,nil)
 	if sg:GetCount()<=0 then return end
 	local tg=sg:Clone()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if ft<=0 then return end
 	if ft<tg:GetCount() then
 	   Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(10129010,1))

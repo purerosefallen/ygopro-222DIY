@@ -35,10 +35,10 @@ end
 function c114100142.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then 
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+		if Duel.GetMZoneCount(tp)>0 then
 			return Duel.IsExistingMatchingCard(c114100142.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,c) 
 		else
-			if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then
+			if Duel.GetMZoneCount(tp)==0 then
 				return Duel.IsExistingMatchingCard(c114100142.cfilter,tp,LOCATION_MZONE,0,1,c)
 			else
 				return false
@@ -47,7 +47,7 @@ function c114100142.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	local g
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if Duel.GetMZoneCount(tp)>0 then
 		g=Duel.SelectMatchingCard(tp,c114100142.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,c)
 	else
 		g=Duel.SelectMatchingCard(tp,c114100142.cfilter,tp,LOCATION_MZONE,0,1,1,c)
@@ -61,7 +61,7 @@ function c114100142.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg=eg:Filter(c114100142.confilter,nil,tp)
 	local tg=mg:Filter(c114100142.spfilter,nil,e,tp)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and tg:IsContains(chkc) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and tg:GetCount()>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=tg:Select(tp,1,1,nil)

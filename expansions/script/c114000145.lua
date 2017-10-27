@@ -20,12 +20,12 @@ function c114000145.spfilter(c,lv,e,tp)
 	and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c114000145.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 	and Duel.IsExistingMatchingCard(c114000145.spfilter,tp,LOCATION_HAND,0,1,nil,4,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c114000145.operation(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if ft<=0 then return end
 	local slv=4
 	local sg=Duel.GetMatchingGroup(c114000145.spfilter,tp,LOCATION_HAND,0,nil,slv,e,tp)

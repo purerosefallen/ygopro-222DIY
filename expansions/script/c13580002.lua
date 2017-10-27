@@ -36,7 +36,7 @@ end
 function cm.scon(e,c,minc)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return c:GetLevel()>4 and minc<=1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return c:GetLevel()>4 and minc<=1 and Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(cm.sfilter,tp,LOCATION_HAND,0,1,c)
 end
 function cm.sop(e,tp,eg,ep,ev,re,r,rp,c)

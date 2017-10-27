@@ -73,5 +73,5 @@ function c13254060.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13254060.hspcon(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return Duel.GetMZoneCount(c:GetControler())>0
 end

@@ -60,7 +60,7 @@ end
 function c114000364.effcon(e,tp,eg,ep,ev,re,r,rp)
 	local code=e:GetLabel()
 	return Duel.IsExistingMatchingCard(c114000364.spfilter,tp,LOCATION_HAND,0,1,nil,code,e,tp)
-	and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	and Duel.GetMZoneCount(tp)>0
 end
 function c114000364.effop(e,tp,eg,ep,ev,re,r,rp)
 	local code=e:GetLabel()

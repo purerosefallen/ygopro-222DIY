@@ -191,7 +191,7 @@ function c17060806.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	local sg=g:Filter(c17060806.retfilter,nil)
 	if sg:GetCount()>1 and sg:GetClassCount(Card.GetPreviousControler)==1 then
-		local ft=Duel.GetLocationCount(sg:GetFirst():GetPreviousControler(),LOCATION_MZONE)
+		local ft=Duel.GetMZoneCount(sg:GetFirst():GetPreviousControler())
 		if ft==1 then
 			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(17060806,0))
 			local tc=sg:Select(tp,1,1,nil):GetFirst()

@@ -34,7 +34,7 @@ function c33700040.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c33700040.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
@@ -47,7 +47,7 @@ function c33700040.filter(c,e,tp)
    return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c33700040.op(e,tp,eg,ep,ev,re,r,rp)
-	local g1=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local g1=Duel.GetMZoneCount(tp)
 	local g2=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
 	local g3=Duel.GetMatchingGroup(c33700040.filter,tp,LOCATION_DECK+LOCATION_HAND,0,nil,e,tp)
 	 local op=Duel.SelectOption(1-tp,aux.Stringid(33700040,0),aux.Stringid(33700040,1),aux.Stringid(33700040,2))

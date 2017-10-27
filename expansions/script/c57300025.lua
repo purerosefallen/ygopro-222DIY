@@ -145,7 +145,7 @@ function c57300025.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		if e:GetLabel()==1 then ft=0 end
 		e:SetLabel(0)
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then return false end
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>ft
+		return Duel.GetMZoneCount(tp)>ft
 			and Duel.IsExistingMatchingCard(c57300025.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 			and Duel.IsExistingMatchingCard(c57300025.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 	end
@@ -192,7 +192,7 @@ end
 function c57300025.activate(e,tp,eg,ep,ev,re,r,rp)
 	local rc=Duel.GetFirstTarget()
 	if rc:IsRelateToEffect(e) and Duel.Destroy(rc,REASON_EFFECT)~=0 and not rc:IsLocation(LOCATION_HAND+LOCATION_DECK) then
-		if rc:IsType(TYPE_MONSTER) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		if rc:IsType(TYPE_MONSTER) and Duel.GetMZoneCount(tp)>0
 			and rc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 			and Duel.SelectYesNo(tp,aux.Stringid(90809975,3)) then
 			Duel.BreakEffect()

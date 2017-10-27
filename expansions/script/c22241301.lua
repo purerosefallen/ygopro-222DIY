@@ -65,17 +65,17 @@ function c22241301.rfilter(c)
 end
 function c22241301.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		local ft=Duel.GetMZoneCount(tp)
 		local mg1=Duel.GetRitualMaterial(tp):Filter(c22241301.rfilter,nil)
 		local mg2=Duel.GetMatchingGroup(c22241301.mfilter,tp,LOCATION_GRAVE,0,nil)
-		return Duel.IsExistingMatchingCard(c22241301.filter,tp,LOCATION_DECK,0,1,nil,e,tp,mg1,mg2,ft) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		return Duel.IsExistingMatchingCard(c22241301.filter,tp,LOCATION_DECK,0,1,nil,e,tp,mg1,mg2,ft) and Duel.GetMZoneCount(tp)>0
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c22241301.activate(e,tp,eg,ep,ev,re,r,rp)
 	local mg1=Duel.GetRitualMaterial(tp):Filter(c22241301.rfilter,nil)
 	local mg2=Duel.GetMatchingGroup(c22241301.mfilter,tp,LOCATION_GRAVE,0,nil)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c22241301.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp,mg1,mg2,ft)
 	local tc=g:GetFirst()
@@ -104,13 +104,13 @@ function c22241301.adcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	return bit.band(e:GetHandler():GetReason(),REASON_RELEASE)~=0
 end
 function c22241301.adtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c22241301.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(c22241301.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetMZoneCount(tp)>0 end
 	local g=Duel.SelectTarget(tp,c22241301.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,LOCATION_GRAVE)
 end
 function c22241301.adop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if tc and tc:IsRelateToEffect(e) and Duel.GetMZoneCount(tp)>0 then
 		Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
 	end
 end

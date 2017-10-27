@@ -39,7 +39,7 @@ function c10113085.setfilter(c,e,tp,fts,ftm)
 	return (c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) and ftm>0) or (c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable() and (fts>0 or c:IsType(TYPE_FIELD))) and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_LOST_TARGET) and c:IsCanBeEffectTarget(e)
 end
 function c10113085.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local fts,ftm,og=Duel.GetLocationCount(tp,LOCATION_SZONE),Duel.GetLocationCount(tp,LOCATION_MZONE),e:GetLabelObject():GetLabelObject()
+	local fts,ftm,og=Duel.GetMZoneCount(tp,LOCATION_SZONE),Duel.GetLocationCount(tp),e:GetLabelObject():GetLabelObject()
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and og:IsExists(c10113085.setfilter,1,nil,e,tp,fts,ftm) end
 	if chk==0 then return og:IsExists(c10113085.setfilter,1,nil,e,tp,fts,ftm) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
@@ -52,7 +52,7 @@ end
 function c10113085.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tc,c=Duel.GetFirstTarget(),e:GetHandler()
 	if not tc:IsRelateToEffect(e) then return end
-	if tc:IsType(TYPE_MONSTER) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if tc:IsType(TYPE_MONSTER) and Duel.GetMZoneCount(tp)>0
 		and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) then
 		if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)~=0 then
 		   Duel.ConfirmCards(1-tp,tc)

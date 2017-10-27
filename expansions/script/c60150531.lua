@@ -46,7 +46,7 @@ function c60150531.target(e,c)
 end
 function c60150531.ntcon(e,c,minc)
 	if c==nil then return true end
-	return minc==0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return minc==0 and Duel.GetMZoneCount(c:GetControler())>0
 end
 function c60150531.nttg(e,c)
 	return c:GetLevel()==10 and c:IsSetCard(0xab20)

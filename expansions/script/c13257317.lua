@@ -40,7 +40,7 @@ end
 function c13257317.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
+	if Duel.GetMZoneCount(tp)<=0 then return false end
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
 	return g:GetCount()==1 and tc:IsSetCard(0x351)
@@ -54,7 +54,7 @@ end
 function c13257317.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local t1=Duel.IsExistingMatchingCard(c13257317.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-	local t2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,93130022,0,0x4011,c:GetAttack(),0,c:GetLevel(),c:GetRace(),c:GetAttribute())
+	local t2=Duel.GetMZoneCount(tp)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,93130022,0,0x4011,c:GetAttack(),0,c:GetLevel(),c:GetRace(),c:GetAttribute())
 	if chk==0 then return t1 or t2 end
 	local op=0
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(13257317,1))
@@ -90,7 +90,7 @@ function c13257317.pcop(e,tp,eg,ep,ev,re,r,rp)
 		local lv=c:GetLevel()
 		local race=c:GetRace()
 		local att=c:GetAttribute()
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not c:IsRelateToEffect(e) or c:IsFacedown()
+		if Duel.GetMZoneCount(tp)<=0 or not c:IsRelateToEffect(e) or c:IsFacedown()
 			or not Duel.IsPlayerCanSpecialSummonMonster(tp,93130022,0,0x4011,atk,0,lv,race,att) then return end
 		local token=Duel.CreateToken(tp,93130022)
 		c:CreateRelation(token,RESET_EVENT+0x1fe0000)

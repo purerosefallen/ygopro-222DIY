@@ -28,7 +28,7 @@ function c60150501.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c60150501.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_HAND,0,1,e:GetHandler(),0xab20)
 		and e:GetHandler():IsCanBeSpecialSummoned(e,1,tp,false,false)
 	end

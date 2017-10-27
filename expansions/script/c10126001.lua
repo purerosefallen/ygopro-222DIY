@@ -46,7 +46,7 @@ function c10126001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return eqg:GetCount()>0 and Duel.IsExistingMatchingCard(c10126001.filter2,tp,0x13,0,1,nil,e,tp,ct) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		return eqg:GetCount()>0 and Duel.IsExistingMatchingCard(c10126001.filter2,tp,0x13,0,1,nil,e,tp,ct) and Duel.GetMZoneCount(tp)>0
 	end
 	local sg=Duel.GetMatchingGroup(c10126001.filter2,tp,0x13,0,nil,e,tp,ct)
 	local tg1,lvmax=sg:GetMaxGroup(Card.GetLevel)
@@ -58,7 +58,7 @@ function c10126001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0x13)
 end
 function c10126001.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c10126001.filter2,tp,0x13,0,1,1,nil,e,tp,c10126001[1]+e:GetHandler():GetLevel())
 	if g:GetCount()>0 and not g:GetFirst():IsHasEffect(EFFECT_NECRO_VALLEY) then

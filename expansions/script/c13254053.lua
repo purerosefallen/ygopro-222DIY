@@ -85,7 +85,7 @@ function c13254053.filter2(c)
 end
 function c13254053.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c13254053.filter1(chkc) and c13254053.filter2(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c13254053.filter1,tp,LOCATION_GRAVE,0,1,nil) and Duel.IsExistingTarget(c13254053.filter2,tp,LOCATION_GRAVE,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return Duel.IsExistingTarget(c13254053.filter1,tp,LOCATION_GRAVE,0,1,nil) and Duel.IsExistingTarget(c13254053.filter2,tp,LOCATION_GRAVE,0,1,nil) and Duel.GetMZoneCount(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g1=Duel.SelectTarget(tp,c13254053.filter1,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)

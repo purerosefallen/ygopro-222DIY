@@ -59,7 +59,7 @@ function c8209725.activate(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
 		local dg=Duel.GetOperatedGroup()
 		local dc=dg:GetFirst()
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and dc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		if Duel.GetMZoneCount(tp)>0 and dc:IsCanBeSpecialSummoned(e,0,tp,false,false)
 			and Duel.SelectYesNo(tp,aux.Stringid(8209725,1)) then
 			Duel.SpecialSummon(dc,0,tp,tp,false,false,POS_FACEUP)
 		end

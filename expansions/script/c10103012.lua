@@ -48,7 +48,7 @@ function c10103012.rmfilter(c)
 end
 function c10103012.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c10103012.rmfilter(chkc) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingTarget(c10103012.rmfilter,tp,LOCATION_REMOVED,0,1,nil) and e:GetHandler():IsRelateToEffect(e)and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,c10103012.rmfilter,tp,LOCATION_REMOVED,0,1,1,nil)

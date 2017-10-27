@@ -67,7 +67,7 @@ function c777001.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c777001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0)
+	if chk==0 then return (Duel.GetMZoneCount(tp)>0 or Duel.GetMZoneCount(1-tp)>0)
 		and (e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) or e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
@@ -75,9 +75,9 @@ end
 function c777001.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local s1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	local s1=Duel.GetMZoneCount(tp)>0 
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-	local s2=Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 
+	local s2=Duel.GetMZoneCount(1-tp)>0 
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)
 	local op=0
 	Duel.Hint(HINT_SELECTMSG,tp,0)
@@ -122,7 +122,7 @@ end
 
 function c777001.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c777001.tdfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(1-tp)>0
 		and Duel.IsExistingTarget(c777001.tdfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c777001.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)

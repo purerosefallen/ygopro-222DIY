@@ -41,6 +41,6 @@ function c33700127.spcon(e,c)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if g:GetCount()==0 then return false end
 	local tg=g:GetMaxGroup(Card.GetAttack)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return Duel.GetMZoneCount(tp)>0
 		and tg:IsExists(Card.IsControler,1,nil,1-tp)
 end

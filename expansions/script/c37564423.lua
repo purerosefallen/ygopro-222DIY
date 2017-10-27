@@ -59,7 +59,7 @@ function cm.tdop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 		local sg=ag:Filter(cm.tfilter,nil,e,tp)
-		if sg:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>=sg:GetCount() and not (sg:GetCount()>1 and Duel.IsPlayerAffectedByEffect(tp,59822133)) then
+		if sg:GetCount()>0 and Duel.GetMZoneCount(tp)>=sg:GetCount() and not (sg:GetCount()>1 and Duel.IsPlayerAffectedByEffect(tp,59822133)) then
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 			local cval=math.floor(val[1]/2)
 			Duel.BreakEffect()
@@ -72,12 +72,12 @@ function cm.filter(c,e,tp)
 	return Senya.CheckPrism(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetLevel()==3 and Duel.GetFlagEffect(tp,c:GetCode())==0
 end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,cm.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()

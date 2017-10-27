@@ -58,13 +58,13 @@ function c10113062.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:GetLocation()~=LOCATION_DECK
 end
 function c10113062.spfilter(c,e,tp,ct)
-	return ((c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) or c:IsAbleToHand()) and c:IsLevelBelow(ct)
+	return ((c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetMZoneCount(tp)>0) or c:IsAbleToHand()) and c:IsLevelBelow(ct)
 end
 function c10113062.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c10113062.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,e:GetLabelObject():GetLabel()) end
 end
 function c10113062.spop(e,tp,eg,ep,ev,re,r,rp)
-	local g,ft,op,c=Duel.GetMatchingGroup(c10113062.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp,e:GetLabelObject():GetLabel()),Duel.GetLocationCount(tp,LOCATION_MZONE),0,e:GetHandler()
+	local g,ft,op,c=Duel.GetMatchingGroup(c10113062.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp,e:GetLabelObject():GetLabel()),Duel.GetMZoneCount(tp),0,e:GetHandler()
 	if g:GetCount()<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(10113062,1))
 	local tc=Duel.SelectMatchingCard(tp,c10113062.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,e:GetLabelObject():GetLabel()):GetFirst()

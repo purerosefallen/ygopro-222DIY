@@ -54,7 +54,7 @@ end
 function c46564005.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return Duel.GetMZoneCount(tp)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) and not Duel.IsExistingMatchingCard(c46564005.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c46564005.fscon(e,tp,eg,ep,ev,re,r,rp)

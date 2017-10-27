@@ -40,7 +40,7 @@ function c60151761.filter2(c,e,tp)
     return c:IsSetCard(0x3b26) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c60151761.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
     if chk==0 then return Duel.IsExistingMatchingCard(c60151761.filter1,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,ft)
         and Duel.IsExistingMatchingCard(c60151761.filter2,tp,LOCATION_DECK,0,1,nil,e,tp) end
     Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
@@ -49,7 +49,7 @@ function c60151761.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c60151761.operation(e,tp,eg,ep,ev,re,r,rp)
     if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then
+	if Duel.GetMZoneCount(tp)==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g=Duel.SelectMatchingCard(tp,c60151761.filter1,tp,LOCATION_MZONE,0,1,1,nil,ft)
 		if g:GetCount()>0 and Duel.Destroy(g,REASON_EFFECT)~=0 then

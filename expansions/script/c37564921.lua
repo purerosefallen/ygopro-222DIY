@@ -45,15 +45,15 @@ function cm.atkval(e,c)
 	return c:GetBattleTarget():GetAttack()
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,m+1,0,0x4011,0,0,1,RACE_MACHINE,ATTRIBUTE_EARTH) end
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,ft,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,ft,0,0)
 end
 function cm.operation(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if ft<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,m+1,0,0x4011,0,0,1,RACE_MACHINE,ATTRIBUTE_EARTH) then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	for i=1,ft do

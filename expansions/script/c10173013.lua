@@ -70,7 +70,7 @@ function c10173013.thfilter2(c,e)
 end
 function c10173013.spcon(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and Duel.GetFlagEffect(0,10173013)>0
+	return Duel.GetMZoneCount(c:GetControler())>0 and Duel.GetFlagEffect(0,10173013)>0
 end
 function c10173013.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c10173013.cfilter,1,nil) then

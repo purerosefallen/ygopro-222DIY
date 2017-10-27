@@ -53,7 +53,7 @@ function c1000611.drop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(tp,1,REASON_EFFECT)>0 then
 	local tc=Duel.GetOperatedGroup():GetFirst()
 	Duel.ConfirmCards(1-tp,tc)
-	if tc:IsSetCard(0xc204) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if tc:IsSetCard(0xc204) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetMZoneCount(tp)>0
 	and  Duel.SelectYesNo(tp,aux.Stringid(1000611,0)) then 
 	Duel.BreakEffect()
 	Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)

@@ -44,7 +44,7 @@ function c50000066.seqcon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():GetSummonType()==SUMMON_TYPE_LINK 
 end
 function c50000066.seqtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    local scount=Duel.GetLocationCount(tp,LOCATION_MZONE)
+    local scount=Duel.GetMZoneCount(tp)
     if scount==0 then return end
     return true
 end

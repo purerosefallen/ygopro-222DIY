@@ -30,7 +30,7 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local tempc=Senya.IgnoreActionCheck(Duel.CreateToken,tp,tcode)		
 		if not tempc:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,true) then return false end
 		local mg=Duel.GetRitualMaterial(tp):Filter(Card.IsCanBeRitualMaterial,e:GetHandler(),tempc)
-		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		local ft=Duel.GetMZoneCount(tp)
 		if ft<0 then return false end
 		if ft>0 then
 			return mg:CheckWithSumGreater(Card.GetRitualLevel,tempc:GetLevel(),tempc)
@@ -47,7 +47,7 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tcode=c.dfc_front_side
 	local tempc=Duel.CreateToken(tp,tcode)
 	local mg=Duel.GetRitualMaterial(tp):Filter(Card.IsCanBeRitualMaterial,c,tempc)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	local mat=nil
 	if ft>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)

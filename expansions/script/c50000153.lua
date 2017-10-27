@@ -52,7 +52,7 @@ function c50000153.filter(c)
 end
 function c50000153.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(tp) and c50000153.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c50000153.filter,tp,LOCATION_ONFIELD,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return Duel.IsExistingTarget(c50000153.filter,tp,LOCATION_ONFIELD,0,1,nil) and Duel.GetMZoneCount(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,c50000153.filter,tp,LOCATION_ONFIELD,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
@@ -61,7 +61,7 @@ function c50000153.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local num=Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	if c:IsRelateToEffect(e) and num==0
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) then
+		and Duel.GetMZoneCount(tp)<=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) then
 		Duel.SendtoGrave(c,REASON_RULE)
 	end
 	if num>0 then

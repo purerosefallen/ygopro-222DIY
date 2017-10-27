@@ -58,7 +58,7 @@ function c1151009.tfilter1(c)
 	return c:IsRace(RACE_FIEND) and c:IsType(TYPE_MONSTER)
 end
 function c1151009.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetMatchingGroupCount(c1151009.tfilter1,tp,LOCATION_ONFIELD,0,nil)>0 end
+	if chk==0 then return Duel.GetMZoneCount(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetMatchingGroupCount(c1151009.tfilter1,tp,LOCATION_ONFIELD,0,nil)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,LOCATION_REMOVED)
 end
 --

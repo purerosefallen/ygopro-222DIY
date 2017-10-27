@@ -28,7 +28,7 @@ function cm.filter(c,e,tp)
 end
 function cm.setfilter(c,e,tp)
 	if c:IsLocation(LOCATION_HAND+LOCATION_DECK) then return false end
-	if c:IsType(TYPE_MONSTER) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) then return true end
+	if c:IsType(TYPE_MONSTER) and Duel.GetMZoneCount(tp)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) then return true end
 	if (c:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0) and c:IsSSetable() then return true end
 	return false
 end

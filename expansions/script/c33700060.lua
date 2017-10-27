@@ -65,8 +65,8 @@ end
 		Duel.ConfirmCards(1-tp,cg)
 	end
 end
-if g:GetClassCount(Card.GetCode)>12 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c33700060.sfilter,tp,LOCATION_HAND,0,1,nil) then
-   local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+if g:GetClassCount(Card.GetCode)>12 and Duel.GetMZoneCount(tp)>0 and Duel.IsExistingMatchingCard(c33700060.sfilter,tp,LOCATION_HAND,0,1,nil) then
+   local ft=Duel.GetMZoneCount(tp)
 	local sg=Duel.GetMatchingGroup(c33700060.sfilter,tp,LOCATION_HAND,0,nil)
 	if ft<=0 or sg:GetCount()==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)

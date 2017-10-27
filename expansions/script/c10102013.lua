@@ -56,7 +56,7 @@ function c10102013.spfilter(c,e,tp)
 end
 function c10102013.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc,ec)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c10102013.spfilter(chkc,e,tp) and chkc~=ec end
-	if chk==0 then return Duel.IsExistingTarget(c10102013.spfilter,tp,LOCATION_REMOVED,0,2,ec,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>=1 and e:GetHandler():GetFlagEffect(10102013)==0 end
+	if chk==0 then return Duel.IsExistingTarget(c10102013.spfilter,tp,LOCATION_REMOVED,0,2,ec,e,tp) and Duel.GetMZoneCount(tp)>=1 and e:GetHandler():GetFlagEffect(10102013)==0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c10102013.spfilter,tp,LOCATION_REMOVED,0,2,2,ec,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,g:GetCount(),tp,LOCATION_REMOVED)   
@@ -75,13 +75,13 @@ function c10102013.sprfilter2(c,code)
 end
 function c10102013.spcon(e,c)
 	if c==nil then return true end
-	local tp,ft=c:GetControler(),Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local tp,ft=c:GetControler(),Duel.GetMZoneCount(tp)
 	local loc=LOCATION_GRAVE+LOCATION_MZONE 
 	if ft<=0 and c:IsLocation(LOCATION_GRAVE) then loc=LOCATION_MZONE end
 	return Duel.IsExistingMatchingCard(c10102013.sprfilter,tp,loc,0,1,nil,e,tp,ft)
 end
 function c10102013.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local loc=LOCATION_MZONE+LOCATION_GRAVE 
 	if ft<=0 and c:IsLocation(LOCATION_GRAVE) then loc=LOCATION_MZONE end   

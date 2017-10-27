@@ -93,7 +93,7 @@ end
 function c33700080.op(e,tp,eg,ep,ev,re,r,rp)
    local g=Duel.GetMatchingGroup(c33700080.confilter,tp,LOCATION_GRAVE,0,nil) 
    if g:GetClassCount(Card.GetCode)>=5  or  e:GetLabel()==33700090 then
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local cg=Duel.SelectMatchingCard(tp,c33700080.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if cg:GetCount()>0 then
@@ -101,7 +101,7 @@ function c33700080.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
    if g:GetClassCount(Card.GetCode)>=12  or  e:GetLabel()==33700090 then
-	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 or  Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 or  Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.ConfirmDecktop(tp,1)
 	local hg=Duel.GetDecktopGroup(tp,1)
 	local tc=hg:GetFirst()

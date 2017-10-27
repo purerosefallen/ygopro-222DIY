@@ -20,12 +20,12 @@ if not Duel.GetLocationCountFromEx then
 	SUMMON_TYPE_LINK=0x4c000000
 	EFFECT_CANNOT_BE_LINK_MATERIAL=0
 	function Duel.GetLocationCountFromEx(tp,p,sg,c)		
-		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		local ft=Duel.GetMZoneCount(tp)
 		if sg then ft=ft+sg:FilterCount(aux.FConditionCheckF,nil,tp) end
 		return ft
 	end
 	function Duel.GetUsableMZoneCount(tp)
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)
+		return Duel.GetMZoneCount(tp)
 	end
 	local pz=LOCATION_PZONE
 	LOCATION_PZONE=LOCATION_SZONE
@@ -497,7 +497,7 @@ function cm.MokouRebornCondition(eff,con)
 end
 function cm.MokouRebornTarget(comp)
 return function(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,comp,comp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
@@ -505,7 +505,7 @@ end
 function cm.MokouRebornOperation(exop,excon,comp)
 return function(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	if not c:IsRelateToEffect(e) or not c:IsCanBeSpecialSummoned(e,0,tp,comp,comp) then return end
 	if Duel.SpecialSummon(c,0,tp,tp,comp,comp,POS_FACEUP)>0 and exop and (not excon or excon(e,tp,eg,ep,ev,re,r,rp)) then
 		exop(e,tp,eg,ep,ev,re,r,rp)
@@ -708,7 +708,7 @@ function cm.SawawaSpsummonCost(ct,exf)
 		   end
 end
 function cm.SelfSpsummonTarget(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
@@ -784,7 +784,7 @@ return function(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 end
 function cm.PrismSpsummonTarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and cm.PrismSpsummonFilter(chkc,ft) end
 	if chk==0 then return ft>-1
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingTarget(cm.PrismSpsummonFilter,tp,LOCATION_MZONE,0,1,nil,ft) end
@@ -941,11 +941,11 @@ end
 function cm.PrismProcCondition(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	return ft>-1 and Duel.CheckReleaseGroup(tp,cm.PrismProcFilter,1,nil,ft)
 end
 function cm.PrismProcOperation(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	local g=Duel.SelectReleaseGroup(tp,cm.PrismProcFilter,1,1,nil,ft)
 	Duel.Release(g,REASON_COST)
 end
@@ -1098,7 +1098,7 @@ function cm.PendConditionNanahira()
 				if lscale>rscale then lscale,rscale=rscale,lscale end
 				local ft=Duel.GetUsableMZoneCount(tp)
 				if ft<=0 then return false end
-				local mft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+				local mft=Duel.GetMZoneCount(tp)
 				local eft=Duel.GetLocationCountFromEx(tp)
 				local g=nil
 				if og then
@@ -1152,7 +1152,7 @@ function cm.PendOperationNanahira()
 				local rscale=rpz:GetRightScale()
 				if lscale>rscale then lscale,rscale=rscale,lscale end
 				local ft=Duel.GetUsableMZoneCount(tp)
-				local mft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+				local mft=Duel.GetMZoneCount(tp)
 				local eft=Duel.GetLocationCountFromEx(tp)
 				if Duel.IsPlayerAffectedByEffect(tp,59822133) then
 					mft=math.min(1,mft)
@@ -2435,7 +2435,7 @@ end
 function cm.CheckSummonLocation(c,tp,g)
 	local g=g or Group.CreateGroup()
 	if c:IsLocation(LOCATION_EXTRA) then return Duel.GetLocationCountFromEx(tp,tp,g,c)>0 end
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)+g:FilterCount(cm.CheckMFilter,nil)>0
+	return Duel.GetMZoneCount(tp)+g:FilterCount(cm.CheckMFilter,nil)>0
 end
 function cm.AND(...)
 	local t={...}

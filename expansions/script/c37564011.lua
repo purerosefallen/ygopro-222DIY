@@ -75,7 +75,7 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetOverlayGroup():IsExists(cm.filter7,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return e:GetHandler():GetOverlayGroup():IsExists(cm.filter7,1,nil,e,tp) and Duel.GetMZoneCount(tp)>0
 end
 function cm.filter7(c,e,tp)
 	return c:IsType(TYPE_XYZ) and c:GetRank()==4 and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
@@ -83,7 +83,7 @@ end
 function cm.operation2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) or c:IsControler(1-tp) or c:IsImmuneToEffect(e) then return end
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	local g1=e:GetHandler():GetOverlayGroup()
 	local sg=g1:Filter(cm.filter7,nil,e,tp)
 	if ft==0 or sg:GetCount()==0 then return end

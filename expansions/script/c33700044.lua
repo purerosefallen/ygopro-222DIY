@@ -53,7 +53,7 @@ function c33700044.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:FilterCount(c33700044.tfilter,nil,tp)>=2 and re:GetActiveType()==TYPE_TRAP
 end
 function c33700044.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end

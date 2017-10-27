@@ -33,14 +33,14 @@ function cm.otcon(e,c,minc)
 	local tp=c:GetControler()
 	local mg=Duel.GetMatchingGroup(cm.otfilter,tp,LOCATION_SZONE,0,nil)
 	return c:GetLevel()>6 and minc<=2
-		and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and mg:GetCount()>=2
+		and (Duel.GetMZoneCount(tp)>0 and mg:GetCount()>=2
 			or Duel.CheckTribute(c,1) and mg:GetCount()>=1)
 		or c:GetLevel()>4 and c:GetLevel()<=6 and minc<=1
-			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and mg:GetCount()>=1
+			and Duel.GetMZoneCount(tp)>0 and mg:GetCount()>=1
 end
 function cm.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mg=Duel.GetMatchingGroup(cm.otfilter,tp,LOCATION_SZONE,0,nil)
-	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and mg:GetCount()>=2
+	local b1=Duel.GetMZoneCount(tp)>0 and mg:GetCount()>=2
 	local b2=Duel.CheckTribute(c,1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local g=mg:Select(tp,1,1,nil)

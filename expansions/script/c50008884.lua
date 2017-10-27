@@ -87,7 +87,7 @@ function c50008884.spfilter(c,e,tp)
 end
 function c50008884.sptg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c50008884.spfilter(chkc,e,tp) end
-    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+    if chk==0 then return Duel.GetMZoneCount(tp)>0
         and Duel.IsExistingTarget(c50008884.spfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
     local g=Duel.SelectTarget(tp,c50008884.spfilter,tp,LOCATION_REMOVED,0,1,1,nil,e,tp)
@@ -113,7 +113,7 @@ function c50008884.spcon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetLabelObject():GetLabel()==Duel.GetTurnCount() and e:GetHandler():GetFlagEffect(50008884)>0
 end
 function c50008884.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+    if chk==0 then return Duel.GetMZoneCount(tp)>0
         and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
     e:GetHandler():ResetFlagEffect(50008884)

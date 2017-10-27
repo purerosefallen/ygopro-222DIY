@@ -203,7 +203,7 @@ function c11200006.recon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local g=Duel.GetMatchingGroup(c11200006.refilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
+	return Duel.GetMZoneCount(tp)>-2
 		and g:GetCount()>1 and g:IsExists(c11200006.refilter2,1,nil)
 end
 function c11200006.reop(e,tp,eg,ep,ev,re,r,rp,c)

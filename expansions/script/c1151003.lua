@@ -44,14 +44,14 @@ function c1151003.con1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1151003.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return Duel.GetMZoneCount(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 --
 function c1151003.op1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,1151997,0,0x4011,200,200,1,RACE_FIEND,ATTRIBUTE_DARK) then
+		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.GetMZoneCount(tp)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,1151997,0,0x4011,200,200,1,RACE_FIEND,ATTRIBUTE_DARK) then
 			local token=Duel.CreateToken(tp,1151997)
 			Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 		end

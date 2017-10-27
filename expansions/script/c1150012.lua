@@ -52,14 +52,14 @@ function c1150012.tfilter3(c,e,sp)
 	return c:IsRace(RACE_AQUA) and c:IsCanBeSpecialSummoned(e,0,sp,false,false) and c:GetLevel()<5 and not c:IsType(TYPE_XYZ)
 end
 function c1150012.tg3(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c1150012.tfilter3,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 --
 function c1150012.op3(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+		if Duel.GetMZoneCount(tp)>0 then
 			if Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 then 
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				local g=Duel.SelectMatchingCard(tp,c1150012.tfilter3,tp,LOCATION_HAND,0,1,1,nil,e,tp)

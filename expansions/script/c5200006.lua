@@ -30,7 +30,7 @@ function c5200006.spfilter(c)
 end
 function c5200006.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c5200006.spfilter,tp,LOCATION_MZONE,0,1,nil,POS_FACEUP_ATTACK)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP) end
+		and Duel.GetMZoneCount(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP) end
 	local g=Duel.GetMatchingGroup(Card.IsPosition,tp,0,LOCATION_MZONE,nil,POS_FACEUP_ATTACK)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,g:GetCount(),0,0)
@@ -43,7 +43,7 @@ function c5200006.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect() 
 		local g=Duel.GetMatchingGroup(Card.IsPosition,tp,0,LOCATION_MZONE,nil,POS_FACEUP_ATTACK)
 		Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
-	elseif Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+	elseif Duel.GetMZoneCount(tp)<=0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) then
 		Duel.SendtoGrave(c,REASON_RULE)
 	end

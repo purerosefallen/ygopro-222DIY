@@ -33,7 +33,7 @@ function c114000989.spconfilter(c,att)
 end
 function c114000989.spcon(e,c)
 	if c==nil then return true end
-	if Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)<0 then return false end
+	if Duel.GetMZoneCount(c:GetControler())<0 then return false end
 	local gwt=Duel.GetMatchingGroup(c114000989.spconfilter,c:GetControler(),LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil,ATTRIBUTE_WATER)
 	local gwd=Duel.GetMatchingGroup(c114000989.spconfilter,c:GetControler(),LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil,ATTRIBUTE_WIND)
 	local ger=Duel.GetMatchingGroup(c114000989.spconfilter,c:GetControler(),LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil,ATTRIBUTE_EARTH)
@@ -43,7 +43,7 @@ function c114000989.spcon(e,c)
 end
 function c114000989.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g,tc
-	if Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 then
+	if Duel.GetMZoneCount(c:GetControler())>0 then
 		g=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		tc=g:Select(tp,1,1,nil)
 	else

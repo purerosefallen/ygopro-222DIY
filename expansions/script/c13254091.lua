@@ -81,7 +81,7 @@ function c13254091.posop(e,tp,eg,ep,ev,re,r,rp)
 		--  tc:RegisterEffect(e1)
 		--  tc=og:GetNext()
 		--end
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 or not c:IsRelateToEffect(e) then return end
+		if Duel.GetMZoneCount(tp)<1 or not c:IsRelateToEffect(e) then return end
 		Duel.BreakEffect()
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end

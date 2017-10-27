@@ -23,7 +23,7 @@ end
 
 function c114000268.ntcon(e,c)
 	if c==nil then return true end
-	return c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return c:GetLevel()>4 and Duel.GetMZoneCount(c:GetControler())>0
 end
 function c114000268.ntop(e,tp,eg,ep,ev,re,r,rp,c)
 	--change base attack

@@ -49,7 +49,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.Remove(token,POS_FACEUP,REASON_RULE)
 	Duel.Hint(HINT_CARD,0,token:GetOriginalCode())
-	if token:IsType(TYPE_MONSTER) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummon(tp) and Duel.SelectYesNo(tp,aux.Stringid(m,0)) then
+	if token:IsType(TYPE_MONSTER) and Duel.GetMZoneCount(tp)>0 and Duel.IsPlayerCanSpecialSummon(tp) and Duel.SelectYesNo(tp,aux.Stringid(m,0)) then
 		Duel.SpecialSummon(token,0,tp,tp,true,true,POS_FACEUP)
 	else
 		Duel.SendtoHand(token,tp,REASON_RULE)

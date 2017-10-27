@@ -57,12 +57,12 @@ function c1000810.filter(c,e,tp,m)
 	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_RITUAL) and c:IsSetCard(0x3204) and not c:IsCode(1000810)
 end
 function c1000810.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c1000810.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c1000810.thaop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c1000810.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
@@ -96,12 +96,12 @@ end
 function c1000810.futarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local mg=Duel.GetRitualMaterial(tp)
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c1000810.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,mg) 
+		return Duel.GetMZoneCount(tp)>0 and Duel.IsExistingMatchingCard(c1000810.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,mg) 
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c1000810.futhaop(e,tp,eg,ep,ev,re,r,rp)
-   if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+   if Duel.GetMZoneCount(tp)<=0 then return end
    local mg=Duel.GetRitualMaterial(tp)
    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
    local tg=Duel.SelectMatchingCard(tp,c1000810.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,mg)

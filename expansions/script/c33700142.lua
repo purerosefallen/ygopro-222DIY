@@ -12,7 +12,7 @@ function c33700142.initial_effect(c)
 end
 function c33700142.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_MZONE,0,nil,TYPE_TOKEN)
-	 local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	 local ft=Duel.GetMZoneCount(tp)
 	 if g>ft  then
 	g=ft
    end
@@ -25,7 +25,7 @@ end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,cg:GetCount(),0,0)
 end
 function c33700142.activate(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft=Duel.GetMZoneCount(tp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	 if ft<=0 then return end

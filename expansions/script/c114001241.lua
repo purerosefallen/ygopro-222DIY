@@ -28,7 +28,7 @@ function c114001241.initial_effect(c)
 end
 function c114001241.spcon(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return Duel.GetMZoneCount(c:GetControler())>0
 		and Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0,nil)==0
 end
 function c114001241.retcon(e,tp,eg,ep,ev,re,r,rp)

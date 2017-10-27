@@ -21,7 +21,7 @@ function c114100578.initial_effect(c)
 end
 function c114100578.ntcon(e,c)
 	if c==nil then return true end
-	return c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return c:GetLevel()>4 and Duel.GetMZoneCount(c:GetControler())>0
 end
 function c114100578.confilter2(c)
 	return ( c:IsFaceup() or c:IsLocation(LOCATION_GRAVE) ) 
@@ -39,7 +39,7 @@ function c114100578.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function c114100578.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end

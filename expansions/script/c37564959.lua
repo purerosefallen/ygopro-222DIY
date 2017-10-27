@@ -35,7 +35,7 @@ function cm.mfilter(c,lc)
 	return c:IsFaceup() and Senya.check_set_sayuri(c) and c:IsLinkType(TYPE_RITUAL) and c:IsReleasable()
 end
 function cm.lcheck(g,tp,lc)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)+g:FilterCount(aux.FConditionCheckF,nil,tp)>0 and not g:IsExists(cm.lfilter,1,nil,g)
+	return Duel.GetMZoneCount(tp)+g:FilterCount(aux.FConditionCheckF,nil,tp)>0 and not g:IsExists(cm.lfilter,1,nil,g)
 end
 function cm.lfilter(c,g)
 	return g:IsExists(Card.IsCode,1,c,c:GetCode())
@@ -67,13 +67,13 @@ function cm.filter(c,e,tp)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and cm.filter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(cm.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetMZoneCount(tp)>0 and Duel.IsExistingTarget(cm.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,cm.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function cm.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetMZoneCount(tp)<=0 then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsCanBeSpecialSummoned(e,0,tp,true,true) then
 		Duel.SpecialSummon(tc,0,tp,tp,true,true,POS_FACEUP)

@@ -15,7 +15,7 @@ end
 function c114100284.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE,nil)>0 and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
+	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE,nil)>0 and Duel.GetMZoneCount(1-tp)>0
 end
 function c114100284.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local e2=Effect.CreateEffect(c)

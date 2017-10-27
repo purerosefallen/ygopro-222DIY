@@ -68,7 +68,7 @@ function c60151606.condition(e,tp,eg,ep,ev,re,r,rp)
     return re:IsActiveType(TYPE_MONSTER) and re:IsActivated() and rc:IsSetCard(0xcb25)
 end
 function c60151606.target(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+    if chk==0 then return Duel.GetMZoneCount(tp)>0
         and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
@@ -91,7 +91,7 @@ function c60151606.filter3(c)
     return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
 end
 function c60151606.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+    if chk==0 then return Duel.GetMZoneCount(tp)>0 
 		and Duel.IsExistingMatchingCard(c60151606.filter3,tp,0,LOCATION_ONFIELD,1,nil) end
     Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_ONFIELD)
 end

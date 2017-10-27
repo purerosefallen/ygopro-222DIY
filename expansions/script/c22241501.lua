@@ -53,11 +53,11 @@ function c22241501.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
 	local g1=Duel.GetMatchingGroup(c22241501.filter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e)
 	local g2=Duel.GetMatchingGroup(c22241501.filter2,tp,LOCATION_SZONE,0,nil,e,tp)
-	if g1:GetCount()>0 and g2:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if g1:GetCount()>0 and g2:GetCount()>0 and Duel.GetMZoneCount(tp)>0 then
 		op=Duel.SelectOption(tp,aux.Stringid(22241501,0),aux.Stringid(22241501,1))
-	elseif g1:GetCount()>0 and (g2:GetCount()<1 or Duel.GetLocationCount(tp,LOCATION_MZONE)<1) then
+	elseif g1:GetCount()>0 and (g2:GetCount()<1 or Duel.GetMZoneCount(tp)<1) then
 		op=Duel.SelectOption(tp,aux.Stringid(22241501,0))
-	elseif g1:GetCount()<1 and g2:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	elseif g1:GetCount()<1 and g2:GetCount()>0 and Duel.GetMZoneCount(tp)>0 then
 		op=Duel.SelectOption(tp,aux.Stringid(22241501,1))+1
 	end
 	e:SetLabel(op)
@@ -80,7 +80,7 @@ function c22241501.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 		end
 	else
 		local g=Duel.SelectMatchingCard(tp,c22241501.filter2,tp,LOCATION_SZONE,0,1,1,nil,e,tp)
-		if g:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+		if g:GetCount()>0 and Duel.GetMZoneCount(tp)>0 then
 			Duel.SpecialSummon(g,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
 		end
 	end

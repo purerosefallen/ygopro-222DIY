@@ -37,7 +37,7 @@ function c114000316.filter2(c)
 	return c:IsSetCard(0xcabb) and c:IsType(TYPE_MONSTER)
 end
 function c114000316.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(c114000316.filter,tp,LOCATION_DECK,0,1,nil,e,tp) 
 		and Duel.IsExistingMatchingCard(c114000316.filter2,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.SetTargetPlayer(tp)
@@ -50,7 +50,7 @@ function c114000316.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	local rec=Duel.Recover(p,d,REASON_EFFECT)
-	if rec~=ev or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if rec~=ev or Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c114000316.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
