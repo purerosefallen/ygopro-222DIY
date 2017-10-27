@@ -51,7 +51,7 @@ function cm.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=e:GetHandler():GetLinkedGroup():Filter(Card.IsAbleToHand,nil)
 	local ct=sg:GetCount()
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=math.min(ct,1) end
-	local g1=Senya.SelectGroup(tp,HINTMSG_RTOHAND,g,cm.thgcheck,nil,1,ct,tp,z)
+	local g1=Senya.SelectGroup(tp,HINTMSG_RTOHAND,tg,cm.thgcheck,nil,1,ct,tp,z)
 	local rct=Duel.SendtoHand(g1,nil,REASON_EFFECT)
 	local tsg=Duel.GetMatchingGroup(cm.sfilter,tp,LOCATION_HAND,0,nil,e,tp)
 	local minct=math.min(tsg:GetCount(),rct)

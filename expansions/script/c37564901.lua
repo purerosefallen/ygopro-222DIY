@@ -54,7 +54,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 			if tc.mat_filter then
 				mg=mg:Filter(tc.mat_filter,nil)
 			end
-			local mat=mat=Senya.CheckRitualMaterial(tc,mg,tp,tc:GetLevel())
+			local mat=Senya.SelectRitualMaterial(tc,mg,tp,tc:GetLevel())
 			tc:SetMaterial(mat)
 			Senya.SayuriCheckTrigger(tc,e,tp,eg,ep,ev,re,r,rp)
 			Duel.ReleaseRitualMaterial(mat)
