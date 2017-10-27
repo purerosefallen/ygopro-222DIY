@@ -59,6 +59,7 @@ end
 function cm.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=3 end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	Duel.Hint(12,0,aux.Stringid(m,3))
 end
 function cm.operation1(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<3 then return false end
@@ -68,6 +69,7 @@ function cm.operation1(e,tp,eg,ep,ev,re,r,rp)
 		local b1=g:IsExists(Card.IsAbleToHand,1,nil)
 		local b2=e:GetHandler():IsRelateToEffect(e) and e:GetHandler():IsDiscardable() and e:GetHandler():IsLocation(LOCATION_HAND) and g:IsExists(function(c) return c:IsSetCard(0x442) and c:IsAbleToHand() end,1,nil)
 		if b2 and Duel.SelectYesNo(tp,m*16+2) then
+			Duel.Hint(12,0,aux.Stringid(m,5))
 			local tg=g:Filter(function(c) return c:IsSetCard(0x442) and c:IsAbleToHand() end,nil)
 			Duel.BreakEffect()
 			Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT+REASON_DISCARD)
@@ -75,7 +77,10 @@ function cm.operation1(e,tp,eg,ep,ev,re,r,rp)
 			g:Sub(Duel.GetOperatedGroup())
 			Duel.ConfirmCards(1-tp,tg)
 		elseif b1 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local tg=g:FilterSelect(tp,Card.IsAbleToHand,1,1,nil)
+			Duel.Hint(12,0,aux.Stringid(m,4))
+			Duel.BreakEffect()
 			Duel.SendtoHand(tg,nil,REASON_EFFECT)
 			g:Sub(Duel.GetOperatedGroup())
 			Duel.ConfirmCards(1-tp,tg)			

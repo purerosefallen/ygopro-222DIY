@@ -1,5 +1,8 @@
 --动物朋友 八咫乌
+xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 function c33700104.initial_effect(c)
+	Senya.AddSummonSE(c,aux.Stringid(33700104,2))
+	Senya.AddAttackSE(c,aux.Stringid(33700104,3))
 	c33700104[c]={}
 	local effect_list=c33700104[c]
 	 c:EnableCounterPermit(0x442)
@@ -123,6 +126,7 @@ function c33700104.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c33700104.ctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanAddCounter(0x442,1) end
+	Duel.Hint(12,0,aux.Stringid(33700104,4))
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x442)
 end
 function c33700104.cop(e,tp,eg,ep,ev,re,r,rp)
@@ -135,6 +139,7 @@ end
 function c33700104.retg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and chkc:IsAbleToRemove() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,nil) end
+	Duel.Hint(12,0,aux.Stringid(33700104,4))
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,1,nil)
 	local tg=Duel.GetMatchingGroup(c33700104.refilter,tp,0,LOCATION_GRAVE,nil,g:GetFirst():GetCode())

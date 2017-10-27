@@ -1,6 +1,8 @@
 --动物朋友 西之白虎
 xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 function c33700085.initial_effect(c)
+	Senya.AddAttackSE(c,aux.Stringid(33700085,1))
+	Senya.AddSummonSE(c,aux.Stringid(33700085,3))
 	  --synchro summon
 	aux.AddSynchroProcedure2(c,nil,aux.NonTuner(nil))
 	c:EnableReviveLimit()
@@ -33,6 +35,7 @@ function c33700085.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local result=g:FilterCount(Card.IsAbleToHand,nil)>0
 		return result
 	end
+	Duel.Hint(12,0,aux.Stringid(33700093,2))
 	Duel.SetTargetPlayer(tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end

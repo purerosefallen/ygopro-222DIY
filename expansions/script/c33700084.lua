@@ -1,10 +1,13 @@
 --动物朋友 北之玄武
 xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 function c33700084.initial_effect(c)
+	Senya.AddSummonSE(c,aux.Stringid(33700084,2))
+	Senya.AddAttackSE(c,aux.Stringid(33700084,3))
 		--xyz summon
 	c:EnableReviveLimit()
 	Senya.AddXyzProcedureCustom(c,c33700084.xyzfilter,c33700084.xyzcheck,1,2)
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(33700084,4))
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
@@ -52,6 +55,7 @@ end
 function c33700084.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,nil) end
+	Duel.Hint(12,0,aux.Stringid(33700084,5))
 	Duel.SetTargetPlayer(tp)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 end

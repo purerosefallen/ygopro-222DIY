@@ -1,5 +1,8 @@
 --动物朋友 东之青龙
+xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 function c33700082.initial_effect(c)
+	Senya.AddSummonSE(c,aux.Stringid(33700082,1))
+	Senya.AddAttackSE(c,aux.Stringid(33700082,2))
 	 c:EnableReviveLimit()
 	--deck check
 	local e1=Effect.CreateEffect(c)
@@ -50,6 +53,7 @@ function c33700082.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<hg then return false end
 		return Duel.GetLocationCount(tp,LOCATION_MZONE,0)>0
 	end
+	Duel.Hint(12,0,aux.Stringid(33700082,3))
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_DECK)
 end
 function c33700082.spfilter(c,e,tp)

@@ -96,8 +96,7 @@ function c57300022.rcon(con,tc,copyt)
 			copyt[tc]=nil
 			return false
 		end
-		if not con or con(e,tp,eg,ep,ev,re,r,rp) then return true end
-		return e:IsHasType(0x7e0) and c:GetFlagEffect(m)>0
+		return not con or con(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c57300022.mfilter(c,xyzc)

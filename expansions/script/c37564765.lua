@@ -2527,3 +2527,38 @@ function cm.SelectRitualMaterial(c,g,tp,lv,f)
 	local f=f or Card.GetRitualLevel
 	return cm.SelectGroup(tp,HINTMSG_RELEASE,g,cm.CheckRitualMaterialGoal,nil,1,99,c,tp,lv,f)
 end
+--for anifriends sound effects
+function cm.AddSummonSE(c,desc)
+	if c:IsStatus(STATUS_COPYING_EFFECT) or Senya.master_rule_3_flag then return end
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_SUMMON_SUCCESS)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetOperation(function()
+		Duel.Hint(12,0,desc)
+	end)
+	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
+	c:RegisterEffect(e2)
+	local e3=e1:Clone()
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e3)
+end
+function cm.AddAttackSE(c,desc)
+	if not cm.AttackSEList then
+		cm.AttackSEList={}
+		local e1=Effect.GlobalEffect()
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_ATTACK_ANNOUNCE)
+		e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetCondition(function()
+			return cm.AttackSEList[Duel.GetAttacker()]
+		end)
+		e1:SetOperation(function()
+			Duel.Hint(12,0,cm.AttackSEList[Duel.GetAttacker()])
+		end)
+		Duel.RegisterEffect(e1,0)
+	end
+	cm.AttackSEList[c]=desc
+end

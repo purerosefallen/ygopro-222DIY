@@ -1,7 +1,10 @@
 --动物朋友 刑部狸
 local m=33700182
 local cm=_G["c"..m]
+xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 function cm.initial_effect(c)
+	Senya.AddSummonSE(c,aux.Stringid(m,0))
+	Senya.AddAttackSE(c,aux.Stringid(m,1))
 	--synchro summon
 	aux.AddSynchroProcedure2(c,nil,aux.NonTuner(nil))
 	c:EnableReviveLimit()

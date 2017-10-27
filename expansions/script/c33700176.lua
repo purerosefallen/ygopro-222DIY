@@ -4,6 +4,10 @@ function c33700176.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
+		if chk==0 then return true end
+		Duel.Hint(12,0,aux.Stringid(33700176,1))
+	end)
 	c:RegisterEffect(e1)   
 	--set
 	local e2=Effect.CreateEffect(c)

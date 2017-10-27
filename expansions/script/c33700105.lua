@@ -1,5 +1,8 @@
 --动物朋友 稻荷神
+xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 function c33700105.initial_effect(c)
+	Senya.AddSummonSE(c,aux.Stringid(33700105,0))
+	Senya.AddAttackSE(c,aux.Stringid(33700105,1))
 	   --synchro summon
 	aux.AddSynchroProcedure2(c,nil,aux.NonTuner(nil))
 	c:EnableReviveLimit()
