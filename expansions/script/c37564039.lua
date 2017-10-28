@@ -14,39 +14,18 @@ function cm.initial_effect(c)
 	e1:SetTarget(cm.target)
 	e1:SetOperation(cm.activate)
 	c:RegisterEffect(e1)
-	if not cm.chk then
-		cm.chk=true
-		local ex=Effect.GlobalEffect()
-		ex:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ex:SetCode(EVENT_ADJUST)
-		ex:SetOperation(cm.reg)
-		Duel.RegisterEffect(ex,0)
-	end
-end
-function cm.regcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(cm.rfilter,tp,0xff,0xff,nil)
-	return g:GetCount()>0
-end
-function cm.reg(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(cm.rfilter,tp,0xff,0xff,nil)
-	g:ForEach(function(c)
-		local e3=Effect.CreateEffect(c)
-		e3:SetDescription(aux.Stringid(m,0))
-		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-		e3:SetCode(EVENT_PHASE+PHASE_END)
-		e3:SetRange(LOCATION_MZONE)
-		e3:SetCountLimit(1)
-		e3:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-			return Duel.GetTurnPlayer()==tp and e:GetHandler():GetOverlayGroup():IsExists(aux.FilterEqualFunction(Card.GetOriginalCode,m),1,nil)
-		end)
-		e3:SetTarget(cm.mttg)
-		e3:SetOperation(cm.mtop)
-		c:RegisterEffect(e3,true)
-		c:RegisterFlagEffect(m,0,0,1)
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(m,0))
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_XMATERIAL+EFFECT_TYPE_TRIGGER_O)
+	e3:SetCode(EVENT_PHASE+PHASE_END)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCountLimit(1)
+	e3:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
+		return Duel.GetTurnPlayer()==tp
 	end)
-end
-function cm.rfilter(c)
-	return c:IsType(TYPE_XYZ) and c:GetFlagEffect(m)==0
+	e3:SetTarget(cm.mttg)
+	e3:SetOperation(cm.mtop)
+	c:RegisterEffect(e3)
 end
 function cm.mtfilter(c)
 	return Senya.check_set_elem(c)
