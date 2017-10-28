@@ -7,6 +7,7 @@ function c1200051.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	--pendulum set
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(1200051,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCountLimit(1)
@@ -34,17 +35,6 @@ function c1200051.initial_effect(c)
 	e1:SetTarget(c1200051.tg)
 	e1:SetOperation(c1200051.op)
 	c:RegisterEffect(e1)
-	--destroy
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(1200051,3))
-	e3:SetCategory(CATEGORY_TODECK)
-	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCountLimit(1)
-	e3:SetCost(c1200051.cost3)
-	e3:SetTarget(c1200051.target3)
-	e3:SetOperation(c1200051.operation3)
-	c:RegisterEffect(e3)
 end
 function c1200051.pcfilter(c)
 	return c:IsType(TYPE_PENDULUM) and not c:IsForbidden() and c:IsSetCard(0xfba)
@@ -80,7 +70,7 @@ function c1200051.operation2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c1200051.con(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) 
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO 
 end
 function c1200051.rfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfba) and c:IsReleasable()
@@ -97,21 +87,5 @@ function c1200051.op(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		local rgg=Duel.SelectMatchingCard(tp,Card.IsReleasable,0,LOCATION_ONFIELD,1,m,nil)
 		Duel.Release(rgg,REASON_EFFECT)
-	end
-end
-function c1200051.cost3(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToDeckOrExtraAsCost() end
-	Duel.SendtoDeck(c,nil,2,REASON_COST)
-end
-function c1200051.target3(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,e:GetHandler()) end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,0,1,0,0)
-end
-function c1200051.operation3(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,e:GetHandler()) then return false end
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,e:GetHandler())
-	if g:GetCount()>0 then
-		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 	end
 end

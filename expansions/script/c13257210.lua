@@ -53,7 +53,7 @@ function c13257210.initial_effect(c)
 end
 function c13257210.ntcon(e,c,minc)
 	if c==nil then return true end
-	return minc==0 and c:GetLevel()>4 and Duel.GetMZoneCount(c:GetControler())>0
+	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function c13257210.ntop(e,tp,eg,ep,ev,re,r,rp,c)
 	--change base attack
@@ -79,7 +79,7 @@ function c13257210.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveCounter(ep,0x1f,1,REASON_EFFECT)
 end
 function c13257210.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x1f,3)
+	e:GetHandler():AddCounter(0x1f,2)
 end
 function c13257210.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst()==e:GetHandler()

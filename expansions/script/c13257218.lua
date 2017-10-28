@@ -101,13 +101,13 @@ function c13257218.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local rg=Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,0,LOCATION_MZONE,nil)
-	local ft=Duel.GetMZoneCount(1-tp)
+	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
 	local ct=-ft+1
 	return ft>-2 and rg:GetCount()>1 and (ft>0 or rg:IsExists(c13257218.mzfilter,ct,nil))
 end
 function c13257218.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,0,LOCATION_MZONE,nil)
-	local ft=Duel.GetMZoneCount(1-tp)
+	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
 	local g=nil
 	if ft>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

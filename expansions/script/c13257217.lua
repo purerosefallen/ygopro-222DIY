@@ -31,7 +31,6 @@ function c13257217.initial_effect(c)
 	e4:SetCountLimit(1)
 	e4:SetHintTiming(0,0x1e0)
 	e4:SetCondition(c13257217.poscon)
-	e4:SetCost(c13257217.poscost)
 	e4:SetTarget(c13257217.postg)
 	e4:SetOperation(c13257217.posop)
 	c:RegisterEffect(e4)
@@ -46,14 +45,10 @@ function c13257217.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveCounter(ep,0x1f,1,REASON_EFFECT)
 end
 function c13257217.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x1f,3)
+	e:GetHandler():AddCounter(0x1f,2)
 end
 function c13257217.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
-function c13257217.poscost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1f,1,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x1f,1,REASON_COST)
 end
 function c13257217.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
@@ -69,7 +64,7 @@ function c13257217.posop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT+0x1fe0000)
 			e1:SetValue(-700)
 			sc:RegisterEffect(e1)
 			local e2=e1:Clone()

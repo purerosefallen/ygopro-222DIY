@@ -42,20 +42,9 @@ function c1200053.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1)
-	e3:SetCondition(c1200053.sscon)
 	e3:SetTarget(c1200053.sstg)
 	e3:SetOperation(c1200053.ssop)
 	c:RegisterEffect(e3)
-	--tograve
-	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(1200053,4))
-	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e6:SetCode(EVENT_PHASE+PHASE_END)
-	e6:SetRange(LOCATION_SZONE)
-	e6:SetCountLimit(1)
-	e6:SetTarget(c1200053.tgtg)
-	e6:SetOperation(c1200053.tgop)
-	c:RegisterEffect(e6)
 end
 function c1200053.matfilter(c)
 	return c:GetSummonLocation()==LOCATION_EXTRA and c:IsSetCard(0xfba) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
@@ -118,9 +107,6 @@ end
 function c1200053.ssfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xfbc)
 end
-function c1200053.sscon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c1200053.ssfilter,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
-end
 function c1200053.sssfilter(c)
 	return c:IsSetCard(0xfbc) and c:IsType(TYPE_CONTINUOUS) and c:IsSSetable()
 end
@@ -133,15 +119,6 @@ function c1200053.ssop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SSet(tp,g:GetFirst())
 		Duel.ConfirmCards(1-tp,g)
-	end
-end
-function c1200053.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,e:GetHandler(),1,0,0)
-end
-function c1200053.tgop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsRelateToEffect(e) then
-		Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
 	end
 end
 

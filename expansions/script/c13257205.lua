@@ -62,10 +62,10 @@ function c13257205.otcon(e,c,minc)
 	local mg=Duel.GetMatchingGroup(c13257205.otfilter,tp,LOCATION_HAND,0,c)
 	local mg1=Duel.GetMatchingGroup(c13257205.otfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	return c:GetLevel()>6 and minc<=2
-		and (Duel.GetMZoneCount(tp)>0 and mg:GetCount()>=1
+		and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and mg:GetCount()>=1
 			or Duel.CheckTribute(c,1,1,mg1))
 		or c:GetLevel()>4 and c:GetLevel()<=6 and minc<=1
-			and Duel.GetMZoneCount(tp)>0 and mg:GetCount()>=1
+			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and mg:GetCount()>=1
 end
 function c13257205.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mg=Duel.GetMatchingGroup(c13257205.otfilter,tp,LOCATION_HAND,0,c)
@@ -92,7 +92,7 @@ function c13257205.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveCounter(ep,0x1f,1,REASON_EFFECT)
 end
 function c13257205.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x1f,3)
+	e:GetHandler():AddCounter(0x1f,2)
 end
 function c13257205.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1f,1,REASON_COST) end

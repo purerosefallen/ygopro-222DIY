@@ -65,7 +65,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mg=Duel.GetMatchingGroup(cm.spfilter,tp,LOCATION_MZONE,0,nil)
 	local g=Senya.SelectGroup(tp,HINTMSG_RTOHAND,mg,cm.spgcheck,nil,3,3,tp)
 	c:SetMaterial(g)
-	Duel.SendtoHand(g,nil,REASON_COST+REASON_FUSION+REASON_MATERIAL)
+	Duel.SendtoHand(g,nil,REASON_COST)
 end
 function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeckAsCost,tp,LOCATION_HAND,0,1,nil) and Duel.IsPlayerCanDraw(tp,1) end

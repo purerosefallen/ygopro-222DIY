@@ -5,6 +5,7 @@ function c13257208.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetTarget(c13257208.target)
 	e1:SetOperation(c13257208.activate)
 	c:RegisterEffect(e1)
 	--atk/def up
@@ -45,6 +46,10 @@ end
 function c13257208.thfilter(c)
 	return (c:IsCode(13257209) or c:IsCode(13257211)) and c:IsAbleToHand()
 end
+function c13257208.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.Hint(11,0,aux.Stringid(13257208,4))
+end
 function c13257208.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(c13257208.thfilter,tp,LOCATION_DECK,0,nil)
@@ -62,7 +67,7 @@ function c13257208.spfilter(c,e,tp)
 	return c:IsSetCard(0x353) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c13257208.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c13257208.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
