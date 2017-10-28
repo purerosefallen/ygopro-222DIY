@@ -31,7 +31,7 @@ function c33700089.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(0,1)
 	e3:SetCondition(c33700089.actcon)
-	effect_list[12]=e3
+	effect_list[7]=e3
 	e3:SetValue(c33700089.limit)
 	c:RegisterEffect(e3)
 	--Destroy
@@ -96,7 +96,7 @@ end
 function c33700089.actcon(e)
 	local g=Duel.GetMatchingGroup(c33700089.confilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)
 	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE and (g:GetClassCount(Card.GetCode)>=12  or e:GetLabel()==33700090) and Duel.GetTurnPlayer()~=e:GetHandlerPlayer()
+	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE and (g:GetClassCount(Card.GetCode)>=7 or e:GetLabel()==33700090) and Duel.GetTurnPlayer()~=e:GetHandlerPlayer()
 end
 function c33700089.limit(e,re,tp)
 	return not re:GetHandler():IsImmuneToEffect(e)
