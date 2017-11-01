@@ -85,7 +85,7 @@ function c1200051.op(e,tp,eg,ep,ev,re,r,rp)
 	local m=Duel.Release(rg,REASON_EFFECT)
 	if m>0 then
 		Duel.BreakEffect()
-		local rgg=Duel.SelectMatchingCard(tp,Card.IsReleasable,0,LOCATION_ONFIELD,1,m,nil)
+		local rgg=Duel.SelectMatchingCard(tp,Card.IsReleasable,tp,0,LOCATION_ONFIELD,1,m,nil)
 		Duel.Release(rgg,REASON_EFFECT)
 	end
 end

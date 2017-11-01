@@ -54,7 +54,7 @@ function c1200016.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c1200016.filter1(c)
-	return c:IsSetCard(0xfba) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0xfba) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:Iscode(1200016)
 end
 function c1200016.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c1200016.filter1(chkc) end

@@ -65,10 +65,12 @@ function c17060833.mfilterf(c,tp,mg,rc)
 end
 function c17060833.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
+	if bit.band(c:GetOriginalType(),0x81)~=0x81
+		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	if chk==0 then
 		local mg1=Duel.GetRitualMaterial(tp)
 		local mg2=Duel.GetMatchingGroup(c17060833.mfilter,tp,LOCATION_GRAVE,0,nil)
-		local ft=Duel.GetMZoneCount(tp)
+		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		return ft>-1 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
@@ -77,7 +79,7 @@ function c17060833.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local mg1=Duel.GetRitualMaterial(tp)
 	local mg2=Duel.GetMatchingGroup(c17060833.mfilter,tp,LOCATION_GRAVE,0,nil)
-	local ft=Duel.GetMZoneCount(tp)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	if c then
 		local mg=mg1:Filter(Card.IsCanBeRitualMaterial,c,c)
