@@ -105,6 +105,13 @@ artifacts:
     name: ygopro-222DIY-data
   - path: ygopro-222DIY-full.7z
     name: ygopro-222DIY-full
+	
+deploy:
+  description: 'Automatic build'
+  provider: GitHub
+  auth_token: %NANAHIRA%
+  on:
+    appveyor_repo_tag: true
 
 cache:
   - premake-5.0.0-alpha12-windows.zip
@@ -117,4 +124,5 @@ cache:
 
 branches:
   only:
-  - local
+    - local
+    - /\d+\..+/
