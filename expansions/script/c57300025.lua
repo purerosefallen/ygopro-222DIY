@@ -141,11 +141,11 @@ function c57300025.spfilter(c,e,tp)
 end
 function c57300025.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local ft=1
-		if e:GetLabel()==1 then ft=0 end
+		local cc=nil
+		if e:GetLabel()==1 then cc=e:GetHandler() end
 		e:SetLabel(0)
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then return false end
-		return Duel.GetMZoneCount(tp)>ft
+		return Duel.GetMZoneCount(tp,cc,tp)>1
 			and Duel.IsExistingMatchingCard(c57300025.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 			and Duel.IsExistingMatchingCard(c57300025.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 	end

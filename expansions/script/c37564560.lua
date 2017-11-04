@@ -70,7 +70,7 @@ function cm.linkcon(e,c)
 end
 function cm.linkop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.GetMatchingGroup(cm.mfilter,tp,LOCATION_MZONE,0,nil)
-	local g1=Senya.SelectGroup(tp,0,g,cm.lcheck,nil,2,2,tp,c)
+	local g1=Senya.SelectGroup(tp,HINTMSG_LMATERIAL,g,cm.lcheck,nil,2,2,tp,c)
 	c:SetMaterial(g1)
 	Duel.SendtoGrave(g1,REASON_MATERIAL+REASON_LINK)
 end
