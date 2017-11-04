@@ -80,6 +80,14 @@ after_build:
 
 test: off
 
+deploy:
+  description: 'Automatic build'
+  provider: GitHub
+  auth_token:
+    secure: EQ9miMjfX/QAoBvgc6D+JLmHatLyxOEKZ/uo68QijxWW5Gp4MzB/pOH9+u2GlDVO
+  on:
+    appveyor_repo_tag: true
+
 artifacts:
   - path: ygopro.exe
     name: ygopro client
