@@ -23,7 +23,7 @@ function cm.initial_effect(c)
 end
 --1
 function cm.spfilter(c)
-	return c:IsFaceup() and c:GetAttack()==1850 
+	return c:IsFaceup() and c:GetAttack()==1850 and c:IsRace(RACE_SPELLCASTER)
 end
 function cm.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(cm.spfilter,tp,LOCATION_MZONE,0,1,nil)
