@@ -105,7 +105,7 @@ artifacts:
     name: ygopro-222DIY-data
   - path: ygopro-222DIY-full.7z
     name: ygopro-222DIY-full
-	
+
 deploy:
   description: 'Automatic build'
   provider: GitHub
