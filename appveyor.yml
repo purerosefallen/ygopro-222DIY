@@ -59,6 +59,7 @@ after_build:
   - rm -rf data/*.dll
 
   - mv -f bin/release/ygopro.exe data/ygopro_222.exe
+  - cp -rf data/ygopro_222.exe .
   - mv -f irrklang/bin/win32-visualStudio/irrKlang.dll data
   - mv -f irrklang/bin/win32-visualStudio/ikpMP3.dll data
 
