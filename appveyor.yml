@@ -63,7 +63,7 @@ after_build:
   - mv -f irrklang/bin/win32-visualStudio/ikpMP3.dll data
 
   - cd data/update
-  - echo y | update.exe -m > /null
+  - update.exe -m > /null
   - cd ..
 
   - git add . -A
