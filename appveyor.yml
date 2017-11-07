@@ -95,7 +95,7 @@ after_build:
   - cp -rf ygopro-starter-pack-master/* .
   
   - 7z a -mx9 -xr!.git* ../ygopro-222DIY-full.7z ygopro_222.exe LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound irrKlang.dll ikpMP3.dll expansions update
- - cd ..
+  - cd ..
 
 test: off
 
