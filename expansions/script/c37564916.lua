@@ -43,47 +43,23 @@ end
 function cm.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
-		local ft=Duel.GetMZoneCount(tp)
 		local mg=Duel.GetRitualMaterial(tp):Filter(cm.matfilter,c,c)
 		if c.mat_filter then
 			mg=mg:Filter(c.mat_filter,nil)
 		end
 		if not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,true) then return end
-		if ft>0 then
-			return mg:CheckWithSumGreater(Card.GetRitualLevel,c:GetLevel(),c)
-		else
-			return mg:IsExists(cm.mfilterf,1,nil,tp,mg,c)
-		end
+		return Senya.CheckRitualMaterial(c,mg,tp,c:GetLevel(),nil,true)
 	end 
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
-function cm.mfilterf(c,tp,mg,rc)
-	if c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then
-		Duel.SetSelectedCard(c)
-		return mg:CheckWithSumGreater(Card.GetRitualLevel,rc:GetLevel(),rc)
-	else return false end
-end
 function cm.spop2(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetMZoneCount(tp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
+	if not e:GetHandler():IsRelateToEffect(e) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,true) then return end
 	local c=e:GetHandler()
 	local mg=Duel.GetRitualMaterial(tp):Filter(cm.matfilter,c,c)
 	if c.mat_filter then
 		mg=mg:Filter(c.mat_filter,nil)
 	end
-	local mat=nil
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	if ft>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		mat=mg:SelectWithSumGreater(tp,Card.GetRitualLevel,c:GetLevel(),c)
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		mat=mg:FilterSelect(tp,cm.mfilterf,1,1,nil,tp,mg,c)
-		Duel.SetSelectedCard(mat)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local mat2=mg:SelectWithSumGreater(tp,Card.GetRitualLevel,c:GetLevel(),c)
-		mat:Merge(mat2)
-	end
+	local mat=Senya.SelectRitualMaterial(c,mg,tp,c:GetLevel(),nil,true)
 	c:SetMaterial(mat)
 	Duel.ReleaseRitualMaterial(mat)
 	Duel.BreakEffect()

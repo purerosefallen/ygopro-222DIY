@@ -14,12 +14,6 @@ function cm.initial_effect(c)
 	e1:SetOperation(cm.operation)
 	c:RegisterEffect(e1)	
 end
-function cm.mfilterf(c,tp,mg,rc)
-	if c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then
-		Duel.SetSelectedCard(c)
-		return mg:CheckWithSumGreater(Card.GetRitualLevel,rc:GetLevel(),rc)
-	else return false end
-end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local l=e:GetLabel()
 	e:SetLabel(0)
@@ -30,13 +24,7 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local tempc=Senya.IgnoreActionCheck(Duel.CreateToken,tp,tcode)		
 		if not tempc:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,true) then return false end
 		local mg=Duel.GetRitualMaterial(tp):Filter(Card.IsCanBeRitualMaterial,e:GetHandler(),tempc)
-		local ft=Duel.GetMZoneCount(tp)
-		if ft<0 then return false end
-		if ft>0 then
-			return mg:CheckWithSumGreater(Card.GetRitualLevel,tempc:GetLevel(),tempc)
-		else
-			return mg:IsExists(cm.mfilterf,1,nil,tp,mg,tempc)
-		end
+		return Senya.CheckRitualMaterial(tempc,mg,tp,tempc:GetLevel(),nil,true)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
@@ -47,19 +35,7 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tcode=c.dfc_front_side
 	local tempc=Duel.CreateToken(tp,tcode)
 	local mg=Duel.GetRitualMaterial(tp):Filter(Card.IsCanBeRitualMaterial,c,tempc)
-	local ft=Duel.GetMZoneCount(tp)
-	local mat=nil
-	if ft>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		mat=mg:SelectWithSumGreater(tp,Card.GetRitualLevel,tempc:GetLevel(),tempc)
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		mat=mg:FilterSelect(tp,cm.mfilterf,1,1,nil,tp,mg,tempc)
-		Duel.SetSelectedCard(mat)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local mat2=mg:SelectWithSumGreater(tp,Card.GetRitualLevel,tempc:GetLevel(),tempc)
-		mat:Merge(mat2)
-	end
+	local mat=Senya.SelectRitualMaterial(tempc,mg,tp,tempc:GetLevel(),nil,true)
 	c:SetMaterial(mat)
 	Duel.ReleaseRitualMaterial(mat)
 	Duel.BreakEffect()

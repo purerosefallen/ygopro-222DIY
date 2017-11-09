@@ -2515,17 +2515,50 @@ function cm.DFCBackSideCommonEffect(c)
 	c:RegisterEffect(e2)	
 end
 --for ritual update
-function cm.CheckRitualMaterialGoal(g,c,tp,lv,f)
+function cm.CheckRitualMaterialGoal(g,c,tp,lv,f,gt)
 	local ct=g:GetCount()
-	return cm.CheckSummonLocation(c,tp,g) and g:CheckWithSumEqual(f,lv,ct,ct,c)
+	return cm.CheckSummonLocation(c,tp,g) and (g:CheckWithSumEqual(f,lv,ct,ct,c) or (gt and cm.CheckGreaterExact(g,f,lv,c)))
 end
-function cm.CheckRitualMaterial(c,g,tp,lv,f)
-	local f=f or Card.GetRitualLevel
-	return cm.CheckGroup(g,cm.CheckRitualMaterialGoal,nil,1,99,c,tp,lv,f)
+function cm.DivideValueMax(f,...)
+	local ext_params={...}
+	return function(c)
+		local v=f(c,table.unpack(ext_params))
+		local v1=bit.band(v,0xffff)
+		local v2=bit.rshift(v,16)
+		return math.max(v1,v2)
+	end
 end
-function cm.SelectRitualMaterial(c,g,tp,lv,f)
+function cm.DivideValueMin(f,...)
+	local ext_params={...}
+	return function(c)
+		local v=f(c,table.unpack(ext_params))
+		local v1=bit.band(v,0xffff)
+		local v2=bit.rshift(v,16)
+		if v1<=0 then
+			return v2
+		elseif v2<=0 then
+			return v1
+		else
+			return math.min(v1,v2)
+		end
+	end
+end
+function cm.CheckGreaterExactCounterCheck(c,g,f,lv,...)
+	g:RemoveCard(c)
+	local res=g:GetSum(cm.DivideValueMin(f,...))>=lv
+	g:AddCard(c)
+	return res
+end
+function cm.CheckGreaterExact(g,f,lv,...)
+	return g:GetSum(cm.DivideValueMax(f,...))>=lv and not g:IsExists(cm.CheckGreaterExactCounterCheck,1,nil,g,f,lv,...)
+end
+function cm.CheckRitualMaterial(c,g,tp,lv,f,gt)
 	local f=f or Card.GetRitualLevel
-	return cm.SelectGroup(tp,HINTMSG_RELEASE,g,cm.CheckRitualMaterialGoal,nil,1,99,c,tp,lv,f)
+	return cm.CheckGroup(g,cm.CheckRitualMaterialGoal,nil,1,99,c,tp,lv,f,gt)
+end
+function cm.SelectRitualMaterial(c,g,tp,lv,f,gt)
+	local f=f or Card.GetRitualLevel
+	return cm.SelectGroup(tp,HINTMSG_RELEASE,g,cm.CheckRitualMaterialGoal,nil,1,99,c,tp,lv,f,gt)
 end
 --for anifriends sound effects
 function cm.AddSummonSE(c,desc)
