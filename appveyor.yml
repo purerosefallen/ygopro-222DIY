@@ -58,14 +58,6 @@ artifacts:
   - path: ygopro_thc.exe
     name: ygopro_thc
 
-deploy:
-  description: 'Automatic build'
-  provider: GitHub
-  auth_token:
-    secure: EQ9miMjfX/QAoBvgc6D+JLmHatLyxOEKZ/uo68QijxWW5Gp4MzB/pOH9+u2GlDVO
-  on:
-    appveyor_repo_tag: true
-
 cache:
   - premake-5.0.0-alpha12-windows.zip
   - libevent-2.0.22-stable.tar.gz
@@ -77,9 +69,5 @@ cache:
 
 branches:
   only:
-<<<<<<< HEAD
   - local-thc
-=======
-    - local
-    - /\d+\..+/
->>>>>>> local
+  - /\d+\..+/
