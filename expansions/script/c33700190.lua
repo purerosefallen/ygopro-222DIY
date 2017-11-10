@@ -36,7 +36,7 @@ function cm.initial_effect(c)
 	e3:SetRange(LOCATION_HAND)
 	e3:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
 		local tc=eg:GetFirst()
-		return eg:GetCount()==1 and tc:IsType(TYPE_MONSTER) and tc:IsPreviousLocation(LOCATION_DECK) and tc:IsPreviousControler(1-tp) and (not tc:IsReason(REASON_DRAW) or tc:IsPublic())
+		return eg:GetCount()==1 and tc:IsType(TYPE_MONSTER) and tc:IsPreviousLocation(LOCATION_DECK) and tc:GetPreviousControler()==1-tp and (not tc:IsReason(REASON_DRAW) or tc:IsPublic())
 	end)
 	e3:SetTarget(cm.SelfSpsummonTarget)
 	e3:SetOperation(cm.SelfSpsummonTarget)
@@ -99,7 +99,7 @@ function cm.Copy(c,tc)
 		c:ResetFlagEffect(m)
 		c:ResetEffect(ccd,RESET_COPY)
 	end
-	local ecd=c:CopyEffect(rcd,RESET_EVENT+0x1fe0000,1)
+	local ecd=c:CopyEffect(code,RESET_EVENT+0x1fe0000,1)
 	c:RegisterFlagEffect(m,RESET_EVENT+0x1fe0000,0,1,ecd)
 end
 function cm.SelfSpsummonTarget(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -121,7 +121,7 @@ function cm.copyfilter(c)
 end
 function cm.copytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and cm.copyfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(cm.copyfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and c:GetFlagEffect(m-700000)==0 end
+	if chk==0 then return Duel.IsExistingTarget(cm.copyfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and e:GetHandler():GetFlagEffect(m-700000)==0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,cm.copyfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 end
@@ -129,7 +129,7 @@ function cm.copyop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsType(TYPE_TOKEN) and c:GetFlagEffect(m-700000)==0 then
-		cm.Copy(c,code)
+		cm.Copy(c,tc)
 		c:RegisterFlagEffect(m-700000,RESET_EVENT+0x1fe0000,0,10)
 	end
 end
