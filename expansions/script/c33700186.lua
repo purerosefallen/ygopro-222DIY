@@ -85,6 +85,13 @@ function cm.operation1(e,tp,eg,ep,ev,re,r,rp)
 			g:Sub(Duel.GetOperatedGroup())
 			Duel.ConfirmCards(1-tp,tg)			
 		end
+	else
+		local hg=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_HAND,0,nil)
+		if hg:GetCount()>=3 then
+			local tg=hg:RandomSelect(tp,3)
+			Duel.BreakEffect()
+			Duel.SendtoDeck(tg,nil,2,REASON_EFFECT)
+		end
 	end
 	if g:GetCount()>0 then
 		Duel.SortDecktop(tp,tp,g:GetCount())
