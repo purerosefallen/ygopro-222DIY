@@ -26,7 +26,7 @@ function c10173016.initial_effect(c)
 end
 function c10173016.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	local ft=Duel.GetMZoneCount(tp)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local loc=LOCATION_ONFIELD 
 	if ft<0 then loc=LOCATION_MZONE end
 	local g=Duel.GetMatchingGroup(Card.IsCanBeEffectTarget,tp,loc,0,c,e)
@@ -54,7 +54,7 @@ function c10173016.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if g:GetCount()>0 and Duel.Destroy(g,REASON_EFFECT)~=0 then
 		if not c:IsRelateToEffect(e) then return end
-		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 and Duel.GetMZoneCount(tp)<=0
+		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
 			and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLocation(LOCATION_HAND) then
 			Duel.SendtoGrave(c,REASON_RULE)
 			return
@@ -69,7 +69,7 @@ function c10173016.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return true
 end
 function c10173016.settg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c,ft1,ft2,ct=e:GetHandler(),Duel.GetMZoneCount(tp,LOCATION_SZONE),Duel.GetLocationCount(tp),e:GetLabel()
+	local c,ft1,ft2,ct=e:GetHandler(),Duel.GetLocationCount(tp,LOCATION_SZONE),Duel.GetLocationCount(tp,LOCATION_MZONE),e:GetLabel()
 	if chk==0 then return Duel.IsExistingMatchingCard(c10173016.setfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,ft1,ft2,ct) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,LOCATION_DECK)
 end
@@ -77,7 +77,7 @@ function c10173016.setfilter(c,e,tp,ft1,ft2,ct)
 	return c:IsRace(RACE_DINOSAUR) and not c:IsForbidden() and (ft1>0 or (ft2>0 and ct>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function c10173016.setop(e,tp,eg,ep,ev,re,r,rp)
-	local c,ft1,ft2,ct=e:GetHandler(),Duel.GetMZoneCount(tp,LOCATION_SZONE),Duel.GetLocationCount(tp),e:GetLabel()
+	local c,ft1,ft2,ct=e:GetHandler(),Duel.GetLocationCount(tp,LOCATION_SZONE),Duel.GetLocationCount(tp,LOCATION_MZONE),e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(10173016,4))
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c10173016.setfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp,ft1,ft2,ct):GetFirst()
 	if not tc then return end

@@ -69,7 +69,7 @@ function c10113048.thfilter2(c)
 end
 function c10113048.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	local ft=Duel.GetMZoneCount(tp)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local loc=LOCATION_ONFIELD 
 	if ft<0 then loc=LOCATION_MZONE end
 	local g=Duel.GetMatchingGroup(Card.IsCanBeEffectTarget,tp,loc,0,c,e)
@@ -97,7 +97,7 @@ function c10113048.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if g:GetCount()>0 and Duel.Destroy(g,REASON_EFFECT)~=0 then
 		if not c:IsRelateToEffect(e) then return end
-		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 and Duel.GetMZoneCount(tp)<=0
+		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
 			and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLocation(LOCATION_HAND) then
 			Duel.SendtoGrave(c,REASON_RULE)
 			return

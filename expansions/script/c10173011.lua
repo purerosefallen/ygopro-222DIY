@@ -83,7 +83,7 @@ function c10173011.spfilter(c)
 end
 function c10173011.hspcon(e,c)
 	if c==nil then return true end
-	local ft=Duel.GetMZoneCount(c:GetControler())
+	local ft=Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)
 	local g=Duel.GetMatchingGroup(c10173011.spfilter,c:GetControler(),LOCATION_MZONE+LOCATION_HAND,0,c)
 	if ft>0 then return
 	   g:GetCount()>=2
@@ -92,7 +92,7 @@ function c10173011.hspcon(e,c)
 	end
 end
 function c10173011.hspop(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft,sg=Duel.GetMZoneCount(tp)
+	local ft,sg=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.GetMatchingGroup(c10173011.spfilter,c:GetControler(),LOCATION_MZONE+LOCATION_HAND,0,c)
 	if ft>0 then
