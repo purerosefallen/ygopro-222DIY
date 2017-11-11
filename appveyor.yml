@@ -50,51 +50,6 @@ build:
     parallel: true
 
 after_build:
-<<<<<<< HEAD
-=======
-  - git config --global user.name "Smile-DK"
-  - git config --global user.email "2236141431@qq.com"
-  
-  - git checkout data
-  - git pull origin data
-
-  - rm -rf ygopro_222.exe
-  - rm -rf irrKlang.dll
-  - rm -rf ikpMP3.dll
-
-  - mv bin\release\ygopro.exe ygopro_222.exe
-  - mv irrklang\bin\win32-visualStudio\irrKlang.dll .
-  - mv irrklang\bin\win32-visualStudio\ikpMP3.dll .
-  
-  - git add ygopro_222.exe
-  - git add irrKlang.dll
-  - git add ikpMP3.dll
-  - git commit -m "Builded by Appveyor"
-  - git push %Smile%purerosefallen/ygopro-222DIY data
-  
-  - 7z a -mx9 -xr!.git* ygopro-222DIY-data.7z ygopro_222.exe irrKlang.dll ikpMP3.dll lflist.conf expansions sound update
-  
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/ygopro-7210srv/archive/master.zip ; exit 0"
-  - 7z x ygopro-7210srv-master.zip
-  - cp -rf ygopro-7210srv-master/cards.cdb .
-  - cp -rf ygopro-7210srv-master/strings.conf .
-  - cp -rf ygopro-7210srv-master/system.conf .
-  - cp -rf ygopro-7210srv-master/textures .
-
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Smile-DK/ygopro-scripts/archive/master.zip ; exit 0"
-  - 7z x ygopro-scripts-master.zip
-  - mv -f ygopro-scripts-master script
-  
-  - rm -rf ygopro-scripts-master.zip
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Fluorohydride/ygopro-scripts/archive/master.zip ; exit 0"
-  - 7z x ygopro-scripts-master.zip
-  - cp -rf ygopro-scripts-master/*.lua script
-
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/HuangYuNan/ygopro222-images/archive/master.zip ; exit 0"
-  - 7z x ygopro222-images-master.zip
-  - mv -f ygopro222-images-master pics
->>>>>>> local
-
   - mv bin\release\ygopro.exe ygopro_thc.exe
 
 test: off
@@ -102,14 +57,6 @@ test: off
 artifacts:
   - path: ygopro_thc.exe
     name: ygopro_thc
-
-deploy:
-  description: 'Automatic build'
-  provider: GitHub
-  auth_token:
-    secure: EQ9miMjfX/QAoBvgc6D+JLmHatLyxOEKZ/uo68QijxWW5Gp4MzB/pOH9+u2GlDVO
-  on:
-    appveyor_repo_tag: true
 
 cache:
   - premake-5.0.0-alpha12-windows.zip
@@ -123,8 +70,13 @@ cache:
 branches:
   only:
 <<<<<<< HEAD
+<<<<<<< HEAD
   - local-thc
 =======
     - local
     - /\d+\..+/
 >>>>>>> local
+=======
+  - local-thc
+  - /\d+\..+/
+>>>>>>> 4babac407db086d2f756c189d1bd1942e323663f
