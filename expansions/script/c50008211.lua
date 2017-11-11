@@ -67,6 +67,7 @@ function cm.initial_effect(c)
     end)
     e2:SetOperation(
     function(e,tp,eg,ep,ev,re,r,rp)
+        
         local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
         if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=3 then return end
         Duel.SendtoHand(tg,nil,REASON_EFFECT)
@@ -74,7 +75,7 @@ function cm.initial_effect(c)
         local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_HAND+LOCATION_EXTRA)
         if ct==3 then
             Duel.BreakEffect()
-            local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,p,LOCATION_HAND,0,nil)
+            local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_HAND,0,nil)
             if g:GetCount()>1 then
                 Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
                 local sg=g:Select(tp,2,2,nil)
