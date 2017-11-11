@@ -2,7 +2,7 @@
 function c1000819.initial_effect(c)
 	--FUSION
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,51105)
@@ -17,7 +17,7 @@ function c1000819.filter1(c,e)
 	return c:IsOnField() and c:IsAbleToRemove() and not c:IsImmuneToEffect(e)
 end
 function c1000819.filter2(c,e,tp,m,f,chkf)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x3008) and (not f or f(c))
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x5204) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function c1000819.filter3(c)
@@ -43,7 +43,7 @@ function c1000819.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
-function c1000819.activate(e,tp,eg,ep,ev,re,r,rp)
+function c1000819.op(e,tp,eg,ep,ev,re,r,rp)
 	local chkf=tp
 	local mg1=Duel.GetFusionMaterial(tp):Filter(c1000819.filter1,nil,e)
 	local mg2=Duel.GetMatchingGroup(c1000819.filter3,tp,LOCATION_GRAVE+LOCATION_HAND,0,nil)
@@ -76,5 +76,7 @@ function c1000819.activate(e,tp,eg,ep,ev,re,r,rp)
 			fop(ce,e,tp,tc,mat2)
 		end
 		tc:CompleteProcedure()
+		Duel.BreakEffect()
+		Duel.SetLP(tp,Duel.GetLP(tp)-2000)
 	end
 end
