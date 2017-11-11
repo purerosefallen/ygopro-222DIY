@@ -75,7 +75,7 @@ function c33700172.fsplimit(e,se,sp,st)
 	return  bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION or se:GetHandler()==e:GetHandler()
 end
 function c33700172.ffilter(c)
-	return (c:IsFusionType(TYPE_XYZ) or c:IsFusionType(TYPE_FUSION) or c:IsFusionType(TYPE_SYNCHRO) or c:IsFusionType(TYPE_LINK)) and c:IsFusionSetCard(0x442)
+	return c:IsFusionType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK) and c:IsFusionSetCard(0x442)
 end
 function c33700172.splimit(e,c,tp,sumtp,sumpos)
 	return not  bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
