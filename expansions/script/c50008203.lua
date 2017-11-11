@@ -17,8 +17,8 @@ function cm.initial_effect(c)
     e1:SetTarget(
     function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
         if chkc then return false end
-        if chk==0 then return Duel.IsExistingTarget(cm.filter,tp,LOCATION_MZONE,0,1,nil)
-            and Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,nil) end
+        if chk==0 then return Duel.IsExistingTarget(cm.filter,tp,LOCATION_ONFIELD,0,1,nil)
+            and Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil) end
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
         local g1=Duel.SelectTarget(tp,cm.filter,tp,LOCATION_ONFIELD,0,1,1,nil)
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
