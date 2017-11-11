@@ -73,11 +73,6 @@ after_build:
   - cp -rf ygopro-scripts-master/*.lua script
   - rm -rf ygopro-scripts-master ygopro-scripts-master.zip
 
-  - 7z x ygopro-7210srv-master.zip
-  - cp -rf ygopro-7210srv-master/cards.cdb .
-  - cp -rf ygopro-7210srv-master/strings.conf .
-  - cp -rf ygopro-7210srv-master/system.conf .
-  - cp -rf ygopro-7210srv-master/textures .
   - mkdir replay
   - cp -rf ../../expansions .
   - cp -rf ../../gframe .
