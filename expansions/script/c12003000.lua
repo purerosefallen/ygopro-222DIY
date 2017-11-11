@@ -37,7 +37,7 @@ function c12003000.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c12003000.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
-		Duel.SendtoGrave(g,REASON_EFFECT)
+		Duel.SendtoGrave(g,REASON_COST)
 	end
 end
 function c12003000.con2(e,tp,eg,ep,ev,re,r,rp)
