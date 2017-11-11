@@ -94,5 +94,5 @@ function cm.rthfilter(c)
     return c:IsFaceup() and mil.is_series(c,'rabbit')
 end
 function cm.filter(c)
-    return mil.is_series(c,'rabbit') and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+    return mil.is_series(c,'rabbit') and c:IsAbleToHand()
 end
