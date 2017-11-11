@@ -69,14 +69,4 @@ cache:
 
 branches:
   only:
-<<<<<<< HEAD
-<<<<<<< HEAD
   - local-thc
-=======
-    - local
-    - /\d+\..+/
->>>>>>> local
-=======
-  - local-thc
-  - /\d+\..+/
->>>>>>> 4babac407db086d2f756c189d1bd1942e323663f
