@@ -43,7 +43,7 @@ function c50000068.ffilter(c)
 	return c:IsFusionSetCard(0x50c) and c:IsFusionType(TYPE_XYZ+TYPE_SYNCHRO)
 end
 function c50000068.ffilter1(c)
-	return c:IsFusionType(TYPE_DUAL)
+	return c:IsFusionType(TYPE_EFFECT)
 end
 
 function c50000068.efilter1(e,re,rp)

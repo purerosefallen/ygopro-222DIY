@@ -67,7 +67,7 @@ function cm.operation0(e,tp,eg,ep,ev,re,r,rp)
 		c:ResetEffect(ccd,RESET_COPY)
 	end
 	local ecd=c:CopyEffect(rcd,RESET_EVENT+0x1fe0000,1)
-	c:RegisterFlagEffect(m,RESET_EVENT+0x1fe0000,0,1,ecd,m*16)
+	c:RegisterFlagEffect(m,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,ecd,m*16)
 end
 function cm.copycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

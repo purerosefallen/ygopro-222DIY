@@ -5,6 +5,7 @@ function c1110121.initial_effect(c)
 	aux.AddXyzProcedure(c,c1110121.xyzfilter,3,2,c1110121.ovfilter,aux.Stringid(1110121,0),2,c1110121.xyzop)
 --
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(1110121,2))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)

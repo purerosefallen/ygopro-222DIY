@@ -64,7 +64,7 @@ function c1110002.tfilter2(c)
 	return c:IsCode(1110001) and c:IsFaceup()
 end
 function c1110002.tg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingMatchingCard(c1110002.tfilter2,tp,LOCATION_MZONE,0,1,nil) and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetMZoneCount(tp)>0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(c1110002.tfilter2,tp,LOCATION_MZONE,0,1,nil) and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,LOCATION_HAND)
 	if e:GetLabel() and e:GetLabel()==1 then
 	   Duel.SetChainLimit(c1110002.limit2)

@@ -296,6 +296,27 @@ end
 function cm.XyzProcedureRankCheck(g,xyzc)
 	return g:GetClassCount(Card.GetRank)==1
 end
+function cm.XyzProcedureCustomTuneMagicianFilter(c,te)
+	local f=te:GetValue()
+	return f(te,c)
+end
+function cm.XyzProcedureCustomTuneMagicianCheck(c,g)
+	local eset={c:FilterEffect(EFFECT_TUNE_MAGICIAN_X)}
+	for _,te in ipairs(eset) do
+		if g:IsExists(cm.XyzProcedureCustomTuneMagicianFilter,1,c,te) then return true end
+	end
+	return false
+end
+function cm.XyzProcedureCustomCheck(g,xyzc,tp,gf)
+	if EFFECT_MUST_BE_XMATERIAL then
+		local eset={Duel.FilterPlayerEffect(tp,EFFECT_MUST_BE_XMATERIAL)}
+		for _,te in ipairs(eset) do
+			if not g:IsContains(te:GetHandler()) then return false end
+		end
+	end
+	if g:IsExists(cm.XyzProcedureCustomTuneMagicianCheck,1,nil,g) then return false end
+	return not gf or gf(g,xyzc,tp)
+end
 function cm.AddXyzProcedureCustom(c,func,gf,minc,maxc,xm,...)
 	local ext_params={...}
 	c:EnableReviveLimit()
@@ -333,7 +354,7 @@ function cm.XyzProcedureCustomCondition(func,gf,minct,maxct,ext_params)
 		else
 			mg=Duel.GetMatchingGroup(cm.XyzProcedureCustomFilter,tp,LOCATION_MZONE,0,nil,c,func,ext_params)
 		end
-		return maxc>=minc and cm.CheckGroup(mg,cm.CheckFieldFilter,nil,minc,maxc,tp,c,gf,c)
+		return maxc>=minc and cm.CheckGroup(mg,cm.CheckFieldFilter,nil,minc,maxc,tp,c,cm.XyzProcedureCustomCheck,c,tp,gf)
 	end
 end
 function cm.XyzProcedureCustomTarget(func,gf,minct,maxct,ext_params)
@@ -354,7 +375,7 @@ function cm.XyzProcedureCustomTarget(func,gf,minct,maxct,ext_params)
 				minc=math.max(minc,min)
 				maxc=math.min(maxc,max)
 			end
-			g=cm.SelectGroupWithCancel(tp,HINTMSG_XMATERIAL,mg,cm.CheckFieldFilter,nil,minc,maxc,tp,c,gf,c)
+			g=cm.SelectGroupWithCancel(tp,HINTMSG_XMATERIAL,mg,cm.CheckFieldFilter,nil,minc,maxc,tp,c,cm.XyzProcedureCustomCheck,c,tp,gf)
 		end
 		if g then
 			g:KeepAlive()
@@ -427,14 +448,14 @@ return function(e,c)
 	if c==nil then return true end
 	if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 	local tp=c:GetControler()
-	local chkf=PLAYER_NONE
+	local chkf=tp
 	local mg=Duel.GetMatchingGroup(cm.SelfFusionProcedureFilter,tp,loc,0,c,c,opf)
 	return c:CheckFusionMaterial(mg,nil,chkf)
 end
 end
 function cm.SelfFusionProcedureOperation(loc,opf)
 return function(e,tp,eg,ep,ev,re,r,rp,c)
-	local chkf=PLAYER_NONE
+	local chkf=tp
 	local mg=Duel.GetMatchingGroup(cm.SelfFusionProcedureFilter,tp,loc,0,c,c,opf)
 	local g=Duel.SelectFusionMaterial(tp,c,mg,nil,chkf)
 	c:SetMaterial(g)

@@ -45,7 +45,7 @@ function c1111301.matfilter(c)
 end
 function c1111301.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		if Duel.GetMZoneCount(tp)<=0 then return false end
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
 		local mg=Duel.GetMatchingGroup(c1111301.matfilter,tp,LOCATION_GRAVE,0,nil)
 		return Duel.IsExistingMatchingCard(c1111301.filter,tp,LOCATION_HAND+LOCATION_REMOVED,0,1,nil,e,tp,mg)
 	end
@@ -53,7 +53,7 @@ function c1111301.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 --
 function c1111301.op1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetMZoneCount(tp)<=0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local mg=Duel.GetMatchingGroup(c1111301.matfilter,tp,LOCATION_GRAVE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tg=Duel.SelectMatchingCard(tp,c1111301.filter,tp,LOCATION_HAND+LOCATION_REMOVED,0,1,1,nil,e,tp,mg)

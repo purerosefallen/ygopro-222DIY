@@ -50,7 +50,7 @@ function c1110111.vfilter3(c)
 end
 --
 function c1110111.con1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) 
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_FUSION 
 end
 --
 function c1110111.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -122,6 +122,13 @@ function c1110111.op1(e,tp,eg,ep,ev,re,r,rp)
 		e1_9:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 		e1_9:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e1_9)
+		local e1_10=Effect.CreateEffect(e:GetHandler())
+		e1_10:SetType(EFFECT_TYPE_SINGLE)
+		e1_10:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e1_10:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+		e1_10:SetValue(1)
+		e1_10:SetReset(RESET_EVENT+0x1fe0000)
+		tc:RegisterEffect(e1_10)
 	end
 end
 --

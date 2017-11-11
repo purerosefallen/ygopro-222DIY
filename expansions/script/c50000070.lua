@@ -2,7 +2,8 @@
 function c50000070.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,c50000070.ffilter,c50000070.ffilter1,true)
+	aux.AddFusionProcMix(c,false,true,c50000070.ffilter,c50000070.ffilter1,c50000070.ffilter2)
+	--aux.AddFusionProcFun3(c,c50000070.ffilter,c50000070.ffilter1,true)
 	--extra attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -54,6 +55,9 @@ function c50000070.ffilter(c)
 end
 function c50000070.ffilter1(c)
 	return  c:IsSetCard(0x50c) and c:IsFusionType(TYPE_FUSION)
+end
+function c50000070.ffilter2(c)
+	return c:IsFusionType(TYPE_EFFECT)
 end
 
 function c50000070.efilter1(e,re,rp)

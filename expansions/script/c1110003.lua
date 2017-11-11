@@ -43,7 +43,7 @@ function c1110003.filter1(c,e,tp)
 	return c1110003.IsLd(c) and c:IsFaceup() and c:IsType(TYPE_MONSTER)
 end
 function c1110003.tg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingTarget(c1110003.filter1,tp,LOCATION_MZONE,0,1,nil,e,tp) and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetMZoneCount(tp)>0 end
+	if chk==0 then return Duel.IsExistingTarget(c1110003.filter1,tp,LOCATION_MZONE,0,1,nil,e,tp) and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,LOCATION_HAND)
 end
 --

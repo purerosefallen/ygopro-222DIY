@@ -1,6 +1,6 @@
 --雷之解放 奇犽
 function c50000063.initial_effect(c)
-	c:EnableCounterPermit(0x1530,LOCATION_MZONE)
+	c:EnableCounterPermit(0x150c,LOCATION_MZONE)
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsSetCard,0x530),1)
 	c:EnableReviveLimit()
 	--synchro success
@@ -47,30 +47,30 @@ function c50000063.initial_effect(c)
 end
 function c50000063.addct(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,2,0,0x1530)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,2,0,0x150c)
 end
 function c50000063.addc(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
-		e:GetHandler():AddCounter(0x1530,2)
+		e:GetHandler():AddCounter(0x150c,2)
 	end
 end
 
 function c50000063.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x112e,1,REASON_COST) end
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x150c,1,REASON_COST) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	Duel.RemoveCounter(tp,1,0,0x1530,1,REASON_COST)
+	Duel.RemoveCounter(tp,1,0,0x150c,1,REASON_COST)
 end
 function c50000063.filter(c)
 	return  c:IsDestructable()
 end
 function c50000063.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c50000063.filter,tp,0,LOCATION_ONFIELD,1,nil) end
-	local g=Duel.GetMatchingGroup(c50000063.filter,tp,0,LOCATION_ONFIELD,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(c50000063.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	local g=Duel.GetMatchingGroup(c50000063.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c50000063.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,c50000063.filter,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c50000063.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.HintSelection(g)
 		Duel.Destroy(g,REASON_EFFECT)
