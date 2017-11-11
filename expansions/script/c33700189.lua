@@ -63,8 +63,8 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e2)
 	if not cm.check then
 		cm.check={
-			[0]={}
-			[1]={}
+			[0]={},
+			[1]={},
 		}
 		local ge1=Effect.GlobalEffect()
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
