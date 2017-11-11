@@ -56,6 +56,10 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
+function cm.aclimit(e,re,tp)
+	local tc=e:GetLabelObject()
+	return  re:GetHandler():IsCode(tc:GetCode()) and not re:GetHandler():IsImmuneToEffect(e)
+end
 function cm.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=3 end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
