@@ -65,7 +65,7 @@ after_build:
   - mv -f ygopro-scripts-master script
 
   - rm -rf ygopro-scripts-master.zip
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Smile-DK/ygopro-scripts/archive/master.zip ; exit 0"
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Fluorohydride/ygopro-scripts/archive/master.zip ; exit 0"
   - 7z x ygopro-scripts-master.zip
   - cp -rf ygopro-scripts-master/*.lua script
   - rm -rf ygopro-scripts-master ygopro-scripts-master.zip
