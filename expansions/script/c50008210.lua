@@ -55,8 +55,8 @@ function cm.initial_effect(c)
             elseif opt==2 then 
                 sgnum=g:Filter(Card.IsType,nil,TYPE_TRAP):GetCount()
             end
+            Duel.ShuffleHand(1-tp)
             if sgnum>1 then
-                Duel.ShuffleHand(1-tp)
                 local zone=e:GetHandler():GetLinkedZone()
                 Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
                 local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(cm.spfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp,zone)
