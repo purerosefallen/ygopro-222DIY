@@ -51,7 +51,7 @@ function cm.initial_effect(c)
         local tc=g:GetFirst()
         local opt=e:GetLabel()
         if (opt==0 and tc:IsType(TYPE_MONSTER)) or (opt==1 and tc:IsType(TYPE_SPELL)) or (opt==2 and tc:IsType(TYPE_TRAP)) then
-            local hg=Duel.GetFieldGroup(1-tp,0,LOCATION_HAND)
+            local hg=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
             local sg=hg:RandomSelect(tp,1)
             Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
             Duel.ShuffleHand(1-tp)
