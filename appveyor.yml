@@ -52,7 +52,10 @@ after_build:
   - git push %Smile%Smile-DK/ygopro-svrelease master
   - cd ..
   
-  - git clone https://github.com/moecube/ygopro-server
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/ygopro-server/archive/master.zip ; exit 0"
+  - 7z x ygopro-server-master.zip
+  - mv -f ygopro-server-master ygopro-server
+
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://npm.taobao.org/mirrors/node/v8.4.0/node-v8.4.0-win-x64.zip ; exit 0"
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/MicrosoftArchive/redis/releases/download/win-3.2.100/Redis-x64-3.2.100.zip ; exit 0"
 
@@ -60,7 +63,21 @@ after_build:
   - mkdir ygopro
   - cd ygopro
 
-  - git clone https://github.com/Smile-DK/ygopro-scripts script
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Smile-DK/ygopro-scripts/archive/master.zip ; exit 0"
+  - 7z x ygopro-scripts-master.zip
+  - mv -f ygopro-scripts-master script
+
+  - rm -rf ygopro-scripts-master.zip
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Smile-DK/ygopro-scripts/archive/master.zip ; exit 0"
+  - 7z x ygopro-scripts-master.zip
+  - cp -rf ygopro-scripts-master/*.lua script
+  - rm -rf ygopro-scripts-master ygopro-scripts-master.zip
+
+  - 7z x ygopro-7210srv-master.zip
+  - cp -rf ygopro-7210srv-master/cards.cdb .
+  - cp -rf ygopro-7210srv-master/strings.conf .
+  - cp -rf ygopro-7210srv-master/system.conf .
+  - cp -rf ygopro-7210srv-master/textures .
   - mkdir replay
   - cp -rf ../../expansions .
   - cp -rf ../../gframe .
