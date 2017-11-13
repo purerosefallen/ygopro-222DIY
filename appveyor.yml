@@ -1,5 +1,4 @@
 version: '{build}'
-skip_tags: true
 
 install:
   - git submodule update --init --recursive
@@ -56,9 +55,14 @@ after_build:
   - mv -f irrklang\bin\win32-visualStudio\irrKlang.dll .
   - mv -f irrklang\bin\win32-visualStudio\ikpMP3.dll .
 
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Fluorohydride/ygopro-scripts/archive/master.zip ; exit 0"
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Smile-DK/ygopro-scripts/archive/master.zip ; exit 0"
   - 7z x ygopro-scripts-master.zip
   - mv -f ygopro-scripts-master script
+  
+  - rm -rf ygopro-scripts-master.zip
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Fluorohydride/ygopro-scripts/archive/master.zip ; exit 0"
+  - 7z x ygopro-scripts-master.zip
+  - cp -rf ygopro-scripts-master/*.lua script
 
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/HuangYuNan/ygopro222-images/archive/master.zip ; exit 0"
   - 7z x ygopro222-images-master.zip
