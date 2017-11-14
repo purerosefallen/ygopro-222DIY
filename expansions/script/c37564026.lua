@@ -16,8 +16,8 @@ function cm.initial_effect(c)
 	--rm
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(m,1))
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_SPSUMMON_PROC_G)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(cm.rmcon)
 	e2:SetOperation(cm.rmop)
@@ -34,12 +34,12 @@ end
 function cm.ovfilter(c)
 	return c:IsFaceup() and Senya.check_set_elem(c) and c:IsXyzType(TYPE_XYZ) and c:GetOverlayCount()>=3
 end
-function cm.rmcon(e,c,og)
+function cm.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local tp=e:GetHandlerPlayer()
 	local c=e:GetHandler()
 	return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) and c:GetOverlayCount()>1 and c:IsFaceup() and not c:IsDisabled()
 end
-function cm.rmop(e,tp,eg,ep,ev,re,r,rp,c,sg,og)  
+function cm.rmop(e,tp,eg,ep,ev,re,r,rp)  
 	Duel.Hint(HINT_CARD,0,m)
 	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_EFFECT)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
