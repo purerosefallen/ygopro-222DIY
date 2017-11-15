@@ -1,6 +1,5 @@
 --├军团┤
 function c60151199.initial_effect(c)
-	c:EnableCounterPermit(0x1b)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -62,13 +61,13 @@ end
 function c60151199.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if not eg then return end
 	local ct=eg:FilterCount(c60151199.cfilter,nil)
-	e:GetHandler():AddCounter(0x1b,ct)
+	e:GetHandler():AddCounter(0x101b,ct)
 end
 function c60151199.cost3(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1b,3,REASON_COST)
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x101b,3,REASON_COST)
 	and Duel.IsPlayerCanDraw(tp,1) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	e:GetHandler():RemoveCounter(tp,0x1b,3,REASON_COST)
+	e:GetHandler():RemoveCounter(tp,0x101b,3,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c60151199.op3(e,tp,eg,ep,ev,re,r,rp)

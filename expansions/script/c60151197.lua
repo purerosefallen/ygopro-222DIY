@@ -2,7 +2,7 @@
 function c60151197.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_BE_BATTLE_TARGET)
 	e1:SetCountLimit(1,60151197)
@@ -35,6 +35,7 @@ function c60151197.tgfilter(c)
 end
 function c60151197.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c60151197.tgfilter,tp,0,LOCATION_HAND+LOCATION_ONFIELD,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_HAND+LOCATION_ONFIELD)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND+LOCATION_ONFIELD)
 end
 function c60151197.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -45,13 +46,13 @@ function c60151197.activate(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		if Duel.SendtoGrave(g,REASON_EFFECT)~=0 then
 			local g3=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_HAND+LOCATION_ONFIELD,nil)
-			local g1=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,LOCATION_HAND+LOCATION_ONFIELD,0,nil)
+			local g1=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,LOCATION_HAND+LOCATION_ONFIELD,0,e:GetHandler())
 			if g3:GetCount()>0 and g1:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(60151197,0)) then 
 				Duel.BreakEffect()
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 				local sg=g1:Select(tp,1,1,nil)
 				Duel.HintSelection(sg)
-				Duel.SendtoGrave(g1,REASON_EFFECT)
+				Duel.SendtoGrave(sg,REASON_EFFECT)
 				Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
 				local sg2=g3:Select(1-tp,1,1,nil)
 				Duel.HintSelection(sg2)

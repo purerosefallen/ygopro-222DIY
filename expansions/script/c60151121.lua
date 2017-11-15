@@ -6,7 +6,7 @@ function c60151121.initial_effect(c)
 	--coin
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(60151101,2))
-	e1:SetCategory(CATEGORY_COIN)
+	e1:SetCategory(CATEGORY_COIN+CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -14,6 +14,16 @@ function c60151121.initial_effect(c)
 	e1:SetTarget(c60151121.cointg)
 	e1:SetOperation(c60151121.coinop)
 	c:RegisterEffect(e1)
+	local e111=Effect.CreateEffect(c)
+	e111:SetDescription(aux.Stringid(60151101,2))
+	e111:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
+	e111:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e111:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e111:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e111:SetCondition(c60151121.atkcon2)
+	e111:SetTarget(c60151121.cointg)
+	e111:SetOperation(c60151121.coinop)
+	c:RegisterEffect(e111)
 	--to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -29,7 +39,10 @@ function c60151121.xyzfilter(c)
 	return c:IsSetCard(0x9b23)
 end
 function c60151121.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ and not e:GetHandler():IsHasEffect(60151199)
+end
+function c60151121.atkcon2(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ and e:GetHandler():IsHasEffect(60151199)
 end
 function c60151121.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -38,7 +51,9 @@ function c60151121.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.RegisterFlagEffect(tp,60151121,RESET_CHAIN,0,1)
 	else
 		Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
+		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND+LOCATION_ONFIELD)
 	end
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE,nil,1,1-tp,LOCATION_MZONE)
 end
 function c60151121.chlimit(e,ep,tp)
 	return tp==ep

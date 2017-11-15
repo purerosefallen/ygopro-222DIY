@@ -13,18 +13,30 @@ function c60151103.initial_effect(c)
 	--coin
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(60151101,2))
-	e1:SetCategory(CATEGORY_COIN)
+	e1:SetCategory(CATEGORY_COIN+CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,6011103)
+	e1:SetCondition(c60151103.coincon)
 	e1:SetTarget(c60151103.cointg)
 	e1:SetOperation(c60151103.coinop)
 	c:RegisterEffect(e1)
+	local e111=Effect.CreateEffect(c)
+	e111:SetDescription(aux.Stringid(60151101,2))
+	e111:SetCategory(CATEGORY_TOGRAVE)
+	e111:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e111:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e111:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e111:SetCountLimit(1,6011103)
+	e111:SetCondition(c60151103.coincon2)
+	e111:SetTarget(c60151103.cointg)
+	e111:SetOperation(c60151103.coinop)
+	c:RegisterEffect(e111)
 	--
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(60151103,1))
-	e3:SetCategory(CATEGORY_TOHAND)
+	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_TOGRAVE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetCode(EVENT_TO_GRAVE)
@@ -34,12 +46,18 @@ function c60151103.initial_effect(c)
 	e3:SetOperation(c60151103.spop)
 	c:RegisterEffect(e3)
 end
+function c60151103.coincon(e,tp,eg,ep,ev,re,r,rp)
+	return not e:GetHandler():IsHasEffect(60151199)
+end
+function c60151103.coincon2(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsHasEffect(60151199)
+end
 function c60151103.sfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x9b23) and c:GetCode()~=60151103
 end
 function c60151103.spcon2(e,c)
 	if c==nil then return true end
-	return Duel.GetMZoneCount(c:GetControler())>0 and
+	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
 		Duel.IsExistingMatchingCard(c60151103.sfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function c60151103.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -50,6 +68,8 @@ function c60151103.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
 	else
 		Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
 	end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND+LOCATION_ONFIELD)
 end
 function c60151103.chlimit(e,ep,tp)
 	return tp==ep
@@ -100,6 +120,7 @@ end
 function c60151103.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(c60151103.spfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND+LOCATION_ONFIELD)
 end
 function c60151103.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

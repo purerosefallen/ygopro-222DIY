@@ -2,39 +2,50 @@
 function c60151108.initial_effect(c)
 	c:EnableReviveLimit()
 	--cannot special summon
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_SINGLE)
-    e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-    e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-    c:RegisterEffect(e1)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
+	c:RegisterEffect(e1)
 	--special summon
-    local e2=Effect.CreateEffect(c)
-    e2:SetType(EFFECT_TYPE_FIELD)
-    e2:SetCode(EFFECT_SPSUMMON_PROC)
-    e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-    e2:SetRange(LOCATION_HAND)
-    e2:SetCondition(c60151108.spcon)
-    e2:SetOperation(c60151108.spop)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_SPSUMMON_PROC)
+	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e2:SetRange(LOCATION_HAND)
+	e2:SetCondition(c60151108.spcon)
+	e2:SetOperation(c60151108.spop)
 	e2:SetValue(1)
-    c:RegisterEffect(e2)
+	c:RegisterEffect(e2)
 	--summon success
-    local e3=Effect.CreateEffect(c)
-    e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-    e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetCondition(c60151108.sumsuccon)
-    e3:SetOperation(c60151108.sumsuc)
-    c:RegisterEffect(e3)
+	e3:SetOperation(c60151108.sumsuc)
+	c:RegisterEffect(e3)
 	--coin
 	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_COIN)
+	e4:SetCategory(CATEGORY_COIN+CATEGORY_TOGRAVE+CATEGORY_DRAW)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e4:SetCountLimit(1,60151108)
+	e4:SetCondition(c60151108.coincon)
 	e4:SetTarget(c60151108.cointg)
 	e4:SetOperation(c60151108.coinop)
 	c:RegisterEffect(e4)
+	local e444=Effect.CreateEffect(c)
+	e444:SetCategory(CATEGORY_TOGRAVE+CATEGORY_DRAW)
+	e444:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e444:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e444:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e444:SetCountLimit(1,60151108)
+	e444:SetCondition(c60151108.coincon2)
+	e444:SetTarget(c60151108.cointg)
+	e444:SetOperation(c60151108.coinop)
+	c:RegisterEffect(e444)
 	--
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(60151108,1))
@@ -48,55 +59,61 @@ function c60151108.initial_effect(c)
 	e5:SetOperation(c60151108.spop2)
 	c:RegisterEffect(e5)
 end
+function c60151108.coincon(e,tp,eg,ep,ev,re,r,rp)
+	return not e:GetHandler():IsHasEffect(60151199)
+end
+function c60151108.coincon2(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsHasEffect(60151199)
+end
 function c60151108.cfilter(c)
-    return not c:IsAbleToDeckOrExtraAsCost()
+	return not c:IsAbleToDeckOrExtraAsCost()
 end
 function c60151108.cfilter2(c)
-    return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x9b23)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x9b23)
 end
 function c60151108.spcon(e,c)
-    if c==nil then return true end
-    local tp=c:GetControler()
-    local g=Duel.GetMatchingGroup(c60151108.cfilter2,tp,LOCATION_GRAVE,0,nil)
-    return Duel.GetMZoneCount(tp)>0 and g:GetCount()>0
-        and not g:IsExists(c60151108.cfilter,1,nil)
+	if c==nil then return true end
+	local tp=c:GetControler()
+	local g=Duel.GetMatchingGroup(c60151108.cfilter2,tp,LOCATION_GRAVE,0,nil)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:GetCount()>0
+		and not g:IsExists(c60151108.cfilter,1,nil)
 end
 function c60151108.spop(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.GetMatchingGroup(c60151108.cfilter2,tp,LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(c60151108.cfilter2,tp,LOCATION_GRAVE,0,nil)
 	local ct=g:GetClassCount(Card.GetCode)
-    if ct>0 then
-        local a=Group.CreateGroup()
-        for i=1,ct do
-            Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-            local g1=g:Select(tp,1,1,nil)
-            g:Remove(Card.IsCode,nil,g1:GetFirst():GetCode())
-            if g1:GetFirst():IsAbleToDeckOrExtraAsCost() then 
-                a:Merge(g1)
-            end
-        end
-        Duel.SendtoDeck(a,nil,2,REASON_COST)
+	if ct>0 then
+		local a=Group.CreateGroup()
+		for i=1,ct do
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+			local g1=g:Select(tp,1,1,nil)
+			g:Remove(Card.IsCode,nil,g1:GetFirst():GetCode())
+			if g1:GetFirst():IsAbleToDeckOrExtraAsCost() then 
+				a:Merge(g1)
+			end
+		end
+		Duel.SendtoDeck(a,nil,2,REASON_COST)
 		local a1=a:GetCount()
 		for i=1,a1 do
-            e:GetHandler():RegisterFlagEffect(60151108,RESET_EVENT+0xfe0000+RESET_PHASE+PHASE_END,0,1)
-        end
-    end
+			e:GetHandler():RegisterFlagEffect(60151108,RESET_EVENT+0xfe0000+RESET_PHASE+PHASE_END,0,1)
+		end
+	end
 end
 function c60151108.sumsuccon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)+1
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
 end
 function c60151108.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-    local ct=e:GetHandler():GetFlagEffect(60151108)
+	local ct=e:GetHandler():GetFlagEffect(60151108)
 	local e1=Effect.CreateEffect(e:GetHandler())
-    e1:SetType(EFFECT_TYPE_SINGLE)
-    e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-    e1:SetRange(LOCATION_MZONE)
-    e1:SetCode(EFFECT_SET_BASE_ATTACK)
-    e1:SetValue(ct*400)
-    e1:SetReset(RESET_EVENT+0x1fe0000)
-    e:GetHandler():RegisterEffect(e1)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCode(EFFECT_SET_BASE_ATTACK)
+	e1:SetValue(ct*400)
+	e1:SetReset(RESET_EVENT+0x1fe0000)
+	e:GetHandler():RegisterEffect(e1)
 	local e2=e1:Clone()
-    e2:SetCode(EFFECT_SET_BASE_DEFENSE)
-    e:GetHandler():RegisterEffect(e2)
+	e2:SetCode(EFFECT_SET_BASE_DEFENSE)
+	e:GetHandler():RegisterEffect(e2)
 end
 function c60151108.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -106,6 +123,9 @@ function c60151108.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
 	else
 		Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
 	end
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_HAND+LOCATION_ONFIELD)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND+LOCATION_ONFIELD)
 end
 function c60151108.chlimit(e,ep,tp)
 	return tp==ep
@@ -180,10 +200,10 @@ function c60151108.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c60151108.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local e2=Effect.CreateEffect(e:GetHandler())
-    e2:SetType(EFFECT_TYPE_FIELD)
-    e2:SetCode(60151199)
-    e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x9b23))
-    e2:SetTargetRange(LOCATION_MZONE,0)
-    e2:SetReset(RESET_PHASE+PHASE_END)
-    Duel.RegisterEffect(e2,tp)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(60151199)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x9b23))
+	e2:SetTargetRange(LOCATION_MZONE,0)
+	e2:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e2,tp)
 end

@@ -13,21 +13,36 @@ function c60151107.initial_effect(c)
 	--coin
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(60151101,2))
-	e1:SetCategory(CATEGORY_COIN)
+	e1:SetCategory(CATEGORY_COIN+CATEGORY_DESTROY+CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCountLimit(1,6011107)
+	e1:SetCondition(c60151107.coincon)
 	e1:SetTarget(c60151107.cointg)
 	e1:SetOperation(c60151107.coinop)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
+	local e111=Effect.CreateEffect(c)
+	e111:SetDescription(aux.Stringid(60151101,2))
+	e111:SetCategory(CATEGORY_DESTROY)
+	e111:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e111:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e111:SetCode(EVENT_SUMMON_SUCCESS)
+	e111:SetCountLimit(1,6011107)
+	e111:SetCondition(c60151107.coincon2)
+	e111:SetTarget(c60151107.cointg)
+	e111:SetOperation(c60151107.coinop)
+	c:RegisterEffect(e111)
+	local e222=e111:Clone()
+	e222:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e222)
 	--
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(60151107,1))
-	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
+	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetCode(EVENT_TO_GRAVE)
@@ -37,22 +52,28 @@ function c60151107.initial_effect(c)
 	e3:SetOperation(c60151107.spop)
 	c:RegisterEffect(e3)
 end
+function c60151107.coincon(e,tp,eg,ep,ev,re,r,rp)
+	return not e:GetHandler():IsHasEffect(60151199)
+end
+function c60151107.coincon2(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsHasEffect(60151199)
+end
 function c60151107.spfilter2(c)
 	return c:IsSetCard(0x9b23) and c:IsType(TYPE_MONSTER) and not c:IsCode(60151107) and c:IsAbleToGrave()
 end
 function c60151107.spcon2(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	if Duel.GetMZoneCount(tp)<1 and Duel.GetMZoneCount(tp)>-2 then 
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 then 
 		return Duel.IsExistingMatchingCard(c60151107.spfilter2,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil)
 			and Duel.IsExistingMatchingCard(c60151107.spfilter2,tp,LOCATION_ONFIELD,0,1,nil)
 	else
-		return Duel.GetMZoneCount(tp)>0 
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 			and Duel.IsExistingMatchingCard(c60151107.spfilter2,tp,LOCATION_HAND+LOCATION_ONFIELD,0,2,nil)
 	end
 end
 function c60151107.spop2(e,tp,eg,ep,ev,re,r,rp,c)
-	if Duel.GetMZoneCount(tp)<1 and Duel.GetMZoneCount(tp)>-2 then
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g1=Duel.SelectMatchingCard(tp,c60151107.spfilter2,tp,LOCATION_ONFIELD,0,1,1,nil)
 		local tc=g1:GetFirst()
@@ -85,10 +106,12 @@ function c60151107.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.RegisterFlagEffect(tp,60151107,RESET_CHAIN,0,1)
 	else
 		Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
+		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND+LOCATION_ONFIELD)
 	end
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_ONFIELD)
 end
 function c60151107.chlimit(e,ep,tp)
-    return tp==ep
+	return tp==ep
 end
 function c60151107.filter(c,atk,def)
 	return c:IsFaceup() and (c:IsAttackBelow(atk) or c:IsDefenseBelow(atk))

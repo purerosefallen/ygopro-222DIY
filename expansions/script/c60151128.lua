@@ -6,7 +6,7 @@ function c60151128.initial_effect(c)
 	c:EnableReviveLimit()
 	--coin
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_COIN)
+	e1:SetCategory(CATEGORY_COIN+CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -14,6 +14,14 @@ function c60151128.initial_effect(c)
 	e1:SetTarget(c60151128.cointg)
 	e1:SetOperation(c60151128.coinop)
 	c:RegisterEffect(e1)
+	local e111=Effect.CreateEffect(c)
+	e111:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e111:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
+	e111:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e111:SetCondition(c60151128.atkcon2)
+	e111:SetTarget(c60151128.cointg)
+	e111:SetOperation(c60151128.coinop)
+	c:RegisterEffect(e111)
 	
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DISABLE)
@@ -37,7 +45,12 @@ function c60151128.xyzfilter(c)
 	return c:IsSetCard(0x9b23)
 end
 function c60151128.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,0x9b23)
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ and e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,0x9b23)
+		and not e:GetHandler():IsHasEffect(60151199)
+end
+function c60151128.atkcon2(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ and e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,0x9b23)
+		and e:GetHandler():IsHasEffect(60151199)
 end
 function c60151128.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -46,6 +59,8 @@ function c60151128.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.RegisterFlagEffect(tp,60151128,RESET_CHAIN,0,1)
 	else
 		Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
+		local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
+		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,sg,sg:GetCount(),0,0)
 	end
 end
 function c60151128.chlimit(e,ep,tp)
