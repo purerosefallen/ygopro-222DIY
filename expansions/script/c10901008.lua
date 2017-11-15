@@ -52,6 +52,7 @@ function cm.initial_effect(c)
     e2:SetCode(EVENT_SUMMON_SUCCESS)
     e2:SetRange(LOCATION_SZONE)
     e2:SetCountLimit(1)
+    e2:SetCondition(cm.searcon)
     e2:SetTarget(cm.target)
     e2:SetOperation(cm.operation)
     c:RegisterEffect(e2)
@@ -110,6 +111,12 @@ function cm.desop(e,tp,eg,ep,ev,re,r,rp)
         local sg=g:Select(tp,1,1,nil)
         Duel.SendtoGrave(sg,REASON_EFFECT)
     end
+end
+function cm.srfilter(c,tp)
+    return c:IsFaceup() and c:IsSetCard(0x234)
+end
+function cm.searcon(e,tp,eg,ep,ev,re,r,rp)
+    return eg:IsExists(cm.srfilter,1,nil)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return false end

@@ -23,6 +23,9 @@ function c12003003.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
+function c12003003.matfilter(c)
+	return c:IsRace(RACE_SEASERPENT)
+end
 function c12003003.cfilter(c,g)
 	return c:IsRace(RACE_SEASERPENT) and g:IsContains(c)
 end
@@ -40,7 +43,7 @@ end
 function c12003003.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12003003.filter,tp,LOCATION_HAND,0,1,nil) end
 	local tg=Duel.SelectTarget(tp,c12003003.filter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoGrave(tg,REASON_EFFECT)
+	Duel.SendtoGrave(tg,REASON_COST)
 end
 function c12003003.tgfilter(c)
 	return c:IsRace(RACE_SEASERPENT) and c:IsAbleToHand()

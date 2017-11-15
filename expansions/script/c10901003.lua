@@ -41,6 +41,7 @@ function cm.initial_effect(c)
     e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
     e2:SetCode(EVENT_SUMMON_SUCCESS)
     e2:SetRange(LOCATION_SZONE)
+    e2:SetCondition(cm.searcon)
     e2:SetCountLimit(1,m)
     e2:SetTarget(cm.target)
     e2:SetOperation(cm.operation)
@@ -87,6 +88,12 @@ function cm.indct(e,re,r,rp)
     if bit.band(r,REASON_BATTLE)~=0 then
         return 1
     else return 0 end
+end
+function cm.srfilter(c,tp)
+    return c:IsFaceup() and c:IsSetCard(0x234)
+end
+function cm.searcon(e,tp,eg,ep,ev,re,r,rp)
+    return eg:IsExists(cm.srfilter,1,nil)
 end
 function cm.filter(c)
     return c:IsSetCard(0x234) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

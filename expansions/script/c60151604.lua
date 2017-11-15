@@ -40,7 +40,7 @@ function c60151604.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c60151604.spcondition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM
 end
 function c60151604.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xcb25) and c:IsType(TYPE_MONSTER)
@@ -68,9 +68,13 @@ function c60151604.condition(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_MONSTER) and re:IsActivated() and rc:IsSetCard(0xcb25)
 end
 function c60151604.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+	if e:GetHandler():IsLocation(LOCATION_EXTRA) then
+		if chk==0 then return Duel.GetLocationCountFromEx(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+	else
+		if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+	end
 end
 function c60151604.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -91,12 +95,12 @@ function c60151604.filter3(c,e,tp)
 	return c:IsSetCard(0xcb25) and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c60151604.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp)>0 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 		and Duel.IsExistingMatchingCard(c60151604.filter3,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED)
 end
 function c60151604.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetMZoneCount(tp)<=0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c60151604.filter3),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then

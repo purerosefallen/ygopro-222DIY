@@ -37,13 +37,13 @@ function c22250006.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c22250006.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,true) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c22250006.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	Duel.SpecialSummon(c,0,tp,tp,false,true,POS_FACEUP)
 	if c:IsPreviousLocation(LOCATION_GRAVE) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -52,6 +52,7 @@ function c22250006.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1)
+		c:CompleteProcedure()
 	end
 end
 function c22250006.efcon(e,tp,eg,ep,ev,re,r,rp)
