@@ -118,7 +118,7 @@ cache:
   - libevent-2.0.22-stable.tar.gz
   - lua-5.2.4.tar.gz
   - sqlite-amalgamation-3150200.zip
-  - node-v8.4.0-win-x64.zip
+  - node-v9.1.0-win-x64.zip
   - Redis-x64-3.2.100.zip
 branches:
   only:
