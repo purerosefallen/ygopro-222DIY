@@ -1,4 +1,4 @@
---无敌卡A
+--无敌卡AAA
 function c10173036.initial_effect(c)
 	--effect
 	local e1=Effect.CreateEffect(c)
@@ -15,8 +15,8 @@ function c10173036.initial_effect(c)
 		c10173036.global_check=true
 		Real_Scl={}
 		Dark_Scl={}
-		Real_Scl[0]=0
-		Dark_Scl[0]=0
+		Real_Scl[1]=0
+		Dark_Scl[1]=0
 		local ge1=Effect.GlobalEffect()
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -60,8 +60,8 @@ end
 function c10173036.reset(e,tp,eg,ep,ev,re,r,rp)
 	Real_Scl={}
 	Dark_Scl={}
-	Real_Scl[0]=0
-	Dark_Scl[0]=0
+	Real_Scl[1]=0
+	Dark_Scl[1]=0
 end
 function c10173036.checkop1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
@@ -96,8 +96,8 @@ function c10173036.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e4,tp)
 end
 function c10173036.tg2(e,re,tp)
-	return re:GetHandler():IsCode(table.unpack(Dark_Scl)) and not re:GetHandler():IsImmuneToEffect(e) and re:IsActiveType(TYPE_MONSTER)
+	return Dark_Scl and re:GetHandler():IsCode(table.unpack(Dark_Scl)) and not re:GetHandler():IsImmuneToEffect(e) and re:IsActiveType(TYPE_MONSTER)
 end
 function c10173036.tg(e,c)
-	return c:IsCode(table.unpack(Real_Scl))
+	return Real_Scl and c:IsCode(table.unpack(Real_Scl))
 end

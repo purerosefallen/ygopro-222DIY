@@ -42,7 +42,10 @@ function c500003.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	else op=Duel.SelectOption(tp,aux.Stringid(500003,2))+1 end
 	e:SetLabel(op)
 	if op~=0 then
+	   e:SetCategory(CATEGORY_RELEASE)
 	   Duel.SetOperationInfo(0,CATEGORY_RELEASE,nil,1,0,LOCATION_DECK)
+	else
+	   e:SetCategory(0)
 	end
 end
 function c500003.operation(e,tp,eg,ep,ev,re,r,rp)
