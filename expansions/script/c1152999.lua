@@ -45,11 +45,11 @@ function c1152999.IsFulsp(c)
 end
 --
 function c1152999.ofilter1(c,e,tp)
-	return c1152999.IsFulan(c) and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsAbleToHand() and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP))
 end
 function c1152999.op1(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(c1152999.ofilter1,tp,LOCATION_ONFIELD,0,nil)
+	local g=Duel.GetMatchingGroup(c1152999.ofilter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(1152999,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 		local sg=g:Select(tp,1,1,nil)
@@ -95,7 +95,7 @@ function c1152999.op2(e,tp,eg,ep,ev,re,r,rp,c)
 end
 --
 function c1152999.cfilter3(c)
-	return (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP)) and c1152999.IsFulsp(c)
+	return (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP))
 end
 function c1152999.tfilter3(c)
 	return (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP)) and c1152999.IsFulsp(c) and c:IsDestructable()

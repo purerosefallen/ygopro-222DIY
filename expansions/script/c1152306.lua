@@ -50,10 +50,10 @@ function c1152306.con2(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1152306.tfilter2_1(c,e,tp)
-	return c1152306.IsFulsp(c) and c:IsAbleToRemove() and bit.band(c:GetReason(),REASON_DESTROY)~=0 and Duel.IsExistingMatchingCard(c1152306.tfilter2_2,tp,LOCATION_DECK,0,1,nil,c:GetCode())
+	return c1152306.IsFulsp(c) and c:IsAbleToRemove() and Duel.IsExistingMatchingCard(c1152306.tfilter2_2,tp,LOCATION_DECK,0,1,nil,c:GetCode()) and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP))
 end
 function c1152306.tfilter2_2(c,code)
-	return c:IsCode(code) and c:IsAbleToHand()
+	return c:IsAbleToHand() and c:IsCode(code) 
 end
 function c1152306.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c1152306.tfilter2_1,tp,LOCATION_GRAVE,0,1,nil) end
@@ -80,18 +80,20 @@ end
 function c1152306.con3(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then
 		local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-		local tc=tg:GetFirst()
-		local i=0
-		while tc do
-			if tc==e:GetHandler() and e:GetHandler():IsFacedown() then
-				i=1
+		if tg then
+			local tc=tg:GetFirst()
+			local i=0
+			while tc do
+				if tc==e:GetHandler() and e:GetHandler():IsFacedown() then
+					i=1
+				end
+				tc=tg:GetNext()
 			end
-			tc=tg:GetNext()
-		end
-		if i==1 then
-			return true
-		else
-			return false
+			if i==1 then
+				return true
+			else
+				return false
+			end
 		end
 	else 
 		return false 

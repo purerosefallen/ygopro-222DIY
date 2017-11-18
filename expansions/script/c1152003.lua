@@ -37,11 +37,11 @@ function c1152003.cfilter1_1(c)
 	return c:IsType(TYPE_MONSTER)
 end
 function c1152003.cfilter1_2(c)
-	return (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP)) and c1152003.IsFulsp(c) and c:IsSSetable() and bit.band(c:GetReason(),REASON_DESTROY)~=0
+	return (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP)) and c1152003.IsFulsp(c) and c:IsSSetable() and c:GetReason()==REASON_DESTROY 
 end
 function c1152003.con1(e,c)
 	if c==nil then return true end
-	return Duel.GetMatchingGroupCount(c1152003.cfilter1_1,tp,LOCATION_ONFIELD,0,nil)==0 and Duel.GetMatchingGroupCount(c1152003.cfilter1_2,tp,LOCATION_GRAVE,0,nil)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and not e:GetHandler():IsHasEffect(EFFECT_NECRO_VALLEY)
+	return Duel.GetMatchingGroupCount(c1152003.cfilter1_1,tp,LOCATION_ONFIELD,0,nil)==0 and Duel.GetMatchingGroupCount(c1152003.cfilter1_2,tp,LOCATION_GRAVE,0,nil)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 end
 --
 function c1152003.op1(e,tp,eg,ep,ev,re,r,rp,c)

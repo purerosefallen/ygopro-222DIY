@@ -44,18 +44,11 @@ function c22250003.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+0xfe0000)
-	e1:SetValue(LOCATION_REMOVED)
-	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_IMMUNE_EFFECT)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetTargetRange(LOCATION_MZONE,0)
+	e2:SetTargetRange(LOCATION_ONFIELD,0)
 	e2:SetReset(RESET_EVENT+0xfe0000)
 	e2:SetTarget(c22250003.etarget)
 	e2:SetValue(c22250003.efilter)
@@ -97,6 +90,7 @@ function c22250003.setop(e,tp,eg,ep,ev,re,r,rp)
 	if lct<sct then sct=lct end
 	if not c:IsRelateToEffect(e) or not c:IsAbleToGrave() then return end
 	if Duel.SendtoGrave(c,REASON_EFFECT)>0 and sct>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local sg=Duel.SelectMatchingCard(tp,c22250003.setfilter,tp,LOCATION_DECK,0,1,sct,nil,false)
 		if sg:GetCount()>0 then
 			Duel.SSet(tp,sg)

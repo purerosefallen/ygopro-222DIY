@@ -41,7 +41,7 @@ function c22250004.spfilter(c,code,e,tp)
 end
 function c22250004.filter(c,e,tp)
 	local code=c:GetCode()
-	return c:IsFaceup() and c22250004.IsRiviera(c) and c:GetBattledGroupCount()>0 and Duel.IsExistingMatchingCard(c22250004.spfilter,tp,LOCATION_DECK,0,1,nil,code,e,tp)
+	return c:IsFaceup() and c22250004.IsRiviera(c) and Duel.IsExistingMatchingCard(c22250004.spfilter,tp,LOCATION_DECK,0,1,nil,code,e,tp)
 end
 function c22250004.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c22250004.filter(chkc,e,tp) end

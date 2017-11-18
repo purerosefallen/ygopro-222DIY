@@ -3,10 +3,10 @@ function c1152005.initial_effect(c)
 --
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_GRAVE+LOCATION_HAND)
-	e1:SetCondition(c1152005.con1)
 	e1:SetTarget(c1152005.tg1)
 	e1:SetOperation(c1152005.op1)
 	c:RegisterEffect(e1)
@@ -29,13 +29,6 @@ c1152005.named_with_Fulsp=1
 function c1152005.IsFulsp(c)
 	local m=_G["c"..c:GetCode()]
 	return c.named_with_Fulsp
-end
---
-function c1152005.cfilter1(c)
-	return c:IsCode(1152999) and c:IsFaceup()
-end
-function c1152005.con1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c1152005.cfilter1,tp,LOCATION_ONFIELD,0,1,nil)
 end
 --
 function c1152005.tfilter1_1(c,e)

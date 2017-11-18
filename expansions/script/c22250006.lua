@@ -1,6 +1,5 @@
 --Riviera 罗莎
 function c22250006.initial_effect(c)
-	c:EnableReviveLimit()
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(22250006,0))
@@ -37,13 +36,13 @@ function c22250006.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c22250006.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,true) end
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c22250006.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	Duel.SpecialSummon(c,0,tp,tp,false,true,POS_FACEUP)
+	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	if c:IsPreviousLocation(LOCATION_GRAVE) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -52,7 +51,6 @@ function c22250006.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1)
-		c:CompleteProcedure()
 	end
 end
 function c22250006.efcon(e,tp,eg,ep,ev,re,r,rp)
@@ -63,7 +61,7 @@ function c22250006.efop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=c:GetReasonCard()
 	local e2=Effect.CreateEffect(rc)
 	e2:SetDescription(aux.Stringid(22250006,1))
-	e2:SetCategory(CATEGORY_DESTROY)
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_NO_TURN_RESET+EFFECT_FLAG_CARD_TARGET)
@@ -82,23 +80,31 @@ function c22250006.efop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c22250006.filter2(c)
-	return bit.band(c:GetReason(),0x40008)==0x40008 and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:IsAbleToDeck()
+	return bit.band(c:GetReason(),0x40008)==0x40008 and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:IsAbleToRemove()
 end
 function c22250006.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(c22250006.filter2,tp,LOCATION_GRAVE,0,2,nil) end
 	local g=Duel.SelectTarget(tp,c22250006.filter2,tp,LOCATION_GRAVE,0,2,2,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,0)
 end
 function c22250006.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if sg:GetCount()==2 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local tc=sg:Select(tp,1,1,nil):GetFirst()
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
 		sg:RemoveCard(tc)
-		Duel.SendtoDeck(sg,nil,1,REASON_EFFECT)
+		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
+		if Duel.IsExistingMatchingCard(c22250006.filterx,tp,LOCATION_DECK,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(22250006,2)) then 
+			local g=Duel.GetMatchingGroup(c22250006.filterx,tp,LOCATION_DECK,0,1,nil)
+			Duel.SendtoHand(g:GetFirst(),nil,REASON_EFFECT)
+		end
 	end
+end
+function c22250006.filterx(c)
+	return c:IsCode(22250001) and c:IsAbleToHand()
 end

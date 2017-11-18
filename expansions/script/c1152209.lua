@@ -80,7 +80,7 @@ function c1152209.op1(e,tp,eg,ep,ev,re,r,rp)
 			if gn:GetCount()>0 then
 				local tc=gn:GetFirst()  
 				while tc do
-					if tc:IsType(TYPE_MONSTER) then
+					if tc:IsType(TYPE_MONSTER) and not c:IsRace(RACE_FIEND) then
 						gr:AddCard(tc)
 					end
 					tc=gn:GetNext()
@@ -118,20 +118,21 @@ function c1152209.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabelObject(rc)
 	local loc,np=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_CONTROLER)
 	if chk==0 then return loc==LOCATION_MZONE and np==tp and re:IsActiveType(TYPE_MONSTER) and c1152209.IsFulan(rc) end
-	return Duel.SelectYesNo(tp,aux.Stringid(1152209,0))
 end
 --
 function c1152209.op2(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
-	local rc=e:GetLabelObject()
-	local e2_1=Effect.CreateEffect(rc)
-	e2_1:SetType(EFFECT_TYPE_SINGLE)
-	e2_1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e2_1:SetRange(LOCATION_MZONE)
-	e2_1:SetCode(EFFECT_IMMUNE_EFFECT)
-	e2_1:SetValue(c1152209.efilter2_1)
-	e2_1:SetReset(RESET_EVENT+0x1fe0000+RESET_CHAIN)
-	rc:RegisterEffect(e2_1)
+	if Duel.SelectYesNo(tp,aux.Stringid(1152209,0)) then
+		Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
+		local rc=e:GetLabelObject()
+		local e2_1=Effect.CreateEffect(rc)
+		e2_1:SetType(EFFECT_TYPE_SINGLE)
+		e2_1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e2_1:SetRange(LOCATION_MZONE)
+		e2_1:SetCode(EFFECT_IMMUNE_EFFECT)
+		e2_1:SetValue(c1152209.efilter2_1)
+		e2_1:SetReset(RESET_EVENT+0x1fe0000+RESET_CHAIN)
+		rc:RegisterEffect(e2_1)
+	end
 end
 function c1152209.efilter2_1(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()

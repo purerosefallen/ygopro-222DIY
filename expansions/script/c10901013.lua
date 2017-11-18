@@ -24,7 +24,7 @@ function cm.disable(e,c)
     return c==e:GetHandler()
 end
 function cm.sumcon(e)
-    return Duel.GetTurnCount()<10
+    return Duel.GetTurnCount()<9
 end
 function cm.drfilter(c)
     return c:IsFaceup() and c:IsCode(10901003)

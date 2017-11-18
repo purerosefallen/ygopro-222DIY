@@ -101,7 +101,7 @@ function c1152203.op1(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:FilterSelect(tp,c1152203.tfilter1,1,1,nil)
 		if sg:GetCount()>0 then
 			local tc=sg:GetFirst()
-			if Duel.Destroy(tc,REASON_EFFECT)~=0 and c1152203.IsFulsp(tc)and (tc:IsType(TYPE_SPELL) or tc:IsType(TYPE_TRAP)) then
+			if Duel.Destroy(tc,REASON_EFFECT)~=0 and c1152203.IsFulsp(tc) and (tc:IsType(TYPE_SPELL) or tc:IsType(TYPE_TRAP)) then
 				local code=tc:GetOriginalCode()
 				if Duel.IsExistingMatchingCard(c1152203.ofilter1,tp,LOCATION_DECK,0,1,nil,code) and Duel.SelectYesNo(tp,aux.Stringid(1152203,0)) then
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

@@ -95,7 +95,7 @@ function c22250101.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local d=c:GetBattleTarget()
 	local ct=c:GetMaterial():FilterCount(c22250101.atkfilter,nil)
-	if chk==0 then return ct>0 and d:IsRelateToBattle() and c:IsRelateToBattle() and c:IsAttackable() end
+	if chk==0 then return ct>0 and d:IsRelateToBattle() and c:IsRelateToBattle() and c:GetSummonType()==SUMMON_TYPE_FUSION end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,e:GetHandler(),1,0,0)
 end
 function c22250101.desop(e,tp,eg,ep,ev,re,r,rp)

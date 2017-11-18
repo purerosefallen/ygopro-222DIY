@@ -50,12 +50,12 @@ function c1152101.cfilter1(c)
 	return c:IsAbleToGraveAsCost()
 end
 function c1152101.cost1(e,c,tp)
-	return Duel.IsExistingMatchingCard(c1152101.cfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(c1152101.cfilter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 --
 function c1152101.op1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c1152101.cfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c1152101.cfilter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoGrave(g,REASON_COST)
 	end
