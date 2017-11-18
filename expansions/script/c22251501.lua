@@ -68,7 +68,7 @@ function c22251501.sfilter(c,e,tp)
 	return c22251501.IsRiviera(c) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsRace(RACE_FAIRY)
 end
 function c22251501.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c22251501.sfilter,tp,LOCATION_DECK,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(c22251501.sfilter,tp,LOCATION_DECK,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and not e:GetHandler():IsCode(22251502) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,0,1,0,0)
 end
 function c22251501.scop(e,tp,eg,ep,ev,re,r,rp)
@@ -85,7 +85,7 @@ function c22251501.tgfilter(c)
 end
 function c22251501.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and c22251501.tgfilter(chkc) and chkc~=e:GetHandler() end
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsExistingTarget(c22251501.tgfilter,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsExistingTarget(c22251501.tgfilter,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) and not e:GetHandler():IsCode(22251502) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectTarget(tp,c22251501.tgfilter,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
