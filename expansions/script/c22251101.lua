@@ -62,7 +62,7 @@ function c22251101.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function c22251101.droperation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,22251101)
-	Duel.Draw(tp,c22251101[tp],REASON_EFFECT)
+	Duel.Draw(tp,c22251101[tp]*2,REASON_EFFECT)
 end
 function c22251101.costfilter(c)
 	return c:IsCode(22251101) and c:IsAbleToDeckAsCost()
@@ -80,6 +80,7 @@ function c22251101.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(c22251101.setfilter,tp,LOCATION_DECK,0,1,nil,false) end
 end
 function c22251101.op(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectMatchingCard(tp,c22251101.setfilter,tp,LOCATION_DECK,0,1,1,nil,false)
 	if g:GetCount()>0 then
 		Duel.SSet(tp,g:GetFirst())

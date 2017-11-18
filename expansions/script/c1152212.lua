@@ -37,7 +37,7 @@ function c1152212.tfilter1_2(c)
 	return c1152212.IsFulsp(c) and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP)) and c:IsAbleToRemove() and bit.band(c:GetReason(),REASON_DESTROY)~=0
 end
 function c1152212.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToHand() and e:GetHandler():IsLocation(LOCATION_REMOVED) and c:IsFaceup() and (Duel.IsExistingMatchingCard(c1152212.tfilter1_1,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,nil) or Duel.IsExistingMatchingCard(c1152212.tfilter1_2,tp,LOCATION_GRAVE,0,1,nil)) end
+	if chk==0 then return e:GetHandler():IsAbleToHand() and e:GetHandler():IsLocation(LOCATION_REMOVED) and e:GetHandler():IsFaceup() and (Duel.IsExistingMatchingCard(c1152212.tfilter1_1,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,nil) or Duel.IsExistingMatchingCard(c1152212.tfilter1_2,tp,LOCATION_GRAVE,0,1,nil)) end
 end
 --
 function c1152212.op1(e,tp,eg,ep,ev,re,r,rp)

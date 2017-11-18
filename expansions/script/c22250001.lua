@@ -6,7 +6,7 @@ function c22250001.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetRange(LOCATION_HAND)
+	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
 	e1:SetCountLimit(1,222500011)
 	e1:SetCondition(c22250001.spcon)
 	e1:SetTarget(c22250001.sptg)
@@ -17,11 +17,11 @@ function c22250001.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(22250001,1))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE)
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCountLimit(1,222500012)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetRange(LOCATION_HAND)
-	e3:SetCountLimit(1,222500012)
 	e3:SetCondition(c22250001.cecon)
 	e3:SetTarget(c22250001.cetg)
 	e3:SetOperation(c22250001.ceop)
@@ -65,7 +65,7 @@ function c22250001.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c22250001.xfilter(c,tp)
-	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c22250001.IsRiviera(c) and c:IsControler(tp)
+	return c:IsLocation(LOCATION_ONFIELD) and c:IsFaceup() and c22250001.IsRiviera(c) and c:IsControler(tp)
 end
 function c22250001.cecon(e,tp,eg,ep,ev,re,r,rp)
 	if e==re or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
@@ -80,8 +80,8 @@ end
 function c22250001.cetg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tf=re:GetTarget()
 	local res,ceg,cep,cev,cre,cr,crp=Duel.CheckEvent(re:GetCode(),true)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c22250001.cefilter(chkc,re,rp,tf,ceg,cep,cev,cre,cr,crp) end
-	if chk==0 then return Duel.IsExistingTarget(c22250001.cefilter,tp,LOCATION_MZONE,0,1,nil,re,rp,tf,ceg,cep,cev,cre,cr,crp,e:GetHandler()) and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(tp) and c22250001.cefilter(chkc,re,rp,tf,ceg,cep,cev,cre,cr,crp) end
+	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c22250001.ceop(e,tp,eg,ep,ev,re,r,rp)

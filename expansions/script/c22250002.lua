@@ -17,7 +17,6 @@ function c22250002.initial_effect(c)
 	e1:SetCategory(CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_BATTLE_START)
-	e1:SetCondition(c22250002.descon)
 	e1:SetTarget(c22250002.destg)
 	e1:SetOperation(c22250002.desop)
 	c:RegisterEffect(e1)
@@ -64,14 +63,6 @@ function c22250002.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.CalculateDamage(a,c)
 		end
 	end
-end
-function c22250002.cfilter(c)
-	return c:IsFaceup() and c22250002.IsRiviera(c)
-end
-function c22250002.descon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=c:GetBattleTarget()
-	return Duel.IsExistingMatchingCard(c22250002.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) and tc
 end
 function c22250002.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

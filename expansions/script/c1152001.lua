@@ -45,7 +45,7 @@ function c1152001.tfilter1(c)
 	return c:IsFaceup() and not c:IsDisabled()
 end
 function c1152001.tfilter1_2(c)
-	return c1152001.IsFulsp(c) and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP)) and c:IsAbleToRemove() and bit.band(c:GetReason(),REASON_DESTROY)~=0
+	return c1152001.IsFulsp(c) and c:IsAbleToRemove() and bit.band(c:GetReason(),REASON_DESTROY)~=0
 end
 function c1152001.tg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and c1152001.tfilter1(chkc) end

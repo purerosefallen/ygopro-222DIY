@@ -14,14 +14,14 @@ function c1152304.initial_effect(c)
 	e2:SetCategory(CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCode(EVENT_DESTROYED)
+	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,1152304)
 	e2:SetCondition(c1152304.con2)
 	e2:SetCost(c1152304.cost2)
 	e2:SetTarget(c1152304.tg2)
 	e2:SetOperation(c1152304.op2)
 	c:RegisterEffect(e2)   
+--
 end
 --
 function c1152304.IsFulan(c)
@@ -35,37 +35,27 @@ function c1152304.IsFulsp(c)
 end
 --
 function c1152304.cfilter1(c)
-	return c1152304.IsFulan(c) and c:IsFaceup()
+	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_FIEND) and c:IsFaceup()
 end
 function c1152304.con1(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
+	if not Duel.IsExistingMatchingCard(c1152304.cfilter1,tp,LOCATION_ONFIELD,0,1,nil) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return tg:IsExists(c1152304.cfilter1,1,nil) and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+	return tg and Duel.IsChainNegatable(ev)
 end
 --
 function c1152304.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if re:GetHandler():IsRelateToEffect(re) then
-		if Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)~=0 then
-			Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_HAND)
-		end
-	end
 	Duel.SetChainLimit(aux.FALSE)   
 end
 --
 function c1152304.op1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateActivation(ev)
-	if re:GetHandler():IsRelateToEffect(re) then
-		local g=Duel.GetFieldGroup(1-tp,LOCATION_HAND,0)
-		if g:GetCount()==0 then return end
-		local sg=g:RandomSelect(1-tp,1)
-		Duel.Destroy(sg,REASON_EFFECT)
-	end
 end
 --
 function c1152304.cfilter2(c,tp)
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT) and c1152304.IsFulan(c)
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==tp and c1152304.IsFulan(c)
 end
 function c1152304.con2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c1152304.cfilter2,1,nil,tp)

@@ -5,7 +5,6 @@ function c1152301.initial_effect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
-	e1:SetCondition(c1152301.con1)
 	e1:SetTarget(c1152301.tg1)
 	e1:SetOperation(c1152301.op1)
 	c:RegisterEffect(e1)
@@ -28,10 +27,6 @@ end
 function c1152301.IsFulsp(c)
 	local m=_G["c"..c:GetCode()]
 	return c.named_with_Fulsp
-end
---
-function c1152301.con1(e,tp,eg,ep,ev,re,r,rp)
-	return (re:IsActiveType(TYPE_SPELL) and re:GetHandler():IsType(TYPE_QUICKPLAY)) or re:IsActiveType(TYPE_TRAP) 
 end
 --
 function c1152301.tfilter1(c)

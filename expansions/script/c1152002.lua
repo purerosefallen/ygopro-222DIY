@@ -3,9 +3,8 @@ function c1152002.initial_effect(c)
 --
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
-	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(c1152002.con1)
 	e1:SetTarget(c1152002.tg1)
@@ -39,7 +38,7 @@ function c1152002.con1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1152002.tfilter1(c)
-	return ((c1152002.IsFulan(c) and c:IsType(TYPE_MONSTER)) or (c1152002.IsFulsp(c) and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP)))) and c:IsDestructable()
+	return ((c:IsRace(RACE_FIEND) and c:IsType(TYPE_MONSTER)) or (c:IsType(TYPE_SPELL) and c:IsFaceup())) and c:IsDestructable()
 end
 function c1152002.tg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(c1152002.tfilter1,tp,LOCATION_ONFIELD,0,1,nil) and Duel.GetFlagEffect(tp,1152000)==0 end
@@ -75,7 +74,7 @@ function c1152002.op1_1(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsHasEffect(EFFECT_NECRO_VALLEY) then
 		if Duel.SelectYesNo(tp,aux.Stringid(1152002,1)) then
 			Duel.SendtoHand(c,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,c)			
+			Duel.ConfirmCards(1-tp,c)	   
 		end
 	end
 end
@@ -90,7 +89,7 @@ function c1152002.tfilter2(c,e,tp)
 end
 function c1152002.tg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c1152002.tfilter2,tp,LOCATION_SZONE,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,LOCATION_SZONE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_SZONE)
 end
 --
 function c1152002.op2(e,tp,eg,ep,ev,re,r,rp)

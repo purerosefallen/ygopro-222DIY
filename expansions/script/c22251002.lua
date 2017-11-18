@@ -3,7 +3,6 @@ function c22251002.initial_effect(c)
 	--draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(22251002,0))
-	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND)
@@ -95,13 +94,10 @@ function c22251002.tdfilter(c)
 	return c:IsCode(22251002) and c:IsAbleToDeck()
 end
 function c22251002.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g=Duel.GetMatchingGroup(c22251002.tdfilter,tp,LOCATION_GRAVE,0,nil)
-	if chk==0 then return g:GetCount()>0 end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
+	if chk==0 then return e:GetHandler():IsAbleToDeck() end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,e:GetHandler(),1,0,0)
 end
 function c22251002.op(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c22251002.tdfilter,tp,LOCATION_GRAVE,0,nil)
-	if g:GetCount()>0 then
-		Duel.SendtoDeck(g,nil,1,REASON_EFFECT)
-	end
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	Duel.SendtoDeck(e:GetHandler(),nil,1,REASON_EFFECT)
 end

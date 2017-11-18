@@ -106,6 +106,7 @@ function c22252101.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c22252101.op(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 or not Duel.IsExistingMatchingCard(c22252101.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c22252101.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if g then Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP) end
 end

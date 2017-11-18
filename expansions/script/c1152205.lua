@@ -111,7 +111,7 @@ function c1152205.op2_1(e,tp,eg,ep,ev,re,r,rp)
 		if g2:GetCount()>0 then
 			Duel.Hint(HINT_CARD,0,1152205)
 			local num=g2:GetCount()
-			local hert=num*200
+			local hert=num*400
 			if Duel.SelectYesNo(1-tp,aux.Stringid(1152205,0)) then
 				local tc=g2:GetFirst()
 				while tc do

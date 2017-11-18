@@ -5,7 +5,8 @@ function c22250102.initial_effect(c)
 	aux.AddFusionProcFun2(c,c22250102.ffilter,aux.FilterBoolFunction(Card.IsRace,RACE_FAIRY),true)
 	--exchange atk
 	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_FIELD)
+	e5:SetCategory(CATEGORY_ATKCHANGE)
+	e5:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 	e5:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCode(EVENT_BATTLE_START)
@@ -68,27 +69,16 @@ end
 function c22250102.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and c22250102.filter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(c22250102.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp) and c:IsAbleToRemove() and (c:GetSequence()<5 or Duel.GetLocationCount(tp,LOCATION_MZONE)>0) end
+	if chk==0 then return Duel.IsExistingTarget(c22250102.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c22250102.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,LOCATION_GRAVE+LOCATION_REMOVED)
 end
 function c22250102.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsAbleToRemove() then return end
-	if c:IsRelateToEffect(e) and Duel.Remove(c,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)~=0 then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		e1:SetLabelObject(c)
-		e1:SetCountLimit(1)
-		e1:SetOperation(c22250102.retop)
-		Duel.RegisterEffect(e1,tp)
-		local tc=Duel.GetFirstTarget()
-		if tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
-			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
-		end
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function c22250102.retop(e,tp,eg,ep,ev,re,r,rp)

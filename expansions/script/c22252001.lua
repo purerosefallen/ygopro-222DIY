@@ -13,7 +13,6 @@ function c22252001.initial_effect(c)
 	--ind
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(22252001,1))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
@@ -52,7 +51,7 @@ function c22252001.activate(e,tp,eg,ep,ev,re,r,rp)
 		sg=sg:Select(tp,ft,ft,nil)
 	end
 	local ct=Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
-	if ct>0 and sg:FilterCount(Card.IsRace,nil,RACE_FAIRY)<2 and Duel.SelectYesNo(tp,aux.Stringid(22252001,2)) then
+	if ct>0 and sg:FilterCount(Card.IsRace,nil,RACE_FAIRY)<sg:GetCount() and Duel.SelectYesNo(tp,aux.Stringid(22252001,2)) then
 		local tc=sg:GetFirst()
 		while tc do
 			if not tc:IsRace(RACE_FAIRY) then
@@ -81,7 +80,7 @@ function c22252001.op(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_FAIRY))
+	e1:SetTarget(aux.TargetBoolFunction(c22252001.eefilter))
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	e1:SetValue(c22252001.efilter)
@@ -89,4 +88,7 @@ function c22252001.op(e,tp,eg,ep,ev,re,r,rp)
 end
 function c22252001.efilter(e,re)
 	return e:GetHandlerPlayer()~=re:GetHandlerPlayer() and re:IsActiveType(TYPE_MONSTER)
+end
+function c22252001.eefilter(c)
+	return c22252001.IsRiviera(c) and c:IsFaceup()
 end
