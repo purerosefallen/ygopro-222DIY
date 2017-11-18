@@ -19,8 +19,6 @@ static const struct luaL_Reg cardlib[] = {
 	//millux
 	{ "IsRitualType", scriptlib::card_is_ritual_type },
 	//222DIY
-	{ "GetAffectingEffect", scriptlib::card_get_affecting_effect },
-	{ "FilterEffect", scriptlib::card_filter_effect },
 	{ "SetEntityCode", scriptlib::card_set_entity_code },
 	{ "SetCardData", scriptlib::card_set_card_data },
 	
@@ -365,7 +363,6 @@ static const struct luaL_Reg duellib[] = {
 	//222DIY
 	{ "SelectField", scriptlib::duel_select_field },
 	{ "GetMasterRule", scriptlib::duel_get_master_rule },
-	{ "FilterPlayerEffect", scriptlib::duel_filter_player_effect },
 	{ "ReadCard", scriptlib::duel_read_card },
 	{ "Exile", scriptlib::duel_exile },
 	{ "DisableActionCheck", scriptlib::duel_disable_action_check },
