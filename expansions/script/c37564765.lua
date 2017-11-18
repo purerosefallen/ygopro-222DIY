@@ -301,7 +301,7 @@ function cm.XyzProcedureCustomTuneMagicianFilter(c,te)
 	return f(te,c)
 end
 function cm.XyzProcedureCustomTuneMagicianCheck(c,g)
-	local eset={c:FilterEffect(EFFECT_TUNE_MAGICIAN_X)}
+	local eset={c:IsHasEffect(EFFECT_TUNE_MAGICIAN_X)}
 	for _,te in ipairs(eset) do
 		if g:IsExists(cm.XyzProcedureCustomTuneMagicianFilter,1,c,te) then return true end
 	end
@@ -309,7 +309,7 @@ function cm.XyzProcedureCustomTuneMagicianCheck(c,g)
 end
 function cm.XyzProcedureCustomCheck(g,xyzc,tp,gf)
 	if EFFECT_MUST_BE_XMATERIAL then
-		local eset={Duel.FilterPlayerEffect(tp,EFFECT_MUST_BE_XMATERIAL)}
+		local eset={Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_XMATERIAL)}
 		for _,te in ipairs(eset) do
 			if not g:IsContains(te:GetHandler()) then return false end
 		end
@@ -816,8 +816,8 @@ function cm.PrismDamageCheckOperation(e,tp,eg,ep,ev,re,r,rp)
 	local bc=c:GetBattleTarget()
 	if ct==0 then return end
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		if Card.FilterEffect then
-			local exte={c:FilterEffect(37564427)}
+		if Card.IsHasEffect then
+			local exte={c:IsHasEffect(37564427)}
 			for _,te in ipairs(exte) do
 				if Duel.SelectEffectYesNo(tp,te:GetHandler()) then
 					Duel.Hint(HINT_CARD,0,te:GetHandler():GetOriginalCode())
@@ -1094,9 +1094,9 @@ function cm.PendConditionNanahira()
 				else
 					g=Duel.GetMatchingGroup(aux.PConditionFilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,nil,e,tp,lscale,rscale)
 				end
-				if Card.FilterEffect then
-					local ext1={c:FilterEffect(37564541)}
-					local ext2={rpz:FilterEffect(37564541)} 
+				if Card.IsHasEffect then
+					local ext1={c:IsHasEffect(37564541)}
+					local ext2={rpz:IsHasEffect(37564541)} 
 					for i,te in pairs(ext1) do
 						local t=cm.order_table[te:GetValue()]
 						if (t.location==LOCATION_EXTRA and eft>0) or (t.location~=LOCATION_EXTRA and mft>0) then
@@ -1154,9 +1154,9 @@ function cm.PendOperationNanahira()
 				else
 					tg=Duel.GetMatchingGroup(aux.PConditionFilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,nil,e,tp,lscale,rscale)
 				end
-				if Card.FilterEffect then
-					local ext1={c:FilterEffect(37564541)}
-					local ext2={rpz:FilterEffect(37564541)}
+				if Card.IsHasEffect then
+					local ext1={c:IsHasEffect(37564541)}
+					local ext2={rpz:IsHasEffect(37564541)}
 					for i,te in pairs(ext1) do
 						local t=cm.order_table[te:GetValue()]
 						if (t.location==LOCATION_EXTRA and eft>0) or (t.location~=LOCATION_EXTRA and mft>0) then
@@ -1884,8 +1884,8 @@ function cm.enable_kaguya_check_3L()
 	Duel.RegisterEffect(ge3,0)
 end
 function cm.CheckKoishiCount(c)
-	if Card.FilterEffect then
-		local t={c:FilterEffect(37564826)}
+	if Card.IsHasEffect then
+		local t={c:IsHasEffect(37564826)}
 		local res=1
 		for i,te in pairs(t) do
 			res=math.max(res,te:GetValue())
@@ -1999,8 +1999,8 @@ function cm.RemoveEffect_3L(tp,tc,ct,maxct,chk,...)
 	local effect_list=cm.GetGainedList_3L(tc)
 	local avaliable_list={}
 	local omit_list={...}
-	if Card.FilterEffect then
-		local oet={tc:FilterEffect(37564827)}
+	if Card.IsHasEffect then
+		local oet={tc:IsHasEffect(37564827)}
 		for i,oe in pairs(oet) do
 			local of=cm.order_table[oe:GetValue()]
 			local og=of(tc)
@@ -2465,7 +2465,7 @@ function cm.GetEffectValue(e,...)
 end
 --custom ocgcore needed
 function cm.CheckEffect(c,code,...)
-	local eset={c:FilterEffect(code)}
+	local eset={c:IsHasEffect(code)}
 	for _,te in ipairs(eset) do
 		local res=cm.GetEffectValue(te,...)
 		if res and res~=0 then return res end
@@ -2473,7 +2473,7 @@ function cm.CheckEffect(c,code,...)
 	return false
 end
 function cm.CheckPlayerEffect(p,code,...)
-	local eset={Duel.FilterPlayerEffect(p,code)}
+	local eset={Duel.IsPlayerAffectedByEffect(p,code)}
 	for _,te in ipairs(eset) do
 		local res=cm.GetEffectValue(te,...)
 		if res and res~=0 then return res end
