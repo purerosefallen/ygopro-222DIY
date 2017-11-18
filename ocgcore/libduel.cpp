@@ -901,6 +901,7 @@ int32 scriptlib::duel_get_chain_material(lua_State *L) {
 	interpreter::effect2value(L, eset[0]);
 	return 1;
 }
+//modded
 int32 scriptlib::duel_confirm_decktop(lua_State *L) {
 	check_param_count(L, 2);
 	int32 playerid = lua_tointeger(L, 1);
@@ -928,12 +929,19 @@ int32 scriptlib::duel_confirm_decktop(lua_State *L) {
 	pduel->write_buffer8(MSG_CONFIRM_DECKTOP);
 	pduel->write_buffer8(playerid);
 	pduel->write_buffer8(count);
+	card_set ccards;
+	uint32 reason = 0;
+	if(lua_gettop(L) >= 3)
+		reason = lua_tointeger(L, 3);
 	for(uint32 i = 0; i < count && cit != pduel->game_field->player[playerid].list_main.rend(); ++i, ++cit) {
 		pduel->write_buffer32((*cit)->data.code);
 		pduel->write_buffer8((*cit)->current.controler);
 		pduel->write_buffer8((*cit)->current.location);
 		pduel->write_buffer8((*cit)->current.sequence);
+		pduel->game_field->raise_single_event(*cit, 0, EVENT_CUSTOM+50000000, pduel->game_field->core.reason_effect, reason, pduel->game_field->core.reason_player, playerid, count);
+		ccards.insert(*cit);
 	}
+	pduel->game_field->raise_event(ccards, EVENT_CUSTOM+50000000, pduel->game_field->core.reason_effect, reason, pduel->game_field->core.reason_player, playerid, count);	
 	pduel->game_field->add_process(PROCESSOR_WAIT, 0, 0, 0, 0, 0);
 	return lua_yield(L, 0);
 }
