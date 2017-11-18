@@ -33,8 +33,8 @@ HostInfo game_info;
 
 void Game::MainServerLoop() {
 	deckManager.LoadLFList();
-	LoadExpansionDB();
 	LoadBetaDB();
+	LoadExpansionDB();
 	dataManager.LoadDB("cards.cdb");
 	aServerPort = NetServer::StartServer(aServerPort);
 	NetServer::InitDuel();
