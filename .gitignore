@@ -16,6 +16,7 @@
 /gframe/dirent.h
 ygopro
 premake5.exe
+<<<<<<< HEAD
 
 /ygopro-7210srv
 /temp
@@ -31,3 +32,7 @@ premake5.exe
 /irrlicht-1.8.4
 /irrlicht
 /lua-5.2.4
+=======
+/expansions/pics
+/pics
+>>>>>>> 984630f8031c564a86e88c45ce43b73c5bc5f75d
