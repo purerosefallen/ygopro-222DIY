@@ -1005,6 +1005,7 @@ void Game::RefershBGMDir(std::wstring path, int scene) {
 		BGMList[BGM_ALL].push_back(wname);
 	}
 	closedir(dir);
+}
 #endif
 void Game::RefreshBot() {
 	botInfo.clear();
