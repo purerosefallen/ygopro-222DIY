@@ -55,6 +55,15 @@ after_build:
   - mv -f irrklang\bin\win32-visualStudio\irrKlang.dll .
   - mv -f irrklang\bin\win32-visualStudio\ikpMP3.dll .
 
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/windbot/archive/master.zip ; exit 0"
+  - 7z x windbot-master.zip
+  - cd windbot-master
+  - msbuild /property:Configuration=Release /property:Platform=x86
+  - rm -rf bin/Release/WindBot.exe.config
+  - mv -f bin/Release ../WindBot
+  - mv -f BotWrapper/bin/Release/Bot.exe ./..
+  - mv -f BotWrapper/bin/Release/Bot.conf ./..  
+
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Smile-DK/ygopro-scripts/archive/master.zip ; exit 0"
   - 7z x ygopro-scripts-master.zip
   - mv -f ygopro-scripts-master script
@@ -80,7 +89,7 @@ after_build:
   - rm -rf pics/thumbnail pics/*.db
   - mkdir replay
 
-  - 7z a -mx9 -xr!.git* YGOPro-by-Koishi.7z ygopro.exe LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound irrKlang.dll ikpMP3.dll
+  - 7z a -mx9 -xr!.git* YGOPro-by-Koishi.7z ygopro.exe LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound irrKlang.dll ikpMP3.dll WindBot Bot.exe bot.conf
 
 test: off
 
