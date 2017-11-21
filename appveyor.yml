@@ -40,17 +40,6 @@ build:
 
 after_build:
   - ps: move bin\release\ygopro.exe .
-  - git config --global user.name "Smile-DK"
-  - git config --global user.email "2236141431@qq.com"
-  - git clone https://github.com/Smile-DK/ygopro-svrelease
-  - cd ygopro-svrelease
-  - rm -rf 222
-  - mkdir 222
-  - cp -rf ../ygopro.exe 222
-  - git add . -A
-  - git commit -m "ygopro 222DIY server pushed by Appveyor"
-  - git push %Smile%Smile-DK/ygopro-svrelease master
-  - cd ..
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/ygopro-server/archive/master.zip ; exit 0"
   - 7z x ygopro-server-master.zip
@@ -59,7 +48,12 @@ after_build:
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://nodejs.org/dist/v9.1.0/node-v9.1.0-win-x64.zip ; exit 0"
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/MicrosoftArchive/redis/releases/download/win-3.2.100/Redis-x64-3.2.100.zip ; exit 0"
 
-  - cd ygopro-server
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/windbot/archive/master.zip ; exit 0"
+  - 7z x windbot-master.zip
+  - cd windbot-master
+  - msbuild /property:Configuration=Release /property:OutDir=../ygopro-server/windbot
+
+  - cd ../ygopro-server
   - mkdir ygopro
   - cd ygopro
 
@@ -93,8 +87,8 @@ after_build:
   - 7z x Redis-x64-3.2.100.zip
   - rm -rf Redis-x64-3.2.100.zip
   - cd ..
-  
-  - cp -rf ../ygopro-svrelease/WindBot .
+
+  - cp -rf ../cards.cdb windbot
   - cp -rf config.json config.user.json  
   - mv -f ../node-v9.1.0-win-x64.zip .
   - 7z x node-v9.1.0-win-x64.zip
