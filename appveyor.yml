@@ -79,6 +79,15 @@ after_build:
   - cp -rf ygopro-7210srv-master/system.conf .
   - cp -rf ygopro-7210srv-master/textures .
 
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/windbot/archive/master.zip ; exit 0"
+  - 7z x windbot-master.zip
+  - cd windbot-master
+  - msbuild /property:Configuration=Release /property:Platform=x86
+  - rm -rf bin/Release/WindBot.exe.config
+  - mv -f bin/Release ../WindBot
+  - mv -f BotWrapper/bin/Release/Bot.exe ./..
+  - mv -f BotWrapper/bin/Release/Bot.conf ./..  
+
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Smile-DK/ygopro-scripts/archive/master.zip ; exit 0"
   - 7z x ygopro-scripts-master.zip
   - mv -f ygopro-scripts-master script
@@ -99,7 +108,7 @@ after_build:
   - 7z x ygopro-starter-pack-master.zip
   - cp -rf ygopro-starter-pack-master/* .
   
-  - 7z a -mx9 -xr!.git* ../ygopro-222DIY-full.7z ygopro_222.exe LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound irrKlang.dll ikpMP3.dll expansions update
+  - 7z a -mx9 -xr!.git* ../ygopro-222DIY-full.7z ygopro_222.exe LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound irrKlang.dll ikpMP3.dll expansions update WindBot Bot.exe bot.conf
   - cd ..
 
 test: off
