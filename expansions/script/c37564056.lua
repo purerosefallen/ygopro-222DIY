@@ -65,7 +65,7 @@ function cm.replace_register_effect(f,p)
 				local cost=e:GetCost()
 				e:SetCost(function(e,tp,eg,ep,ev,re,r,rp,chk)
 					if chk==0 then
-						local let={Duel.FilterPlayerEffect(tp,EFFECT_CANNOT_ACTIVATE)}
+						local let={Duel.IsPlayerAffectedByEffect(tp,EFFECT_CANNOT_ACTIVATE)}
 						for _,le in pairs(let) do
 							local cres=Senya.GetEffectValue(le,c:GetActivateEffect(),le:GetHandlerPlayer())
 							if cres and cres~=0 then return false end
