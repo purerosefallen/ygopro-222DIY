@@ -155,7 +155,7 @@ if Group.SelectUnselect then
 		local ct=sg:GetCount()
 		local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
 		while ct<max and ag:GetCount()>0 do
-			local finish=(ct>=min and and ct<=max and f(sg,...))
+			local finish=(ct>=min and ct<=max and f(sg,...))
 			local seg=sg:Clone()
 			local dmin=min-cg:GetCount()
 			local dmax=math.min(max-cg:GetCount(),g:GetCount())
