@@ -59,8 +59,8 @@ after_build:
   - 7z x windbot-master.zip
   - cd windbot-master
   - msbuild /property:Configuration=Release /property:Platform=x86
-  - rm -rf bin/x86/Release/WindBot.exe.config
-  - mv -f bin/x86/Release ../WindBot
+  - rm -rf bin/Release/WindBot.exe.config
+  - mv -f bin/Release ../WindBot
   - mv -f BotWrapper/bin/Release/Bot.exe ./..
   - mv -f BotWrapper/bin/Release/Bot.conf ./..
   - cd ..
