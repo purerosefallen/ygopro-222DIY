@@ -155,7 +155,7 @@ if Group.SelectUnselect then
 		local ct=sg:GetCount()
 		local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
 		while ct<max and ag:GetCount()>0 do
-			local finish=(ct>=min and and ct<=max and f(sg,...))
+			local finish=(ct>=min and ct<=max and f(sg,...))
 			local seg=sg:Clone()
 			local dmin=min-cg:GetCount()
 			local dmax=math.min(max-cg:GetCount(),g:GetCount())
@@ -349,7 +349,7 @@ function cm.XyzProcedureCustomCondition(func,gf,minct,maxct,ext_params)
 			mg=Duel.GetMatchingGroup(cm.XyzProcedureCustomFilter,tp,LOCATION_MZONE,0,nil,c,func,ext_params)
 		end
 		local sg=Group.CreateGroup()
-		local ce={Duel.IsPlayerAffectedByEffect(EFFECT_MUST_BE_XMATERIAL)}
+		local ce={Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_XMATERIAL)}
 		for _,te in ipairs(ce) do
 			local tc=te:GetHandler()
 			if not mg:IsContains(tc) then return false end
@@ -376,7 +376,7 @@ function cm.XyzProcedureCustomTarget(func,gf,minct,maxct,ext_params)
 				minc=math.max(minc,min)
 				maxc=math.min(maxc,max)
 			end
-			local ce={Duel.IsPlayerAffectedByEffect(EFFECT_MUST_BE_XMATERIAL)}
+			local ce={Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_XMATERIAL)}
 			for _,te in ipairs(ce) do
 				local tc=te:GetHandler()
 				sg:AddCard(tc)
@@ -1762,7 +1762,7 @@ return function(e,g,gc,chkfnf)
 		if not cm.FusionFilter_3L(gc,fc,mf,sub) then return false end
 		sg:AddCard(gc)
 	end
-	local ce={Duel.IsPlayerAffectedByEffect(EFFECT_MUST_BE_FMATERIAL)}
+	local ce={Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_FMATERIAL)}
 	for _,te in ipairs(ce) do
 		local tc=te:GetHandler()
 		if not mg:IsContains(tc) then return false end
@@ -1782,7 +1782,7 @@ return function(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
 	if gc then
 		sg:AddCard(gc)
 	end
-	local ce={Duel.IsPlayerAffectedByEffect(EFFECT_MUST_BE_FMATERIAL)}
+	local ce={Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_FMATERIAL)}
 	for _,te in ipairs(ce) do
 		local tc=te:GetHandler()
 		sg:AddCard(tc)
