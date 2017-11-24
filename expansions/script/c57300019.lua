@@ -1,7 +1,7 @@
 --Approved·樱野美雪
 xpcall(function() require("expansions/script/c57300000") end,function() require("script/c57300000") end)
 function c57300019.initial_effect(c)
-	miyuki.rxyz1(c,nil,nil,3,3)
+	miyuki.AddXyzProcedureRank(c,nil,nil,3,3)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
