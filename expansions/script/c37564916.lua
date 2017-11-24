@@ -53,8 +53,8 @@ function cm.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function cm.spop2(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,true) then return end
 	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,true) then return end
 	local mg=Duel.GetRitualMaterial(tp):Filter(cm.matfilter,c,c)
 	if c.mat_filter then
 		mg=mg:Filter(c.mat_filter,nil)

@@ -1,4 +1,4 @@
---秘龙剑
+--秘龙剑-
 function c10173066.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -56,10 +56,10 @@ function c10173066.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DRAGON)
 end
 function c10173066.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c10173012.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c10173012.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c10173066.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c10173066.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	Duel.SelectTarget(tp,c10173012.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,c10173066.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 end
 function c10173066.operation(e,tp,eg,ep,ev,re,r,rp)

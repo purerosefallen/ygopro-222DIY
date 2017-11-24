@@ -105,7 +105,7 @@ end
 function c500008.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
 	   if e:GetLabel()==100 then return 
-		  Duel.IsExistingMatchingCard(c500008.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
+		  Duel.IsExistingMatchingCard(c500008.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler())
 	   else
 		  return true
 	   end

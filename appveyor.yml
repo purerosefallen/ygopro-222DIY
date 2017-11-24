@@ -48,7 +48,12 @@ after_build:
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://nodejs.org/dist/v9.1.0/node-v9.1.0-win-x64.zip ; exit 0"
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/MicrosoftArchive/redis/releases/download/win-3.2.100/Redis-x64-3.2.100.zip ; exit 0"
 
-  - cd ygopro-server
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/windbot/archive/master.zip ; exit 0"
+  - 7z x windbot-master.zip
+  - cd windbot-master
+  - msbuild /property:Configuration=Release /property:OutDir=../ygopro-server/windbot
+
+  - cd ../ygopro-server
   - mkdir ygopro
   - cd ygopro
 
@@ -59,7 +64,7 @@ after_build:
   - rm -rf ygopro-scripts-master.zip
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Fluorohydride/ygopro-scripts/archive/master.zip ; exit 0"
   - 7z x ygopro-scripts-master.zip
-  - cp -rf ygopro-scripts-master/*.lua script
+  - cp -rf ygopro-scripts-master/* script
   - rm -rf ygopro-scripts-master ygopro-scripts-master.zip
 
   - mkdir replay
@@ -82,8 +87,8 @@ after_build:
   - 7z x Redis-x64-3.2.100.zip
   - rm -rf Redis-x64-3.2.100.zip
   - cd ..
-  
-  - cp -rf ../ygopro-svrelease/WindBot .
+
+  - cp -rf ../cards.cdb windbot
   - cp -rf config.json config.user.json  
   - mv -f ../node-v9.1.0-win-x64.zip .
   - 7z x node-v9.1.0-win-x64.zip

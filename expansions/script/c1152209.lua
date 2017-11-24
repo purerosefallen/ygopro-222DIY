@@ -80,7 +80,7 @@ function c1152209.op1(e,tp,eg,ep,ev,re,r,rp)
 			if gn:GetCount()>0 then
 				local tc=gn:GetFirst()  
 				while tc do
-					if tc:IsType(TYPE_MONSTER) and not c:IsRace(RACE_FIEND) then
+					if tc:IsType(TYPE_MONSTER) and not tc:IsRace(RACE_FIEND) then
 						gr:AddCard(tc)
 					end
 					tc=gn:GetNext()

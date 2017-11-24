@@ -95,7 +95,7 @@ function c1151219.op1(e,tp,eg,ep,ev,re,r,rp)
 					local sel=Duel.SelectOption(tp,aux.Stringid(1151219,0),aux.Stringid(1151219,1))
 					if sel==0 then
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-						local g1_1=Duel.SelectMatchingCard(tp,c1151219.ofilter1_1,tp,LOCATION_DECK,0,1,1,nil)	  
+						local g1_1=Duel.SelectMatchingCard(tp,c1151219.ofilter1_1,tp,LOCATION_DECK,0,1,1,nil)	 
 						if g1_1:GetCount()>0 then
 							Duel.SendtoGrave(g1_1,REASON_EFFECT)
 						end
@@ -103,14 +103,14 @@ function c1151219.op1(e,tp,eg,ep,ev,re,r,rp)
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 						local g1_2=Duel.SelectMatchingCard(tp,c1151219.ofilter1_2,tp,LOCATION_DECK,0,1,1,nil) 
 						if g1_2:GetCount()>0 then
-							Duel.SendtoHand(g1_2,REASON_EFFECT)
+							Duel.SendtoHand(g1_2,nil,REASON_EFFECT)
 							Duel.ConfirmCards(1-tp,g1_2)
 						end
 					end
 				else
 					if Duel.IsExistingMatchingCard(c1151219.ofilter1_1,tp,LOCATION_DECK,0,1,nil) and not Duel.IsExistingMatchingCard(c1151219.ofilter1_2,tp,LOCATION_DECK,0,1,nil) then
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-						local g1_1=Duel.SelectMatchingCard(tp,c1151219.ofilter1_1,tp,LOCATION_DECK,0,1,1,nil)	  
+						local g1_1=Duel.SelectMatchingCard(tp,c1151219.ofilter1_1,tp,LOCATION_DECK,0,1,1,nil)	 
 						if g1_1:GetCount()>0 then
 							Duel.SendtoGrave(g1_1,REASON_EFFECT)
 						end
@@ -118,7 +118,7 @@ function c1151219.op1(e,tp,eg,ep,ev,re,r,rp)
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 						local g1_2=Duel.SelectMatchingCard(tp,c1151219.ofilter1_2,tp,LOCATION_DECK,0,1,1,nil) 
 						if g1_2:GetCount()>0 then
-							Duel.SendtoHand(g1_2,REASON_EFFECT)
+							Duel.SendtoHand(g1_2,nil,REASON_EFFECT)
 							Duel.ConfirmCards(1-tp,g1_2)
 						end
 					end

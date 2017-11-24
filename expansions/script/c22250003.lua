@@ -69,7 +69,7 @@ function c22250003.efilter(e,te)
 	return te:IsActiveType(TYPE_TRAP)
 end
 function c22250003.setcfilter(c,tp,rp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c22250003.IsRiviera(c) and c:IsReason(REASON_EFFECT)
+	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c22250003.IsRiviera(c) and c:IsReason(REASON_EFFECT) and c:IsType(TYPE_MONSTER)
 end
 function c22250003.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c22250003.setcfilter,1,nil,tp,rp)

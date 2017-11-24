@@ -65,7 +65,7 @@ end
 function cm.rmcon(e,c,og)
 	local tp=e:GetHandlerPlayer()
 	local c=e:GetHandler()
-	return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) and c:IsFaceup() and not c:IsDisabled() and c:GetOriginalCode()==m
+	return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) and c:IsFaceup() and not c:IsDisabled() and c:GetOriginalCode()==m and Senya.MustMaterialCheck(c,tp,EFFECT_MUST_BE_XMATERIAL)
 end
 function cm.rmop(e,tp,eg,ep,ev,re,r,rp,c,sg,og)  
 	Duel.Hint(HINT_CARD,0,e:GetHandler():GetOriginalCode())

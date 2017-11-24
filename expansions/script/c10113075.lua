@@ -17,7 +17,6 @@ function c10113075.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e2:SetCondition(c10113075.con)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2) 
 	--Destroy
@@ -38,37 +37,39 @@ function c10113075.initial_effect(c)
 end
 function c10113075.descon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return c10113075.con(e) and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
+	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
 end
 function c10113075.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
-function c10113075.desfilter(c)
+function c10113075.rmfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToRemove()
 end
 function c10113075.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c10113075.desfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c10113075.desfilter,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsType(TYPE_SPELL+TYPE_TRAP) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsType,tp,0,LOCATION_ONFIELD,1,nil,TYPE_SPELL+TYPE_TRAP) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c10113075.desfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,Card.IsType,tp,0,LOCATION_ONFIELD,1,1,nil,TYPE_SPELL+TYPE_TRAP)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function c10113075.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc,c=Duel.GetFirstTarget(),e:GetHandler()
-	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT,LOCATION_REMOVED)~=0 and tc:IsLocation(LOCATION_REMOVED) then
+	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		e1:SetValue(200)
 		c:RegisterEffect(e1)
+		local g=Duel.GetMatchingGroup(c10113075.rmfilter,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,nil)
+		if c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,10113076) and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(10113075,1)) then
+		   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		   local rg=g:Select(tp,1,1,nil)
+		   Duel.Remove(rg,POS_FACEUP,REASON_EFFECT) 
+		end
 	end
 end
 function c10113075.efilter(e,te)
 	return te:IsActiveType(TYPE_SPELL+TYPE_TRAP)
-end
-function c10113075.con(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,10113076)
 end

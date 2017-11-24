@@ -68,9 +68,16 @@ function cm.xyzcon(e,c,og,min,max)
 		else
 			mg=Duel.GetMatchingGroup(cm.xyzfilter,tp,LOCATION_MZONE,0,nil,c)
 			local exg=Duel.GetMatchingGroup(cm.xyzfilter1,tp,LOCATION_PZONE,0,nil,c)
-			if exg:GetCount()==2 and Duel.GetLocationCountFromEx(tp,tp,exg,c)>0 and Duel.GetFlagEffect(tp,m)==0 then return true end
+			if exg:GetCount()==2 and Duel.GetLocationCountFromEx(tp,tp,exg,c)>0 and Duel.GetFlagEffect(tp,m)==0 and not Duel.IsPlayerAffectedByEffect(EFFECT_MUST_BE_XMATERIAL) then return true end
 		end
-		return Senya.CheckGroup(mg,Senya.CheckFieldFilter,nil,minc,maxc,tp,c)
+		local sg=Group.CreateGroup()
+		local ce={Duel.IsPlayerAffectedByEffect(EFFECT_MUST_BE_XMATERIAL)}
+		for _,te in ipairs(ce) do
+			local tc=te:GetHandler()
+			if not mg:IsContains(tc) then return false end
+			sg:AddCard(tc)
+		end
+		return Senya.CheckGroup(mg,Senya.CheckFieldFilter,sg,minc,maxc,tp,c)
 end
 function cm.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
 	local g=nil
@@ -89,7 +96,7 @@ function cm.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
 		else
 			mg=Duel.GetMatchingGroup(cm.xyzfilter,tp,LOCATION_MZONE,0,nil,c)
 			local exg=Duel.GetMatchingGroup(cm.xyzfilter1,tp,LOCATION_PZONE,0,nil,c)
-			if exg:GetCount()==2 and Duel.GetLocationCountFromEx(tp,tp,exg,c)>0 and Duel.GetFlagEffect(tp,m)==0 and (not Senya.CheckGroup(mg,Senya.CheckFieldFilter,nil,minc,maxc,tp,c) or Duel.SelectYesNo(tp,m*16)) then
+			if exg:GetCount()==2 and Duel.GetLocationCountFromEx(tp,tp,exg,c)>0 and Duel.GetFlagEffect(tp,m)==0 and not Duel.IsPlayerAffectedByEffect(EFFECT_MUST_BE_XMATERIAL) and (not Senya.CheckGroup(mg,Senya.CheckFieldFilter,nil,minc,maxc,tp,c) or Duel.SelectYesNo(tp,m*16)) then
 				Duel.HintSelection(exg)
 				Duel.RegisterFlagEffect(tp,m,RESET_PHASE+PHASE_END,0,1)
 				c:SetMaterial(exg)
@@ -97,7 +104,13 @@ function cm.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
 				return
 			end
 		end
-		g=Senya.SelectGroup(tp,HINTMSG_XMATERIAL,mg,Senya.CheckFieldFilter,nil,minc,maxc,tp,c)
+		local sg=Group.CreateGroup()
+		local ce={Duel.IsPlayerAffectedByEffect(EFFECT_MUST_BE_XMATERIAL)}
+		for _,te in ipairs(ce) do
+			local tc=te:GetHandler()
+			sg:AddCard(tc)
+		end
+		g=Senya.SelectGroup(tp,HINTMSG_XMATERIAL,mg,Senya.CheckFieldFilter,sg,minc,maxc,tp,c)
 	end
 	c:SetMaterial(g)
 	Senya.OverlayGroup(c,g,false,true)

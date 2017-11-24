@@ -128,7 +128,7 @@ end
 function cm.CheckGroupRecursive(c,sg,g,f,min,max,ext_params)
 	sg:AddCard(c)
 	local ct=sg:GetCount()
-	local res=(ct>=min and f(sg,table.unpack(ext_params)))
+	local res=(ct>=min and ct<= max and f(sg,table.unpack(ext_params)))
 		or (ct<max and g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params))
 	sg:RemoveCard(c)
 	return res
@@ -141,7 +141,7 @@ function cm.CheckGroup(g,f,cg,min,max,...)
 	local sg=Group.CreateGroup()
 	if cg then sg:Merge(cg) end
 	local ct=sg:GetCount()
-	if ct>=min and ct<max and f(sg,...) then return true end
+	if ct>=min and ct<=max and f(sg,...) then return true end
 	return g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params)
 end
 if Group.SelectUnselect then
@@ -155,7 +155,7 @@ if Group.SelectUnselect then
 		local ct=sg:GetCount()
 		local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
 		while ct<max and ag:GetCount()>0 do
-			local finish=(ct>=min and f(sg,...))
+			local finish=(ct>=min and ct<=max and f(sg,...))
 			local seg=sg:Clone()
 			local dmin=min-cg:GetCount()
 			local dmax=math.min(max-cg:GetCount(),g:GetCount())
@@ -183,7 +183,7 @@ if Group.SelectUnselect then
 		local ct=sg:GetCount()
 		local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
 		while ct<max and ag:GetCount()>0 do
-			local finish=(ct>=min and f(sg,...))
+			local finish=(ct>=min and ct<=max and f(sg,...))
 			local cancel=finish or ct==0
 			local seg=sg:Clone()
 			local dmin=min-cg:GetCount()
@@ -218,7 +218,7 @@ else
 		local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
 		while ct<max and ag:GetCount()>0 do
 			local minc=1
-			local finish=(ct>=min and f(sg,...))
+			local finish=(ct>=min and ct<=max and f(sg,...))
 			if finish then
 				minc=0
 				if cm.master_rule_3_flag and not Duel.SelectYesNo(tp,210) then break end
@@ -283,6 +283,17 @@ function cm.CheckFieldFilter(g,tp,c,f,...)
 		return Duel.GetMZoneCount(tp,g,tp)>0 and (not f or f(g,...))
 	end
 end
+function cm.MustMaterialCheck(v,tp,code)
+	if not v then return not Duel.IsPlayerAffectedByEffect(tp,code) end
+	local t=cm.GetValueType(v)
+	if v~="Card" and v~="Group" then error("Parameter 1 must be \"Card\" or \"Group\".",2) end
+	local ce={Duel.IsPlayerAffectedByEffect(tp,code)}
+	for _,te in ipairs(te) do
+		if (cm.GetValueType(v)=="Card" and v~=te:GetHandler())
+			or (cm.GetValueType(v)=="Group" and not v:IsExists(te:GetHandler())) then return false end
+	end
+	return true
+end
 --xyz summon of prim
 function cm.AddXyzProcedureRank(c,rk,f,minct,maxct,xm,...)
 	local ext_params={...}
@@ -308,12 +319,6 @@ function cm.XyzProcedureCustomTuneMagicianCheck(c,g)
 	return false
 end
 function cm.XyzProcedureCustomCheck(g,xyzc,tp,gf)
-	if EFFECT_MUST_BE_XMATERIAL then
-		local eset={Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_XMATERIAL)}
-		for _,te in ipairs(eset) do
-			if not g:IsContains(te:GetHandler()) then return false end
-		end
-	end
 	if g:IsExists(cm.XyzProcedureCustomTuneMagicianCheck,1,nil,g) then return false end
 	return not gf or gf(g,xyzc,tp)
 end
@@ -354,7 +359,14 @@ function cm.XyzProcedureCustomCondition(func,gf,minct,maxct,ext_params)
 		else
 			mg=Duel.GetMatchingGroup(cm.XyzProcedureCustomFilter,tp,LOCATION_MZONE,0,nil,c,func,ext_params)
 		end
-		return maxc>=minc and cm.CheckGroup(mg,cm.CheckFieldFilter,nil,minc,maxc,tp,c,cm.XyzProcedureCustomCheck,c,tp,gf)
+		local sg=Group.CreateGroup()
+		local ce={Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_XMATERIAL)}
+		for _,te in ipairs(ce) do
+			local tc=te:GetHandler()
+			if not mg:IsContains(tc) then return false end
+			sg:AddCard(tc)
+		end
+		return maxc>=minc and cm.CheckGroup(mg,cm.CheckFieldFilter,sg,minc,maxc,tp,c,cm.XyzProcedureCustomCheck,c,tp,gf)
 	end
 end
 function cm.XyzProcedureCustomTarget(func,gf,minct,maxct,ext_params)
@@ -375,7 +387,12 @@ function cm.XyzProcedureCustomTarget(func,gf,minct,maxct,ext_params)
 				minc=math.max(minc,min)
 				maxc=math.min(maxc,max)
 			end
-			g=cm.SelectGroupWithCancel(tp,HINTMSG_XMATERIAL,mg,cm.CheckFieldFilter,nil,minc,maxc,tp,c,cm.XyzProcedureCustomCheck,c,tp,gf)
+			local ce={Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_XMATERIAL)}
+			for _,te in ipairs(ce) do
+				local tc=te:GetHandler()
+				sg:AddCard(tc)
+			end
+			g=cm.SelectGroupWithCancel(tp,HINTMSG_XMATERIAL,mg,cm.CheckFieldFilter,sg,minc,maxc,tp,c,cm.XyzProcedureCustomCheck,c,tp,gf)
 		end
 		if g then
 			g:KeepAlive()
@@ -1749,13 +1766,19 @@ return function(e,g,gc,chkfnf)
 	local chkf=bit.band(chkfnf,0xff)
 	local mg=g:Filter(cm.FusionFilter_3L,nil,e:GetHandler(),mf,sub)
 	local tp=e:GetHandlerPlayer()
+	local exg=Duel.GetMatchingGroup(cm.MyonCheckFilter,tp,0,LOCATION_MZONE,nil,c,myon)
+	mg:Merge(exg)
 	local sg=Group.CreateGroup()
 	if gc then
 		if not cm.FusionFilter_3L(gc,fc,mf,sub) then return false end
 		sg:AddCard(gc)
 	end
-	local exg=Duel.GetMatchingGroup(cm.MyonCheckFilter,tp,0,LOCATION_MZONE,nil,c,myon)
-	mg:Merge(exg)
+	local ce={Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_FMATERIAL)}
+	for _,te in ipairs(ce) do
+		local tc=te:GetHandler()
+		if not mg:IsContains(tc) then return false end
+		sg:AddCard(tc)
+	end
 	return cm.CheckGroup(mg,cm.FusionCheck_3L,sg,1,max,min,tp,c,f,chkfnf,sub)
 end
 end
@@ -1764,10 +1787,17 @@ return function(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
 	local c=e:GetHandler()
 	local chkf=bit.band(chkfnf,0xff)
 	local mg=eg:Filter(cm.FusionFilter_3L,nil,e:GetHandler(),mf,sub)
-	local sg=Group.CreateGroup()
-	if gc then sg:AddCard(gc) end
 	local exg=Duel.GetMatchingGroup(cm.MyonCheckFilter,tp,0,LOCATION_MZONE,nil,c,myon)
 	mg:Merge(exg)
+	local sg=Group.CreateGroup()
+	if gc then
+		sg:AddCard(gc)
+	end
+	local ce={Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_FMATERIAL)}
+	for _,te in ipairs(ce) do
+		local tc=te:GetHandler()
+		sg:AddCard(tc)
+	end
 	local g=cm.SelectGroup(tp,HINTMSG_FMATERIAL,mg,cm.FusionCheck_3L,sg,1,max,min,tp,c,f,chkf,sub)
 	Duel.SetFusionMaterial(g)
 end

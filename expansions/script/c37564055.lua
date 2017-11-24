@@ -118,6 +118,10 @@ end
 function cm.goal(g,tp,lv,syncard,tuc)
 	if Duel.GetLocationCountFromEx(tp,tp,g,syncard)<=0 then return false end
 	if tuc:IsHasEffect(EFFECT_HAND_SYNCHRO) and g:IsExists(Card.IsLocation,2,tuc,LOCATION_HAND) then return false end
+	local pe={Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_SMATERIAL)}
+	for _,te in ipairs(pe) do
+		if not g:IsContains(te:GetHandler()) then return false end
+	end
 	local ct=g:GetCount()
 	return g:CheckWithSumEqual(cm.val,lv,ct,ct,syncard)
 end
@@ -139,13 +143,10 @@ function cm.syncon(e,c,tuner,mg)
 		g2=Duel.GetMatchingGroup(cm.matfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c)
 		g3=Duel.GetMatchingGroup(cm.matfilter2,tp,LOCATION_MZONE+LOCATION_HAND,LOCATION_MZONE,nil,c)
 	end
-	local pe=Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_SMATERIAL)
 	local lv=c:GetLevel()
 	local sg=nil
 	if tuner then
 		return cm.matfilter1(c,tp) and cm.synfilter(tuner,c,lv,g2,g3,minc,maxc,tp)
-	elseif pe then
-		return cm.matfilter1(pe:GetOwner(),tp) and cm.synfilter(pe:GetOwner(),c,lv,g2,g3,minc,maxc,tp)
 	else
 		return g1:IsExists(cm.synfilter,1,nil,c,lv,g2,g3,minc,maxc,tp)
 	end
@@ -165,20 +166,14 @@ function cm.syntg(e,tp,eg,ep,ev,re,r,rp,chk,c,tuner,mg)
 		g2=Duel.GetMatchingGroup(cm.matfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c)
 		g3=Duel.GetMatchingGroup(cm.matfilter2,tp,LOCATION_MZONE+LOCATION_HAND,LOCATION_MZONE,nil,c)
 	end
-	local pe=Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_SMATERIAL)
 	local lv=c:GetLevel()
 	local tuc=nil
 	if tuner then
 		tuner=tuc
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
-		if not pe then
-			local t1=g1:FilterSelect(tp,cm.synfilter,1,1,nil,c,lv,g2,g3,minc,maxc,tp)
-			tuc=t1:GetFirst()
-		else
-			tuc=pe:GetOwner()
-			Group.FromCards(tuc):Select(tp,1,1,nil)
-		end
+		local t1=g1:FilterSelect(tp,cm.synfilter,1,1,nil,c,lv,g2,g3,minc,maxc,tp)
+		tuc=t1:GetFirst()
 	end
 	tuc:RegisterFlagEffect(m,RESET_EVENT+0x1fe0000,0,1)
 	local tsg=tuc:IsHasEffect(EFFECT_HAND_SYNCHRO) and g3 or g2
