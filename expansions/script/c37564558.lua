@@ -1,4 +1,4 @@
---Secret Scarlet
+--Nanahira & Senne
 local m=37564558
 local cm=_G["c"..m]
 xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
