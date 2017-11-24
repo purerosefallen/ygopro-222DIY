@@ -28,7 +28,7 @@ function cm.op(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()==0 then return end
 	local gc=g:RandomSelect(tp,1):GetFirst()
 	Duel.ConfirmCards(tp,gc)
-	if gc:IsType(TYPE_XYZ) and gc:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(e:GetHandler()),gc)>0 then
+	if gc:IsType(TYPE_XYZ) and gc:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(e:GetHandler()),gc)>0 and Senya.MustMaterialCheck(e:GetHandler(),tp,EFFECT_MUST_BE_XMATERIAL) then
 	   local mg=tc:GetOverlayGroup()
 		if mg:GetCount()~=0 then
 			Duel.Overlay(gc,mg)

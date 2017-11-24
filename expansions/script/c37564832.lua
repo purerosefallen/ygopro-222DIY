@@ -16,7 +16,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function cm.tgfilter0(c,e,tp)
-	return c:IsFaceup() and Senya.check_set_3L(c)
+	return c:IsFaceup() and Senya.check_set_3L(c) and Senya.MustMaterialCheck(c,tp,EFFECT_MUST_BE_FMATERIAL)
 		and c:IsCanBeFusionMaterial() and Duel.IsExistingMatchingCard(cm.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function cm.tgfilter(c,e,tp)

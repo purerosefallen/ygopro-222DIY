@@ -1,7 +1,7 @@
 --终焉的物语·物凄
 xpcall(function() require("expansions/script/c57300000") end,function() require("script/c57300000") end)
 function c57300020.initial_effect(c)
-	miyuki.rxyz1(c,nil,nil,2,63)
+	miyuki.AddXyzProcedureRank(c,nil,nil,2,63)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)

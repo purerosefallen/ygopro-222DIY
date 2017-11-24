@@ -6,15 +6,7 @@ cm.Senya_name_with_sayuri=true
 function cm.initial_effect(c)
 	Senya.AddSummonMusic(c,m*16,SUMMON_TYPE_LINK)
 	c:EnableReviveLimit()
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_FIELD)
-	e0:SetCode(EFFECT_SPSUMMON_PROC)
-	e0:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-	e0:SetRange(LOCATION_EXTRA)
-	e0:SetCondition(cm.linkcon)
-	e0:SetOperation(cm.linkop)
-	e0:SetValue(SUMMON_TYPE_LINK)
-	c:RegisterEffect(e0)
+	aux.AddLinkProcedure(c,cm.mfilter,3,3,cm.lcheck)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(37564765,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -27,27 +19,14 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e3)
 	Senya.NegateEffectModule(c,1,nil,cm.cost)
 end
-function cm.mfilter(c,lc)
-	return c:IsFaceup() and Senya.check_set_sayuri(c) and c:IsLinkType(TYPE_RITUAL) and c:IsCanBeLinkMaterial(lc)
+function cm.mfilter(c)
+	return c:IsFaceup() and Senya.check_set_sayuri(c) and c:IsLinkType(TYPE_RITUAL)
 end
-function cm.lcheck(g,tp,lc)
-	return Duel.GetLocationCountFromEx(tp,tp,g,lc)>0 and not g:IsExists(cm.lfilter,1,nil,g)
+function cm.lcheck(g)
+	return not g:IsExists(cm.lfilter,1,nil,g)
 end
 function cm.lfilter(c,g)
 	return g:IsExists(Card.IsCode,1,c,c:GetCode())
-end
-function cm.linkcon(e,c)
-	if c==nil then return true end
-	if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
-	local tp=c:GetControler()
-	local g=Duel.GetMatchingGroup(cm.mfilter,tp,LOCATION_MZONE,0,nil)
-	return g:GetCount()>=3 and Senya.CheckGroup(g,cm.lcheck,nil,3,3,tp,c)
-end
-function cm.linkop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.GetMatchingGroup(cm.mfilter,tp,LOCATION_MZONE,0,nil)
-	local g1=Senya.SelectGroup(tp,HINTMSG_LMATERIAL,g,cm.lcheck,nil,3,3,tp,c)
-	c:SetMaterial(g1)
-	Duel.SendtoGrave(g1,REASON_MATERIAL+REASON_LINK)
 end
 function cm.cfilter(c,g)
 	return g:IsContains(c)
