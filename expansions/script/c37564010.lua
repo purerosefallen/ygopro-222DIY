@@ -27,7 +27,7 @@ function cm.filter(c,e,tp)
 		and Duel.IsExistingMatchingCard(cm.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,rk,c)
 end
 function cm.spfilter(c,e,tp,rk,tc)
-	return c:IsType(TYPE_XYZ) and c:GetRank()==rk+1 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and Senya.check_set_elem(c) and tc:IsCanBeXyzMaterial(c) and Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(tc),c)>0
+	return c:IsType(TYPE_XYZ) and c:GetRank()==rk+1 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and Senya.check_set_elem(c) and tc:IsCanBeXyzMaterial(c) and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0 and Senya.MustMaterialCheck(c,tp,EFFECT_MUST_BE_XMATERIAL)
 end
 function cm.chkfilter(c,tc)
 	local rk=tc:GetRank()
