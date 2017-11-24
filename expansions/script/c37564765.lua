@@ -290,7 +290,7 @@ function cm.MustMaterialCheck(v,tp,code)
 	local ce={Duel.IsPlayerAffectedByEffect(tp,code)}
 	for _,te in ipairs(te) do
 		if (cm.GetValueType(v)=="Card" and v~=te:GetHandler())
-			or (cm.GetValueType(v)=="Group" and not v:IsExists(te:GetHandler()) then return false end
+			or (cm.GetValueType(v)=="Group" and not v:IsExists(te:GetHandler())) then return false end
 	end
 	return true
 end
