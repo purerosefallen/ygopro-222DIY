@@ -174,7 +174,7 @@ end
 function cm.ClariSRankFilter(c,xyzc)
 	return c:IsSetCard(0x570) and c:IsXyzType(TYPE_XYZ) and c:GetRank()==2
 end
-function c57300009.ClariSXyzValue(c)
+function cm.ClariSXyzValue(c)
 	local v=1
 	if c:IsHasEffect(57300021) then v=v+0x20000 end
 	return v
