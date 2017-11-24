@@ -43,6 +43,10 @@ end
 function cm.lcheck(g)
 	return g:IsExists(cm.lfilter,1,nil,g)
 end
+function cm.lfilter(c,g)
+	local cg=c:GetColumnGroup()
+	return g:IsExists(function(tc) return cg:IsContains(tc) end,1,c)
+end
 function cm.location_check(p,tp,z)
 	local tz=0
 	if p~=tp then
