@@ -1383,8 +1383,6 @@ void Game::PlaySoundEffect(int sound) {
 		break;
 	}
 	engineSound->setSoundVolume(gameConf.sound_volume);
-#else
-	return;
 #endif
 }
 void Game::PlayMusic(char* song, bool loop) {
@@ -1396,8 +1394,6 @@ void Game::PlayMusic(char* song, bool loop) {
 		soundBGM = engineMusic->play2D(song, loop, false, true);
 		engineMusic->setSoundVolume(gameConf.music_volume);
 	}
-#else
-	return;
 #endif
 }
 void Game::PlayBGM(int scene) {
@@ -1419,8 +1415,6 @@ void Game::PlayBGM(int scene) {
 		BufferIO::EncodeUTF8(fname, BGMName);
 		PlayMusic(BGMName, false);
 	}
-#else
-	return;
 #endif
 }
 void Game::ShowCardInfo(int code) {
