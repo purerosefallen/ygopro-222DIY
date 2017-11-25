@@ -2048,6 +2048,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				return true;
 				break;
 			}
+#ifdef _WIN32
 			case CHECKBOX_ENABLE_MUSIC: {
 				if(!mainGame->chkEnableMusic->isChecked())
 					mainGame->engineMusic->stopAllSounds();
@@ -2061,6 +2062,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				return true;
 				break;
 			}
+#endif
 			}
 			break;
 		}
@@ -2098,6 +2100,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				return true;
 				break;
 			}
+#ifdef _WIN32
 			case SCROLL_VOLUME: {
 				mainGame->gameConf.sound_volume = (double)mainGame->scrSoundVolume->getPos() / 100;
 				mainGame->gameConf.music_volume = (double)mainGame->scrMusicVolume->getPos() / 100;
@@ -2105,6 +2108,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				mainGame->engineMusic->setSoundVolume(mainGame->gameConf.music_volume);
 				break;
 			}
+#endif
 			}
 			break;
 		}

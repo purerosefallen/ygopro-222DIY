@@ -665,6 +665,7 @@ bool Game::Initialize() {
 		col.setAlpha(224);
 		env->getSkin()->setColor((EGUI_DEFAULT_COLOR)i, col);
 	}
+#ifdef _WIN32
 	engineSound = irrklang::createIrrKlangDevice();
 	engineMusic = irrklang::createIrrKlangDevice();
 	if(!engineSound || !engineMusic) {
@@ -674,6 +675,13 @@ bool Game::Initialize() {
 		chkEnableMusic->setEnabled(false);
 		chkMusicMode->setEnabled(false);
 	}
+#else
+	chkEnableSound->setChecked(false);
+	chkEnableSound->setEnabled(false);
+	chkEnableMusic->setChecked(false);
+	chkEnableMusic->setEnabled(false);
+	chkMusicMode->setEnabled(false);
+#endif
 	hideChat = false;
 	hideChatTimer = 0;
 	return true;
@@ -783,8 +791,10 @@ void Game::MainLoop() {
 	usleep(500000);
 #endif
 	SaveConfig();
+#ifdef _WIN32
 	if(engineMusic)
 		engineMusic->drop();
+#endif
 //	device->drop();
 }
 void Game::BuildProjectionMatrix(irr::core::matrix4& mProjection, f32 left, f32 right, f32 bottom, f32 top, f32 znear, f32 zfar) {
@@ -1000,19 +1010,20 @@ void Game::RefershBGMDir(std::wstring path, int scene) {
 	} while(FindNextFileW(fh, &fdataw));
 	FindClose(fh);
 #else
-	DIR * dir;
-	struct dirent * dirp;
-	if((dir = opendir("./sound/BGM/*.mp3")) == NULL)
-		return;
-	while((dirp = readdir(dir)) != NULL) {
-		size_t len = strlen(dirp->d_name);
-		if(len < 5 || strcasecmp(dirp->d_name + len - 4, ".mp3") != 0)
-			continue;
-		wchar_t wname[256];
-		BufferIO::DecodeUTF8(dirp->d_name, wname);
-		BGMList[BGM_ALL].push_back(wname);
-	}
-	closedir(dir);
+	//DIR * dir;
+	//struct dirent * dirp;
+	//if((dir = opendir("./sound/BGM/*.mp3")) == NULL)
+	//	return;
+	//while((dirp = readdir(dir)) != NULL) {
+	//	size_t len = strlen(dirp->d_name);
+	//	if(len < 5 || strcasecmp(dirp->d_name + len - 4, ".mp3") != 0)
+	//		continue;
+	//	wchar_t wname[256];
+	//	BufferIO::DecodeUTF8(dirp->d_name, wname);
+	//	BGMList[BGM_ALL].push_back(wname);
+	//}
+	//closedir(dir);
+	return;
 #endif
 }
 void Game::RefreshBot() {
@@ -1236,6 +1247,7 @@ void Game::SaveConfig() {
 	fclose(fp);
 }
 void Game::PlaySoundEffect(int sound) {
+#ifdef _WIN32
 	if(!mainGame->chkEnableSound->isChecked())
 		return;
 	switch(sound) {
@@ -1363,8 +1375,10 @@ void Game::PlaySoundEffect(int sound) {
 		break;
 	}
 	engineSound->setSoundVolume(gameConf.sound_volume);
+#endif
 }
 void Game::PlayMusic(char* song, bool loop) {
+#ifdef _WIN32
 	if(!mainGame->chkEnableMusic->isChecked())
 		return;
 	if(!engineMusic->isCurrentlyPlaying(song)) {
@@ -1372,9 +1386,11 @@ void Game::PlayMusic(char* song, bool loop) {
 		soundBGM = engineMusic->play2D(song, loop, false, true);
 		engineMusic->setSoundVolume(gameConf.music_volume);
 	}
+#endif
 }
 //modded
 void Game::PlayBGM(int scene) {
+#ifdef _WIN32
 	if(!mainGame->chkEnableMusic->isChecked())
 		return;
 	if(!mainGame->chkMusicMode->isChecked())
@@ -1393,6 +1409,7 @@ void Game::PlayBGM(int scene) {
 		BufferIO::EncodeUTF8(fname, BGMName);
 		PlayMusic(BGMName, false);
 	}
+#endif
 }
 void Game::ShowCardInfo(int code) {
 	CardData cd;
