@@ -1008,19 +1008,20 @@ void Game::RefershBGMDir(std::wstring path, int scene) {
 	} while(FindNextFileW(fh, &fdataw));
 	FindClose(fh);
 #else
-	DIR * dir;
-	struct dirent * dirp;
-	if((dir = opendir("./sound/BGM/*.mp3")) == NULL)
-		return;
-	while((dirp = readdir(dir)) != NULL) {
-		size_t len = strlen(dirp->d_name);
-		if(len < 5 || strcasecmp(dirp->d_name + len - 4, ".mp3") != 0)
-			continue;
-		wchar_t wname[256];
-		BufferIO::DecodeUTF8(dirp->d_name, wname);
-		BGMList[BGM_ALL].push_back(wname);
-	}
-	closedir(dir);
+	//DIR * dir;
+	//struct dirent * dirp;
+	//if((dir = opendir("./sound/BGM/*.mp3")) == NULL)
+	//	return;
+	//while((dirp = readdir(dir)) != NULL) {
+	//	size_t len = strlen(dirp->d_name);
+	//	if(len < 5 || strcasecmp(dirp->d_name + len - 4, ".mp3") != 0)
+	//		continue;
+	//	wchar_t wname[256];
+	//	BufferIO::DecodeUTF8(dirp->d_name, wname);
+	//	BGMList[BGM_ALL].push_back(wname);
+	//}
+	//closedir(dir);
+	return;
 #endif
 }
 void Game::RefreshBot() {
