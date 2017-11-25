@@ -51,8 +51,13 @@ inline int _wtoi(const wchar_t * s) {
 #ifdef _WIN32
 #include <irrKlang.h>
 #endif
+#ifdef __APPLE__
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#else
 #include <GL/gl.h>
 #include <GL/glu.h>
+#endif
 #include "CGUITTFont.h"
 #include "CGUIImageButton.h"
 #include <iostream>
