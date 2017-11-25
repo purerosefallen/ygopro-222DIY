@@ -791,8 +791,10 @@ void Game::MainLoop() {
 	usleep(500000);
 #endif
 	SaveConfig();
+#ifdef _WIN32
 	if(engineMusic)
 		engineMusic->drop();
+#endif
 //	device->drop();
 }
 void Game::BuildProjectionMatrix(irr::core::matrix4& mProjection, f32 left, f32 right, f32 bottom, f32 top, f32 znear, f32 zfar) {
