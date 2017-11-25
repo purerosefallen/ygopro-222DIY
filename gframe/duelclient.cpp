@@ -1014,6 +1014,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 		}
 		//modded
 		//playing music
+#ifdef _WIN32
 		case 11: {
 			if (data == 0) {
 				mainGame->engineMusic->stopAllSounds();
@@ -1048,6 +1049,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			mainGame->engineSound->setSoundVolume(mainGame->gameConf.sound_volume);
 			break;
 		}
+#endif
 		}
 		break;
 	}
