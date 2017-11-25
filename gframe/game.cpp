@@ -662,6 +662,7 @@ bool Game::Initialize() {
 		col.setAlpha(224);
 		env->getSkin()->setColor((EGUI_DEFAULT_COLOR)i, col);
 	}
+#ifdef _WIN32
 	engineSound = irrklang::createIrrKlangDevice();
 	engineMusic = irrklang::createIrrKlangDevice();
 #ifdef IRRKLANG_STATIC
@@ -677,6 +678,13 @@ bool Game::Initialize() {
 		chkEnableMusic->setEnabled(false);
 		chkMusicMode->setEnabled(false);
 	}
+#else
+	chkEnableSound->setChecked(false);
+	chkEnableSound->setEnabled(false);
+	chkEnableMusic->setChecked(false);
+	chkEnableMusic->setEnabled(false);
+	chkMusicMode->setEnabled(false);
+#endif
 	hideChat = false;
 	hideChatTimer = 0;
 	return true;
@@ -1247,6 +1255,7 @@ void Game::SaveConfig() {
 	fclose(fp);
 }
 void Game::PlaySoundEffect(int sound) {
+#ifdef _WIN32
 	if(!mainGame->chkEnableSound->isChecked())
 		return;
 	switch(sound) {
@@ -1374,8 +1383,12 @@ void Game::PlaySoundEffect(int sound) {
 		break;
 	}
 	engineSound->setSoundVolume(gameConf.sound_volume);
+#else
+	return;
+#endif
 }
 void Game::PlayMusic(char* song, bool loop) {
+#ifdef _WIN32
 	if(!mainGame->chkEnableMusic->isChecked())
 		return;
 	if(!engineMusic->isCurrentlyPlaying(song)) {
@@ -1383,8 +1396,12 @@ void Game::PlayMusic(char* song, bool loop) {
 		soundBGM = engineMusic->play2D(song, loop, false, true);
 		engineMusic->setSoundVolume(gameConf.music_volume);
 	}
+#else
+	return;
+#endif
 }
 void Game::PlayBGM(int scene) {
+#ifdef _WIN32
 	if(!mainGame->chkEnableMusic->isChecked())
 		return;
 	if(!mainGame->chkMusicMode->isChecked())
@@ -1402,6 +1419,9 @@ void Game::PlayBGM(int scene) {
 		BufferIO::EncodeUTF8(fname, BGMName);
 		PlayMusic(BGMName, false);
 	}
+#else
+	return;
+#endif
 }
 void Game::ShowCardInfo(int code) {
 	CardData cd;
