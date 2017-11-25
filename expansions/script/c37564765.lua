@@ -2605,11 +2605,11 @@ function cm.CheckGreaterExact(g,f,lv,...)
 end
 function cm.CheckRitualMaterial(c,g,tp,lv,f,gt)
 	local f=f or Card.GetRitualLevel
-	return cm.CheckGroup(g,cm.CheckRitualMaterialGoal,nil,1,99,c,tp,lv,f,gt)
+	return cm.CheckGroup(g,cm.CheckRitualMaterialGoal,nil,1,lv,c,tp,lv,f,gt)
 end
 function cm.SelectRitualMaterial(c,g,tp,lv,f,gt)
 	local f=f or Card.GetRitualLevel
-	return cm.SelectGroup(tp,HINTMSG_RELEASE,g,cm.CheckRitualMaterialGoal,nil,1,99,c,tp,lv,f,gt)
+	return cm.SelectGroup(tp,HINTMSG_RELEASE,g,cm.CheckRitualMaterialGoal,nil,1,lv,c,tp,lv,f,gt)
 end
 --for anifriends sound effects
 function cm.AddSummonSE(c,desc)
