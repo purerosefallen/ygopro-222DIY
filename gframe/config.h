@@ -48,7 +48,9 @@ inline int _wtoi(const wchar_t * s) {
 #endif
 
 #include <irrlicht.h>
+#ifdef _WIN32
 #include <irrKlang.h>
+#endif
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "CGUITTFont.h"
