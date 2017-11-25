@@ -468,9 +468,11 @@ public:
 	irr::gui::IGUIButton* btnCancelOrFinish;
 
 	//soundEngine
+#ifdef _WIN32
 	irrklang::ISoundEngine* engineSound;
 	irrklang::ISoundEngine* engineMusic;
 	irrklang::ISound* soundBGM;
+#endif
 };
 
 extern Game* mainGame;
