@@ -55,6 +55,7 @@ end
 function c22240122.xyzcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
+	if Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_XMATERIAL) then return false end
 	local olg=Duel.GetMatchingGroup(c22240122.xyzfilter,tp,LOCATION_SZONE,0,nil,c)
 	if olg:GetCount()>=2 and Duel.GetLocationCountFromEx(tp,tp,olg,c)>0 then return true end
 end
