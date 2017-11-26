@@ -46,6 +46,7 @@ struct Config {
 	double music_volume;
 	int music_mode;
 	int defaultOT;
+	int enable_bot_mode;
 };
 
 struct DuelInfo {
