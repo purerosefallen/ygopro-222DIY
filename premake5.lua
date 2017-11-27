@@ -3,6 +3,12 @@ solution "ygo"
     language "C++"
     objdir "obj"
 
+    USE_IRRKLANG = true
+	if os.getenv("irrklang_pro") then
+		IRRKLANG_PRO = true
+	end
+
+
     configurations { "Debug", "Release" }
 
     configuration "windows"
@@ -67,4 +73,7 @@ solution "ygo"
     include "irrlicht"
     include "lua"
     include "sqlite3"
+    if IRRKLANG_PRO then
+    include "ikpmp3"
+    end
     end
