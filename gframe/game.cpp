@@ -662,7 +662,7 @@ bool Game::Initialize() {
 		col.setAlpha(224);
 		env->getSkin()->setColor((EGUI_DEFAULT_COLOR)i, col);
 	}
-#ifdef _WIN32
+#ifndef __APPLE__
 	engineSound = irrklang::createIrrKlangDevice();
 	engineMusic = irrklang::createIrrKlangDevice();
 #ifdef IRRKLANG_STATIC
@@ -793,7 +793,7 @@ void Game::MainLoop() {
 	usleep(500000);
 #endif
 	SaveConfig();
-#ifdef _WIN32
+#ifdef __APPLE__
 	if(engineMusic)
 		engineMusic->drop();
 #endif
@@ -1257,7 +1257,7 @@ void Game::SaveConfig() {
 	fclose(fp);
 }
 void Game::PlaySoundEffect(int sound) {
-#ifdef _WIN32
+#ifndef __APPLE__
 	if(!mainGame->chkEnableSound->isChecked())
 		return;
 	switch(sound) {
@@ -1388,7 +1388,7 @@ void Game::PlaySoundEffect(int sound) {
 #endif
 }
 void Game::PlayMusic(char* song, bool loop) {
-#ifdef _WIN32
+#ifndef __APPLE__
 	if(!mainGame->chkEnableMusic->isChecked())
 		return;
 	if(!engineMusic->isCurrentlyPlaying(song)) {
@@ -1399,7 +1399,7 @@ void Game::PlayMusic(char* song, bool loop) {
 #endif
 }
 void Game::PlayBGM(int scene) {
-#ifdef _WIN32
+#ifndef __APPLE__
 	if(!mainGame->chkEnableMusic->isChecked())
 		return;
 	if(!mainGame->chkMusicMode->isChecked())
