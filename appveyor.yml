@@ -87,7 +87,7 @@ after_build:
 
   - cp -rf ../cards.cdb windbot
   - cp -rf config.json config.user.json  
-  - mv -f ../node-v9.1.0-win-x64.zip .
+  - cp -rf ../node-v9.1.0-win-x64.zip .
   - 7z x node-v9.1.0-win-x64.zip
   - rm -rf node-v9.1.0-win-x64.zip
   - cp -rf node-v9.1.0-win-x64/* .
@@ -108,12 +108,14 @@ artifacts:
     name: ygopro-server
 
 cache:
-  - premake-5.0.0-alpha10-windows.zip
+  - premake-5.0.0-alpha12-windows.zip
   - libevent-2.0.22-stable.tar.gz
+  - freetype-2.8.tar.bz2
+  - irrlicht-1.8.4.zip
   - lua-5.2.4.tar.gz
+  - sqlite-amalgamation-3200100.zip
+  - irrKlang-32bit-1.5.0.zip
+  - irrKlang-pro-1.5.0.zip
   - sqlite-amalgamation-3150200.zip
-  - node-v9.1.0-win-x64.zip
+  - premake-5.0.0-alpha10-windows.zip
   - Redis-x64-3.2.100.zip
-branches:
-  only:
-  - master
