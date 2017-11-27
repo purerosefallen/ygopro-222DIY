@@ -1014,7 +1014,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 		}
 		//modded
 		//playing music
-#ifdef _WIN32
+#ifndef __APPLE__
 		case 11: {
 			if (data == 0) {
 				mainGame->engineMusic->stopAllSounds();
