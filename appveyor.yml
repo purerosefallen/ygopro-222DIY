@@ -119,6 +119,3 @@ cache:
   - sqlite-amalgamation-3150200.zip
   - premake-5.0.0-alpha10-windows.zip
   - Redis-x64-3.2.100.zip
-branches:
-  only:
-  - master
