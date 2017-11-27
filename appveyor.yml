@@ -1,5 +1,13 @@
 version: '{build}'
 
+environment:
+  access_token:
+    secure: DOOS4g7CT8ctOgiMr62K56qQ1FO6s2ESpqNZlhf8F4nomemvvwxV/pRj9nbKmtjR
+  irrklang_pro:
+    secure: l0At/QtuW8XgdROZSAt4b3/pIssTVQ+EDpisjFzaaTUiWwBVDwE10C1bWuNqxk6O0Q54H0ZTBq0ZUXLNEx+59tRNe2F/KAbPjlFELry7gFI=
+  irrklang_pro_user:
+    secure: TOWMXao5dXWg9MVdlEYaGjIeT6McnHodbNSO7DIJCfU=
+
 install:
   # environment and system dependency
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/premake/premake-core/releases/download/v5.0.0-alpha12/premake-5.0.0-alpha12-windows.zip ; exit 0"
@@ -28,17 +36,25 @@ install:
   - 7z x sqlite-amalgamation-3200100.zip
   - move sqlite-amalgamation-3200100 sqlite3
   
+  #- bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://www.ambiera.at/downloads/irrKlang-32bit-1.5.0.zip ; exit 0"
+  #- 7z x irrKlang-32bit-1.5.0.zip
+  #- move irrKlang-1.5.0 irrklang
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name -u %irrklang_pro_user% %irrklang_pro% ; exit 0"
+  - 7z x irrKlang-pro-1.5.0.zip
+  - move irrKlang-pro-1.5.0 irrklang
+  
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://www.ambiera.at/downloads/irrKlang-32bit-1.5.0.zip ; exit 0"
   - 7z x irrKlang-32bit-1.5.0.zip
-  - move irrKlang-1.5.0 irrklang
+  - move irrKlang-1.5.0\plugins\ikpMP3 ikpmp3
 
   # let premake happy
   - xcopy /E premake\* .
   
-  # patch irrlicht and lua
+  # patch irrlicht and ikpmp3
   - patch -p0 < irrlicht\irrlicht.patch
-  # - patch -p0 < lua\lua.patch
-  
+  - patch -p0 < ikpmp3\ikpmp3.patch
+
   # premake
   - premake5 vs2015
   
@@ -70,7 +86,7 @@ after_build:
   - git commit -m "Builded by Appveyor"
   - git push %Smile%purerosefallen/ygopro-222DIY data
   
-  - 7z a -mx9 -xr!.git* ../ygopro-222DIY-data.7z ygopro_222.exe irrKlang.dll ikpMP3.dll lflist.conf expansions sound update
+  - 7z a -mx9 -xr!.git* ../ygopro-222DIY-data.7z ygopro_222.exe lflist.conf expansions sound update
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/ygopro-7210srv/archive/master.zip ; exit 0"
   - 7z x ygopro-7210srv-master.zip
@@ -110,7 +126,7 @@ after_build:
   - 7z x ygopro-starter-pack-master.zip
   - cp -rf ygopro-starter-pack-master/* .
   
-  - 7z a -mx9 -xr!.git* ../ygopro-222DIY-full.7z ygopro_222.exe LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound irrKlang.dll ikpMP3.dll expansions update WindBot Bot.exe bot.conf
+  - 7z a -mx9 -xr!.git* ../ygopro-222DIY-full.7z ygopro_222.exe LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound expansions update WindBot Bot.exe bot.conf
   - cd ..
 
 test: off

@@ -50,6 +50,9 @@ inline int _wtoi(const wchar_t * s) {
 #include <irrlicht.h>
 #ifdef _WIN32
 #include <irrKlang.h>
+#ifdef IRRKLANG_STATIC
+#include "../ikpMP3/ikpMP3.h"
+#endif
 #endif
 #ifdef __APPLE__
 #include <OpenGL/gl.h>
