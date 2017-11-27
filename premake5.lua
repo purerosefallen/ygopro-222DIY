@@ -4,7 +4,10 @@ solution "ygo"
     objdir "obj"
 
     USE_IRRKLANG = true
-    IRRKLANG_PRO = true
+	if os.getenv("irrklang_pro") then
+		IRRKLANG_PRO = true
+	end
+
 
     configurations { "Debug", "Release" }
 
