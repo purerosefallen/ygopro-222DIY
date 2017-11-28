@@ -2,9 +2,7 @@ version: '{build}'
 
 environment:
   irrklang_pro:
-    secure: l0At/QtuW8XgdROZSAt4b3/pIssTVQ+EDpisjFzaaTUiWwBVDwE10C1bWuNqxk6O0Q54H0ZTBq0ZUXLNEx+59tRNe2F/KAbPjlFELry7gFI=
-  irrklang_pro_user:
-    secure: TOWMXao5dXWg9MVdlEYaGjIeT6McnHodbNSO7DIJCfU=
+    secure: IHiumvV9+f+4JOGb9Al3Husl+Hox2gCq90R74mJQy+g=
 
 install:
   # environment and system dependency
@@ -34,20 +32,17 @@ install:
   - 7z x sqlite-amalgamation-3200100.zip
   - move sqlite-amalgamation-3200100 sqlite3
   
-  #- bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://www.ambiera.at/downloads/irrKlang-32bit-1.5.0.zip ; exit 0"
-  #- 7z x irrKlang-32bit-1.5.0.zip
-  #- move irrKlang-1.5.0 irrklang
-
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name -u %irrklang_pro_user% %irrklang_pro% ; exit 0"
-  - 7z x irrKlang-pro-1.5.0.zip
-  - move irrKlang-pro-1.5.0 irrklang
-  
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://www.ambiera.at/downloads/irrKlang-32bit-1.5.0.zip ; exit 0"
   - 7z x irrKlang-32bit-1.5.0.zip
-  - move irrKlang-1.5.0\plugins\ikpMP3 ikpmp3
+  - move irrKlang-1.5.0 irrklang
+  - move irrklang\plugins\ikpMP3 ikpmp3
 
   # let premake happy
   - xcopy /E premake\* .
+
+  #irrklang pro
+  - rm -rf irrklang/lib/Win32-visualStudio/irrKlang.lib
+  - 7z x -oirrklang/lib/Win32-visualStudio -p%irrklang_pro% irrKlang.7z
   
   # patch irrlicht and ikpmp3
   - patch -p0 < irrlicht\irrlicht.patch
@@ -154,7 +149,6 @@ cache:
   - lua-5.2.4.tar.gz
   - sqlite-amalgamation-3200100.zip
   - irrKlang-32bit-1.5.0.zip
-  - irrKlang-pro-1.5.0.zip
   - sqlite-amalgamation-3150200.zip
   - premake-5.0.0-alpha10-windows.zip
   - Redis-x64-3.2.100.zip
