@@ -66,14 +66,14 @@ after_build:
   - git config --global user.name "Smile-DK"
   - git config --global user.email "2236141431@qq.com"
   
-  - git clone --branch=data . data
+  - mv -f bin/release/ygopro.exe ygopro_222.exe
 
-  - rm -rf data/ygopro_222.exe
+  - git clone . data
+  - cd data
+  - git checkout data
+  - cp -rf ../ygopro_222.exe .
 
-  - mv -f bin/release/ygopro.exe data/ygopro_222.exe
-  - cp -rf data/ygopro_222.exe .
-
-  - cd data/update
+  - cd update
   - update.exe -ci
   - cd ..
 
