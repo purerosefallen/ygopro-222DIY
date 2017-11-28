@@ -18,10 +18,8 @@ project "ygopro"
 			includedirs { "../irrklang/include" }
 			if IRRKLANG_PRO then
 				defines { "IRRKLANG_STATIC" }
-				libdirs { "../irrklang/bin/win32-visualstudio_lib" }
-			else
-				libdirs { "../irrklang/lib/Win32-visualStudio" }
 			end
+			libdirs { "../irrklang/lib/Win32-visualStudio" }
 		end
         links { "opengl32", "ws2_32", "winmm", "gdi32", "kernel32", "user32", "imm32" }
     configuration {"windows", "not vs*"}
