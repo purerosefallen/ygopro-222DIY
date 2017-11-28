@@ -6,7 +6,6 @@
 /gframe/ygopro.ico
 /gframe/ygopro.rc
 /gframe/ygopro.aps
-/gframe/__iob_func_fix.cpp
 /irrlicht/
 /lua/
 /obj/
@@ -14,3 +13,4 @@
 /irrklang/
 /ikpmp3/
 premake5.exe
+/irrKlang.7z

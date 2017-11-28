@@ -1014,7 +1014,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 		}
 		//modded
 		//playing music
-#ifndef __APPLE__
+#ifdef YGOPRO_USE_IRRKLANG
 		case 11: {
 			if (data == 0) {
 				mainGame->engineMusic->stopAllSounds();
