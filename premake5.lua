@@ -3,13 +3,14 @@ solution "ygo"
     language "C++"
     objdir "obj"
 
-    USE_IRRKLANG = true
+	USE_IRRKLANG = true
 	if os.getenv("irrklang_pro") then
 		IRRKLANG_PRO = true
 	end
-
+	startproject "ygopro"
 
     configurations { "Debug", "Release" }
+	defines { "LUA_COMPAT_5_2" }
 
     configuration "windows"
         defines { "WIN32", "_WIN32", "WINVER=0x0501" }
