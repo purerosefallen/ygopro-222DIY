@@ -58,12 +58,13 @@ build:
     parallel: true
 
 after_build:
+  - mv -f bin/release/ygopro.exe ygopro_222.exe
+  
+before_deploy:
   - git config --global user.name "Smile-DK"
   - git config --global user.email "2236141431@qq.com"
   
   - git checkout data
-
-  - mv -f bin/release/ygopro.exe ygopro_222.exe
 
   - git clone . data
   - cd data
@@ -76,10 +77,7 @@ after_build:
   - git add . -A
   - git commit -m "Builded by Appveyor"
   - git push %Smile%purerosefallen/ygopro-222DIY data
-  - cd ..
 
-before_deploy:
-  - cd data 
   - 7z a -mx9 -xr!.git* ../ygopro-222DIY-data.7z ygopro_222.exe lflist.conf expansions sound update
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/ygopro-7210srv/archive/master.zip ; exit 0"
@@ -152,8 +150,3 @@ cache:
   - sqlite-amalgamation-3150200.zip
   - premake-5.0.0-alpha10-windows.zip
   - Redis-x64-3.2.100.zip
-
-branches:
-  only:
-    - local
-    - /\d+\..+/
