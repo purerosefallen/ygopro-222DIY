@@ -799,7 +799,7 @@ void Game::MainLoop() {
 	usleep(500000);
 #endif
 	SaveConfig();
-#ifdef __APPLE__
+#ifdef YGOPRO_USE_IRRKLANG
 	if(engineMusic)
 		engineMusic->drop();
 #endif
