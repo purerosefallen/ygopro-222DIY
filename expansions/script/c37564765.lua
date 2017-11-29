@@ -128,7 +128,7 @@ end
 function cm.CheckGroupRecursive(c,sg,g,f,min,max,ext_params)
 	sg:AddCard(c)
 	local ct=sg:GetCount()
-	local res=(ct>=min and ct<= max and f(sg,table.unpack(ext_params)))
+	local res=(ct>=min and ct<=max and f(sg,table.unpack(ext_params)))
 		or (ct<max and g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params))
 	sg:RemoveCard(c)
 	return res
