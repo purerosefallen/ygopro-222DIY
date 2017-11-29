@@ -2001,7 +2001,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				return true;
 				break;
 			}
-#ifdef _WIN32
+#ifdef YGOPRO_USE_IRRKLANG
 			case CHECKBOX_ENABLE_MUSIC: {
 				if(!mainGame->chkEnableMusic->isChecked())
 					mainGame->engineMusic->stopAllSounds();
