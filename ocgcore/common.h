@@ -43,3 +43,4 @@ struct card_sort {
 };
 
 #endif /* COMMON_H_ */
+#define lua_tonumberint(L,i) (lua_Integer)(((lua_tonumberx(L, (i), NULL) > 0) ? 0.5 : -0.5) + lua_tonumberx(L, (i), NULL))

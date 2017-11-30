@@ -1010,7 +1010,7 @@ int32 interpreter::get_operation_value(card* pcard, int32 findex, int32 extraarg
 		}
 		return OPERATION_FAIL;
 	}
-	result = lua_tointeger(current_state, -1);
+	result = lua_tonumberint(current_state, -1);
 	lua_pop(current_state, 1);
 	no_action--;
 	call_depth--;
@@ -1032,7 +1032,7 @@ int32 interpreter::get_function_value(int32 f, uint32 param_count) {
 		if (lua_isboolean(current_state, -1))
 			result = lua_toboolean(current_state, -1);
 		else
-			result = lua_tointeger(current_state, -1);
+			result = lua_tonumberint(current_state, -1);
 		lua_pop(current_state, 1);
 		no_action--;
 		call_depth--;
@@ -1066,7 +1066,7 @@ int32 interpreter::get_function_value(int32 f, uint32 param_count, std::vector<i
 			if (lua_isboolean(current_state, index))
 				return_value = lua_toboolean(current_state, index);
 			else
-				return_value = lua_tointeger(current_state, index);
+				return_value = lua_tonumberint(current_state, index);
 			result->push_back(return_value);
 		}
 		lua_settop(current_state, stack_top);
@@ -1127,7 +1127,7 @@ int32 interpreter::call_coroutine(int32 f, uint32 param_count, uint32 * yield_va
 	if (result == 0) {
 		coroutines.erase(f);
 		if(yield_value)
-			*yield_value = lua_isboolean(rthread, -1) ? lua_toboolean(rthread, -1) : lua_tointeger(rthread, -1);
+			*yield_value = lua_isboolean(rthread, -1) ? lua_toboolean(rthread, -1) : lua_tonumberint(rthread, -1);
 		current_state = lua_state;
 		call_depth--;
 		if(call_depth == 0) {
