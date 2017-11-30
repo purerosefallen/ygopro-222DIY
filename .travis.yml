@@ -7,7 +7,7 @@ before_install:
 - brew update > /dev/null
 - brew install freetype libevent sqlite dylibbundler > /dev/null
 
-- curl --location --retry 5 http://www.lua.org/ftp/lua-5.3.4.tar.gzhttps://github.com/premake/premake-core/releases/download/v5.0.0-alpha12/premake-5.0.0-alpha12-macosx.tar.gz | tar zfx -
+- curl --location --retry 5 http://www.lua.org/ftp/lua-5.3.4.tar.gz | tar zfx -
 - cd lua-5.3.4
 - make macosx test
 - make install
