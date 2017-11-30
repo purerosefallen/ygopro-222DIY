@@ -18,8 +18,7 @@ before_install:
 
 - unzip -q irrlicht-1.8.4.zip 
 - cd irrlicht-1.8.4/
-- cp -rf ../premake/irrlicht/irrlicht-mac.patch .
-- patch -p1 < irrlicht-mac.patch 
+- curl --location --retry 5 https://github.com/moecube/ygopro/raw/master/premake/irrlicht/irrlicht-mac.patch | patch -p1
 - cd source/Irrlicht/MacOSX/ 
 - xcodebuild -project MacOSX.xcodeproj > /dev/null
 - cp build/Release/libIrrlicht.a /usr/local/lib/ 
