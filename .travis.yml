@@ -23,5 +23,4 @@ before_install:
 script:
 - ./premake5 gmake
 - cd build
-- sed -i 's/-llua/-llua5.3/g' ygopro.make
 - make config=release
