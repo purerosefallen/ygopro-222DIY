@@ -1,0 +1,58 @@
+language: cpp
+os: osx
+sudo: required
+dist: trusty
+osx_image: xcode8
+before_install:
+- brew update > /dev/null
+- brew install freetype libevent sqlite dylibbundler > /dev/null
+
+- curl --location --retry 5 http://www.lua.org/ftp/lua-5.3.4.tar.gz
+- tar zxf lua-5.3.4.tar.gz
+- cd lua-5.3.4
+- make macosx test
+- make install
+- cd ..
+
+- curl --location --retry 5 https://github.com/premake/premake-core/releases/download/v5.0.0-alpha12/premake-5.0.0-alpha12-macosx.tar.gz | tar zfx -
+- curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://downloads.sourceforge.net/irrlicht/irrlicht-1.8.4.zip
+
+- unzip -q irrlicht-1.8.4.zip 
+- cd irrlicht-1.8.4/
+- cp -rf ../premake/irrlicht/irrlicht-mac.patch .
+- patch -p1 < irrlicht-mac.patch 
+- cd source/Irrlicht/MacOSX/ 
+- xcodebuild -project MacOSX.xcodeproj > /dev/null
+- cp build/Release/libIrrlicht.a /usr/local/lib/ 
+- cp -rf ../../../include /usr/local/include/irrlicht 
+- cd ../../../../
+
+script:
+- ./premake5 gmake --cc=clang
+- cd build
+- make config=release ygopro
+- cd ..
+
+- mkdir -p ygopro.app/Contents/MacOS
+- mv bin/release/ygopro ygopro.app/Contents/MacOS
+- dylibbundler -x ygopro.app/Contents/MacOS/ygopro -b -d ygopro.app/Contents/Frameworks/ -p @executable_path/../Frameworks/ -cd
+- strip ygopro.app/Contents/MacOS/ygopro; mkdir ygopro.app/Contents/Resources
+- mv premake/gframe/ygopro.icns ygopro.app/Contents/Resources/Icon.icns
+- defaults write "$PWD/ygopro.app/Contents/Info.plist" "CFBundleIconFile" "Icon.icns"
+- defaults write "$PWD/ygopro.app/Contents/Info.plist" "CFBundleIdentifier" "moe.mycard.ygopro"
+
+- echo $CERTIFICATE | base64 --decode --output cert.p12
+- security create-keychain -p "" build.keychain
+- security unlock-keychain -p "" build.keychain
+- security import cert.p12 -k build.keychain -P "$CERTIFICATE_PASSWORD" -T /usr/bin/codesign
+- codesign --deep --keychain build.keychain --sign "$(security find-identity -v -p codesigning build.keychain | head -1 | grep -o '".*"' | tr -d '"')" ygopro.app
+
+- zip -q -r ygopro-koishi-mac.zip ygopro.app
+
+deploy:
+  provider: releases
+  file: ygopro-koishi-mac.zip
+  skip_cleanup: true
+  on:
+    tags: true
+  api-key: $NANAHIRA

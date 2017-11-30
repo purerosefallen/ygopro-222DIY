@@ -2,10 +2,11 @@ solution "ygo"
     location "build"
     language "C++"
     objdir "obj"
-
-	USE_IRRKLANG = true
-	if os.getenv("irrklang_pro") then
-		IRRKLANG_PRO = true
+	if os.ishost("windows") then
+		USE_IRRKLANG = true
+		if os.getenv("irrklang_pro") then
+			IRRKLANG_PRO = true
+		end
 	end
 	startproject "ygopro"
 
@@ -69,12 +70,12 @@ solution "ygo"
     include "ocgcore"
     include "gframe"
     if os.ishost("windows") then
-    include "event"
-    include "freetype"
-    include "irrlicht"
-    include "lua"
-    include "sqlite3"
-    if IRRKLANG_PRO then
-    include "ikpmp3"
-    end
+		include "event"
+		include "freetype"
+		include "irrlicht"
+		include "lua"
+		include "sqlite3"
+		if IRRKLANG_PRO then
+			include "ikpmp3"
+		end
     end
