@@ -38,9 +38,12 @@ typedef int BOOL;
 #ifndef NULL
 #define NULL 0
 #endif
-#define lua_tonumberint(L,i) (lua_Integer)(((lua_tonumberx(L, (i), NULL) > 0) ? 0.5 : -0.5) + lua_tonumberx(L, (i), NULL))
 struct card_sort {
 	bool operator()(void* const & c1, void* const & c2) const;
 };
 
 #endif /* COMMON_H_ */
+#ifndef MODDED_TONUMBER
+#define MODDED_TONUMBER
+#define lua_tonumberint(L,i) (lua_Integer)(((lua_tonumberx(L, (i), NULL) > 0) ? 0.5 : -0.5) + lua_tonumberx(L, (i), NULL))
+#endif

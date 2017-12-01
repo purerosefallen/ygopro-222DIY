@@ -96,10 +96,10 @@ function cm.replace_register_effect(f,p)
 	end
 end
 function cm.replace_function(of)
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+	return function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		local f=Duel.IsPlayerAffectedByEffect
 		Duel.IsPlayerAffectedByEffect=cm.replace_affected_by_effect(f)
-		local res=(not of or of(e,tp,eg,ep,ev,re,r,rp,chk))
+		local res=(not of or of(e,tp,eg,ep,ev,re,r,rp,chk,chkc))
 		Duel.IsPlayerAffectedByEffect=f
 		return res
 	end
