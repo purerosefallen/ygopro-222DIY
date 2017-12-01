@@ -34,6 +34,8 @@ solution "ygo"
 
     configuration "linux"
         defines { "LUA_USE_LINUX" }
+        includedirs { "/usr/local/include", "/usr/local/include/*" }
+        libdirs { "/usr/local/lib" }
 
     configuration "Release"
         optimize "Speed"
