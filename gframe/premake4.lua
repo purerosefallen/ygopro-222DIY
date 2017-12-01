@@ -35,8 +35,8 @@ project "ygopro"
             links { "irrKlang" }
             includedirs { "/usr/include/irrKlang" }
             if os.getenv("TRAVIS_OS_NAME")=="osx" then
-              libdirs { "../irrklang/bin/macosx-gcc" }
+                libdirs { "../irrklang/bin/macosx-gcc" }
 			elseif os.getenv("TRAVIS_OS_NAME")=="linux" then
-              libdirs { "../irrklang/bin/linux-gcc" }
+                libdirs { "../irrklang/bin/linux-gcc" }
             end
         end
