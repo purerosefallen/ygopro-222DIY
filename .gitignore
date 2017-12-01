@@ -17,3 +17,5 @@ ygopro
 premake5.exe
 /expansions/pics
 /pics
+/premake5
+/lua
