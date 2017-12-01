@@ -283,6 +283,7 @@ bool Game::Initialize() {
 	chkAutoSearch = env->addCheckBox(false, rect<s32>(posX, posY, posX + 260, posY + 25), tabSystem, CHECKBOX_AUTO_SEARCH, dataManager.GetSysString(1358));
 	chkAutoSearch->setChecked(gameConf.auto_search_limit >= 0);
 	posY += 30;
+#ifdef YGOPRO_USE_IRRKLANG
 	chkEnableSound = env->addCheckBox(gameConf.enable_sound, rect<s32>(posX, posY, posX + 120, posY + 25), tabSystem, -1, dataManager.GetSysString(1279));
 	chkEnableSound->setChecked(gameConf.enable_sound);
 	scrSoundVolume = env->addScrollBar(true, rect<s32>(posX + 126, posY + 4, posX + 260, posY + 21), tabSystem, SCROLL_VOLUME);
@@ -303,6 +304,7 @@ bool Game::Initialize() {
 	posY += 30;
 	chkMusicMode = env->addCheckBox(false, rect<s32>(posX, posY, posX + 260, posY + 25), tabSystem, -1, dataManager.GetSysString(1281));
 	chkMusicMode->setChecked(gameConf.music_mode != 0);
+#endif
 	//
 	wHand = env->addWindow(rect<s32>(500, 450, 825, 605), false, L"");
 	wHand->getCloseButton()->setVisible(false);
@@ -678,12 +680,6 @@ bool Game::Initialize() {
 		chkEnableMusic->setEnabled(false);
 		chkMusicMode->setEnabled(false);
 	}
-#else
-	chkEnableSound->setChecked(false);
-	chkEnableSound->setEnabled(false);
-	chkEnableMusic->setChecked(false);
-	chkEnableMusic->setEnabled(false);
-	chkMusicMode->setEnabled(false);
 #endif
 	hideChat = false;
 	hideChatTimer = 0;
@@ -995,6 +991,7 @@ void Game::RefreshBGMList() {
 	RefershBGMDir(L"lose/", BGM_LOSE);
 }
 void Game::RefershBGMDir(std::wstring path, int scene) {
+#ifdef YGOPRO_USE_IRRKLANG
 #ifdef _WIN32
 	WIN32_FIND_DATAW fdataw;
 	std::wstring search = L"./sound/BGM/" + path + L"*.mp3";
@@ -1023,6 +1020,7 @@ void Game::RefershBGMDir(std::wstring path, int scene) {
 		BGMList[BGM_ALL].push_back(wname);
 	}
 	closedir(dir);
+#endif
 #endif
 }
 void Game::RefreshBot() {
@@ -1242,6 +1240,7 @@ void Game::SaveConfig() {
 	fprintf(fp, "#auto_search_limit >= 0: Start search automatically when the user enters N chars\n");
 	fprintf(fp, "auto_search_limit = %d\n", gameConf.auto_search_limit);
 	fprintf(fp, "ignore_deck_changes = %d\n", ((mainGame->chkIgnoreDeckChanges->isChecked()) ? 1 : 0));
+#ifdef YGOPRO_USE_IRRKLANG
 	fprintf(fp, "enable_sound = %d\n", ((mainGame->chkEnableSound->isChecked()) ? 1 : 0));
 	fprintf(fp, "enable_music = %d\n", ((mainGame->chkEnableMusic->isChecked()) ? 1 : 0));
 	fprintf(fp, "#Volume of sound and music, between 0 and 100\n");
@@ -1252,6 +1251,7 @@ void Game::SaveConfig() {
 	if(vol < 0) vol = 0; else if(vol > 100) vol = 100;
 	fprintf(fp, "music_volume = %d\n", vol);
 	fprintf(fp, "music_mode = %d\n", ((mainGame->chkMusicMode->isChecked()) ? 1 : 0));
+#endif
 	fprintf(fp, "default_ot = %d\n", gameConf.defaultOT);
 	fprintf(fp, "enable_bot_mode = %d\n", gameConf.enable_bot_mode);
 	fclose(fp);
