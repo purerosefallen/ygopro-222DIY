@@ -2,17 +2,10 @@ solution "ygo"
     location "build"
     language "C++"
     objdir "obj"
-<<<<<<< HEAD
     startproject "ygopro"
 
     configurations { "Debug", "Release" }
     defines { "LUA_COMPAT_5_2" }
-=======
-	startproject "ygopro"
-
-    configurations { "Debug", "Release" }
-	defines { "LUA_COMPAT_5_2" }
->>>>>>> mactest
 
     configuration "windows"
         defines { "WIN32", "_WIN32" }
