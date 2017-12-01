@@ -34,7 +34,9 @@ project "ygopro"
             defines { "YGOPRO_USE_IRRKLANG" }
             links { "irrKlang" }
             includedirs { "/usr/include/irrKlang" }
-            if os.getenv("USE_IRRKLANG")=="mac" then
-                libdirs { "../irrklang/lib/Win32-visualStudio" }
+            if os.getenv("TRAVIS_OS_NAME")=="osx" then
+              libdirs { "../irrklang/bin/macosx-gcc" }
+			elseif  os.getenv("TRAVIS_OS_NAME")=="linux" then
+              libdirs { "../irrklang/bin/linux-gcc" }
             end
         end
