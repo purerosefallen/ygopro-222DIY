@@ -49,7 +49,7 @@ before_install:
     curl --location --retry 5 https://github.com/moecube/ygopro/raw/master/premake/irrlicht/irrlicht-mac.patch | patch -p1;
     cd source/Irrlicht/MacOSX/;
     xcodebuild -project MacOSX.xcodeproj > /dev/null;
-    sudo cp build/Release/libIrrlicht.a /usr/local/lib/;
+    sudo cp -rf build/Release/libIrrlicht.a /usr/local/lib/;
     sudo cp -rf ../../../include /usr/local/include/irrlicht;
     cd ../../../../;
   fi
@@ -72,14 +72,14 @@ script:
 - cd build
 - make config=release ygopro
 - cd ..
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mv bin/release/ygopro ./; strip ygopro;
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mv -f bin/release/ygopro ./; strip ygopro;
   fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     mkdir -p ygopro.app/Contents/MacOS;
-    mv bin/release/ygopro ygopro.app/Contents/MacOS;
+    mv -f bin/release/ygopro ygopro.app/Contents/MacOS;
     dylibbundler -x ygopro.app/Contents/MacOS/ygopro -b -d ygopro.app/Contents/Frameworks/ -p @executable_path/../Frameworks/ -cd;
     strip ygopro.app/Contents/MacOS/ygopro; mkdir ygopro.app/Contents/Resources;
-    mv premake/gframe/ygopro.icns ygopro.app/Contents/Resources/Icon.icns;
+    mv -f premake/gframe/ygopro.icns ygopro.app/Contents/Resources/Icon.icns;
     defaults write "$PWD/ygopro.app/Contents/Info.plist" "CFBundleIconFile" "Icon.icns";
     defaults write "$PWD/ygopro.app/Contents/Info.plist" "CFBundleIdentifier" "moe.mycard.ygopro";
     if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
