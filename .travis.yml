@@ -5,8 +5,8 @@ os:
 sudo: required
 dist: trusty
 osx_image: xcode8
-env:
-- USE_IRRKLANG=1
+#env:
+#- USE_IRRKLANG=1
 addons:
   ssh_known_hosts:
   - github.com
@@ -22,6 +22,7 @@ before_install:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     brew update > /dev/null;
     brew install freetype libevent sqlite dylibbundler > /dev/null;
+    export USE_IRRKLANG=1
   fi
 
 - curl --location --retry 5 http://www.lua.org/ftp/lua-5.3.4.tar.gz | tar zfx -
@@ -62,10 +63,10 @@ before_install:
     sudo cp -rf irrklang/bin/macosx-gcc/*.dylib /usr/local/lib/;
     cp -rf irrklang/bin/macosx-gcc/*.dylib .;
   fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    sudo cp -rf irrklang/bin/linux-gcc/*.so /usr/local/lib/;
-    cp -rf irrklang/bin/linux-gcc/*.so .;
-  fi
+#- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+#    sudo cp -rf irrklang/bin/linux-gcc/*.so /usr/local/lib/;
+#    cp -rf irrklang/bin/linux-gcc/*.so .;
+#  fi
 
 script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./premake5 gmake --cc=clang; fi
@@ -96,7 +97,8 @@ script:
     zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro.app *.dylib;
   fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro.app *.so;
+    #zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro *.so;
+    zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro;
   fi
 
 deploy:
