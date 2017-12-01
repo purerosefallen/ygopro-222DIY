@@ -5,8 +5,8 @@ os:
 sudo: required
 dist: trusty
 osx_image: xcode8
-#env:
-#- USE_IRRKLANG=1
+# env:
+# - USE_IRRKLANG=1
 addons:
   ssh_known_hosts:
   - github.com
