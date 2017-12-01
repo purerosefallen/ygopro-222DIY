@@ -29,8 +29,8 @@ before_install:
 
 - curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://www.ambiera.at/downloads/irrKlang-32bit-1.5.0.zip
 - unzip -q irrKlang-32bit-1.5.0.zip
-- cp -rf irrKlang-1.5.0/lib/Win32-gcc/libirrKlang.a /usr/local/lib/
 - cp -rf irrKlang-1.5.0/include /usr/local/include/irrKlang
+- cp -rf irrKlang-1.5.0/bin/macosx-gcc/*.dylib /usr/local/lib/
 - cp -rf irrKlang-1.5.0/bin/macosx-gcc/*.dylib .
 
 script:
