@@ -31,7 +31,7 @@ before_install:
 - unzip -q irrKlang-32bit-1.5.0.zip
 - cp -rf irrKlang-1.5.0/lib/Win32-gcc/libirrKlang.a /usr/local/lib/
 - cp -rf irrKlang-1.5.0/include /usr/local/include/irrKlang
-- cp -rf irrKlang-1.5.0/bin/macosx-gcc *.dylib .
+- cp -rf irrKlang-1.5.0/bin/macosx-gcc/*.dylib .
 
 script:
 - ./premake5 gmake --cc=clang
