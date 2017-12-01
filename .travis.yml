@@ -36,10 +36,10 @@ before_install:
 - cd ..
 
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    curl --location --retry 5 https://github.com/premake/premake-core/releases/download/v5.0.0-alpha12/premake-5.0.0-alpha12-macosx.tar.gz | tar zfx -
+    curl --location --retry 5 https://github.com/premake/premake-core/releases/download/v5.0.0-alpha12/premake-5.0.0-alpha12-macosx.tar.gz | tar zfx -;
   fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    curl --location --retry 5 https://github.com/premake/premake-core/releases/download/v5.0.0-alpha12/premake-5.0.0-alpha12-linux.tar.gz | tar zfx -
+    curl --location --retry 5 https://github.com/premake/premake-core/releases/download/v5.0.0-alpha12/premake-5.0.0-alpha12-linux.tar.gz | tar zfx -;
   fi
 
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
