@@ -49,8 +49,8 @@ before_install:
     curl --location --retry 5 https://github.com/moecube/ygopro/raw/master/premake/irrlicht/irrlicht-mac.patch | patch -p1;
     cd source/Irrlicht/MacOSX/;
     xcodebuild -project MacOSX.xcodeproj > /dev/null;
-    cp build/Release/libIrrlicht.a /usr/local/lib/;
-    cp -rf ../../../include /usr/local/include/irrlicht;
+    sudo cp build/Release/libIrrlicht.a /usr/local/lib/;
+    sudo cp -rf ../../../include /usr/local/include/irrlicht;
     cd ../../../../;
   fi
 
@@ -58,12 +58,12 @@ before_install:
 - unzip -q irrKlang-32bit-1.5.0.zip
 - cp -rf irrKlang-1.5.0/include /usr/local/include/irrKlang
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    cp -rf irrKlang-1.5.0/bin/macosx-gcc/*.dylib /usr/local/lib/;
-    cp -rf irrKlang-1.5.0/bin/macosx-gcc/*.dylib .;
+    sudo cp -rf irrKlang-1.5.0/bin/macosx-gcc/*.dylib /usr/local/lib/;
+    sudo cp -rf irrKlang-1.5.0/bin/macosx-gcc/*.dylib .;
   fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    cp -rf irrKlang-1.5.0/bin/linux-gcc/*.so /usr/local/lib/;
-    cp -rf irrKlang-1.5.0/bin/linux-gcc/*.so .;
+    sudo cp -rf irrKlang-1.5.0/bin/linux-gcc/*.so /usr/local/lib/;
+    sudo cp -rf irrKlang-1.5.0/bin/linux-gcc/*.so .;
   fi
 
 script:
