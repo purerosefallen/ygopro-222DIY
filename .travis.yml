@@ -1,0 +1,108 @@
+language: cpp
+os:
+- linux
+- osx
+sudo: required
+dist: trusty
+osx_image: xcode8
+env:
+- USE_IRRKLANG=1
+addons:
+  ssh_known_hosts:
+  - github.com
+  apt:
+    packages:
+    - libfreetype6-dev
+    - libevent-dev
+    - libsqlite3-dev
+    - libirrlicht-dev
+    - libgl1-mesa-dev
+    - libglu-dev
+before_install:
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    brew update > /dev/null;
+    brew install freetype libevent sqlite dylibbundler > /dev/null;
+  fi
+
+- curl --location --retry 5 http://www.lua.org/ftp/lua-5.3.4.tar.gz | tar zfx -
+- cd lua-5.3.4
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    make macosx test;
+  fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    make linux test;
+  fi
+- sudo make install
+- cd ..
+
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    curl --location --retry 5 https://github.com/premake/premake-core/releases/download/v5.0.0-alpha12/premake-5.0.0-alpha12-macosx.tar.gz | tar zfx -;
+  fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    curl --location --retry 5 https://github.com/premake/premake-core/releases/download/v5.0.0-alpha12/premake-5.0.0-alpha12-linux.tar.gz | tar zfx -;
+  fi
+
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://downloads.sourceforge.net/irrlicht/irrlicht-1.8.4.zip;
+    unzip -q irrlicht-1.8.4.zip;
+    cd irrlicht-1.8.4/;
+    curl --location --retry 5 https://github.com/moecube/ygopro/raw/master/premake/irrlicht/irrlicht-mac.patch | patch -p1;
+    cd source/Irrlicht/MacOSX/;
+    xcodebuild -project MacOSX.xcodeproj > /dev/null;
+    sudo cp -rf build/Release/libIrrlicht.a /usr/local/lib/;
+    sudo cp -rf ../../../include /usr/local/include/irrlicht;
+    cd ../../../../;
+  fi
+
+- curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://www.ambiera.at/downloads/irrKlang-32bit-1.5.0.zip
+- unzip -q irrKlang-32bit-1.5.0.zip
+- mv -f irrKlang-1.5.0 irrklang
+- sudo cp -rf irrklang/include /usr/local/include/irrKlang
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    sudo cp -rf irrklang/bin/macosx-gcc/*.dylib /usr/local/lib/;
+    cp -rf irrklang/bin/macosx-gcc/*.dylib .;
+  fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    sudo cp -rf irrklang/bin/linux-gcc/*.so /usr/local/lib/;
+    cp -rf irrklang/bin/linux-gcc/*.so .;
+  fi
+
+script:
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./premake5 gmake --cc=clang; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./premake5 gmake; fi
+- cd build
+- make config=release ygopro
+- cd ..
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mv -f bin/release/ygopro ./; strip ygopro;
+  fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    mkdir -p ygopro.app/Contents/MacOS;
+    mv -f bin/release/ygopro ygopro.app/Contents/MacOS;
+    dylibbundler -x ygopro.app/Contents/MacOS/ygopro -b -d ygopro.app/Contents/Frameworks/ -p @executable_path/../Frameworks/ -cd;
+    strip ygopro.app/Contents/MacOS/ygopro; mkdir ygopro.app/Contents/Resources;
+    mv -f premake/gframe/ygopro.icns ygopro.app/Contents/Resources/Icon.icns;
+    defaults write "$PWD/ygopro.app/Contents/Info.plist" "CFBundleIconFile" "Icon.icns";
+    defaults write "$PWD/ygopro.app/Contents/Info.plist" "CFBundleIdentifier" "moe.mycard.ygopro";
+    if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
+      echo $CERTIFICATE | base64 --decode --output cert.p12;
+      security create-keychain -p "" build.keychain; security unlock-keychain -p "" build.keychain;
+      security import cert.p12 -k build.keychain -P "$CERTIFICATE_PASSWORD" -T /usr/bin/codesign;
+      codesign --deep --keychain build.keychain --sign "$(security find-identity -v -p
+      codesigning build.keychain | head -1 | grep -o '".*"' | tr -d '"')" ygopro.app;
+    fi
+  fi
+
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro.app *.dylib;
+  fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro.app *.so;
+  fi
+
+deploy:
+  provider: releases
+  file: ygopro-koishi-$TRAVIS_OS_NAME.zip
+  skip_cleanup: true
+  on:
+    tags: true
+  api-key: $NANAHIRA
