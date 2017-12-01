@@ -32,7 +32,7 @@ before_install:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     make linux test;
   fi
-- make install
+- sudo make install
 - cd ..
 
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
