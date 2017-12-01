@@ -30,8 +30,10 @@ premake5.exe
 /irrklang
 /irrlicht-1.8.4
 /irrlicht
-/lua-5.2.4
+/lua-5.3.4
 /expansions/pics
 /pics
+/premake5
+/lua
 
 /data
