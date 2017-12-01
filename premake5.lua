@@ -2,7 +2,7 @@ solution "ygo"
     location "build"
     language "C++"
     objdir "obj"
-	if os.ishost("windows") then
+	if os.ishost("windows") or os.getenv("USE_IRRKLANG") then
 		USE_IRRKLANG = true
 		if os.getenv("irrklang_pro") then
 			IRRKLANG_PRO = true
