@@ -20,7 +20,7 @@ before_install:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     brew update > /dev/null;
     brew install freetype libevent sqlite dylibbundler > /dev/null;
-    export USE_IRRKLANG=1
+    export USE_IRRKLANG=1;
   fi
 
 - curl --location --retry 5 http://www.lua.org/ftp/lua-5.3.4.tar.gz | tar zfx -
