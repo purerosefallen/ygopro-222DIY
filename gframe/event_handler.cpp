@@ -2046,7 +2046,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				return true;
 				break;
 			}
-#ifdef _WIN32
+#ifdef YGOPRO_USE_IRRKLANG
 			case SCROLL_VOLUME: {
 				mainGame->gameConf.sound_volume = (double)mainGame->scrSoundVolume->getPos() / 100;
 				mainGame->gameConf.music_volume = (double)mainGame->scrMusicVolume->getPos() / 100;
