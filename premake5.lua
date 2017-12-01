@@ -2,7 +2,6 @@ solution "ygo"
     location "build"
     language "C++"
     objdir "obj"
-<<<<<<< HEAD
     if os.ishost("windows") or os.getenv("USE_IRRKLANG") then
         USE_IRRKLANG = true
         if os.getenv("irrklang_pro") then
@@ -13,18 +12,6 @@ solution "ygo"
 
     configurations { "Debug", "Release" }
     defines { "LUA_COMPAT_5_2" }
-=======
-	if os.ishost("windows") or os.getenv("USE_IRRKLANG") then
-		USE_IRRKLANG = true
-		if os.getenv("irrklang_pro") then
-			IRRKLANG_PRO = true
-		end
-	end
-	startproject "ygopro"
-
-    configurations { "Debug", "Release" }
-	defines { "LUA_COMPAT_5_2" }
->>>>>>> mactest
 
     configuration "windows"
         defines { "WIN32", "_WIN32", "WINVER=0x0501" }
