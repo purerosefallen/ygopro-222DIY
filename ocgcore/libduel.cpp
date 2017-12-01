@@ -13,7 +13,7 @@
 #include "group.h"
 #include "ocgapi.h"
 
-//222DIY
+//modded
 int32 scriptlib::duel_select_field(lua_State * L) {
 	check_action_permission(L);
 	check_param_count(L, 4);
@@ -1739,7 +1739,7 @@ int32 scriptlib::duel_get_location_count(lua_State *L) {
 	lua_pushinteger(L, pduel->game_field->get_useable_count(playerid, location, uplayer, reason, zone));
 	return 1;
 }
-//222DIY modded by Flandre
+//modded by Flandre
 int32 scriptlib::duel_get_mzone_count(lua_State *L) {
 	check_param_count(L, 1);
 	uint32 playerid = lua_tonumberint(L, 1);

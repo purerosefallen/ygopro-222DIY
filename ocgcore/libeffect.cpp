@@ -10,7 +10,7 @@
 #include "field.h"
 #include "card.h"
 #include "effect.h"
-//222DIY
+//modded
 int32 scriptlib::effect_set_owner(lua_State *L) {
 	check_param_count(L, 2);
 	check_param(L, PARAM_TYPE_EFFECT, 1);

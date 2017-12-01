@@ -22,7 +22,7 @@ uint32 card::get_ritual_type() {
 		return data.type;
 	return get_type();
 }
-//222DIY
+//modded
 uint32 card::set_entity_code(uint32 entity_code, bool remove_alias) {
 	card_data dat;
 	::read_card(entity_code, &dat);
@@ -917,7 +917,7 @@ uint32 card::get_rank() {
 		return 0;
 	if(assume_type == ASSUME_RANK)
 		return assume_value;
-	//222DIY modded from ygocc
+	//modded from ygocc
 	//if(!(current.location & LOCATION_MZONE))
 	//	return data.level;
 	if (temp.level != 0xffffffff)
@@ -1129,7 +1129,7 @@ uint32 card::get_rscale() {
 	temp.rscale = 0xffffffff;
 	return rscale;
 }
-//222DIY modded by Flandre
+//modded by Flandre
 uint32 card::get_link_marker() {
 	if(!(data.type & TYPE_LINK))
 		return 0;
