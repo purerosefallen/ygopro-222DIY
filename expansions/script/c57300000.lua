@@ -165,7 +165,7 @@ function cm.XyzProcedureCustomOperation(xm)
 	end
 end
 function cm.AddXyzProcedureClariS(c,ct,rk)
-	local f=rk and cm.ClariSRankFilter or cm.ClariSRankFilter
+	local f=rk and cm.ClariSRankFilter or cm.ClariSXyzFilter
 	cm.AddXyzProcedureCustom(c,f,cm.ClariSXyzCheck(ct),1,ct)
 end
 function cm.ClariSXyzFilter(c,xyzc)
