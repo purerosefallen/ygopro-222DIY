@@ -133,7 +133,7 @@ function cm.filter(c,e,tp)
 	return c:IsAbleToRemoveAsCost() and Duel.IsExistingTarget(cm.filter1,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,1,e:GetHandler(),(c:GetType() & 0x7))
 end
 function cm.filter1(c,t)
-	return c:IsAbleToChangeControler() and not c:IsType(TYPE_TOKEN) and c:IsType((t & 0x7))
+	return c:IsAbleToChangeControler() and not c:IsType(TYPE_TOKEN) and c:IsType((t & 0x7)) and (c:IsType(TYPE_MONSTER) or c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 end
 function cm.target0(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD+LOCATION_GRAVE) and cm.filter1(chkc,e:GetLabelObject():GetType()) and chkc~=e:GetHandler() and chkc:IsControler(1-tp) end
