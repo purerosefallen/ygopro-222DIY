@@ -3230,19 +3230,19 @@ int32 scriptlib::duel_select_disable_field(lua_State * L) {
 		flag = (flag & 0xffffff) | (plist << 24);
 	}
 	flag |= filter | 0xe0e0e0e0;
-	if(count > ct1 + ct2 + ct3 + ct4)
-		count = ct1 + ct2 + ct3 + ct4;
-	int32 allow_exzone = lua_toboolean(L, 6);
 	if (allow_exzone && pduel->game_field->core.duel_rule >= 4) {
 		if(pduel->game_field->is_location_useable(playerid, LOCATION_MZONE, 5)) {
-			count = count + 1;
+			ct1 = ct1 + 1;
 			flag = flag - (flag & 0x20);
 		}
 		if(pduel->game_field->is_location_useable(playerid, LOCATION_MZONE, 6)) {
-			count = count + 1;
+			ct1 = ct1 + 1;
 			flag = flag - (flag & 0x40);
 		}
 	}
+	if(count > ct1 + ct2 + ct3 + ct4)
+		count = ct1 + ct2 + ct3 + ct4;
+	int32 allow_exzone = lua_toboolean(L, 6);
 	if(count == 0)
 		return 0;
 	pduel->game_field->add_process(PROCESSOR_SELECT_DISFIELD_S, 0, 0, 0, playerid, flag, count);
