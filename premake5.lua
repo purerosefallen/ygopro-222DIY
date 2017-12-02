@@ -79,6 +79,6 @@ solution "ygo"
 		include "lua"
 		include "sqlite3"
     end
-    if IRRKLANG_PRO or USE_IKPMP3 then
+    if USE_IKPMP3 then
         include "ikpmp3"
     end
