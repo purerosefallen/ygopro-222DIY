@@ -182,7 +182,7 @@ end
 function cm.ClariSXyzCheck(ct)
 return function(g,xyzc)
 	local i=g:GetCount()
-	if not g:CheckWithSumEqual(c57300009.ClariSXyzValue,ct,i,i) then return false end
+	if not g:CheckWithSumEqual(cm.ClariSXyzValue,ct,i,i) then return false end
 	return Duel.GetLocationCountFromEx(tp,tp,g,xyzc)>0 
 end
 end
