@@ -58,7 +58,7 @@ build:
     parallel: true
 
 after_build:
-  - mv bin\release\ygopro.exe ygopro_thc.exe
+  - mv -f bin/release/ygopro.exe ygopro_thc.exe
 
 test: off
 
