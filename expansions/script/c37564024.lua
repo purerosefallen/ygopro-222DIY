@@ -21,7 +21,7 @@ function cm.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,m)
 	e1:SetCondition(function(e)
-		return bit.band(e:GetHandler():GetSummonType(),0x24)~=0x24
+		return not e:GetHandler():IsSummonType(0x24)
 	end)
 	e1:SetCost(Senya.SelfReleaseCost)
 	e1:SetTarget(cm.target)

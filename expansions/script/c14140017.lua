@@ -98,7 +98,7 @@ end
 function cm.fscon(e,g,gc,chkfnf)
 	if g==nil then return true end
 	local sg=Group.CreateGroup()
-	local chkf=bit.band(chkfnf,0xff)
+	local chkf=(chkfnf & 0xff)
 	local c=e:GetHandler()
 	local tp=c:GetControler()
 	local mg=g:Filter(cm.fsfilter,nil,c)
@@ -109,7 +109,7 @@ function cm.fscon(e,g,gc,chkfnf)
 end
 function cm.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
 	local c=e:GetHandler()
-	local chkf=bit.band(chkfnf,0xff)
+	local chkf=(chkfnf & 0xff)
 	local mg=eg:Filter(cm.fsfilter,nil,c)
 	local exg=Duel.GetMatchingGroup(cm.exfilter,tp,LOCATION_EXTRA,0,mg,c)
 	mg:Merge(exg)

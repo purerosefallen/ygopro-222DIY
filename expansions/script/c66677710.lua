@@ -48,7 +48,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.rfilter(c,tc)
-	return c:IsAbleToRemove() and bit.band(tc:GetAttribute(),c:GetAttribute())~=0 and c:IsType(TYPE_MONSTER)
+	return c:IsAbleToRemove() and (tc:GetAttribute() & c:GetAttribute())~=0 and c:IsType(TYPE_MONSTER)
 end
 function cm.cfilter(c,tp)
 	return c:IsSetCard(0x777) and c:IsControler(tp) and c:IsFaceup() and c:IsType(TYPE_MONSTER)

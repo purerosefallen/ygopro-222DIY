@@ -50,7 +50,7 @@ function cm.initial_effect(c)
 end
 function cm.bmrlfilter(c,ft)
 	if ft==0 and c:GetSequence()>4 then return false end
-	return c:IsCode(37564765) and bit.band(c:GetType(),0x8020d0+TYPE_LINK)~=0
+	return c:IsCode(37564765) and (c:GetType() & 0x8020d0+TYPE_LINK)~=0
 end
 function cm.bmrlcon(e,c)
 	if c==nil then return true end

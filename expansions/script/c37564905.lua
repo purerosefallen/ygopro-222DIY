@@ -2,6 +2,7 @@
 xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 local m,cm=Senya.SayuriRitualPreload(37564905)
 function cm.initial_effect(c)
+	Senya.AddSummonMusic(c,m*16,SUMMON_TYPE_RITUAL)
 	c:EnableReviveLimit()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -36,10 +37,10 @@ function cm.initial_effect(c)
 		if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
 			Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 			local cat=e:GetCategory()
-			if bit.band(re:GetHandler():GetOriginalType(),TYPE_MONSTER)~=0 then
-				e:SetCategory(bit.bor(cat,CATEGORY_SPECIAL_SUMMON))
+			if (re:GetHandler():GetOriginalType() & TYPE_MONSTER)~=0 then
+				e:SetCategory((cat | CATEGORY_SPECIAL_SUMMON))
 			else
-				e:SetCategory(bit.band(cat,bit.bnot(CATEGORY_SPECIAL_SUMMON)))
+				e:SetCategory((cat & ~CATEGORY_SPECIAL_SUMMON))
 			end
 		end
 	end)

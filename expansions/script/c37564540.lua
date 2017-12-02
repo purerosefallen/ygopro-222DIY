@@ -60,7 +60,7 @@ function cm.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.repop(e,tp,eg,ep,ev,re,r,rp)
 	local t=e:GetActiveType()
-	if (bit.band(t,TYPE_CONTINUOUS+TYPE_FIELD)~=0 or bit.band(t,TYPE_SPELL+TYPE_PENDULUM)==TYPE_SPELL+TYPE_PENDULUM) and not e:GetHandler():IsRelateToEffect(e) then return end
+	if ((t & TYPE_CONTINUOUS+TYPE_FIELD)~=0 or (t & TYPE_SPELL+TYPE_PENDULUM)==TYPE_SPELL+TYPE_PENDULUM) and not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,nil)
 	if g:GetCount()>0 then

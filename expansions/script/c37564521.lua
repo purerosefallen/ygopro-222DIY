@@ -38,7 +38,7 @@ function cm.hcon(e,c)
 	return Duel.GetMZoneCount(c:GetControler())>0 and Duel.IsExistingMatchingCard(cm.ssfilter,c:GetControler(),LOCATION_MZONE,0,1,nil) and c:IsFaceup() and not c:IsDisabled()
 end
 function cm.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
+	return (r & REASON_EFFECT+REASON_BATTLE)~=0
 end
 function cm.spfilter(c,e,tp)
 	return c:IsCode(37564765) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -34,7 +34,7 @@ function cm.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local ar=cm.list[dt]
 	local g=Group.CreateGroup()
 	if not (ar and cm.dtchk(tp) and c:IsRelateToEffect(e)) then return end
-	if bit.band(ar,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA)~=0 then
+	if (ar & LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA)~=0 then
 		local g1=Duel.GetMatchingGroup(cm.filter,tp,0,ar,nil)
 		if g1:GetCount()>0 then
 			if ar==LOCATION_HAND then

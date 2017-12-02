@@ -49,7 +49,7 @@ function cm.initial_effect(c)
 		ex:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ex:SetCode(EVENT_TO_GRAVE)
 		ex:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-			return bit.band(r,REASON_COST)~=0 and re:IsHasType(0x7e0) and eg:IsContains(re:GetHandler())
+			return (r & REASON_COST)~=0 and re:IsHasType(0x7e0) and eg:IsContains(re:GetHandler())
 		end)
 		ex:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
 			re:GetHandler():RegisterFlagEffect(m,0x1fe1000,0,1)
@@ -86,7 +86,7 @@ function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function cm.discon(e,tp,eg,ep,ev,re,r,rp)
 	local loc,np=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_CONTROLER)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and bit.band(loc,0x0c)~=0 and np~=tp
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and (loc & 0x0c)~=0 and np~=tp
 end
 function cm.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

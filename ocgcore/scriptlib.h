@@ -18,7 +18,7 @@ public:
 	static int32 check_action_permission(lua_State* L);
 	//millux
 	static int32 card_is_ritual_type(lua_State *L);
-	//222DIY
+	//modded
 	static int32 card_set_entity_code(lua_State *L);
 	static int32 card_set_card_data(lua_State *L);
 	static int32 effect_set_owner(lua_State *L);

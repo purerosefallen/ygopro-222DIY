@@ -16,5 +16,5 @@ function cm.initial_effect(c)
 	Senya.NegateEffectModule(c,1)
 end
 function cm.splimit(e,se,sp,st)
-	return bit.band(st,SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
+	return (st & SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
 end

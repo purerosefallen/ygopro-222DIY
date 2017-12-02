@@ -165,7 +165,7 @@ function cm.XyzProcedureCustomOperation(xm)
 	end
 end
 function cm.AddXyzProcedureClariS(c,ct,rk)
-	local f=rk and cm.ClariSRankFilter or cm.ClariSRankFilter
+	local f=rk and cm.ClariSRankFilter or cm.ClariSXyzFilter
 	cm.AddXyzProcedureCustom(c,f,cm.ClariSXyzCheck(ct),1,ct)
 end
 function cm.ClariSXyzFilter(c,xyzc)
@@ -182,7 +182,7 @@ end
 function cm.ClariSXyzCheck(ct)
 return function(g,xyzc)
 	local i=g:GetCount()
-	if not g:CheckWithSumEqual(c57300009.ClariSXyzValue,ct,i,i) then return false end
+	if not g:CheckWithSumEqual(cm.ClariSXyzValue,ct,i,i) then return false end
 	return Duel.GetLocationCountFromEx(tp,tp,g,xyzc)>0 
 end
 end
@@ -435,7 +435,7 @@ end
 function cm.GetFusionMaterial(tp,loc,oloc,f,gc,e,...)
 	local g1=Duel.GetFusionMaterial(tp)
 	if loc then
-		local floc=bit.band(loc,LOCATION_ONFIELD+LOCATION_HAND)
+		local floc=(loc & LOCATION_ONFIELD+LOCATION_HAND)
 		if floc~=0 then
 			g1=g1:Filter(Card.IsLocation,nil,floc)
 		else

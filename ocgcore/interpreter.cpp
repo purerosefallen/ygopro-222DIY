@@ -18,7 +18,7 @@
 static const struct luaL_Reg cardlib[] = {
 	//millux
 	{ "IsRitualType", scriptlib::card_is_ritual_type },
-	//222DIY
+	//modded
 	{ "SetEntityCode", scriptlib::card_set_entity_code },
 	{ "SetCardData", scriptlib::card_set_card_data },
 	
@@ -266,7 +266,7 @@ static const struct luaL_Reg cardlib[] = {
 };
 
 static const struct luaL_Reg effectlib[] = {
-	//222DIY
+	//modded
 	{ "SetOwner", scriptlib::effect_set_owner },
 	{ "GetRange", scriptlib::effect_get_range },
 	{ "GetCountLimit", scriptlib::effect_get_count_limit },
@@ -360,7 +360,7 @@ static const struct luaL_Reg grouplib[] = {
 };
 
 static const struct luaL_Reg duellib[] = {
-	//222DIY
+	//modded
 	{ "SelectField", scriptlib::duel_select_field },
 	{ "GetMasterRule", scriptlib::duel_get_master_rule },
 	{ "ReadCard", scriptlib::duel_read_card },
@@ -595,7 +595,7 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 	pduel = pd;
 	no_action = 0;
 	call_depth = 0;
-	//222DIY
+	//modded
 	disable_action_check = 0;
 
 	set_duel_info(lua_state, pd);

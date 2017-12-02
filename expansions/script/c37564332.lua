@@ -71,7 +71,7 @@ function cm.cop(te)
 		if not te then return end
 		local c=e:GetHandler()
 		local tg=te:GetTarget()
-		if bit.band(c:GetType(),TYPE_FIELD+TYPE_CONTINUOUS+TYPE_PENDULUM)==0 then
+		if (c:GetType() & TYPE_FIELD+TYPE_CONTINUOUS+TYPE_PENDULUM)==0 then
 			c:CancelToGrave(false)
 		end
 		local code=te:GetCode()

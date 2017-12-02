@@ -36,8 +36,8 @@ function cm.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e4:SetCode(EVENT_TO_GRAVE)
 	e4:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-		return bit.band(e:GetHandler():GetPreviousPosition(),POS_FACEUP)~=0
-			and bit.band(e:GetHandler():GetPreviousLocation(),LOCATION_ONFIELD)~=0
+		return (e:GetHandler():GetPreviousPosition() & POS_FACEUP)~=0
+			and (e:GetHandler():GetPreviousLocation() & LOCATION_ONFIELD)~=0
 	end)
 	e4:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local s0=Duel.IsExistingMatchingCard(cm.tfilter,tp,LOCATION_GRAVE,0,1,nil,0)

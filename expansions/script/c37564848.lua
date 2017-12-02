@@ -138,7 +138,7 @@ end
 function cm.sfilter(c,tp,fc,e)
 	if not fc then return false end
 	if e and not c:IsCanBeEffectTarget(e) then return false end
-	return c:IsControler(tp) and c:IsLocation(LOCATION_REMOVED) and c:IsAbleToDeck() and c:IsType(TYPE_MONSTER) and Senya.check_set_3L(c) and Senya.EffectSourceFilter_3L(c,fc) and bit.band(c:GetReason(),0x40008)==0x40008 and c:GetReasonCard()==fc
+	return c:IsControler(tp) and c:IsLocation(LOCATION_REMOVED) and c:IsAbleToDeck() and c:IsType(TYPE_MONSTER) and Senya.check_set_3L(c) and Senya.EffectSourceFilter_3L(c,fc) and (c:GetReason() & 0x40008)==0x40008 and c:GetReasonCard()==fc
 end
 function cm.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local fc=e:GetHandler():GetFirstCardTarget()

@@ -72,7 +72,7 @@ function cm.eqlimit(e,c)
 	return e:GetOwner()==c
 end
 function cm.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsOnField() and bit.band(re:GetHandler():GetOriginalType(),TYPE_PENDULUM)==0 and re:GetHandler():GetFlagEffect(m)==0
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsOnField() and (re:GetHandler():GetOriginalType() & TYPE_PENDULUM)==0 and re:GetHandler():GetFlagEffect(m)==0
 end
 function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()

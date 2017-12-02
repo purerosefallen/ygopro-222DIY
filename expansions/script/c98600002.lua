@@ -24,7 +24,7 @@ function c98600002.fscon(e,g,gc,chkfnf)
 	local c=e:GetHandler()
 	local tp=c:GetControler()
 	if aux.FCheckAdditional and not aux.FCheckAdditional(tp,Group.CreateGroup(),c) then return false end
-	local chkf=bit.band(chkfnf,0xff)
+	local chkf=(chkfnf & 0xff)
 	return chkf==PLAYER_NONE or Duel.GetLocationCountFromEx(chkf)>0
 end
 function c98600002.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkf)

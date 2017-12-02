@@ -63,7 +63,7 @@ function cm.spop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(r,REASON_EFFECT)~=0
+	return (r & REASON_EFFECT)~=0
 		and Senya.check_set_prim(re:GetHandler()) and not e:GetHandler():IsReason(REASON_RETURN)
 end
 function cm.thfilter(c)

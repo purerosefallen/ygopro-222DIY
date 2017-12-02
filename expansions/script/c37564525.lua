@@ -23,7 +23,7 @@ end
 function cm.cf(c,rc)
 	if not c:IsAbleToGraveAsCost() then return false end
 	if c:IsCode(37564517) then return true end
-	return bit.band(c:GetAttribute(),rc:GetAttribute())~=0 or bit.band(c:GetRace(),rc:GetRace())~=0
+	return (c:GetAttribute() & rc:GetAttribute())~=0 or (c:GetRace() & rc:GetRace())~=0
 end
 function cm.DiscardHandCost(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
