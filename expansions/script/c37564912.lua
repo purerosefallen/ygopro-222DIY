@@ -2,6 +2,7 @@
 xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 local m,cm=Senya.SayuriRitualPreload(37564912)
 function cm.initial_effect(c)
+	Senya.AddSummonMusic(c,m*16+3,SUMMON_TYPE_RITUAL)
 	c:EnableReviveLimit()
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(m,0))

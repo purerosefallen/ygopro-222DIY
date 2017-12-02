@@ -53,7 +53,8 @@ function cm.xyzcheck(g)
 	return g:GetClassCount(Card.GetOriginalLevel)==g:GetCount()
 end
 function cm.filter(c,tp)
-	return c:IsLocation(LOCATION_GRAVE) and c:IsControler(1-tp)
+	--return c:IsLocation(LOCATION_GRAVE) and c:IsControler(1-tp)
+	return c:IsLocation(LOCATION_GRAVE)
 end
 function cm.dtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) and eg:IsExists(cm.filter,1,e:GetHandler(),tp) end

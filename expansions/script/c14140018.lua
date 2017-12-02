@@ -130,10 +130,10 @@ function cm.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
 	Duel.Overlay(c,sg)
 end
 function cm.filter(c,e,tp)
-	return c:IsAbleToRemoveAsCost() and Duel.IsExistingTarget(cm.filter1,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,1,e:GetHandler(),bit.band(c:GetType(),0x7))
+	return c:IsAbleToRemoveAsCost() and Duel.IsExistingTarget(cm.filter1,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,1,e:GetHandler(),(c:GetType() & 0x7))
 end
 function cm.filter1(c,t)
-	return c:IsAbleToChangeControler() and not c:IsType(TYPE_TOKEN) and c:IsType(bit.band(t,0x7))
+	return c:IsAbleToChangeControler() and not c:IsType(TYPE_TOKEN) and c:IsType((t & 0x7))
 end
 function cm.target0(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD+LOCATION_GRAVE) and cm.filter1(chkc,e:GetLabelObject():GetType()) and chkc~=e:GetHandler() and chkc:IsControler(1-tp) end
@@ -172,7 +172,7 @@ function cm.cfilter(c,rtype)
 	return c:IsType(rtype) and c:IsAbleToRemoveAsCost()
 end
 function cm.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rtype=bit.band(re:GetActiveType(),0x7)
+	local rtype=(re:GetActiveType() & 0x7)
 	local og=e:GetHandler():GetOverlayGroup():Filter(cm.cfilter,nil,rtype)
 	if chk==0 then return og:GetCount()>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)

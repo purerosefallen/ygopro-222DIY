@@ -156,7 +156,7 @@ function scorp.hana_effect_register(c,e,m,tg,op)
 	e:SetCost(scorp.sethcost)
 	e:SetTarget(scorp.hana_target(tg,m))
 	e:SetOperation(scorp.hana_operation(op,m))
-	e:SetCategory(bit.band(e:GetCategory(),CATEGORY_SPECIAL_SUMMON))
+	e:SetCategory((e:GetCategory() & CATEGORY_SPECIAL_SUMMON))
 	c:RegisterEffect(e)
 end
 function scorp.hana_target(tg,m)

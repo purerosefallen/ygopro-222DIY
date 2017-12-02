@@ -81,7 +81,7 @@ function cm.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local al=0xff
 	for i=0,4 do
 		local tc=Duel.GetFieldCard(1-tp,LOCATION_MZONE,4-i)
-		if Duel.CheckLocation(tp,LOCATION_MZONE,i) and tc and tc:IsAbleToHand() then al=al-bit.band(al,2^i) end
+		if Duel.CheckLocation(tp,LOCATION_MZONE,i) and tc and tc:IsAbleToHand() then al=al-(al & 2^i) end
 	end
 	Duel.Hint(HINT_SELECTMSG,0,m*16+3)
 	local op=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,al)
@@ -117,12 +117,12 @@ function cm.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if seq>0 then
 		local i=seq-1
 		local tc=Duel.GetFieldCard(1-tp,LOCATION_MZONE,4-i)
-		if Duel.CheckLocation(tp,LOCATION_MZONE,i) and tc and tc:IsAbleToHand() then al=al-bit.band(al,2^i) end
+		if Duel.CheckLocation(tp,LOCATION_MZONE,i) and tc and tc:IsAbleToHand() then al=al-(al & 2^i) end
 	end
 	if seq<4 then
 		local i=seq+1
 		local tc=Duel.GetFieldCard(1-tp,LOCATION_MZONE,4-i)
-		if Duel.CheckLocation(tp,LOCATION_MZONE,i) and tc and tc:IsAbleToHand() then al=al-bit.band(al,2^i) end
+		if Duel.CheckLocation(tp,LOCATION_MZONE,i) and tc and tc:IsAbleToHand() then al=al-(al & 2^i) end
 	end
 	Duel.Hint(HINT_SELECTMSG,0,m*16+3)
 	local op=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,al)
