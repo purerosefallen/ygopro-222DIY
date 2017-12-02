@@ -17,7 +17,7 @@ project "ygopro"
             links { "irrKlang", "ikpMP3" }
             includedirs { "../irrklang/include" }
             if IRRKLANG_PRO then
-                defines { "IRRKLANG_STATIC" }
+                defines { "IRRKLANG_STATIC", "YGOPRO_USE_IKPMP3" }
             end
             libdirs { "../irrklang/lib/Win32-visualStudio" }
         end
@@ -31,6 +31,6 @@ project "ygopro"
         excludes { "COSOperator.*" }
         links { "event_pthreads", "GL", "dl", "pthread" }
         if USE_IRRKLANG then
-            defines { "YGOPRO_USE_IRRKLANG" }
+            defines { "YGOPRO_USE_IRRKLANG", "YGOPRO_USE_IKPMP3" }
             links { "irrKlang" }
         end

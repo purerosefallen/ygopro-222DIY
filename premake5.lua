@@ -7,6 +7,9 @@ solution "ygo"
         if os.getenv("irrklang_pro") then
             IRRKLANG_PRO = true
         end
+        if IRRKLANG_PRO or os.getenv("USE_IKPMP3") then
+		    USE_IKPMP3 = true
+        end
     end
     startproject "ygopro"
 
@@ -34,8 +37,6 @@ solution "ygo"
 
     configuration "linux"
         defines { "LUA_USE_LINUX" }
-        includedirs { "/usr/local/include", "/usr/local/include/*" }
-        libdirs { "/usr/local/lib" }
 
     configuration "Release"
         optimize "Speed"
@@ -77,7 +78,7 @@ solution "ygo"
 		include "irrlicht"
 		include "lua"
 		include "sqlite3"
-		if IRRKLANG_PRO then
-			include "ikpmp3"
-		end
+    end
+    if IRRKLANG_PRO or USE_IKPMP3 then
+        include "ikpmp3"
     end

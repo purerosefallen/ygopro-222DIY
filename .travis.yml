@@ -21,6 +21,7 @@ before_install:
     brew update > /dev/null;
     brew install freetype libevent sqlite dylibbundler > /dev/null;
     export USE_IRRKLANG=1;
+    export USE_IKPMP3=1;
   fi
 
 - curl --location --retry 5 http://www.lua.org/ftp/lua-5.3.4.tar.gz | tar zfx -
@@ -54,17 +55,13 @@ before_install:
   fi
 
 - curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://www.ambiera.at/downloads/irrKlang-32bit-1.5.0.zip
-- unzip -q irrKlang-32bit-1.5.0.zip
-- mv -f irrKlang-1.5.0 irrklang
-- sudo cp -rf irrklang/include /usr/local/include/irrKlang
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    unzip -q irrKlang-32bit-1.5.0.zip;
+    mv -f irrKlang-1.5.0 irrklang;
+    sudo cp -rf irrklang/include /usr/local/include/irrKlang;
     sudo cp -rf irrklang/bin/macosx-gcc/*.dylib /usr/local/lib/;
-    cp -rf irrklang/bin/macosx-gcc/*.dylib .;
+    cp -rf irrklang/
   fi
-# - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-#     sudo cp -rf irrklang/bin/linux-gcc/*.so /usr/local/lib/;
-#     cp -rf irrklang/bin/linux-gcc/*.so .;
-#   fi
 
 script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./premake5 gmake --cc=clang; fi
@@ -92,7 +89,7 @@ script:
   fi
 
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro.app *.dylib;
+    zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro.app;
   fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro;
