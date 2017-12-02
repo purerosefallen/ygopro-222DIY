@@ -50,7 +50,7 @@ inline int _wtoi(const wchar_t * s) {
 #include <irrlicht.h>
 #ifdef YGOPRO_USE_IRRKLANG
 #include <irrKlang.h>
-#ifdef IRRKLANG_STATIC
+#ifdef YGOPRO_USE_IKPMP3
 #include "../ikpMP3/ikpMP3.h"
 #endif
 #endif
