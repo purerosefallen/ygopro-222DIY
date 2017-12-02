@@ -50,7 +50,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 function cm.splimit(e,se,sp,st)
-	return bit.band(st,SUMMON_TYPE_FUSION)~=SUMMON_TYPE_FUSION
+	return (st & SUMMON_TYPE_FUSION)~=SUMMON_TYPE_FUSION
 end
 function cm.ffilter(c)
 	return c:GetSummonLocation()==LOCATION_EXTRA and c:IsOnField()
@@ -141,7 +141,7 @@ function cm.spptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local mg=c:GetMaterial()
 	local sumtype=c:GetSummonType()
 	if chk==0 then   
-		return not (bit.band(sumtype,SUMMON_TYPE_FUSION)~=SUMMON_TYPE_FUSION or mg:GetCount()==0
+		return not ((sumtype & SUMMON_TYPE_FUSION)~=SUMMON_TYPE_FUSION or mg:GetCount()==0
 		or mg:GetCount()>Duel.GetMZoneCount(tp)
 		or mg:IsExists(cm.mgfilter,1,nil,e,tp,c))
 	end
@@ -152,7 +152,7 @@ function cm.spptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function cm.mgfilter(c,e,tp,fusc)
 	return not c:IsControler(tp) or not c:IsLocation(LOCATION_GRAVE)
-		or bit.band(c:GetReason(),0x40008)~=0x40008 or c:GetReasonCard()~=fusc
+		or (c:GetReason() & 0x40008)~=0x40008 or c:GetReasonCard()~=fusc
 		or not c:IsCanBeSpecialSummoned(e,0,tp,true,true) or c:IsHasEffect(EFFECT_NECRO_VALLEY)
 end
 function cm.mgfilterx(c,e,tp,fusc)

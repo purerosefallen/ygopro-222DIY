@@ -109,7 +109,7 @@ function cm.op(e,tp,eg,ep,ev,re,r,rp)
 		e:SetCondition(cm.rcon(e:GetCondition(),tc,copyt))
 		e:SetCost(cm.rcost(e:GetCost()))
 		if e:IsHasType(EFFECT_TYPE_IGNITION) then
-			e:SetType(bit.bor(e:GetType()-EFFECT_TYPE_IGNITION,EFFECT_TYPE_QUICK_O))
+			e:SetType((e:GetType()-EFFECT_TYPE_IGNITION | EFFECT_TYPE_QUICK_O))
 			e:SetCode(EVENT_FREE_CHAIN)
 			e:SetHintTiming(0,0x1c0)
 		end

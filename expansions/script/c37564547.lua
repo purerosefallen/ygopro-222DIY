@@ -65,7 +65,7 @@ function cm.matfilter3(c,syncard)
 	return c:IsFaceup() and c:IsSynchroType(TYPE_TUNER) and c:IsCode(37564765) and c:IsCanBeSynchroMaterial(syncard)
 end
 function cm.matfilter4(c,syncard)
-	return c:IsFaceup() and bit.band(c:GetOriginalType(),TYPE_TUNER)==0 and bit.band(c:GetOriginalRace(),RACE_FAIRY)~=0 and c:IsCode(37564765) and c:IsCanBeSynchroMaterial(syncard)
+	return c:IsFaceup() and (c:GetOriginalType() & TYPE_TUNER)==0 and (c:GetOriginalRace() & RACE_FAIRY)~=0 and c:IsCode(37564765) and c:IsCanBeSynchroMaterial(syncard)
 end
 function cm.val(c,syncard)
 	if c:IsLocation(LOCATION_SZONE) then

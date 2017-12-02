@@ -17,7 +17,7 @@ function cm.tg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and chkc~=e:GetHandler() end
 	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,e:GetHandler()) and Senya.NanahiraExistingCondition(false)(e,tp,eg,ep,ev,re,r,rp) end
 	local pr1,pr2=e:GetProperty()
-	e:SetProperty(bit.bor(pr1,EFFECT_FLAG_CARD_TARGET),pr2)
+	e:SetProperty((pr1 | EFFECT_FLAG_CARD_TARGET),pr2)
 	e:SetCategory(CATEGORY_DESTROY)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,e:GetHandler())
@@ -26,7 +26,7 @@ end
 function cm.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) and Senya.NanahiraExistingCondition(true)(e,tp,eg,ep,ev,re,r,rp) and Duel.IsPlayerCanDraw(tp,1) end
 	local pr1,pr2=e:GetProperty()
-	e:SetProperty(pr1-bit.band(pr1,EFFECT_FLAG_CARD_TARGET),pr2)
+	e:SetProperty(pr1-(pr1 & EFFECT_FLAG_CARD_TARGET),pr2)
 	e:SetCategory(CATEGORY_REMOVE+CATEGORY_DRAW)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)

@@ -112,7 +112,7 @@ function cm.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.repval(e,re,r,rp)
-	return bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0
+	return (r & REASON_BATTLE+REASON_EFFECT)~=0
 end
 function cm.adcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetLabelObject():GetLabelObject()
@@ -121,7 +121,7 @@ end
 function cm.atkval(e,c)
 	local ec=e:GetLabelObject():GetLabelObject()
 	local atk=ec:GetTextAttack()
-	if ec:IsFacedown() or bit.band(ec:GetOriginalType(),TYPE_MONSTER)==0 or atk<0 then
+	if ec:IsFacedown() or (ec:GetOriginalType() & TYPE_MONSTER)==0 or atk<0 then
 		return 0
 	else
 		return atk
@@ -130,7 +130,7 @@ end
 function cm.defval(e,c)
 	local ec=e:GetLabelObject():GetLabelObject()
 	local def=ec:GetTextDefense()
-	if ec:IsFacedown() or bit.band(ec:GetOriginalType(),TYPE_MONSTER)==0 or def<0 then
+	if ec:IsFacedown() or (ec:GetOriginalType() & TYPE_MONSTER)==0 or def<0 then
 		return 0
 	else
 		return def

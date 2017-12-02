@@ -71,7 +71,7 @@ function cm.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.thcfilter,tp,LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,cm.thcfilter,tp,LOCATION_REMOVED,0,1,1,nil)
-	local s=bit.band(g:GetFirst():GetOriginalType(),TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ)==0 and 2 or 0
+	local s=(g:GetFirst():GetOriginalType() & TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ)==0 and 2 or 0
 	Duel.SendtoDeck(g,nil,s,REASON_COST)
 end
 function cm.atkop(e,tp,eg,ep,ev,re,r,rp)

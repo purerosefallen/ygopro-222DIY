@@ -48,22 +48,22 @@ function cm.disop(e,tp,eg,ep,ev,re,r,rp)
 	local t=re:GetType()
 	local cd=re:GetCode()
 	local pr1,pr2=re:GetProperty()
-	pr1=bit.bor(pr1,EFFECT_FLAG_NO_TURN_RESET)
-	if bit.band(t,EFFECT_TYPE_ACTIVATE)~=0 then
-		t=bit.bor(t-EFFECT_TYPE_ACTIVATE,EFFECT_TYPE_QUICK_O)
+	pr1=(pr1 | EFFECT_FLAG_NO_TURN_RESET)
+	if (t & EFFECT_TYPE_ACTIVATE)~=0 then
+		t=(t-EFFECT_TYPE_ACTIVATE | EFFECT_TYPE_QUICK_O)
 	end
-	if bit.band(t,EFFECT_TYPE_XMATERIAL)~=0 then
+	if (t & EFFECT_TYPE_XMATERIAL)~=0 then
 		t=t-EFFECT_TYPE_XMATERIAL
 	end
-	if bit.band(t,EFFECT_TYPE_QUICK_F)~=0 then
-		t=bit.bor(t-EFFECT_TYPE_QUICK_F,EFFECT_TYPE_QUICK_O)
+	if (t & EFFECT_TYPE_QUICK_F)~=0 then
+		t=(t-EFFECT_TYPE_QUICK_F | EFFECT_TYPE_QUICK_O)
 	end
-	if bit.band(t,EFFECT_TYPE_TRIGGER_F)~=0 then
-		t=bit.bor(t-EFFECT_TYPE_TRIGGER_F,EFFECT_TYPE_TRIGGER_O)
-		pr1=bit.bor(pr1,EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	if (t & EFFECT_TYPE_TRIGGER_F)~=0 then
+		t=(t-EFFECT_TYPE_TRIGGER_F | EFFECT_TYPE_TRIGGER_O)
+		pr1=(pr1 | EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	end
-	if bit.band(t,EFFECT_TYPE_IGNITION)~=0 then
-		t=bit.bor(t-EFFECT_TYPE_IGNITION,EFFECT_TYPE_QUICK_O)
+	if (t & EFFECT_TYPE_IGNITION)~=0 then
+		t=(t-EFFECT_TYPE_IGNITION | EFFECT_TYPE_QUICK_O)
 		cd=EVENT_FREE_CHAIN
 	end
 	e1:SetType(t)

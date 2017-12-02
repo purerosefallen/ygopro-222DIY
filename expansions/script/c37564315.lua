@@ -34,7 +34,7 @@ function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(tp,4)
 	local att=0
 	g:ForEach(function(tc)
-		att=bit.bor(att,bit.band(tc:GetType(),0x7))
+		att=(att | (tc:GetType() & 0x7))
 	end)
 	if att~=0x7 then return end
 	Duel.Hint(HINT_CARD,0,e:GetHandler():GetOriginalCode())

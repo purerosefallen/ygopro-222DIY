@@ -24,7 +24,7 @@ function cm.tg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and cm.filter(chkc,e,tp) end
 	if chk==0 then return Duel.IsExistingTarget(cm.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetMZoneCount(tp)>0 end
 	local pr1,pr2=e:GetProperty()
-	e:SetProperty(bit.bor(pr1,EFFECT_FLAG_CARD_TARGET),pr2)
+	e:SetProperty((pr1 | EFFECT_FLAG_CARD_TARGET),pr2)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,cm.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)	
@@ -32,7 +32,7 @@ end
 function cm.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.filter1,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetMZoneCount(tp)>0 end
 	local pr1,pr2=e:GetProperty()
-	e:SetProperty(pr1-bit.band(pr1,EFFECT_FLAG_CARD_TARGET),pr2)
+	e:SetProperty(pr1-(pr1 & EFFECT_FLAG_CARD_TARGET),pr2)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function cm.op1(e,tp,eg,ep,ev,re,r,rp)

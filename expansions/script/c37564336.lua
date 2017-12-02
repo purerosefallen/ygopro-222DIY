@@ -36,7 +36,7 @@ function cm.rmop(e,tp,eg,ep,ev,re,r,rp)
 			local flag=0
 			if seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then flag=bit.replace(flag,0x1,seq-1) end
 			if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=bit.replace(flag,0x1,seq+1) end
-			flag=bit.bxor(flag,0xff)
+			flag=(flag ^ 0xff)
 			Duel.Hint(HINT_SELECTMSG,tp,571)
 			local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,flag)
 			local nseq=0

@@ -120,8 +120,8 @@ function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
 			local f=Card.RegisterEffect
 			Card.RegisterEffect=function(tc,e,forced)
 				local t=e:GetType()
-				if bit.band(t,EFFECT_TYPE_IGNITION)~=0 then
-					e:SetType(bit.bor(t-EFFECT_TYPE_IGNITION,EFFECT_TYPE_QUICK_O))
+				if (t & EFFECT_TYPE_IGNITION)~=0 then
+					e:SetType((t-EFFECT_TYPE_IGNITION | EFFECT_TYPE_QUICK_O))
 					e:SetCode(EVENT_FREE_CHAIN)
 					e:SetHintTiming(0,0x1e0)
 				end

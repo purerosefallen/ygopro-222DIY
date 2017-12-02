@@ -498,7 +498,7 @@ end
 function cm.MokouRebornCondition(eff,con)
 	if eff then
 		return function(e,tp,eg,ep,ev,re,r,rp)
-			return bit.band(e:GetHandler():GetReason(),0x41)==0x41 and (not con or con(e,tp,eg,ep,ev,re,r,rp))
+			return (e:GetHandler():GetReason() & 0x41)==0x41 and (not con or con(e,tp,eg,ep,ev,re,r,rp))
 		end
 	else
 		return function(e,tp,eg,ep,ev,re,r,rp)
@@ -972,7 +972,7 @@ function cm.PrismXyzCheck(min,max)
 end
 function cm.PrismXyzValue(c)
 	local v=1
-	if c:IsHasEffect(37564499) then v=bit.bor(v,0x20000) end
+	if c:IsHasEffect(37564499) then v=(v | 0x20000) end
 	return v
 end
 --xyz monster atk drain effect
@@ -1074,8 +1074,8 @@ function cm.NanahiraExtraPendulum(c,scon)
 	e2:SetValue(function(e,se,sp,st)
 		if scon and not scon(e,se,sp,st) then return false end
 		local c=e:GetHandler()
-		if c:IsFaceup() and c:IsLocation(LOCATION_EXTRA) and c:IsType(TYPE_FUSION) and bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION then return false end
-		return c:IsHasEffect(EFFECT_REVIVE_LIMIT) or c:IsStatus(STATUS_PROC_COMPLETE) or bit.band(st,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+		if c:IsFaceup() and c:IsLocation(LOCATION_EXTRA) and c:IsType(TYPE_FUSION) and (st & SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION then return false end
+		return c:IsHasEffect(EFFECT_REVIVE_LIMIT) or c:IsStatus(STATUS_PROC_COMPLETE) or (st & SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 	end)
 	c:RegisterEffect(e2)
 end
@@ -1315,7 +1315,7 @@ function cm.NanahiraTrap(c,...)
 		e1:SetCost(cm.SelfReleaseCost)
 		e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
 			if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-			return bit.band(e:GetHandler():GetSummonType(),0x553)==0x553
+			return e:GetHandler():IsSummonType(0x553)
 		end)
 		local op=te:GetOperation()
 		e1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
@@ -1409,7 +1409,7 @@ end
 --counter summon effect universals
 --n=normal f=flip s=special o=opponent only
 function cm.NegateSummonModule(c,tpcode,ctlm,ctlmid,con,cost)
-	if not tpcode or bit.band(tpcode,7)==0 then return end
+	if not tpcode or (tpcode & 7)==0 then return end
 	ctlmid=ctlmid or 1
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(37564765,4))
@@ -1418,7 +1418,7 @@ function cm.NegateSummonModule(c,tpcode,ctlm,ctlmid,con,cost)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EVENT_SPSUMMON)
 	if ctlm then e3:SetCountLimit(ctlm,ctlmid) end
-	if bit.band(tpcode,8)==8 then
+	if (tpcode & 8)==8 then
 		e3:SetLabel(2)
 	else
 		e3:SetLabel(1)
@@ -1432,15 +1432,15 @@ function cm.NegateSummonModule(c,tpcode,ctlm,ctlmid,con,cost)
 	local e1=e3:Clone()
 	e1:SetCode(EVENT_SUMMON)
 	local t={}
-	if bit.band(tpcode,1)==1 then
+	if (tpcode & 1)==1 then
 		c:RegisterEffect(e1)
 		table.insert(t,e1)
 	end
-	if bit.band(tpcode,2)==2 then
+	if (tpcode & 2)==2 then
 		c:RegisterEffect(e2)
 		table.insert(t,e2)
 	end
-	if bit.band(tpcode,4)==4 then
+	if (tpcode & 4)==4 then
 		c:RegisterEffect(e3)
 		table.insert(t,e3)
 	end
@@ -1763,7 +1763,7 @@ function cm.FusionCondition_3L(mf,f,min,max,myon,sub)
 return function(e,g,gc,chkfnf)
 	if g==nil then return true end
 	local c=e:GetHandler()
-	local chkf=bit.band(chkfnf,0xff)
+	local chkf=(chkfnf & 0xff)
 	local mg=g:Filter(cm.FusionFilter_3L,nil,e:GetHandler(),mf,sub)
 	local tp=e:GetHandlerPlayer()
 	local exg=Duel.GetMatchingGroup(cm.MyonCheckFilter,tp,0,LOCATION_MZONE,nil,c,myon)
@@ -1785,7 +1785,7 @@ end
 function cm.FusionOperation_3L(mf,f,min,max,myon,sub)
 return function(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
 	local c=e:GetHandler()
-	local chkf=bit.band(chkfnf,0xff)
+	local chkf=(chkfnf & 0xff)
 	local mg=eg:Filter(cm.FusionFilter_3L,nil,e:GetHandler(),mf,sub)
 	local exg=Duel.GetMatchingGroup(cm.MyonCheckFilter,tp,0,LOCATION_MZONE,nil,c,myon)
 	mg:Merge(exg)
@@ -2235,7 +2235,7 @@ function cm.multi_choice_target(m,...)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		if chkc then
 			local pr=e:GetProperty()
-			return bit.band(pr,EFFECT_FLAG_CARD_TARGET)~=0 and function_list[e:GetLabel()](e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+			return (pr & EFFECT_FLAG_CARD_TARGET)~=0 and function_list[e:GetLabel()](e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		end
 		local avaliable_list={}
 		for i,tg in pairs(function_list) do
@@ -2307,7 +2307,7 @@ end
 function cm.GetFusionMaterial(tp,loc,oloc,f,gc,e,...)
 	local g1=Duel.GetFusionMaterial(tp)
 	if loc then
-		local floc=bit.band(loc,LOCATION_ONFIELD+LOCATION_HAND)
+		local floc=(loc & LOCATION_ONFIELD+LOCATION_HAND)
 		if floc~=0 then
 			g1=g1:Filter(Card.IsLocation,nil,floc)
 		else
@@ -2574,8 +2574,8 @@ function cm.DivideValueMax(f,...)
 	local ext_params={...}
 	return function(c)
 		local v=f(c,table.unpack(ext_params))
-		local v1=bit.band(v,0xffff)
-		local v2=bit.rshift(v,16)
+		local v1=(v & 0xffff)
+		local v2=(v >> 16)
 		return math.max(v1,v2)
 	end
 end
@@ -2583,8 +2583,8 @@ function cm.DivideValueMin(f,...)
 	local ext_params={...}
 	return function(c)
 		local v=f(c,table.unpack(ext_params))
-		local v1=bit.band(v,0xffff)
-		local v2=bit.rshift(v,16)
+		local v1=(v & 0xffff)
+		local v2=(v >> 16)
 		if v1<=0 then
 			return v2
 		elseif v2<=0 then

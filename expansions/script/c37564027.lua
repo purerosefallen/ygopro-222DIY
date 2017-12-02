@@ -78,7 +78,7 @@ function cm.xmfilter(c)
 	return Senya.check_set_elem(c) and c:IsType(TYPE_XYZ) and c:GetRank()==4
 end
 function cm.rcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(r,REASON_COST)~=0 and re:IsHasType(0x7e0) and re:IsActiveType(TYPE_XYZ) and Senya.check_set_elem(re:GetHandler()) and e:GetHandler():GetOverlayGroup():IsExists(cm.xmfilter,1,nil)
+	return (r & REASON_COST)~=0 and re:IsHasType(0x7e0) and re:IsActiveType(TYPE_XYZ) and Senya.check_set_elem(re:GetHandler()) and e:GetHandler():GetOverlayGroup():IsExists(cm.xmfilter,1,nil)
 and re:GetHandler()~=e:GetHandler()
 end
 

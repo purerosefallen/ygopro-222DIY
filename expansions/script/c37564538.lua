@@ -64,7 +64,7 @@ function cm.f(c)
 end
 function cm.add(tc)
 	local p2=0
-	if bit.band(tc:GetOriginalType(),TYPE_QUICKPLAY+TYPE_TRAP)==0 then p2=EFFECT_TYPE_QUICK_O end
+	if (tc:GetOriginalType() & TYPE_QUICKPLAY+TYPE_TRAP)==0 then p2=EFFECT_TYPE_QUICK_O end
 	local e2=Effect.CreateEffect(tc)
 	e2:SetDescription(m*16)
 	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -112,10 +112,10 @@ function cm.reg(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.condition2(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) then return false end
-	if e:GetHandler():GetTurnID()==Duel.GetTurnCount() and bit.band(e:GetHandler():GetOriginalType(),TYPE_QUICKPLAY+TYPE_TRAP)==0 then return false end
-	local t1=bit.band(e:GetHandler():GetOriginalType(),0x7)
-	local t2=bit.band(re:GetHandler():GetOriginalType(),0x7)
-	return bit.band(t1,t2)~=0
+	if e:GetHandler():GetTurnID()==Duel.GetTurnCount() and (e:GetHandler():GetOriginalType() & TYPE_QUICKPLAY+TYPE_TRAP)==0 then return false end
+	local t1=(e:GetHandler():GetOriginalType() & 0x7)
+	local t2=(re:GetHandler():GetOriginalType() & 0x7)
+	return (t1 & t2)~=0
 end
 function cm.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

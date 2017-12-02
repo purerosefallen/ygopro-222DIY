@@ -50,7 +50,7 @@ function cm.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function cm.thfilter(c,tc)
-	return Senya.check_set_sayuri(c) and c:IsType(bit.band(tc:GetType(),0x7)) and c:IsAbleToHand()
+	return Senya.check_set_sayuri(c) and c:IsType((tc:GetType() & 0x7)) and c:IsAbleToHand()
 end
 function cm.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_HAND,1,nil) end

@@ -42,7 +42,7 @@ function cm.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
 	local s1=Duel.SelectMatchingCard(tp,cm.f1,tp,LOCATION_HAND,0,1,1,nil):GetFirst()
 	sg:AddCard(s1)
-	local tpe=bit.band(s1:GetType(),0x7)
+	local tpe=(s1:GetType() & 0x7)
 	if Duel.IsExistingMatchingCard(cm.f2,tp,LOCATION_HAND,0,1,s1,tpe) and Duel.SelectYesNo(tp,aux.Stringid(m,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
 		local g=Duel.SelectMatchingCard(tp,cm.f2,tp,LOCATION_HAND,0,1,99,s1,tpe)
@@ -129,5 +129,5 @@ end
 function cm.dfilter(c,tc)
 	local lv1=c:GetLevel()
 	local lv2=tc:GetLevel()
-	return bit.band(c:GetAttribute(),tc:GetAttribute())~=0 and bit.band(c:GetRace(),tc:GetRace())~=0 and c:GetLevel()>0 and lv1==lv2 and lv1~=0 and c:IsAbleToGrave() and c:IsType(TYPE_MONSTER)
+	return (c:GetAttribute() & tc:GetAttribute())~=0 and (c:GetRace() & tc:GetRace())~=0 and c:GetLevel()>0 and lv1==lv2 and lv1~=0 and c:IsAbleToGrave() and c:IsType(TYPE_MONSTER)
 end

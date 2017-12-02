@@ -13,7 +13,7 @@ function cm.initial_effect(c)
 	Senya.sayuri_activate_effect[c]=e1
 end
 function cm.filter(c,e,tp,m1,m2,ft)
-	if not Senya.check_set_sayuri(c) or bit.band(c:GetType(),0x81)~=0x81
+	if not Senya.check_set_sayuri(c) or (c:GetType() & 0x81)~=0x81
 		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	local mg=m1:Filter(Card.IsCanBeRitualMaterial,c,c)
 	mg:Merge(m2)

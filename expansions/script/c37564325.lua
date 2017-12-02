@@ -82,7 +82,7 @@ function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.afilter(c)
-	return bit.band(c:GetOriginalType(),TYPE_MONSTER)~=0 and c:GetFlagEffect(m)>0
+	return (c:GetOriginalType() & TYPE_MONSTER)~=0 and c:GetFlagEffect(m)>0
 end
 function cm.adcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject():GetLabelObject()
