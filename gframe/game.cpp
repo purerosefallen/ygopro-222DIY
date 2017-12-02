@@ -671,7 +671,7 @@ bool Game::Initialize() {
 #ifdef YGOPRO_USE_IRRKLANG
 	engineSound = irrklang::createIrrKlangDevice();
 	engineMusic = irrklang::createIrrKlangDevice();
-#ifdef IRRKLANG_STATIC
+#ifdef YGOPRO_USE_IKPMP3
 	if(engineMusic) {
 		irrklang::ikpMP3Init(engineSound);
 		irrklang::ikpMP3Init(engineMusic);
