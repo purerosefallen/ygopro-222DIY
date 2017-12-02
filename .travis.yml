@@ -58,7 +58,6 @@ before_install:
     curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://www.ambiera.at/downloads/irrKlang-32bit-1.5.0.zip;
     unzip -q irrKlang-32bit-1.5.0.zip;
     mv -f irrKlang-1.5.0 irrklang;
-    sudo cp -rf irrklang/include /usr/local/include/irrKlang;
     sudo cp -rf irrklang/bin/macosx-gcc/*.dylib /usr/local/lib/;
     mv -f irrklang/plugins/ikpMP3 ikpmp3;
     cp -rf premake/ikpmp3 .;
