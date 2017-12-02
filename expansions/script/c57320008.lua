@@ -31,7 +31,7 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if (g:GetFirst():GetOriginalType() & TYPE_MONSTER)~=0 then
 		e:SetCategory((cat | CATEGORY_SPECIAL_SUMMON))
 	else
-		e:SetCategory((cat & bit.bnot(CATEGORY_SPECIAL_SUMMON)))
+		e:SetCategory((cat & ~CATEGORY_SPECIAL_SUMMON))
 	end
 end
 function cm.activate(e,tp,eg,ep,ev,re,r,rp)

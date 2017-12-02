@@ -1,4 +1,5 @@
 --库拉丽丝-翩翩
+xpcall(function() require("expansions/script/c57300000") end,function() require("script/c57300000") end)
 function c57300025.initial_effect(c)
 	c:EnableReviveLimit()
 	--fusion material
@@ -81,7 +82,7 @@ function c57300025.fscon(e,g,gc,chkfnf)
 		if not c57300025.fsfilter(gc,fc) then return false end
 		sg:AddCard(gc)
 	end	
-	return c57300025.CheckGroup(mg,c57300025.fgoal,sg,1,5,e:GetHandler(),e:GetHandlerPlayer(),chkf)
+	return miyuki.CheckGroup(mg,c57300025.fgoal,sg,1,5,e:GetHandler(),e:GetHandlerPlayer(),chkf)
 end
 function c57300025.val(c)
 	return (0x10000*c:GetOverlayCount())+1
@@ -98,42 +99,8 @@ function c57300025.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
 	local fs=false
 	local chkf=(chkfnf & 0xff)
 	local mg=eg:Filter(c57300025.fsfilter,nil,e:GetHandler())	
-	local tg=c57300025.SelectGroup(tp,HINTMSG_FMATERIAL,mg,c57300025.fgoal,sg,1,5,e:GetHandler(),tp,chkf)
+	local tg=miyuki.SelectGroup(tp,HINTMSG_FMATERIAL,mg,c57300025.fgoal,sg,1,5,e:GetHandler(),tp,chkf)
 	Duel.SetFusionMaterial(tg) 
-end
-function c57300025.CheckGroupRecursive(c,sg,g,f,min,max,ext_params)
-	sg:AddCard(c)
-	local ct=sg:GetCount()
-	local res=(ct>=min and f(sg,table.unpack(ext_params)))
-		or (ct<max and g:IsExists(c57300025.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params))
-	sg:RemoveCard(c)
-	return res
-end
-function c57300025.CheckGroup(g,f,cg,min,max,...)
-	local min=min or 1
-	local max=max or g:GetCount()
-	if min>max then return false end
-	local ext_params={...}
-	local sg=Group.CreateGroup()
-	if cg then sg:Merge(cg) end
-	local ct=sg:GetCount()
-	if ct>=min and ct<max and f(sg,...) then return true end
-	return g:IsExists(c57300025.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params)
-end
-function c57300025.SelectGroup(tp,desc,g,f,cg,min,max,...)
-	local min=min or 1
-	local max=max or g:GetCount()
-	local ext_params={...}
-	local sg=Group.CreateGroup()
-	if cg then sg:Merge(cg) end
-	local ct=sg:GetCount()
-	while ct<max and not (ct>=min and f(sg,...) and not (g:IsExists(c57300025.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params) and Duel.SelectYesNo(tp,210))) do
-		Duel.Hint(HINT_SELECTMSG,tp,desc)
-		local tg=g:FilterSelect(tp,c57300025.CheckGroupRecursive,1,1,sg,sg,g,f,min,max,ext_params)
-		sg:Merge(tg)
-		ct=sg:GetCount()
-	end
-	return sg
 end
 function c57300025.spfilter(c,e,tp)
 	if c:IsLocation(LOCATION_GRAVE) and c:IsHasEffect(EFFECT_NECRO_VALLEY) then return false end
@@ -186,7 +153,7 @@ function c57300025.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if (g:GetFirst():GetOriginalType() & TYPE_MONSTER)~=0 then
 		e:SetCategory((cat | CATEGORY_SPECIAL_SUMMON))
 	else
-		e:SetCategory((cat & bit.bnot(CATEGORY_SPECIAL_SUMMON)))
+		e:SetCategory((cat & ~CATEGORY_SPECIAL_SUMMON))
 	end
 end
 function c57300025.activate(e,tp,eg,ep,ev,re,r,rp)
