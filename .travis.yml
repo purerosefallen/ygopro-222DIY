@@ -52,9 +52,6 @@ before_install:
     sudo cp -rf build/Release/libIrrlicht.a /usr/local/lib/;
     sudo cp -rf ../../../include /usr/local/include/irrlicht;
     cd ../../../../;
-  fi
-
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://www.ambiera.at/downloads/irrKlang-32bit-1.5.0.zip;
     unzip -q irrKlang-32bit-1.5.0.zip;
     mv -f irrKlang-1.5.0 irrklang;
