@@ -40,15 +40,15 @@ install:
   - move irrklang\plugins\ikpMP3 ikpmp3
 
   # let premake happy
-  - xcopy /E premake\* .
+  - cp -rf premake/* .
 
   #irrklang pro
   - rm -rf irrklang/lib/Win32-visualStudio/irrKlang.lib
   - 7z x -oirrklang/lib/Win32-visualStudio -p%irrklang_pro% irrKlang.7z
   
-  # patch irrlicht and ikpmp3
+  # patch irrlicht
   - patch -p0 < irrlicht\irrlicht.patch
-  - patch -p0 < ikpmp3\ikpmp3.patch
+  # - patch -p0 < ikpmp3\ikpmp3.patch
 
   # premake
   - premake5 vs2015
