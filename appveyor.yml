@@ -63,7 +63,6 @@ after_build:
   - git checkout master
   - mv -f bin/release/ygopro.exe .
 
-before_deploy:
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/windbot/archive/master.zip ; exit 0"
   - 7z x windbot-master.zip
   - cd windbot-master
