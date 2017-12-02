@@ -23,7 +23,7 @@ function cm.initial_effect(c)
 			local g=Senya.get_all_cards:Clone()
 			local rg=Group.CreateGroup()
 			g:ForEach(function(c)
-				if bit.band(c:GetOriginalType(),0x81)==0x81 and not cm.gg:IsExists(cm.ctfilter,1,nil,c:GetOriginalCode()) then
+				if (c:GetOriginalType() & 0x81)==0x81 and not cm.gg:IsExists(cm.ctfilter,1,nil,c:GetOriginalCode()) then
 					rg:AddCard(c)
 					cm.gg:AddCard(c)
 				end
@@ -39,7 +39,7 @@ function cm.ctfilter(c,code)
 	return c:GetOriginalCode()==code
 end
 function cm.filter(c,e,tp,m,ft)
-	if bit.band(c:GetType(),0x81)~=0x81
+	if (c:GetType() & 0x81)~=0x81
 		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	local mg=m:Filter(Card.IsCanBeRitualMaterial,c,c)
 	if c.ritual_custom_condition then return c:ritual_custom_condition(mg,ft) end

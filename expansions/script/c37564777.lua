@@ -136,23 +136,23 @@ return function(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabelObject(tc)
 	local ctg=0
 	if tc:IsSetCard(0x777) then
-		ctg=bit.bor(ctg,CATEGORY_REMOVE+CATEGORY_DRAW)
+		ctg=(ctg | CATEGORY_REMOVE+CATEGORY_DRAW)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_DECK)
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 	end
 	if tc:IsAttribute(at) then
 		if at==ATTRIBUTE_WIND then
-			ctg=bit.bor(ctg,CATEGORY_TOHAND+CATEGORY_SEARCH)
+			ctg=(ctg | CATEGORY_TOHAND+CATEGORY_SEARCH)
 			Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 		elseif at==ATTRIBUTE_FIRE then
 			local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
-			ctg=bit.bor(ctg,CATEGORY_DESTROY)
+			ctg=(ctg | CATEGORY_DESTROY)
 			Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 		elseif at==ATTRIBUTE_EARTH then
-			ctg=bit.bor(ctg,CATEGORY_SPECIAL_SUMMON)
+			ctg=(ctg | CATEGORY_SPECIAL_SUMMON)
 			Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 		elseif at==ATTRIBUTE_WATER then
-			ctg=bit.bor(ctg,CATEGORY_TOGRAVE+CATEGORY_DECKDES)
+			ctg=(ctg | CATEGORY_TOGRAVE+CATEGORY_DECKDES)
 			Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 		end
 	end
@@ -277,7 +277,7 @@ function prim.ses(c,at)
 	e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
 		local l=e:GetLabel()
 		local b=false
-		if bit.band(l,1)~=0 and Duel.GetMZoneCount(tp)>0 then
+		if (l & 1)~=0 and Duel.GetMZoneCount(tp)>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local g=Duel.SelectMatchingCard(tp,prim.sesspfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,m)
 			local tc=g:GetFirst()
@@ -292,7 +292,7 @@ function prim.ses(c,at)
 				tc:RegisterEffect(e1,true)
 			end
 		end
-		if bit.band(l,2)~=0 and Duel.IsPlayerCanDraw(tp,1) then
+		if (l & 2)~=0 and Duel.IsPlayerCanDraw(tp,1) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 			local g=Duel.SelectMatchingCard(tp,prim.sessrfilter,tp,LOCATION_DECK,0,1,1,nil,at)
 			local tc=g:GetFirst()

@@ -29,7 +29,7 @@ function cm.cfilter(c,ori)
 	if c:IsFacedown() then return false end
 	if ori then return c:GetOriginalCode()==37564765 and c:IsLocation(LOCATION_MZONE) end
 	if c:IsCode(37564765) then return true end
-	return (Senya.check_set_sawawa(c) or (Senya.check_set_3L(c) and c:IsType(TYPE_FUSION)) or (Senya.check_set_sayuri(c) and bit.band(c:GetType(),0x81)==0x81)) and c:IsLocation(LOCATION_MZONE)
+	return (Senya.check_set_sawawa(c) or (Senya.check_set_3L(c) and c:IsType(TYPE_FUSION)) or (Senya.check_set_sayuri(c) and (c:GetType() & 0x81)==0x81)) and c:IsLocation(LOCATION_MZONE)
 end
 function cm.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsChainNegatable(ev) and Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_ONFIELD,0,1,nil,false)

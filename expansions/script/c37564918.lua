@@ -15,7 +15,7 @@ function cm.initial_effect(c)
 	Senya.sayuri_activate_effect[c]=e1
 end
 function cm.filter(c,e,tp,mg)
-	if not Senya.check_set_sayuri(c) or bit.band(c:GetType(),0x81)~=0x81 or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
+	if not Senya.check_set_sayuri(c) or (c:GetType() & 0x81)~=0x81 or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	if c.mat_filter then
 		mg=mg:Filter(c.mat_filter,nil)
 	end
@@ -72,11 +72,11 @@ function cm.retfilter(c)
 	return c:IsFaceup() and c:IsAbleToDeckOrExtraAsCost() and Senya.check_set_sayuri(c) and c:IsType(TYPE_MONSTER)
 end
 function cm.rcon(e,tp,eg,ep,ev,re,r,rp)
-	local ct=bit.band(ev,0xffff)
-	return bit.band(r,REASON_COST)~=0 and re:GetHandler()==e:GetHandler() and re:IsHasType(0x7e0) and Duel.IsExistingMatchingCard(cm.retfilter,tp,LOCATION_REMOVED,0,ct,nil)
+	local ct=(ev & 0xffff)
+	return (r & REASON_COST)~=0 and re:GetHandler()==e:GetHandler() and re:IsHasType(0x7e0) and Duel.IsExistingMatchingCard(cm.retfilter,tp,LOCATION_REMOVED,0,ct,nil)
 end
 function cm.rop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=bit.band(ev,0xffff)
+	local ct=(ev & 0xffff)
 	Duel.Hint(HINT_CARD,0,e:GetOwner():GetOriginalCode())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,cm.retfilter,tp,LOCATION_REMOVED,0,ct,ct,nil)

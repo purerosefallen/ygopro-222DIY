@@ -38,7 +38,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function cm.rgcon(e)
-	return bit.band(e:GetHandler():GetSummonType(),0x534)==0x534
+	return e:GetHandler():IsSummonType(0x534)
 end
 function cm.spcon(e,c)
 	if c==nil then return true end
@@ -51,7 +51,7 @@ end
 function cm.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return ep~=tp and Duel.GetAttackTarget()==nil
-		and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and bit.band(e:GetHandler():GetSummonType(),0x534)==0x534
+		and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and e:GetHandler():IsSummonType(0x534)
 end
 function cm.rdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(ep,ev/2)
@@ -66,7 +66,7 @@ function cm.f3(c,e,tp)
 	return c:IsCode(37564765) and c:IsAbleToGrave() and not c:IsImmuneToEffect(e) and c:IsFaceup() and Duel.IsExistingMatchingCard(cm.f2,tp,LOCATION_EXTRA,0,1,nil,e,tp,Group.FromCards(e:GetHandler(),nc))
 end
 function cm.filter(c)
-	return c.Senya_desc_with_nanahira and bit.band(c:GetType(),TYPE_TRAP+TYPE_COUNTER)==TYPE_TRAP+TYPE_COUNTER and c:IsAbleToHand()
+	return c.Senya_desc_with_nanahira and (c:GetType() & TYPE_TRAP+TYPE_COUNTER)==TYPE_TRAP+TYPE_COUNTER and c:IsAbleToHand()
 end
 function cm.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGrave() and Duel.IsExistingMatchingCard(cm.f1,tp,LOCATION_MZONE,0,1,e:GetHandler(),e,tp) end

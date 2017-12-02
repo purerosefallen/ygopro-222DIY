@@ -16,7 +16,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function cm.cfilter(c,ori)
-	return Senya.check_set_sayuri(c) and c:IsFaceup() and bit.band(c:GetType(),0x81)==0x81
+	return Senya.check_set_sayuri(c) and c:IsFaceup() and (c:GetType() & 0x81)==0x81
 end
 function cm.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_MZONE,0,1,nil)

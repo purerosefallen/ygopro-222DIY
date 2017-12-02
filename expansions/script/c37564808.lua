@@ -54,8 +54,8 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function cm.chkf(c)
-	local t=bit.bor(c:GetType(),c:GetOriginalType())
-	return bit.band(t,TYPE_FUSION)==TYPE_FUSION
+	local t=(c:GetType() | c:GetOriginalType())
+	return (t & TYPE_FUSION)==TYPE_FUSION
 end
 function cm.dfilter(c)
 	return true
@@ -67,10 +67,10 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,cm.dfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	local cat=e:GetCategory()
-	if bit.band(g:GetFirst():GetOriginalType(),TYPE_MONSTER)~=0 then
-		e:SetCategory(bit.bor(cat,CATEGORY_SPECIAL_SUMMON))
+	if (g:GetFirst():GetOriginalType() & TYPE_MONSTER)~=0 then
+		e:SetCategory((cat | CATEGORY_SPECIAL_SUMMON))
 	else
-		e:SetCategory(bit.band(cat,bit.bnot(CATEGORY_SPECIAL_SUMMON)))
+		e:SetCategory((cat & ~CATEGORY_SPECIAL_SUMMON))
 	end
 end
 function cm.activate(e,tp,eg,ep,ev,re,r,rp)

@@ -31,7 +31,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function cm.condition(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(r,REASON_EFFECT)~=0
+	return (r & REASON_EFFECT)~=0
 		and Senya.check_set_prim(re:GetHandler())
 end
 function cm.thfilter(c)

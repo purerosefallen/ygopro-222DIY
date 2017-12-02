@@ -49,7 +49,7 @@ function c66677706.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c66677706.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:GetPreviousControler()==tp and bit.band(r,REASON_DESTROY)~=0
+	return rp~=tp and c:GetPreviousControler()==tp and (r & REASON_DESTROY)~=0
 end
 function c66677706.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:IsSetCard(0x777) and c:IsFaceup()

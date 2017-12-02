@@ -70,7 +70,7 @@ function cm.sfilter(c,e,tp)
 	return c:IsCode(m) and c:IsCanBeSpecialSummoned(e,0,tp,true,true) and c:IsType(TYPE_MONSTER)
 end
 function cm.sfilter1(c,e,tp)
-	return c:IsLevelBelow(8) and Senya.check_set_sayuri(c) and c:IsCanBeSpecialSummoned(e,0,tp,true,true) and bit.band(c:GetType(),0x81)==0x81
+	return c:IsLevelBelow(8) and Senya.check_set_sayuri(c) and c:IsCanBeSpecialSummoned(e,0,tp,true,true) and (c:GetType() & 0x81)==0x81
 end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMZoneCount(tp)>0

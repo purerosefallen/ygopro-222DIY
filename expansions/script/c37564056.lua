@@ -84,7 +84,7 @@ function cm.replace_register_effect(f,p)
 				end)
 			end
 			local pr=e:GetProperty()
-			e:SetProperty(bit.bor(pr,EFFECT_FLAG_BOTH_SIDE))
+			e:SetProperty((pr | EFFECT_FLAG_BOTH_SIDE))
 			local con=e:GetCondition()
 			e:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
 				return (not con or con(e,tp,eg,ep,ev,re,r,rp)) and tp==p

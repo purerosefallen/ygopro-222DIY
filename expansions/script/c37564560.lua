@@ -50,20 +50,20 @@ end
 function cm.location_check(p,tp,z)
 	local tz=0
 	if p~=tp then
-		tz=bit.rshift(bit.band(z,0x1f0000),16)
+		tz=((z & 0x1f0000) >> 16)
 	else
-		tz=bit.band(z,0x1f)
+		tz=(z & 0x1f)
 	end
 	local ct=0
 	local res=0
 	for i=0,4 do
-		local cz=bit.lshift(1,i)
-		if bit.band(tz,cz)==cz and Duel.CheckLocation(p,LOCATION_MZONE,i) then
+		local cz=(1 << i)
+		if (tz & cz)==cz and Duel.CheckLocation(p,LOCATION_MZONE,i) then
 			ct=ct+1
-			res=bit.bor(cz,res)
+			res=(cz | res)
 		end
 	end
-	if p~=tp then res=bit.lshift(res,16) end
+	if p~=tp then res=(res << 16) end
 	return ct,res
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -87,6 +87,6 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct,res=cm.location_check(p,tp,z)
 	Duel.Hint(HINT_SELECTMSG,tp,571)
 	local sz=Duel.SelectDisableField(tp,1,LOCATION_MZONE,LOCATION_MZONE,0x1f001f-res)
-	if bit.band(sz,0x1f0000)~=0 then sz=bit.rshift(sz,16) end
+	if (sz & 0x1f0000)~=0 then sz=(sz >> 16) end
 	Duel.MoveSequence(rc,math.log(sz,2))
 end

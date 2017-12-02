@@ -35,7 +35,7 @@ function cm.chkfilter_mokou(c)
 end
 function cm.NegateEffectWithoutChainingCondition(e,tp,eg,ep,ev,re,r,rp)
 	local loc,np=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_CONTROLER)
-	return e:GetHandler():GetFlagEffect(m)==0 and re:GetHandler():IsRelateToEffect(re) and not re:GetHandler():IsImmuneToEffect(e) and bit.band(loc,0x0c)~=0 and np~=tp and re:GetHandler():IsAbleToGrave()
+	return e:GetHandler():GetFlagEffect(m)==0 and re:GetHandler():IsRelateToEffect(re) and not re:GetHandler():IsImmuneToEffect(e) and (loc & 0x0c)~=0 and np~=tp and re:GetHandler():IsAbleToGrave()
 end
 function cm.NegateEffectWithoutChainingOperation(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.SelectYesNo(tp,m*16+2) then return end

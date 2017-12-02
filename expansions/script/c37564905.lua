@@ -36,10 +36,10 @@ function cm.initial_effect(c)
 		if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
 			Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 			local cat=e:GetCategory()
-			if bit.band(re:GetHandler():GetOriginalType(),TYPE_MONSTER)~=0 then
-				e:SetCategory(bit.bor(cat,CATEGORY_SPECIAL_SUMMON))
+			if (re:GetHandler():GetOriginalType() & TYPE_MONSTER)~=0 then
+				e:SetCategory((cat | CATEGORY_SPECIAL_SUMMON))
 			else
-				e:SetCategory(bit.band(cat,bit.bnot(CATEGORY_SPECIAL_SUMMON)))
+				e:SetCategory((cat & ~CATEGORY_SPECIAL_SUMMON))
 			end
 		end
 	end)

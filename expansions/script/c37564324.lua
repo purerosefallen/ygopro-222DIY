@@ -85,10 +85,10 @@ function cm.FConditionCode2(e,g,gc,chkfnf)
 				if g==nil then return true end
 				if not cm.material then return false end
 				local funs=cm.GenerateList(cm.material)
-				local chkf=bit.band(chkfnf,0xff)
+				local chkf=(chkfnf & 0xff)
 				local c=e:GetHandler()
 				local tp=c:GetControler()
-				local notfusion=bit.rshift(chkfnf,8)~=0
+				local notfusion=(chkfnf >> 8)~=0
 				local sub=sub or notfusion
 				local mg=g:Filter(Auxiliary.FConditionFilterMix,c,c,sub,table.unpack(funs))
 				if gc then
@@ -101,10 +101,10 @@ function cm.FConditionCode2(e,g,gc,chkfnf)
 end
 function cm.FOperationCode2(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
 				local funs=cm.GenerateList(cm.material)
-				local chkf=bit.band(chkfnf,0xff)
+				local chkf=(chkfnf & 0xff)
 				local c=e:GetHandler()
 				local tp=c:GetControler()
-				local notfusion=bit.rshift(chkfnf,8)~=0
+				local notfusion=(chkfnf >> 8)~=0
 				local sub=sub or notfusion
 				local mg=eg:Filter(Auxiliary.FConditionFilterMix,c,c,sub,table.unpack(funs))
 				local sg=Group.CreateGroup()
