@@ -75,7 +75,7 @@ function c57300025.fscon(e,g,gc,chkfnf)
 	if g==nil then return true end
 	local sg=Group.CreateGroup()
 	local fs=false
-	local chkf=bit.band(chkfnf,0xff)
+	local chkf=(chkfnf & 0xff)
 	local mg=g:Filter(c57300025.fsfilter,nil,e:GetHandler())
 	if gc then
 		if not c57300025.fsfilter(gc,fc) then return false end
@@ -96,7 +96,7 @@ function c57300025.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
 	local sg=Group.CreateGroup()
 	if gc then sg:AddCard(gc) end
 	local fs=false
-	local chkf=bit.band(chkfnf,0xff)
+	local chkf=(chkfnf & 0xff)
 	local mg=eg:Filter(c57300025.fsfilter,nil,e:GetHandler())	
 	local tg=c57300025.SelectGroup(tp,HINTMSG_FMATERIAL,mg,c57300025.fgoal,sg,1,5,e:GetHandler(),tp,chkf)
 	Duel.SetFusionMaterial(tg) 
@@ -183,10 +183,10 @@ function c57300025.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,c57300025.dfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	local cat=e:GetCategory()
-	if bit.band(g:GetFirst():GetOriginalType(),TYPE_MONSTER)~=0 then
-		e:SetCategory(bit.bor(cat,CATEGORY_SPECIAL_SUMMON))
+	if (g:GetFirst():GetOriginalType() & TYPE_MONSTER)~=0 then
+		e:SetCategory((cat | CATEGORY_SPECIAL_SUMMON))
 	else
-		e:SetCategory(bit.band(cat,bit.bnot(CATEGORY_SPECIAL_SUMMON)))
+		e:SetCategory((cat & bit.bnot(CATEGORY_SPECIAL_SUMMON)))
 	end
 end
 function c57300025.activate(e,tp,eg,ep,ev,re,r,rp)

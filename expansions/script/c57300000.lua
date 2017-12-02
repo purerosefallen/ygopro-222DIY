@@ -435,7 +435,7 @@ end
 function cm.GetFusionMaterial(tp,loc,oloc,f,gc,e,...)
 	local g1=Duel.GetFusionMaterial(tp)
 	if loc then
-		local floc=bit.band(loc,LOCATION_ONFIELD+LOCATION_HAND)
+		local floc=(loc & LOCATION_ONFIELD+LOCATION_HAND)
 		if floc~=0 then
 			g1=g1:Filter(Card.IsLocation,nil,floc)
 		else
