@@ -58,7 +58,9 @@ before_install:
     sudo cp -rf irrklang/bin/macosx-gcc/*.dylib /usr/local/lib/;
     mv -f irrklang/plugins/ikpMP3 ikpmp3;
     cp -rf premake/ikpmp3 .;
-    patch -p0 < ikpmp3/ikpmp3.patch;
+    cd ikpmp3;
+    patch -p0 < ikpmp3.patch;
+    cd ..;
   fi
 
 script:
