@@ -13,7 +13,7 @@
 #include "group.h"
 #include "ocgapi.h"
 
-//222DIY
+//modded
 int32 scriptlib::duel_select_field(lua_State * L) {
 	check_action_permission(L);
 	check_param_count(L, 4);
@@ -1739,7 +1739,7 @@ int32 scriptlib::duel_get_location_count(lua_State *L) {
 	lua_pushinteger(L, pduel->game_field->get_useable_count(playerid, location, uplayer, reason, zone));
 	return 1;
 }
-//222DIY modded by Flandre
+//modded by Flandre
 int32 scriptlib::duel_get_mzone_count(lua_State *L) {
 	check_param_count(L, 1);
 	uint32 playerid = lua_tonumberint(L, 1);
@@ -3200,6 +3200,7 @@ int32 scriptlib::duel_select_position(lua_State * L) {
 	pduel->game_field->add_process(PROCESSOR_SELECT_POSITION_S, 0, 0, 0, playerid + (positions << 16), pcard->data.code);
 	return lua_yield(L, 0);
 }
+//modded
 int32 scriptlib::duel_select_disable_field(lua_State * L) {
 	check_action_permission(L);
 	check_param_count(L, 5);
@@ -3229,6 +3230,17 @@ int32 scriptlib::duel_select_disable_field(lua_State * L) {
 		flag = (flag & 0xffffff) | (plist << 24);
 	}
 	flag |= filter | 0xe0e0e0e0;
+	int32 allow_exzone = lua_toboolean(L, 6);
+	if (allow_exzone && pduel->game_field->core.duel_rule >= 4) {
+		if(pduel->game_field->is_location_useable(playerid, LOCATION_MZONE, 5)) {
+			ct1 = ct1 + 1;
+			flag = flag - (flag & 0x20);
+		}
+		if(pduel->game_field->is_location_useable(playerid, LOCATION_MZONE, 6)) {
+			ct1 = ct1 + 1;
+			flag = flag - (flag & 0x40);
+		}
+	}
 	if(count > ct1 + ct2 + ct3 + ct4)
 		count = ct1 + ct2 + ct3 + ct4;
 	if(count == 0)

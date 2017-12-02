@@ -107,7 +107,7 @@ public:
 
 	//millux
 	uint32 get_ritual_type();
-	//222DIY
+	//modded
 	uint32 set_entity_code(uint32 entity_code, bool remove_alias = false);
 
 	struct sendto_param_t {
@@ -502,7 +502,7 @@ public:
 #define STATUS_OPPO_BATTLE			0x10000000
 #define STATUS_FLIP_SUMMON_TURN		0x20000000
 #define STATUS_SPSUMMON_TURN		0x40000000
-//222DIY
+//modded
 #define STATUS_TO_LEAVE_FROMEX		0x80000000
 //Counter
 #define COUNTER_WITHOUT_PERMIT	0x1000

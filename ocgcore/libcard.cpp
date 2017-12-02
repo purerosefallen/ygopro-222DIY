@@ -13,7 +13,7 @@
 #include "group.h"
 #include <iostream>
 
-//millux
+//modded by millux
 int32 scriptlib::card_is_ritual_type(lua_State *L) {
 	check_param_count(L, 2);
 	check_param(L, PARAM_TYPE_CARD, 1);
@@ -25,7 +25,7 @@ int32 scriptlib::card_is_ritual_type(lua_State *L) {
 		lua_pushboolean(L, 0);
 	return 1;
 }
-//222DIY functions
+//modded functions
 int32 scriptlib::card_set_entity_code(lua_State *L) {
 	check_param_count(L, 2);
 	check_param(L, PARAM_TYPE_CARD, 1);
