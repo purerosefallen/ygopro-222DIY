@@ -1751,8 +1751,10 @@ void SingleDuel::RefreshMzone(int player, int flag, int use_cache) {
 #ifdef YGOPRO_SERVER_MODE
 	NetServer::ReSendToPlayer(replay_recorder);
 #endif
-	for (int i = 0; i < 5; ++i) {
+	int qlen = 0;
+	while(qlen < len) {
 		int clen = BufferIO::ReadInt32(qbuf);
+		qlen += clen;
 		if (clen == 4)
 			continue;
 		if (qbuf[11] & POS_FACEDOWN)
@@ -1777,8 +1779,10 @@ void SingleDuel::RefreshSzone(int player, int flag, int use_cache) {
 #ifdef YGOPRO_SERVER_MODE
 	NetServer::ReSendToPlayer(replay_recorder);
 #endif
-	for (int i = 0; i < 8; ++i) {
+	int qlen = 0;
+	while(qlen < len) {
 		int clen = BufferIO::ReadInt32(qbuf);
+		qlen += clen;
 		if (clen == 4)
 			continue;
 		if (qbuf[11] & POS_FACEDOWN)
@@ -1803,9 +1807,9 @@ void SingleDuel::RefreshHand(int player, int flag, int use_cache) {
 #ifdef YGOPRO_SERVER_MODE
 	NetServer::ReSendToPlayer(replay_recorder);
 #endif
-	int qlen = 0, slen;
+	int qlen = 0;
 	while(qlen < len) {
-		slen = BufferIO::ReadInt32(qbuf);
+		int slen = BufferIO::ReadInt32(qbuf);
 		int qflag = *(int*)qbuf;
 		int pos = slen - 8;
 		if(qflag & QUERY_LSCALE)
