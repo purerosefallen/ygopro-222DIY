@@ -36,8 +36,8 @@ function cm.rmop(e,tp,eg,ep,ev,re,r,rp)
 			or (seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1)) then
 			local flag=0xff
 			if seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then flag=flag & ~(0x1 << seq-1) end
-			if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=flag & ~(0x1 << seq-1) end
-Duel.Hint(HINT_SELECTMSG,tp,571)
+			if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=flag & ~(0x1 << seq+1) end
+			Duel.Hint(HINT_SELECTMSG,tp,571)
 			local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,flag)
 			local nseq=math.log(s,2)
 			Duel.MoveSequence(c,nseq)
