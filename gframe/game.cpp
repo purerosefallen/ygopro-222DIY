@@ -667,12 +667,6 @@ bool Game::Initialize() {
 #ifdef YGOPRO_USE_IRRKLANG
 	engineSound = irrklang::createIrrKlangDevice();
 	engineMusic = irrklang::createIrrKlangDevice();
-#ifdef YGOPRO_USE_IKPMP3
-	if(engineMusic) {
-		irrklang::ikpMP3Init(engineSound);
-		irrklang::ikpMP3Init(engineMusic);
-	}
-#endif
 	if(!engineSound || !engineMusic) {
 		chkEnableSound->setChecked(false);
 		chkEnableSound->setEnabled(false);
@@ -680,6 +674,12 @@ bool Game::Initialize() {
 		chkEnableMusic->setEnabled(false);
 		chkMusicMode->setEnabled(false);
 	}
+#ifdef YGOPRO_USE_IKPMP3
+	else {
+		irrklang::ikpMP3Init(engineSound);
+		irrklang::ikpMP3Init(engineMusic);
+	}
+#endif
 #endif
 	hideChat = false;
 	hideChatTimer = 0;
