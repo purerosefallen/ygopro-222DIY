@@ -12,8 +12,6 @@ function c1156013.initial_effect(c)
 	c:RegisterEffect(e0)  
 --
 	local e2=Effect.CreateEffect(c)
-	e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-	e2:SetDescription(aux.Stringid(1156013,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
 	e2:SetRange(LOCATION_MZONE)

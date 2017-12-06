@@ -6,6 +6,7 @@ function c22251102.initial_effect(c)
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCountLimit(2,22251102+EFFECT_COUNT_CODE_OATH)
 	e1:SetCost(c22251102.cost)
 	e1:SetTarget(c22251102.target)
@@ -45,7 +46,6 @@ end
 function c22251102.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local flag=Duel.GetFlagEffect(tp,22251102)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
-	if e:GetLabel()==0 then e:SetProperty(EFFECT_FLAG_PLAYER_TARGET) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(2)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
@@ -55,8 +55,9 @@ function c22251102.activate(e,tp,eg,ep,ev,re,r,rp)
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		Duel.Draw(p,d,REASON_EFFECT)
 	elseif e:GetLabel()==1 then
-		while Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>2 do
-			Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_EFFECT,nil)
+		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+		while Duel.GetFieldGroupCount(p,LOCATION_HAND,0)>2 do
+			Duel.DiscardHand(p,Card.IsDiscardable,1,1,REASON_EFFECT,nil)
 		end
 	end
 end
