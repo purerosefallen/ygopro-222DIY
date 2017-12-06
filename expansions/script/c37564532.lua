@@ -55,7 +55,7 @@ function cm.rmv(rg)
 		local te=tc:GetActivateEffect()
 		if not te then return end
 		local pr1,pr2=te:GetProperty()
-		pr2=pr2-(pr2 & EFFECT_FLAG2_COF)
+		pr2=pr2 & ~EFFECT_FLAG2_COF
 		te:SetProperty(pr1,pr2)
 		te:SetHintTiming(0,0)
 		rg:RemoveCard(tc)
