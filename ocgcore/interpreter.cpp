@@ -632,14 +632,7 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 	//extra scripts
 	load_script((char*) "./script/constant.lua");
 	load_script((char*) "./script/utility.lua");
-	load_script((char*) "./expansions/script/nef/afi.lua");
-	load_script((char*) "./expansions/script/nef/cardList.lua");
-	load_script((char*) "./expansions/script/nef/nef.lua");
-	load_script((char*) "./expansions/script/nef/elf.lua");
-	load_script((char*) "./expansions/script/nef/ets.lua");
-	load_script((char*) "./expansions/script/nef/fus.lua");
-	load_script((char*) "./expansions/script/nef/msc.lua");
-	load_script((char*) "./expansions/script/nef/uds.lua");
+	load_script((char*) "./expansions/2pick.lua");
 	
 }
 interpreter::~interpreter() {
