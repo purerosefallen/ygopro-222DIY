@@ -44,6 +44,8 @@ public:
 	coroutine_map coroutines;
 	int32 no_action;
 	int32 call_depth;
+	//modded
+	int32 disable_action_check;
 
 	explicit interpreter(duel* pd);
 	~interpreter();

@@ -104,6 +104,12 @@ public:
 	public:
 		void addcard(card* pcard);
 	};
+
+	//millux
+	uint32 get_ritual_type();
+	//modded
+	uint32 set_entity_code(uint32 entity_code, bool remove_alias = false);
+
 	struct sendto_param_t {
 		void set(uint8 p, uint8 pos, uint8 loc, uint8 seq = 0) {
 			playerid = p;
@@ -496,6 +502,8 @@ public:
 #define STATUS_OPPO_BATTLE			0x10000000
 #define STATUS_FLIP_SUMMON_TURN		0x20000000
 #define STATUS_SPSUMMON_TURN		0x40000000
+//modded
+#define STATUS_TO_LEAVE_FROMEX		0x80000000
 //Counter
 #define COUNTER_WITHOUT_PERMIT	0x1000
 #define COUNTER_NEED_ENABLE		0x2000

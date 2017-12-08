@@ -13,6 +13,77 @@
 #include "group.h"
 #include <iostream>
 
+//modded by millux
+int32 scriptlib::card_is_ritual_type(lua_State *L) {
+	check_param_count(L, 2);
+	check_param(L, PARAM_TYPE_CARD, 1);
+	card* pcard = *(card**) lua_touserdata(L, 1);
+	uint32 ttype = lua_tonumberint(L, 2);
+	if(pcard->get_ritual_type() & ttype)
+		lua_pushboolean(L, 1);
+	else
+		lua_pushboolean(L, 0);
+	return 1;
+}
+//modded functions
+int32 scriptlib::card_set_entity_code(lua_State *L) {
+	check_param_count(L, 2);
+	check_param(L, PARAM_TYPE_CARD, 1);
+	card* pcard = *(card**) lua_touserdata(L, 1);
+	uint32 trace = lua_tonumberint(L, 2);
+	bool remove_alias = false;
+	int32 enable = lua_toboolean(L, 3);
+	if (enable)
+		remove_alias = true;
+	lua_pushinteger(L, pcard->set_entity_code(trace, remove_alias));
+	return 1;
+}
+int32 scriptlib::card_set_card_data(lua_State *L) {
+	check_param_count(L, 3);
+	check_param(L, PARAM_TYPE_CARD, 1);
+	card* pcard = *(card**) lua_touserdata(L, 1);
+	int32 stype = lua_tonumberint(L, 2);
+	switch(stype) {
+	case ASSUME_CODE:
+		pcard->data.code = lua_tonumberint(L, 3);
+		break;
+	case ASSUME_TYPE:
+		pcard->data.type = lua_tonumberint(L, 3);
+		break;
+	case ASSUME_LEVEL:
+		pcard->data.level = lua_tonumberint(L, 3);
+		break;
+	case ASSUME_RANK:
+		pcard->data.level = lua_tonumberint(L, 3);
+		break;
+	case ASSUME_ATTRIBUTE:
+		pcard->data.attribute = lua_tonumberint(L, 3);
+		break;
+	case ASSUME_RACE:
+		pcard->data.race = lua_tonumberint(L, 3);
+		break;
+	case ASSUME_ATTACK:
+		pcard->data.attack = lua_tonumberint(L, 3);
+		break;
+	case ASSUME_DEFENSE:
+		pcard->data.defense = lua_tonumberint(L, 3);
+		break;		
+	case 9:
+		pcard->data.alias = lua_tonumberint(L, 3);
+		break;
+	case 10:
+		pcard->data.lscale = lua_tonumberint(L, 3);
+		break;
+	case 11:
+		pcard->data.rscale = lua_tonumberint(L, 3);
+		break;
+	case 12:
+		pcard->data.link_marker = lua_tonumberint(L, 3);
+		break;
+	}
+	return 0;
+}
+
 int32 scriptlib::card_get_code(lua_State *L) {
 	check_param_count(L, 1);
 	check_param(L, PARAM_TYPE_CARD, 1);
