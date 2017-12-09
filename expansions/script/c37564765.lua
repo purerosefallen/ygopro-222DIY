@@ -2543,3 +2543,4 @@ function cm.AddAttackSE(c,desc)
 	end
 	cm.AttackSEList[c]=desc
 end
+--triggered a build on Dec 9
