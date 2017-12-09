@@ -58,11 +58,11 @@ function Auxiliary.LoadDB()
 		end
 	end
 end
-function Auxiliary.SinglePick(p,list)
+function Auxiliary.SinglePick(p,list,count)
 	local g1=Group.CreateGroup()
 	local g2=Group.CreateGroup()
 	for _,g in ipairs({g1,g2}) do
-		for i=1,2 do
+		for i=1,count do
 			local code=list[math.random(#list)]
 			g:AddCard(Duel.CreateToken(p,code))
 		end
@@ -82,22 +82,29 @@ function Auxiliary.StartPick(e)
 	Duel.Exile(g,REASON_RULE)
 	for i=1,5 do
 		for p=0,1 do
-			Auxiliary.SinglePick(p,extra)
+			Auxiliary.SinglePick(p,extra,4)
 		end
 	end
-	for i=1,10 do
+	for i=1,11 do
 		local list=main
-		if i==7 then list=semi_limited
-		elseif i==8 or i==9 then list=limited
-		elseif i==10 then list=forbidden end
+		local count=4
+		if i==9 then
+			list=semi_limited
+		elseif i==10 then
+			list=limited
+			count=3
+		elseif i==11 then
+			list=forbidden
+			count=1
+		end
 		for p=0,1 do
-			Auxiliary.SinglePick(p,list)
+			Auxiliary.SinglePick(p,list,count)
 		end
 	end
 	Duel.ShuffleDeck(0)
 	Duel.ShuffleDeck(1)	
-	Duel.Draw(0,4,REASON_RULE)
-	Duel.Draw(1,4,REASON_RULE)
+	Duel.Draw(0,5,REASON_RULE)
+	Duel.Draw(1,5,REASON_RULE)
 	e:Reset()
 end
 
