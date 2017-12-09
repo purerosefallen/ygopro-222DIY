@@ -79,7 +79,7 @@ after_build:
   - mv -f ../../lflist.conf .  
   - mv -f ../../strings.conf .
   - mv -f ../../system.conf .
-  - mv -f ../../ygopro.exe .
+  - cp -rf ../../ygopro.exe .
   - mv -f ../../premake5.exe .
   - cd ..
   
