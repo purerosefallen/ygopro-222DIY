@@ -80,7 +80,11 @@ function Auxiliary.StartPick(e)
 	math.randomseed(os.time())
 	local g=Duel.GetFieldGroup(0,LOCATION_HAND | LOCATION_DECK | LOCATION_EXTRA, LOCATION_HAND | LOCATION_DECK | LOCATION_EXTRA)
 	Duel.Exile(g,REASON_RULE)
-	local pick_count=1
+	for i=1,5 do
+		for p=0,1 do
+			Auxiliary.SinglePick(p,extra)
+		end
+	end
 	for i=1,10 do
 		local list=main
 		if i==7 then list=semi_limited
@@ -88,11 +92,6 @@ function Auxiliary.StartPick(e)
 		elseif i==10 then list=forbidden end
 		for p=0,1 do
 			Auxiliary.SinglePick(p,list)
-		end
-	end
-	for i=1,5 do
-		for p=0,1 do
-			Auxiliary.SinglePick(p,extra)
 		end
 	end
 	Duel.ShuffleDeck(0)
