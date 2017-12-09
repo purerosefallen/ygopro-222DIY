@@ -120,7 +120,6 @@ cache:
   - lua-5.3.4.tar.gz
   - sqlite-amalgamation-3200100.zip
   - irrKlang-32bit-1.5.0.zip
-  - irrKlang-pro-1.5.0.zip
   - sqlite-amalgamation-3150200.zip
   - premake-5.0.0-alpha10-windows.zip
   - Redis-x64-3.2.100.zip
