@@ -833,16 +833,12 @@ function cm.PrismDamageCheckOperation(e,tp,eg,ep,ev,re,r,rp)
 	local bc=c:GetBattleTarget()
 	if ct==0 then return end
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		if Card.IsHasEffect then
-			local exte={c:IsHasEffect(37564427)}
-			for _,te in ipairs(exte) do
-				if Duel.SelectEffectYesNo(tp,te:GetHandler()) then
-					Duel.Hint(HINT_CARD,0,te:GetHandler():GetOriginalCode())
-					ct=ct+1
-				end
+		local exte={c:IsHasEffect(37564427)}
+		for _,te in ipairs(exte) do
+			if Duel.SelectEffectYesNo(tp,te:GetHandler()) then
+				Duel.Hint(HINT_CARD,0,te:GetHandler():GetOriginalCode())
+				ct=ct+1
 			end
-		else
-			ct=ct+c:GetEffectCount(37564427)
 		end
 		Duel.ConfirmDecktop(tp,ct)
 		local g=Duel.GetDecktopGroup(tp,ct)
@@ -1089,9 +1085,6 @@ function cm.PConditionFilterNanahira(c,e,tp,lscale,rscale,f,tc)
 	return lv>lscale and lv<rscale and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_PENDULUM,tp,false,false)
 		and not c:IsForbidden() and (not f or f(c,tc))
 end
-function cm.PConditionFilterExtra(c)
-	return c:IsHasEffect(37564541) and c.pendulum_info
-end
 function cm.PendConditionNanahira()
 	return  function(e,c,og)
 				if c==nil then return true end
@@ -1111,31 +1104,20 @@ function cm.PendConditionNanahira()
 				else
 					g=Duel.GetMatchingGroup(aux.PConditionFilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,nil,e,tp,lscale,rscale)
 				end
-				if Card.IsHasEffect then
-					local ext1={c:IsHasEffect(37564541)}
-					local ext2={rpz:IsHasEffect(37564541)} 
-					for i,te in pairs(ext1) do
-						local t=cm.order_table[te:GetValue()]
-						if (t.location==LOCATION_EXTRA and eft>0) or (t.location~=LOCATION_EXTRA and mft>0) then
-							local exg=Duel.GetMatchingGroup(cm.PConditionFilterNanahira,tp,t.location,0,nil,e,tp,lscale,rscale,t.filter,te:GetHandler())
+				local ext1={c:IsHasEffect(37564541)}
+				local ext2={rpz:IsHasEffect(37564541)} 
+				for i,te in pairs(ext1) do
+					local t=cm.order_table[te:GetValue()]
+					if (t.location==LOCATION_EXTRA and eft>0) or (t.location~=LOCATION_EXTRA and mft>0) then
+						local exg=Duel.GetMatchingGroup(cm.PConditionFilterNanahira,tp,t.location,0,nil,e,tp,lscale,rscale,t.filter,te:GetHandler())
 							g:Merge(exg)
-						end
 					end
-					for i,te in pairs(ext2) do
-						local t=cm.order_table[te:GetValue()]
-						if (t.location==LOCATION_EXTRA and eft>0) or (t.location~=LOCATION_EXTRA and mft>0) then
-							local exg=Duel.GetMatchingGroup(cm.PConditionFilterNanahira,tp,t.location,0,nil,e,tp,lscale,rscale,t.filter,te:GetHandler())
-							g:Merge(exg)
-						end
-					end
-				else
-					local cg=Group.FromCards(c,rpz):Filter(cm.PConditionFilterExtra,nil)
-					for tc in aux.Next(cg) do
-						local t=tc.pendulum_info
-						if (t.location==LOCATION_EXTRA and eft>0) or (t.location~=LOCATION_EXTRA and mft>0) then
-							local exg=Duel.GetMatchingGroup(cm.PConditionFilterNanahira,tp,t.location,0,nil,e,tp,lscale,rscale,t.filter,tc)
-							g:Merge(exg)
-						end
+				end
+				for i,te in pairs(ext2) do
+					local t=cm.order_table[te:GetValue()]
+					if (t.location==LOCATION_EXTRA and eft>0) or (t.location~=LOCATION_EXTRA and mft>0) then
+						local exg=Duel.GetMatchingGroup(cm.PConditionFilterNanahira,tp,t.location,0,nil,e,tp,lscale,rscale,t.filter,te:GetHandler())
+						g:Merge(exg)
 					end
 				end
 				if mft<=0 then g=g:Filter(Card.IsLocation,nil,LOCATION_EXTRA) end
@@ -1171,42 +1153,27 @@ function cm.PendOperationNanahira()
 				else
 					tg=Duel.GetMatchingGroup(aux.PConditionFilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,nil,e,tp,lscale,rscale)
 				end
-				if Card.IsHasEffect then
-					local ext1={c:IsHasEffect(37564541)}
-					local ext2={rpz:IsHasEffect(37564541)}
-					for i,te in pairs(ext1) do
-						local t=cm.order_table[te:GetValue()]
-						if (t.location==LOCATION_EXTRA and eft>0) or (t.location~=LOCATION_EXTRA and mft>0) then
-							local exg=Duel.GetMatchingGroup(cm.PConditionFilterNanahira,tp,t.location,0,nil,e,tp,lscale,rscale,t.filter,te:GetHandler())
-							tg:Merge(exg)
-							local mct=t.max_count
-							if mct and mct>0 and mct<ft then
-								maxlist[t.location]=mct
-							end
+				local ext1={c:IsHasEffect(37564541)}
+				local ext2={rpz:IsHasEffect(37564541)}
+				for i,te in pairs(ext1) do
+					local t=cm.order_table[te:GetValue()]
+					if (t.location==LOCATION_EXTRA and eft>0) or (t.location~=LOCATION_EXTRA and mft>0) then
+						local exg=Duel.GetMatchingGroup(cm.PConditionFilterNanahira,tp,t.location,0,nil,e,tp,lscale,rscale,t.filter,te:GetHandler())
+						tg:Merge(exg)
+						local mct=t.max_count
+						if mct and mct>0 and mct<ft then
+							maxlist[t.location]=mct
 						end
 					end
-					for i,te in pairs(ext2) do
-						local t=cm.order_table[te:GetValue()]
-						if (t.location==LOCATION_EXTRA and eft>0) or (t.location~=LOCATION_EXTRA and mft>0) then
-							local exg=Duel.GetMatchingGroup(cm.PConditionFilterNanahira,tp,t.location,0,nil,e,tp,lscale,rscale,t.filter,te:GetHandler())
-							tg:Merge(exg)
-							local mct=t.max_count
-							if mct and mct>0 and mct<ft then
-								maxlist[t.location]=mct
-							end
-						end
-					end
-				else
-					local cg=Group.FromCards(c,rpz):Filter(cm.PConditionFilterExtra,nil)
-					for tc in aux.Next(cg) do
-						local t=tc.pendulum_info
-						if (t.location==LOCATION_EXTRA and eft>0) or (t.location~=LOCATION_EXTRA and mft>0) then
-							local exg=Duel.GetMatchingGroup(cm.PConditionFilterNanahira,tp,t.location,0,nil,e,tp,lscale,rscale,t.filter,tc)
-							tg:Merge(exg)
-							local mct=t.max_count
-							if mct and mct>0 and mct<ft then
-								maxlist[t.location]=mct
-							end
+				end
+				for i,te in pairs(ext2) do
+					local t=cm.order_table[te:GetValue()]
+					if (t.location==LOCATION_EXTRA and eft>0) or (t.location~=LOCATION_EXTRA and mft>0) then
+						local exg=Duel.GetMatchingGroup(cm.PConditionFilterNanahira,tp,t.location,0,nil,e,tp,lscale,rscale,t.filter,te:GetHandler())
+						tg:Merge(exg)
+						local mct=t.max_count
+						if mct and mct>0 and mct<ft then
+							maxlist[t.location]=mct
 						end
 					end
 				end
@@ -1227,65 +1194,6 @@ function cm.PendOperationNanahira()
 end
 function cm.NanahiraPCardFilter(c)
 	return c.Senya_desc_with_nanahira
-end
-function cm.NanahiraLink(c,f,vf,gf,min,max)
-	cm.Nanahira(c)
-	c:EnableReviveLimit()	
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-	e1:SetRange(LOCATION_EXTRA)
-	if max==nil then max=99 end
-	e1:SetCondition(cm.LinkConditionNanahira(f,vf,gf,min,max))
-	e1:SetOperation(cm.LinkOperationNanahira(f,vf,gf,min,max))
-	e1:SetValue(SUMMON_TYPE_LINK)
-	c:RegisterEffect(e1)
-end
-function cm.GetLinkCountNanahira(c,vf)
-	if c:IsType(TYPE_LINK) and c:GetLink()>1 then
-		return 1+0x10000*c:GetLink()
-	elseif vf then
-		local v=vf(c)
-		return v and 1+0x10000*v or 1
-	else return 1 end
-end
-function cm.LCheckRecursiveNanahira(c,tp,sg,mg,lc,ct,minc,maxc,vf,gf)
-	sg:AddCard(c)
-	ct=ct+1
-	local res=cm.LCheckGoalNanahira(tp,sg,lc,minc,ct,vf,gf)
-		or (ct<maxc and mg:IsExists(cm.LCheckRecursiveNanahira,1,sg,tp,sg,mg,lc,ct,minc,maxc,vf,gf))
-	sg:RemoveCard(c)
-	ct=ct-1
-	return res
-end
-function cm.LCheckGoalNanahira(tp,sg,lc,minc,ct,vf,gf)
-	return ct>=minc and sg:CheckWithSumEqual(cm.GetLinkCountNanahira,lc:GetLink(),ct,ct,vf) and Duel.GetLocationCountFromEx(tp,tp,sg,lc)>0 and (not gf or gf(sg,lc))
-end
-function cm.LinkConditionNanahira(f,vf,gf,minc,maxc)
-	return	function(e,c)
-				if c==nil then return true end
-				if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
-				local tp=c:GetControler()
-				local mg=Duel.GetMatchingGroup(aux.LConditionFilter,tp,LOCATION_MZONE,0,nil,f,c)
-				local sg=Group.CreateGroup()
-				return mg:IsExists(cm.LCheckRecursiveNanahira,1,nil,tp,sg,mg,c,0,minc,maxc,vf,gf)
-			end
-end
-function cm.LinkOperationNanahira(f,vf,gf,minc,maxc)
-	return	function(e,tp,eg,ep,ev,re,r,rp,c)
-				local mg=Duel.GetMatchingGroup(aux.LConditionFilter,tp,LOCATION_MZONE,0,nil,f,c)
-				local sg=Group.CreateGroup()
-				for i=0,maxc-1 do
-					local cg=mg:Filter(cm.LCheckRecursiveNanahira,sg,tp,sg,mg,c,i,minc,maxc,vf,gf)
-					if cg:GetCount()==0
-						or (cm.LCheckGoalNanahira(tp,sg,c,minc,i,vf,gf) and not Duel.SelectYesNo(tp,210)) then break end
-					local g=cg:Select(tp,1,1,nil)
-					sg:Merge(g)
-				end
-				c:SetMaterial(sg)
-				Duel.SendtoGrave(sg,REASON_MATERIAL+REASON_LINK)
-			end
 end
 function cm.NanahiraPCardCheck(e)
 	return Duel.IsExistingMatchingCard(cm.NanahiraPCardFilter,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler())
@@ -1914,16 +1822,12 @@ function cm.enable_kaguya_check_3L()
 	Duel.RegisterEffect(ge3,0)
 end
 function cm.CheckKoishiCount(c)
-	if Card.IsHasEffect then
-		local t={c:IsHasEffect(37564826)}
-		local res=1
-		for i,te in pairs(t) do
-			res=math.max(res,te:GetValue())
-		end
-		return res
-	else
-		return c.custom_ctlm_3L or 1
+	local t={c:IsHasEffect(37564826)}
+	local res=1
+	for i,te in pairs(t) do
+		res=math.max(res,te:GetValue())
 	end
+	return res
 end
 --filter for effect gaining
 --chkc=card to check if it can gain c's effect, nil for not checking
@@ -2029,17 +1933,10 @@ function cm.RemoveEffect_3L(tp,tc,ct,maxct,chk,...)
 	local effect_list=cm.GetGainedList_3L(tc)
 	local avaliable_list={}
 	local omit_list={...}
-	if Card.IsHasEffect then
-		local oet={tc:IsHasEffect(37564827)}
-		for i,oe in pairs(oet) do
-			local of=cm.order_table[oe:GetValue()]
-			local og=of(tc)
-			for oc in aux.Next(og) do
-				table.insert(omit_list,oc:GetOriginalCode())
-			end
-		end
-	elseif tc:IsHasEffect(37564827) and tc.omit_group_3L then
-		local og=tc:omit_group_3L()
+	local oet={tc:IsHasEffect(37564827)}
+	for i,oe in pairs(oet) do
+		local of=cm.order_table[oe:GetValue()]
+		local og=of(tc)
 		for oc in aux.Next(og) do
 			table.insert(omit_list,oc:GetOriginalCode())
 		end

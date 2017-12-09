@@ -37,16 +37,12 @@ function cm.tdop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then return end
 		local ct=1
-		if Card.IsHasEffect then
-			local exte={c:IsHasEffect(37564427)}
-			for _,te in ipairs(exte) do
-				if Duel.SelectEffectYesNo(tp,te:GetHandler()) then
-					Duel.Hint(HINT_CARD,0,te:GetHandler():GetOriginalCode())
-					ct=ct+1
-				end
+		local exte={c:IsHasEffect(37564427)}
+		for _,te in ipairs(exte) do
+			if Duel.SelectEffectYesNo(tp,te:GetHandler()) then
+				Duel.Hint(HINT_CARD,0,te:GetHandler():GetOriginalCode())
+				ct=ct+1
 			end
-		else
-			ct=ct+c:GetEffectCount(37564427)
 		end
 		Duel.ConfirmDecktop(tp,ct)
 		local ag=Duel.GetDecktopGroup(tp,ct)
