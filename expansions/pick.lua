@@ -97,8 +97,8 @@ function Auxiliary.StartPick(e)
 	end
 	Duel.ShuffleDeck(0)
 	Duel.ShuffleDeck(1)	
-	Duel.Draw(0,5,REASON_RULE)
-	Duel.Draw(1,5,REASON_RULE)
+	Duel.Draw(0,4,REASON_RULE)
+	Duel.Draw(1,4,REASON_RULE)
 	e:Reset()
 end
 
