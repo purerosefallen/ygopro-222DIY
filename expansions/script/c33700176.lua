@@ -50,10 +50,10 @@ function c33700176.op(e,tp,eg,ep,ev,re,r,rp)
 	   Duel.SSet(tp,c)
 	end
 end
-function c3700176.thfilter(c,tp)
+function c33700176.thfilter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_DECK)
 end
-function c3700176.thcon(e,tp,eg,ep,ev,re,r,rp)
+function c33700176.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return  eg:IsExists(c3700176.thfilter,1,nil,tp)
 end
 function c33700176.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

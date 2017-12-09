@@ -53,7 +53,7 @@ function c1156015.lkfilter(c,lc,tp)
 	if c:IsType(TYPE_MONSTER) then
 		return flag and c:IsRace(RACE_SPELLCASTER)
 	else
-		return flag and c:IsType(TYPE_SPELL)
+		return c:IsFaceup() and c:IsType(TYPE_SPELL)
 	end
 end
 function c1156015.lvfilter(c)
@@ -131,11 +131,11 @@ function c1156015.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 --
 function c1156015.op2(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
+	if (re:GetHandler():IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0) and not re:GetHandler():IsImmuneToEffect(e) then
+		re:GetHandler():CancelToGrave()
 		if Duel.MoveToField(re:GetHandler(),tp,tp,LOCATION_SZONE,POS_FACEDOWN,true) then
 			Duel.ConfirmCards(1-tp,re:GetHandler())
 			Duel.RaiseEvent(re:GetHandler(),EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
-			re:GetHandler():CancelToGrave()
 		end
 	end
 end

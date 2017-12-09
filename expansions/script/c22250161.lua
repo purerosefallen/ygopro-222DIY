@@ -40,16 +40,15 @@ function c22250161.filter(c,e,zone)
 	return c22250161.IsRiviera(c) and c:IsType(TYPE_MONSTER) and c:IsSummonable(true,e,0,zone)
 end
 function c22250161.stg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		local zone=e:GetHandler():GetLinkedZone()
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and zone~=0 and Duel.IsExistingMatchingCard(c22250161.filter,tp,LOCATION_HAND,0,1,nil,e,0,zone) end
+	local c=e:GetHandler()
+	local zone=c:GetLinkedZone()
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and zone~=0 and Duel.GetMZoneCount(tp,g,tp,LOCATION_REASON_TOFIELD,zone)>0 and Duel.IsExistingMatchingCard(c22250161.filter,tp,LOCATION_HAND,0,1,nil,e,0,zone) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c22250161.sop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local zone=e:GetHandler():GetLinkedZone()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 or zone==0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 or zone==0 or Duel.GetMZoneCount(tp,g,tp,LOCATION_REASON_TOFIELD,zone)<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
 	local g=Duel.SelectMatchingCard(tp,c22250161.filter,tp,LOCATION_HAND,0,1,1,nil,e,0,zone)
 	local tc=g:GetFirst()

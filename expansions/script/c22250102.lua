@@ -53,8 +53,32 @@ function c22250102.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if ac:IsRelateToBattle() and tc:IsRelateToBattle() and c:IsRelateToEffect(e) then
 		if c:IsPosition(POS_DEFENSE) then Duel.ChangePosition(c,POS_FACEUP_ATTACK) end
 		if (c22250102.IsRiviera(ac) and ac:IsControler(tp) and tc~=nil and ac~=c) then
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetValue(-300)
+			e1:SetReset(RESET_EVENT+0xfe0000)
+			tc:RegisterEffect(e1)
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_DEFENSE)
+			e1:SetValue(-300)
+			e1:SetReset(RESET_EVENT+0xfe0000)
+			tc:RegisterEffect(e1)
 			Duel.CalculateDamage(c,tc)
 		else
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetValue(-300)
+			e1:SetReset(RESET_EVENT+0xfe0000)
+			ac:RegisterEffect(e1)
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_DEFENSE)
+			e1:SetValue(-300)
+			e1:SetReset(RESET_EVENT+0xfe0000)
+			ac:RegisterEffect(e1)
 			Duel.CalculateDamage(c,ac)
 		end
 	end

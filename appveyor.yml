@@ -69,17 +69,22 @@ after_build:
   - rm -rf ygopro-scripts-master ygopro-scripts-master.zip
 
   - mkdir replay
-  - cp -rf ../../expansions .
-  - cp -rf ../../gframe .
-  - cp -rf ../../ocgcore .
-  - cp -rf ../../premake .
-  - cp -rf ../../cards.cdb .
-  - cp -rf ../../textures .
-  - cp -rf ../../*.lua .
-  - cp -rf ../../lflist.conf .
-  - cp -rf ../../strings.conf .
-  - cp -rf ../../system.conf .
+  - mv -f ../../expansions .
+  - mv -f ../../gframe .
+  - mv -f ../../ocgcore .
+  - mv -f ../../premake .
+  - mv -f ../../event .
+  - mv -f ../../lua .
+  - mv -f ../../sqlite3 .
+  - mv -f ../../cards.cdb .
+  - mv -f ../../textures .
+  - mv -f ../../premake4.lua .
+  - mv -f ../../premake5.lua .
+  - mv -f ../../lflist.conf .  
+  - mv -f ../../strings.conf .
+  - mv -f ../../system.conf .
   - cp -rf ../../ygopro.exe .
+  - mv -f ../../premake5.exe .
   - cd ..
   
   - mkdir redis
@@ -89,7 +94,7 @@ after_build:
   - rm -rf Redis-x64-3.2.100.zip
   - cd ..
 
-  - cp -rf ../cards.cdb windbot
+  - cp -rf ygopro/cards.cdb windbot
   - cp -rf config.json config.user.json  
   - cp -rf ../node-v9.1.0-win-x64.zip .
   - 7z x node-v9.1.0-win-x64.zip
