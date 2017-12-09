@@ -46,7 +46,7 @@ function Auxiliary.LoadDB()
 		local cat=tonumber(line:sub(col+1,#line))
 		if (cat & TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)>0 then
 			table.insert(extra,code)
-		else
+		elseif (cat & TYPE_TOKEN)==0 then
 			table.insert(main,code)
 			if forbidden_check[code] then
 				table.insert(forbidden,code)
