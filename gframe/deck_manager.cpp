@@ -74,7 +74,7 @@ int DeckManager::CheckDeck(Deck& deck, int lfhash, bool allow_ocg, bool allow_tc
 	if(!list)
 		return 0;
 	int dc = 0;
-	if(deck.main.size() > 0)
+	if(deck.main.size() > 1)
 		return (DECKERROR_MAINCOUNT << 28) + deck.main.size();
 	if(deck.extra.size() > 0)
 		return (DECKERROR_EXTRACOUNT << 28) + deck.extra.size();
