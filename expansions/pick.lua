@@ -82,11 +82,6 @@ function Auxiliary.StartPick(e)
 	math.randomseed(os.time())
 	local g=Duel.GetFieldGroup(0,LOCATION_HAND | LOCATION_DECK | LOCATION_EXTRA, LOCATION_HAND | LOCATION_DECK | LOCATION_EXTRA)
 	Duel.Exile(g,REASON_RULE)
-	for i=1,5 do
-		for p=0,1 do
-			Auxiliary.SinglePick(p,extra,4)
-		end
-	end
 	for i=1,11 do
 		local list=main
 		local count=4
@@ -101,6 +96,11 @@ function Auxiliary.StartPick(e)
 		end
 		for p=0,1 do
 			Auxiliary.SinglePick(p,list,count)
+		end
+	end
+	for i=1,5 do
+		for p=0,1 do
+			Auxiliary.SinglePick(p,extra,4)
 		end
 	end
 	Duel.ShuffleDeck(0)
