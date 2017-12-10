@@ -66,16 +66,16 @@ function Auxiliary.SinglePick(p,list,count)
 			local code=list[math.random(#list)]
 			g:AddCard(Duel.CreateToken(p,code))
 		end
-		Duel.Remove(g,POS_FACEDOWN,REASON_RULE)
+		Duel.SendtoDeck(g,nil,2,REASON_RULE)
 	end
 	local sg=g1:Clone()
 	sg:Merge(g2)
-	Duel.ConfirmCards(p,sg)
+	--Duel.ConfirmCards(p,sg)
 	Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 	local sc=sg:Select(p,1,1,nil):GetFirst()
-	local tg=g1:IsContains(sc) and g1 or g2
+	--local tg=g1:IsContains(sc) and g1 or g2
 	local rg=g1:IsContains(sc) and g2 or g1
-	Duel.SendtoDeck(tg,p,0,REASON_RULE)
+	--Duel.SendtoDeck(tg,p,0,REASON_RULE)
 	Duel.Exile(rg,REASON_RULE)
 end
 function Auxiliary.StartPick(e)
