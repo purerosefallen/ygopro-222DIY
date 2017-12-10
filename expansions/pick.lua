@@ -66,7 +66,7 @@ function Auxiliary.SinglePick(p,list,count)
 			local code=list[math.random(#list)]
 			g:AddCard(Duel.CreateToken(p,code))
 		end
-		Duel.SendtoDeck(g,nil,2,REASON_RULE)
+		Duel.SendtoDeck(g,nil,0,REASON_RULE)
 	end
 	local sg=g1:Clone()
 	sg:Merge(g2)
