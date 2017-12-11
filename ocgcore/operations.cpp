@@ -3198,6 +3198,12 @@ int32 field::destroy(uint16 step, group * targets, effect * reason_effect, uint3
 			pduel->write_buffer8(HINT_CARD);
 			pduel->write_buffer8(0);
 			pduel->write_buffer32((*eit)->owner->data.code);
+			if((*eit)->description) {
+				pduel->write_buffer8(MSG_HINT);
+				pduel->write_buffer8(12);
+				pduel->write_buffer8(0);
+				pduel->write_buffer32((*eit)->description);
+			}
 		}
 		operation_replace(EFFECT_DESTROY_REPLACE, 5, targets);
 		return FALSE;
@@ -3302,6 +3308,12 @@ int32 field::destroy(uint16 step, group * targets, effect * reason_effect, uint3
 						pduel->write_buffer8(HINT_CARD);
 						pduel->write_buffer8(0);
 						pduel->write_buffer32(eset[i]->owner->data.code);
+						if(eset[i]->description) {
+							pduel->write_buffer8(MSG_HINT);
+							pduel->write_buffer8(12);
+							pduel->write_buffer8(0);
+							pduel->write_buffer32(eset[i]->description);
+						}
 						indes = true;
 						break;
 					}
@@ -3332,6 +3344,12 @@ int32 field::destroy(uint16 step, group * targets, effect * reason_effect, uint3
 							pduel->write_buffer8(HINT_CARD);
 							pduel->write_buffer8(0);
 							pduel->write_buffer32(eset[i]->owner->data.code);
+							if(eset[i]->description) {
+								pduel->write_buffer8(MSG_HINT);
+								pduel->write_buffer8(12);
+								pduel->write_buffer8(0);
+								pduel->write_buffer32(eset[i]->description);
+							}
 							indes = true;
 						}
 					} else {
@@ -3346,6 +3364,12 @@ int32 field::destroy(uint16 step, group * targets, effect * reason_effect, uint3
 								pduel->write_buffer8(HINT_CARD);
 								pduel->write_buffer8(0);
 								pduel->write_buffer32(eset[i]->owner->data.code);
+								if(eset[i]->description) {
+									pduel->write_buffer8(MSG_HINT);
+									pduel->write_buffer8(12);
+									pduel->write_buffer8(0);
+									pduel->write_buffer32(eset[i]->description);
+								}
 								indes = true;
 							}
 						}

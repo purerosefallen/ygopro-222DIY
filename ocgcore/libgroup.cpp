@@ -247,12 +247,79 @@ int32 scriptlib::group_select(lua_State *L) {
 	pduel->game_field->add_process(PROCESSOR_SELECT_CARD_S, 0, 0, 0, playerid, min + (max << 16));
 	return lua_yield(L, 0);
 }
+int32 scriptlib::group_select_unselect(lua_State *L) {
+	check_action_permission(L);
+	check_param_count(L, 3);
+	check_param(L, PARAM_TYPE_GROUP, 1);
+	check_param(L, PARAM_TYPE_GROUP, 2);
+	group* pgroup1 = *(group**) lua_touserdata(L, 1);
+	group* pgroup2 = *(group**) lua_touserdata(L, 2);
+	duel* pduel = pgroup1->pduel;
+	uint32 playerid = lua_tonumberint(L, 3);
+	if(playerid != 0 && playerid != 1)
+		return 0;
+	for (auto it = pgroup2->container.begin(); it != pgroup2->container.end(); ++it) {
+		card* pcard = *it;
+		for (auto it2 = pgroup1->container.begin(); it2 != pgroup1->container.end(); ++it2) {
+			if ((*it2) == pcard) {
+				return 0;
+			}
+		}
+	}
+	bool buttonok = false;
+	if (lua_gettop(L) > 3) {
+		buttonok = lua_toboolean(L, 4);
+	}
+	bool cancelable = false;
+	if (lua_gettop(L) > 4) {
+		cancelable = lua_toboolean(L, 5);
+	}
+	uint32 min = 1;
+	if (lua_gettop(L) > 5) {
+		min = lua_tonumberint(L, 6);
+	}
+	uint32 max = 1;
+	if (lua_gettop(L) > 6) {
+		max = lua_tonumberint(L, 7);
+	}
+	if (min > max)
+		min = max;
+	pduel->game_field->core.select_cards.clear();
+	pduel->game_field->core.unselect_cards.clear();
+	for (auto it = pgroup1->container.begin(); it != pgroup1->container.end(); ++it) {
+		pduel->game_field->core.select_cards.push_back(*it);
+	}
+	for (auto it = pgroup2->container.begin(); it != pgroup2->container.end(); ++it) {
+		pduel->game_field->core.unselect_cards.push_back(*it);
+	}
+	pduel->game_field->add_process(PROCESSOR_SELECT_UNSELECT_CARD_S, 0, 0, 0, playerid + (cancelable << 16), min + (max << 16), buttonok);
+	return lua_yield(L, 0);
+}
+//modded
 int32 scriptlib::group_random_select(lua_State *L) {
 	check_param_count(L, 3);
 	check_param(L, PARAM_TYPE_GROUP, 1);
 	group* pgroup = *(group**) lua_touserdata(L, 1);
 	int32 playerid = lua_tonumberint(L, 2);
 	int32 count = lua_tonumberint(L, 3);
+	int32 no_hint = lua_toboolean(L, 4);
+	if(no_hint) {
+		duel* pduel = interpreter::get_duel_info(L);
+		group* newgroup = pduel->new_group();		
+		if(count == pgroup->container.size())
+			newgroup->container = pgroup->container;
+		else {
+			while(newgroup->container.size() < count) {
+				int32 i = pduel->get_next_integer(0, pgroup->container.size() - 1);
+				auto cit = pgroup->container.begin();
+				std::advance(cit, i);
+				newgroup->container.insert(*cit);
+			}
+		}
+		interpreter::group2value(L, newgroup);
+		return 1;
+		
+	}
 	pgroup->pduel->game_field->add_process(PROCESSOR_RANDOM_SELECT_S, 0, 0, pgroup, playerid, count);
 	return lua_yield(L, 0);
 }
