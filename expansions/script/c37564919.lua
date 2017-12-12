@@ -20,13 +20,13 @@ function cm.initial_effect(c)
 	Senya.NegateEffectModule(c,1,nil,cm.cost)
 end
 function cm.mfilter(c)
-	return c:IsFaceup() and Senya.check_set_sayuri(c) and c:IsLinkType(TYPE_RITUAL)
+	return c:IsFaceup() and Senya.check_link_set_sayuri(c) and c:IsLinkType(TYPE_RITUAL)
 end
 function cm.lcheck(g)
 	return not g:IsExists(cm.lfilter,1,nil,g)
 end
 function cm.lfilter(c,g)
-	return g:IsExists(Card.IsCode,1,c,c:GetCode())
+	return g:IsExists(Card.IsLinkCode,1,c,c:GetCode())
 end
 function cm.cfilter(c,g)
 	return g:IsContains(c)

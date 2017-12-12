@@ -5,7 +5,7 @@ xpcall(function() require("expansions/script/c37564765") end,function() require(
 function cm.initial_effect(c)
 	c:EnableReviveLimit()
 	Senya.AddSummonMusic(c,m*16+2,SUMMON_TYPE_LINK)
-	aux.AddLinkProcedure(c,Senya.check_set_3L,2,2)
+	aux.AddLinkProcedure(c,Senya.check_link_set_3L,2,2)
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e0:SetCode(EVENT_SPSUMMON_SUCCESS)

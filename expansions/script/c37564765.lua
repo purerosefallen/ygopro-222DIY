@@ -78,12 +78,28 @@ end
 function cm.check_set_sayuri(c)
 	return cm.check_set(c,"sayuri") or c:IsHasEffect(37564900)
 end
+function cm.check_link_set_sayuri(c)
+	return cm.check_set(c,"sayuri",nil,Card.GetLinkCode) or c:IsHasEffect(37564900)
+end
 function cm.check_set_remix(c)
 	return cm.check_set(c,"remix")
 end
 function cm.check_set_3L(c)
 	if c:IsHasEffect(37564800) then return true end
 	local codet={c:GetCode()}
+	for j,code in pairs(codet) do
+		local mt=cm.LoadMetatable(code)
+		if mt then
+			for str,v in pairs(mt) do   
+				if type(str)=="string" and str:find("_3L") and v then return true end
+			end
+		end
+	end
+	return false
+end
+function cm.check_link_set_3L(c)
+	if c:IsHasEffect(37564800) then return true end
+	local codet={c:GetLinkCode()}
 	for j,code in pairs(codet) do
 		local mt=cm.LoadMetatable(code)
 		if mt then
