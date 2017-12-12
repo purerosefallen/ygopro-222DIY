@@ -26,7 +26,7 @@ function cm.lcheck(g)
 	return not g:IsExists(cm.lfilter,1,nil,g)
 end
 function cm.lfilter(c,g)
-	return g:IsExists(Card.IsLinkCode,1,c,c:GetCode())
+	return g:IsExists(Card.IsLinkCode,1,c,c:GetLinkCode())
 end
 function cm.cfilter(c,g)
 	return g:IsContains(c)
@@ -41,7 +41,8 @@ function cm.filter(c,e,tp,z)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,true,POS_FACEUP,tp,z) and Senya.check_set_sayuri(c) and c:GetLevel()==4
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local z=e:GetHandler():GetLinkedZone()
+	local z=e:GetHandler():GetLinkedZone(tp)
+	if z==0 then return false end
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and cm.filter(chkc,e,tp,z) end
 	if chk==0 then return Duel.IsExistingTarget(cm.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,z) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -49,7 +50,7 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function cm.operation(e,tp,eg,ep,ev,re,r,rp)
-	local z=e:GetHandler():GetLinkedZone()
+	local z=e:GetHandler():GetLinkedZone(tp)
 	local tc=Duel.GetFirstTarget()
 	if z~=0 and tc:IsRelateToEffect(e) and tc:IsCanBeSpecialSummoned(e,0,tp,true,true,POS_FACEUP,tp,z) then
 		Duel.SpecialSummon(tc,0,tp,tp,true,true,POS_FACEUP,z)
