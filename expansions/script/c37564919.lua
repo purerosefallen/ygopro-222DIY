@@ -26,7 +26,7 @@ function cm.lcheck(g)
 	return not g:IsExists(cm.lfilter,1,nil,g)
 end
 function cm.lfilter(c,g)
-	return g:IsExists(Card.IsLinkCode,1,c,c:GetCode())
+	return g:IsExists(Card.IsLinkCode,1,c,c:GetLinkCode())
 end
 function cm.cfilter(c,g)
 	return g:IsContains(c)
