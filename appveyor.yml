@@ -41,8 +41,7 @@ install:
   - cp -rf premake/* .
 
   #irrklang pro
-  - rm -rf irrklang/lib/Win32-visualStudio/irrKlang.lib
-  - 7z x -oirrklang/lib/Win32-visualStudio -p%irrklang_pro% irrKlang.7z
+  - 7z x -oirrklang/lib/Win32-visualStudio -p%irrklang_pro% -y irrklang/irrKlang.7z
   
   # patch irrlicht
   - patch -p0 < irrlicht\irrlicht.patch
