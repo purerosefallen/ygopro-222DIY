@@ -81,6 +81,7 @@ after_build:
   - mv -f ../../system.conf .
   - cp -rf ../../ygopro.exe .
   - mv -f ../../premake5.exe .
+  - mv -f ../../bats/build.bat .
   - cd ..
   
   - mkdir redis
@@ -102,7 +103,8 @@ after_build:
   - npm install ws
   - npm install redis
   - cd ..
-  - 7z a ygopro-server.7z ygopro-server start.bat -mx=9 -xr!.git*
+  - mv -f bats/start.bat .
+  - 7z a -mx9 -xr!.git* ygopro-server.7z ygopro-server start.bat
 
 test: off
 
