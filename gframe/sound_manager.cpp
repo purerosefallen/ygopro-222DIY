@@ -13,7 +13,7 @@ bool SoundManager::Init() {
 	if(!engineSound || !engineMusic) {
 		return false;
 	} else {
-#ifdef YGOPRO_USE_IKPMP3
+#ifdef IRRKLANG_STATIC
 		irrklang::ikpMP3Init(engineMusic);
 #endif
 		return true;
