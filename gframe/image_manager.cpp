@@ -109,7 +109,7 @@ void ImageManager::RefreshRandomImageList() {
 	RefreshJPGDir(L"cover/", TEXTURE_COVER_S);
 	RefreshJPGDir(L"cover2/", TEXTURE_COVER_O);
 	RefreshPNGDir(L"attack/", TEXTURE_ATTACK);
-	RefreshPNGDir(L"act/", TEXTURE_ACTIVATE);	
+	RefreshPNGDir(L"act/", TEXTURE_ACTIVATE);
 }
 void ImageManager::RefreshPNGDir(std::wstring path, int image_type) {
 	WIN32_FIND_DATAW fdataw;
