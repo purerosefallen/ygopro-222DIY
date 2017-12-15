@@ -3,6 +3,7 @@ xpcall(function() require("expansions/script/c37564765") end,function() require(
 local m,cm=Senya.SayuriRitualPreload(37564911)
 function cm.initial_effect(c)
 	c:EnableReviveLimit()
+	Senya.AddSummonMusic(c,aux.Stringid(m,1),SUMMON_TYPE_RITUAL)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(m,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
