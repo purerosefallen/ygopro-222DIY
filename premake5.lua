@@ -75,7 +75,7 @@ solution "ygo"
 		include "irrlicht"
 		include "lua"
 		include "sqlite3"
-    end
+	end
 	if IRRKLANG_PRO then
 		include "ikpmp3"
 	end
