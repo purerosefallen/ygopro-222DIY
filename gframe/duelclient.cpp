@@ -1012,11 +1012,25 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 		//modded
 		//playing music
 		case 11: {
-			soundManager.PlayCustomBGM(data);
+			char BGMName[1024];
+			if (data) {
+				myswprintf(textBuffer, L"./sound/BGM/custom/%ls.mp3", dataManager.GetDesc(data));			
+				BufferIO::EncodeUTF8(textBuffer, BGMName);
+				soundManager.PlayCustomBGM(BGMName);
+			} else {
+				soundManager.StopBGM();
+			}
 			break;
 		}
 		case 12: {
-			soundManager.PlayCustomSound(data);
+			char SoundName[1024];
+			if (data) {
+				myswprintf(textBuffer, L"./sound/custom/%ls.wav", dataManager.GetDesc(data));
+				BufferIO::EncodeUTF8(textBuffer, SoundName);
+				soundManager.PlayCustomSound(SoundName);
+			} else {
+				soundManager.StopSound();
+			}
 			break;
 		}
 		}

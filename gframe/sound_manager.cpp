@@ -238,6 +238,7 @@ void SoundManager::PlayBGM(int scene) {
 		int count = BGMList[scene].size();
 		if(count <= 0)
 			return;
+		previous_bgm_scene = bgm_scene;
 		bgm_scene = scene;
 		int bgm = rand() % count;
 		auto name = BGMList[scene][bgm].c_str();
@@ -248,17 +249,10 @@ void SoundManager::PlayBGM(int scene) {
 	}
 #endif
 }
-void SoundManager::PlayCustomBGM(int data) {
+void SoundManager::PlayCustomBGM(char* BGMName) {
 #ifdef YGOPRO_USE_IRRKLANG
-	if (data == 0) {
-		StopBGM();
-		return;
-	}
 	if(!mainGame->chkEnableMusic->isChecked() || !mainGame->chkMusicMode->isChecked())
 		return;
-	char BGMName[1024];
-	myswprintf(textBuffer, L"./sound/BGM/custom/%ls.mp3", dataManager.GetDesc(data));
-	BufferIO::EncodeUTF8(textBuffer, BGMName);
 	if(engineMusic->isCurrentlyPlaying(BGMName))
 		return;
 	int pscene = bgm_scene;
@@ -269,17 +263,10 @@ void SoundManager::PlayCustomBGM(int data) {
 	PlayMusic(BGMName, false);
 #endif
 }
-void SoundManager::PlayCustomSound(int data) {
+void SoundManager::PlayCustomSound(char* SoundName) {
 #ifdef YGOPRO_USE_IRRKLANG
-	if (data == 0) {
-		StopSound();
-		return;
-	}
 	if(!mainGame->chkEnableSound->isChecked())
-		break;
-	char SoundName[1024];
-	myswprintf(textBuffer, L"./sound/custom/%ls.wav", dataManager.GetDesc(data));
-	BufferIO::EncodeUTF8(textBuffer, SoundName);
+		return;
 	engineSound->play2D(SoundName);
 	engineSound->setSoundVolume(mainGame->gameConf.sound_volume);
 #endif

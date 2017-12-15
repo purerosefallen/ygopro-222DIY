@@ -31,8 +31,8 @@ public:
 	void PlayDialogSound(irr::gui::IGUIElement * element);
 	void PlayMusic(char* song, bool loop);
 	void PlayBGM(int scene);
-	void PlayCustomBGM(int data);
-	void PlayCustomSound(int data);	
+	void PlayCustomBGM(char* BGMName);
+	void PlayCustomSound(char* SoundName);	
 	void StopBGM();
 	void StopSound();
 	void SetSoundVolume(double volume);
