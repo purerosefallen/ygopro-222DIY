@@ -45,9 +45,9 @@ install:
   #irrklang pro
   - 7z x -oirrklang/lib/Win32-visualStudio -p%irrklang_pro% -y irrklang/irrKlang.7z
   
-  # patch irrlicht
+  # patch irrlicht & ikpmp3
   - patch -p0 < irrlicht\irrlicht.patch
-  # - patch -p0 < ikpmp3\ikpmp3.patch
+  - patch -p0 < ikpmp3\ikpmp3.patch
 
   # premake
   - premake5 vs2015
