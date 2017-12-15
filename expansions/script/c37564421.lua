@@ -1,7 +1,6 @@
 --百慕 宣战布告·布莱
 local m=37564421
 local cm=_G["c"..m]
-
 xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 cm.Senya_name_with_elem=true
 cm.Senya_name_with_prism=true
@@ -38,7 +37,7 @@ end
 function cm.efcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
-	return r==REASON_XYZ and (Senya.check_set_elem(rc) or Senya.check_fusion_set_prism(rc))
+	return r & REASON_XYZ~=0 and (Senya.check_set_elem(rc) or Senya.check_set_prism(rc))
 end
 function cm.efop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
