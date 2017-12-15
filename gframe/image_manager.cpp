@@ -102,8 +102,8 @@ void ImageManager::RefreshRandomImageList() {
 	RefreshJPGDir(L"bg_duel/", TEXTURE_DUEL);
 	RefreshJPGDir(L"bg_deck/", TEXTURE_DECK);
 	RefreshJPGDir(L"bg_menu/", TEXTURE_MENU);
-	RefreshPNGDir(L"cover/", TEXTURE_COVER_S);
-	RefreshPNGDir(L"cover2/", TEXTURE_COVER_O);
+	RefreshJPGDir(L"cover/", TEXTURE_COVER_S);
+	RefreshJPGDir(L"cover2/", TEXTURE_COVER_O);
 	RefreshPNGDir(L"attack/", TEXTURE_ATTACK);
 	RefreshPNGDir(L"act/", TEXTURE_ACTIVATE);	
 }
