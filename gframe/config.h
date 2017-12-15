@@ -48,6 +48,12 @@ inline int _wtoi(const wchar_t * s) {
 #endif
 
 #include <irrlicht.h>
+#ifdef YGOPRO_USE_IRRKLANG
+#include <irrKlang.h>
+#ifdef YGOPRO_USE_IKPMP3
+#include "../ikpMP3/ikpMP3.h"
+#endif
+#endif
 #ifdef __APPLE__
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>

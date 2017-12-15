@@ -2,7 +2,6 @@
 #include "duelclient.h"
 #include "game.h"
 #include "single_mode.h"
-#include "sound_manager.h"
 #include "../ocgcore/duel.h"
 #include "../ocgcore/field.h"
 #include "../ocgcore/mtrandom.h"
@@ -314,7 +313,7 @@ bool ReplayMode::ReplayAnalyze(char* msg, unsigned int len) {
 			mainGame->gMutex.Lock();
 			mainGame->stMessage->setText(L"Error occurs.");
 			mainGame->PopupElement(mainGame->wMessage);
-			soundManager.PlaySoundEffect(SOUND_INFO);
+			mainGame->PlaySoundEffect(SOUND_INFO);
 			mainGame->gMutex.Unlock();
 			mainGame->actionSignal.Reset();
 			mainGame->actionSignal.Wait();
