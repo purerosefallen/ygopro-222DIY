@@ -656,5 +656,14 @@ extern Game* mainGame;
 #define BGM_WIN						6
 #define BGM_LOSE					7
 
+#define TEXTURE_DUEL				0
+#define TEXTURE_DECK				1
+#define TEXTURE_MENU				2
+#define TEXTURE_COVER_S				3
+#define TEXTURE_COVER_O				4
+#define TEXTURE_ATTACK				5
+#define TEXTURE_ACTIVATE			6
+
+
 #define DEFAULT_DUEL_RULE			4
 #endif // GAME_H
