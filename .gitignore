@@ -6,6 +6,7 @@
 /gframe/ygopro.ico
 /gframe/ygopro.rc
 /gframe/ygopro.aps
+/gframe/ygopro.icns
 /irrlicht/
 /lua/
 /obj/
@@ -13,4 +14,4 @@
 /irrklang/
 /ikpmp3/
 premake5.exe
-/irrKlang.7z
+/ygopro_build.bat
