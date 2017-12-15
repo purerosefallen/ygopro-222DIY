@@ -1,0 +1,46 @@
+#ifndef SOUNDMANAGER_H
+#define SOUNDMANAGER_H
+
+#include "config.h"
+#include "game.h"
+#ifdef YGOPRO_USE_IRRKLANG
+#include <irrKlang.h>
+#ifdef IRRKLANG_STATIC
+#include "../ikpmp3/ikpMP3.h"
+#endif
+#endif
+
+namespace ygo {
+
+class SoundManager {
+private:
+	std::vector<std::wstring> BGMList[9];
+	int bgm_scene;
+	int previous_bgm_scene;
+#ifdef YGOPRO_USE_IRRKLANG
+	irrklang::ISoundEngine* engineSound;
+	irrklang::ISoundEngine* engineMusic;
+	irrklang::ISound* soundBGM;
+#endif
+	void RefershBGMDir(std::wstring path, int scene);
+
+public:
+	bool Init();
+	void RefreshBGMList();
+	void PlaySoundEffect(int sound);
+	void PlayDialogSound(irr::gui::IGUIElement * element);
+	void PlayMusic(char* song, bool loop);
+	void PlayBGM(int scene);
+	void PlayCustomBGM(int data);
+	void PlayCustomSound(int data);	
+	void StopBGM();
+	void StopSound();
+	void SetSoundVolume(double volume);
+	void SetMusicVolume(double volume);
+};
+
+extern SoundManager soundManager;
+
+}
+
+#endif //SOUNDMANAGER_H
