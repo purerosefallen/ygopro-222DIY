@@ -7,6 +7,10 @@ ImageManager imageManager;
 
 bool ImageManager::Initial() {
 #ifdef _WIN32
+	RefreshRandomImageList();
+#endif
+
+#ifdef _WIN32
 	tCover[0] = GetRandomImage(TEXTURE_COVER_S);
 	if(!tCover[0])
 		tCover[0] = driver->getTexture("textures/cover.jpg");
@@ -60,7 +64,7 @@ bool ImageManager::Initial() {
 		tBackGround_menu = GetRandomImage(TEXTURE_DUEL);
 	if(!tBackGround_menu)
 		tBackGround_menu = tBackGround;
-	tBackGround_menu = GetRandomImage(TEXTURE_DECK);
+	tBackGround_deck = GetRandomImage(TEXTURE_DECK);
 	if(!tBackGround_deck)
 		tBackGround_deck = driver->getTexture("textures/bg_deck.jpg");
 	if(!tBackGround_deck)
