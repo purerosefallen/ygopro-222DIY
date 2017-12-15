@@ -46,7 +46,7 @@ function Auxiliary.LoadDB()
 		local cat=tonumber(line:sub(col+1,#line))
 		if (cat & TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)>0 then
 			table.insert(extra,code)
-		elseif (cat & TYPE_TOKEN)==0 then
+		elseif (cat & TYPE_TOKEN)==0 and cat~=TYPE_MONSTER+TYPE_NORMAL then
 			table.insert(main,code)
 			if forbidden_check[code] then
 				table.insert(forbidden,code)
@@ -66,25 +66,22 @@ function Auxiliary.SinglePick(p,list,count)
 			local code=list[math.random(#list)]
 			g:AddCard(Duel.CreateToken(p,code))
 		end
-		Duel.Remove(g,POS_FACEUP,REASON_RULE)
+		Duel.SendtoDeck(g,nil,0,REASON_RULE)
 	end
 	local sg=g1:Clone()
 	sg:Merge(g2)
+	--Duel.ConfirmCards(p,sg)
+	Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 	local sc=sg:Select(p,1,1,nil):GetFirst()
-	local tg=g1:IsContains(sc) and g1 or g2
+	--local tg=g1:IsContains(sc) and g1 or g2
 	local rg=g1:IsContains(sc) and g2 or g1
-	Duel.SendtoDeck(tg,p,0,REASON_RULE)
+	--Duel.SendtoDeck(tg,p,0,REASON_RULE)
 	Duel.Exile(rg,REASON_RULE)
 end
 function Auxiliary.StartPick(e)
 	math.randomseed(os.time())
 	local g=Duel.GetFieldGroup(0,LOCATION_HAND | LOCATION_DECK | LOCATION_EXTRA, LOCATION_HAND | LOCATION_DECK | LOCATION_EXTRA)
 	Duel.Exile(g,REASON_RULE)
-	for i=1,5 do
-		for p=0,1 do
-			Auxiliary.SinglePick(p,extra,4)
-		end
-	end
 	for i=1,11 do
 		local list=main
 		local count=4
@@ -99,6 +96,11 @@ function Auxiliary.StartPick(e)
 		end
 		for p=0,1 do
 			Auxiliary.SinglePick(p,list,count)
+		end
+	end
+	for i=1,5 do
+		for p=0,1 do
+			Auxiliary.SinglePick(p,extra,4)
 		end
 	end
 	Duel.ShuffleDeck(0)
