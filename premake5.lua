@@ -7,9 +7,6 @@ solution "ygo"
         if os.getenv("irrklang_pro") then
             IRRKLANG_PRO = true
         end
-        if IRRKLANG_PRO or os.getenv("USE_IKPMP3") then
-		    USE_IKPMP3 = true
-        end
     end
     startproject "ygopro"
 
@@ -79,6 +76,6 @@ solution "ygo"
 		include "lua"
 		include "sqlite3"
     end
-    if USE_IKPMP3 then
-        include "ikpmp3"
-    end
+	if IRRKLANG_PRO then
+		include "ikpmp3"
+	end
