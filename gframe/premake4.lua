@@ -11,11 +11,8 @@ project "ygopro"
         defines { "YGOPRO_USE_IRRKLANG" }
         links { "irrKlang" }
         includedirs { "../irrklang/include" }
-        if USE_IKPMP3 then
-		    links { "ikpMP3" }
-            defines { "YGOPRO_USE_IKPMP3" }
-        end
         if IRRKLANG_PRO then
+		    links { "ikpMP3" }
             defines { "IRRKLANG_STATIC" }
         end
     end
