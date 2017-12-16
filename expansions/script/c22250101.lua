@@ -70,7 +70,7 @@ function c22250101.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(-500)
 		e2:SetReset(RESET_EVENT+0x1fe0000)
 		bc:RegisterEffect(e2)
-		if bc:GetAttack()*bc:GetDefense()==0 then
+		if (bc:IsType(TYPE_LINK) and bc:GetAttack()==0) or (bc:GetAttack()*bc:GetDefense()==0 and not bc:IsType(TYPE_LINK)) then
 			Duel.Remove(bc,POS_FACEUP,REASON_EFFECT)
 			if Duel.Remove(c,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)~=0 then
 				local e1=Effect.CreateEffect(c)

@@ -171,13 +171,9 @@ function c22251001.op(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetValue(-400*e:GetLabel())
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e1)
-		if tc:GetAttack()*tc:GetDefense()==0 then
+		if (tc:IsType(TYPE_LINK) and tc:GetAttack()==0) or (tc:GetAttack()*tc:GetDefense()==0 and not tc:IsType(TYPE_LINK))then
 			Duel.Destroy(tc,REASON_EFFECT)
 		end
 		tc=g:GetNext()
 	end
 end
-
-
-
-
