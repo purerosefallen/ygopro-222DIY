@@ -270,11 +270,11 @@ end
 function cm.MustMaterialCheck(v,tp,code)
 	if not v then return not Duel.IsPlayerAffectedByEffect(tp,code) end
 	local t=cm.GetValueType(v)
-	if v~="Card" and v~="Group" then error("Parameter 1 must be \"Card\" or \"Group\".",2) end
+	if t~="Card" and t~="Group" then error("Parameter 1 must be \"Card\" or \"Group\".",2) end
 	local ce={Duel.IsPlayerAffectedByEffect(tp,code)}
-	for _,te in ipairs(te) do
-		if (cm.GetValueType(v)=="Card" and v~=te:GetHandler())
-			or (cm.GetValueType(v)=="Group" and not v:IsExists(te:GetHandler())) then return false end
+	for _,te in ipairs(ce) do
+		if (t=="Card" and v~=te:GetHandler())
+			or (t=="Group" and not v:IsExists(te:GetHandler())) then return false end
 	end
 	return true
 end
