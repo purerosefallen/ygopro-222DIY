@@ -67,10 +67,12 @@ function cm.initial_effect(c)
 		end
 		if g:GetCount()>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,g)
 		end
 	end)   
 	c:RegisterEffect(e4)
+end
+function cm.tfilter(c,code)
+	return c:IsAbleToHand() and (code==1 or c:IsAttribute(ATTRIBUTE_WATER))
 end
 function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
