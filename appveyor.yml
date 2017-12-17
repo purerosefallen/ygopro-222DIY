@@ -71,10 +71,6 @@ after_build:
   - cd data
   - cp -rf ../ygopro_222.exe .
 
-  - cd update
-  - update.exe -ci
-  - cd ..
-
   - git add . -A
   - git commit -m "Builded by Appveyor"
   - git push %Smile%purerosefallen/ygopro-222DIY data
