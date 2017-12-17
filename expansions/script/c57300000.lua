@@ -175,9 +175,12 @@ function cm.ClariSRankFilter(c,xyzc)
 	return c:IsSetCard(0x570) and c:IsXyzType(TYPE_XYZ) and c:GetRank()==2
 end
 function cm.ClariSXyzValue(c)
-	local v=1
-	if c:IsHasEffect(57300021) then v=v+0x20000 end
-	return v
+	local eset={c:IsHasEffect(57300021)}
+	for _,te in ipairs(eset) do
+		local g=te:GetLabelObject()
+		if not g or not g:IsContains(c) then return 0x20001 end
+	end
+	return 1
 end
 function cm.ClariSXyzCheck(ct)
 return function(g,xyzc)
@@ -205,97 +208,84 @@ function cm.CheckGroup(g,f,cg,min,max,...)
 	if ct>=min and ct<=max and f(sg,...) then return true end
 	return g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params)
 end
-if Group.SelectUnselect then
-	function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
-		local min=min or 1
-		local max=max or g:GetCount()
-		local ext_params={...}
-		local sg=Group.CreateGroup()
-		local cg=cg or Group.CreateGroup()
-		sg:Merge(cg)
-		local ct=sg:GetCount()
-		local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
-		while ct<max and ag:GetCount()>0 do
-			local finish=(ct>=min and ct<=max and f(sg,...))
-			local seg=sg:Clone()
-			local dmin=min-cg:GetCount()
-			local dmax=math.min(max-cg:GetCount(),g:GetCount())
-			seg:Sub(cg)
-			Duel.Hint(HINT_SELECTMSG,tp,desc)
-			local tc=ag:SelectUnselect(seg,tp,finish,finish,dmin,dmax)
-			if not tc then break end
-			if sg:IsContains(tc) then
-				sg:RemoveCard(tc)
-			else
-				sg:AddCard(tc)
-			end
-			ct=sg:GetCount()
-			ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)
+function cm.CheckGroupRecursive(c,sg,g,f,min,max,ext_params)
+	sg:AddCard(c)
+	local ct=sg:GetCount()
+	local res=(ct>=min and ct<=max and f(sg,table.unpack(ext_params)))
+		or (ct<max and g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params))
+	sg:RemoveCard(c)
+	return res
+end
+function cm.CheckGroup(g,f,cg,min,max,...)
+	local min=min or 1
+	local max=max or g:GetCount()
+	if min>max then return false end
+	local ext_params={...}
+	local sg=Group.CreateGroup()
+	if cg then sg:Merge(cg) end
+	local ct=sg:GetCount()
+	if ct>=min and ct<=max and f(sg,...) then return true end
+	return g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params)
+end
+function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
+	local min=min or 1
+	local max=max or g:GetCount()
+	local ext_params={...}
+	local sg=Group.CreateGroup()
+	local cg=cg or Group.CreateGroup()
+	sg:Merge(cg)
+	local ct=sg:GetCount()
+	local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
+	while ct<max and ag:GetCount()>0 do
+		local finish=(ct>=min and ct<=max and f(sg,...))
+		local seg=sg:Clone()
+		local dmin=min-cg:GetCount()
+		local dmax=math.min(max-cg:GetCount(),g:GetCount())
+		seg:Sub(cg)
+		Duel.Hint(HINT_SELECTMSG,tp,desc)
+		local tc=ag:SelectUnselect(seg,tp,finish,finish,dmin,dmax)
+		if not tc then break end
+		if sg:IsContains(tc) then
+			sg:RemoveCard(tc)
+		else
+			sg:AddCard(tc)
 		end
-		return sg
+		ct=sg:GetCount()
+		ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)
 	end
-	function cm.SelectGroupWithCancel(tp,desc,g,f,cg,min,max,...)
-		local min=min or 1
-		local max=max or g:GetCount()
-		local ext_params={...}
-		local sg=Group.CreateGroup()
-		local cg=cg or Group.CreateGroup()
-		sg:Merge(cg)
-		local ct=sg:GetCount()
-		local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
-		while ct<max and ag:GetCount()>0 do
-			local finish=(ct>=min and ct<=max and f(sg,...))
-			local cancel=finish or ct==0
-			local seg=sg:Clone()
-			local dmin=min-cg:GetCount()
-			local dmax=math.min(max-cg:GetCount(),g:GetCount())
-			seg:Sub(cg)
-			Duel.Hint(HINT_SELECTMSG,tp,desc)
-			local tc=ag:SelectUnselect(seg,tp,finish,cancel,dmin,dmax)
-			if not tc then
-				if not finish then return end
-				break
-			end
-			if sg:IsContains(tc) then
-				sg:RemoveCard(tc)
-			else
-				sg:AddCard(tc)
-			end
-			ct=sg:GetCount()
-			ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)
+	return sg
+end
+function cm.SelectGroupWithCancel(tp,desc,g,f,cg,min,max,...)
+	local min=min or 1
+	local max=max or g:GetCount()
+	local ext_params={...}
+	local sg=Group.CreateGroup()
+	local cg=cg or Group.CreateGroup()
+	sg:Merge(cg)
+	local ct=sg:GetCount()
+	local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
+	while ct<max and ag:GetCount()>0 do
+		local finish=(ct>=min and ct<=max and f(sg,...))
+		local cancel=finish or ct==0
+		local seg=sg:Clone()
+		local dmin=min-cg:GetCount()
+		local dmax=math.min(max-cg:GetCount(),g:GetCount())
+		seg:Sub(cg)
+		Duel.Hint(HINT_SELECTMSG,tp,desc)
+		local tc=ag:SelectUnselect(seg,tp,finish,cancel,dmin,dmax)
+		if not tc then
+			if not finish then return end
+			break
 		end
-		return sg
-	end
-else
-	function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
-		local min=min or 1
-		local max=max or g:GetCount()
-		local ext_params={...}
-		local sg=Group.CreateGroup()
-		if cg then
-			sg:Merge(cg)
+		if sg:IsContains(tc) then
+			sg:RemoveCard(tc)
+		else
+			sg:AddCard(tc)
 		end
-		local ct=sg:GetCount()
-		local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
-		while ct<max and ag:GetCount()>0 do
-			local minc=1
-			local finish=(ct>=min and ct<=max and f(sg,...))
-			if finish then
-				minc=0
-				if cm.master_rule_3_flag and not Duel.SelectYesNo(tp,210) then break end
-			end
-			Duel.Hint(HINT_SELECTMSG,tp,desc)
-			local tg=ag:Select(tp,minc,1,nil)
-			if tg:GetCount()==0 then break end
-			sg:Merge(tg)
-			ct=sg:GetCount()
-			ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)
-		end
-		return sg
+		ct=sg:GetCount()
+		ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)
 	end
-	function cm.SelectGroupWithCancel(tp,desc,g,f,cg,min,max,...)
-		return cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
-	end
+	return sg
 end
 function cm.exgoal(g,tp,fc)
 	return Duel.GetLocationCountFromEx(tp,tp,g,fc)>0
@@ -587,4 +577,24 @@ function cm.SanaeCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,cm.SanaeCostFilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
+end
+function cm.AddSummonMusic(c,desc,stype)
+	if c:IsStatus(STATUS_COPYING_EFFECT) or Senya.master_rule_3_flag then return end
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_SUMMON_SUCCESS)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
+	if stype then
+		e1:SetCondition(cm.SummonTypeCondition(stype))
+	end
+	e1:SetOperation(function()
+		Duel.Hint(11,0,desc)
+	end)
+	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
+	c:RegisterEffect(e2)
+	local e3=e1:Clone()
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e3)
 end

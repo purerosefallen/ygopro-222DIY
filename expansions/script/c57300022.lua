@@ -2,6 +2,7 @@
 function c57300022.initial_effect(c)
 	xpcall(function() require("expansions/script/c57300000") end,function() require("script/c57300000") end)
 	miyuki.AddXyzProcedureClariS(c,3)
+	miyuki.AddSummonMusic(c,m*16,SUMMON_TYPE_XYZ)
 	local ex=Effect.CreateEffect(c)
 	ex:SetType(EFFECT_TYPE_SINGLE)
 	ex:SetCode(57300022)
