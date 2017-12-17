@@ -98,7 +98,9 @@ after_build:
   - rm -rf pics/thumbnail pics/*.db
   - mkdir replay
 
-  - 7z a -mx9 -xr!.git* YGOPro-by-Koishi.7z ygopro.exe LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound WindBot Bot.exe bot.conf
+  - 7z a -mx9 -xr!.git* YGOPro-by-Koishi.7z ygopro.exe LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay WindBot Bot.exe bot.conf
+  - cp -rf YGOPro-by-Koishi.7z YGOPro-by-Koishi-with-sound.7z
+  - 7z a -mx9 -xr!.git* YGOPro-by-Koishi-with-sound.7z sound
 
 test: off
 
@@ -115,6 +117,8 @@ artifacts:
     name: ygopro client
   - path: YGOPro-by-Koishi.7z
     name: ygopro full repack
+  - path: YGOPro-by-Koishi-with-sound.7z
+    name: ygopro full repack with sound
 
 cache:
   - premake-5.0.0-alpha12-windows.zip
