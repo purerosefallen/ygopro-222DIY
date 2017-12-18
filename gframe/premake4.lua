@@ -35,10 +35,6 @@ project "ygopro"
         links { "event_pthreads", "GL", "dl", "pthread" }
     configuration "linux"
         if USE_IRRKLANG then
-            linkoptions{ "-Wl,-rpath=./irrklang/bin/linux-gcc/" }
-            libdirs { "../irrklang/bin/linux-gcc" }
-        end
-    configuration "macosx"
-        if USE_IRRKLANG then
-            libdirs { "../irrklang/bin/macosx-gcc" }
+            linkoptions{ "-Wl,-rpath=./" }
+            libdirs { "../irrklang/bin/linux-gcc-64" }
         end
