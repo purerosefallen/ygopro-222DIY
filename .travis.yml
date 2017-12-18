@@ -91,7 +91,7 @@ script:
     zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro *.so;
   fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro *.dylib;
+    zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro.app *.dylib;
   fi
 
 deploy:
