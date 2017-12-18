@@ -57,6 +57,7 @@ before_install:
 - mv -f irrKlang-64bit-1.5.0 irrklang
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     cp -rf irrklang/bin/macosx-gcc/*.dylib .;
+    sudo cp -rf irrklang/bin/macosx-gcc/*.dylib /usr/local/lib/;
   fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     cp -rf irrklang/bin/linux-gcc-64/*.so .;
