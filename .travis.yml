@@ -60,7 +60,7 @@ before_install:
     sudo cp -rf irrklang/bin/macosx-gcc/*.dylib /usr/local/lib/;
   fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    mv -f irrklang/bin/linux-gcc-64/libIrrKlang.so libirrKlang.so;
+    mv -f irrklang/bin/linux-gcc-64/libIrrKlang.so irrklang/bin/linux-gcc-64/libirrKlang.so;
     cp -rf irrklang/bin/linux-gcc-64/*.so .;
   fi
 
