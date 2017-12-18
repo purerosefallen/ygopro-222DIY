@@ -56,10 +56,12 @@ before_install:
 - unzip -q irrKlang-64bit-1.5.0.zip
 - mv -f irrKlang-64bit-1.5.0 irrklang
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    mv -f irrklang/bin/macosx-gcc/libirrklang.dylib irrklang/bin/macosx-gcc/libirrKlang.dylib;
     cp -rf irrklang/bin/macosx-gcc/*.dylib .;
     sudo cp -rf irrklang/bin/macosx-gcc/*.dylib /usr/local/lib/;
   fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    mv -f irrklang/bin/linux-gcc-64/libIrrKlang.so irrklang/bin/linux-gcc-64/libirrKlang.so;
     cp -rf irrklang/bin/linux-gcc-64/*.so .;
   fi
 
