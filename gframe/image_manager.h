@@ -14,7 +14,7 @@ public:
 	//random image
 	irr::video::ITexture* GetRandomImage(int image_type);
 	void RefreshRandomImageList();
-	void RefreshImageDir(std::wstring path, int image_type)
+	void RefreshImageDir(std::wstring path, int image_type);
 	void SetDevice(irr::IrrlichtDevice* dev);
 	void ClearTexture();
 	void RemoveTexture(int code);
