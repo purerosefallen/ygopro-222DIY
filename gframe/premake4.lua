@@ -36,4 +36,5 @@ project "ygopro"
     configuration "linux"
         if USE_IRRKLANG then
             linkoptions{ "-Wl,-rpath=./irrklang/bin/linux-gcc-64/" }
+            libdirs { "../irrklang/bin/linux-gcc-64" }
         end
