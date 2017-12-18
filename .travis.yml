@@ -88,7 +88,7 @@ script:
   fi
 
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro.app *.so;
+    zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro *.so;
   fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro *.dylib;
