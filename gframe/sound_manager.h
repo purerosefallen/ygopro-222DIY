@@ -5,9 +5,7 @@
 #include "game.h"
 #ifdef YGOPRO_USE_IRRKLANG
 #include <irrKlang.h>
-#ifdef IRRKLANG_STATIC
 #include "../ikpmp3/ikpMP3.h"
-#endif
 #endif
 
 #define wcsicmp _wcsicmp

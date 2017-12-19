@@ -55,20 +55,21 @@ before_install:
 - curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://www.ambiera.at/downloads/irrKlang-64bit-1.5.0.zip
 - unzip -q irrKlang-64bit-1.5.0.zip
 - mv -f irrKlang-64bit-1.5.0 irrklang
+- mv -f irrklang/plugins/ikpMP3 ikpmp3
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     mv -f irrklang/bin/macosx-gcc/libirrklang.dylib irrklang/bin/macosx-gcc/libirrKlang.dylib;
-    sudo cp -rf irrklang/bin/macosx-gcc/*.dylib /usr/local/lib/;
+    sudo cp -rf irrklang/bin/macosx-gcc/libirrKlang.dylib /usr/local/lib/;
   fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     mv -f irrklang/bin/linux-gcc-64/libIrrKlang.so irrklang/bin/linux-gcc-64/libirrKlang.so;
-    cp -rf irrklang/bin/linux-gcc-64/*.so .;
+    cp -rf irrklang/bin/linux-gcc-64/libirrKlang.so .;
   fi
 
 script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./premake5 gmake --cc=clang; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./premake5 gmake; fi
 - cd build
-- make config=release ygopro
+- make config=release ygopro -j4
 - cd ..
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mv -f bin/release/ygopro ./; strip ygopro;
   fi
@@ -90,7 +91,7 @@ script:
   fi
 
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro *.so;
+    zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro libirrKlang.so;
   fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro.app;
@@ -100,6 +101,7 @@ deploy:
   provider: releases
   file: ygopro-koishi-$TRAVIS_OS_NAME.zip
   skip_cleanup: true
+  overwrite: true
   on:
     tags: true
   api-key: $NANAHIRA
