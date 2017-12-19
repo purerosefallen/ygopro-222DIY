@@ -60,7 +60,7 @@ before_install:
 - mv -f irrklang/plugins/ikpMP3 ikpmp3
 - cd ikpmp3
 - cp -rf ../premake/ikpmp3/* .
-- ls | xargs -I {} sed -i 's/\r//g' {}
+- find . | xargs -I {} sed -i 's/\r//g' {}
 - patch -p1 < ikpMP3.patch
 - cd ..
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
