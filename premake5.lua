@@ -8,7 +8,6 @@ solution "ygo"
             IRRKLANG_PRO = true
         end
     end
-    startproject "ygopro"
 
     configurations { "Debug", "Release" }
     defines { "LUA_COMPAT_5_2" }
@@ -76,6 +75,6 @@ solution "ygo"
 		include "lua"
 		include "sqlite3"
 	end
-	if IRRKLANG_PRO then
+	if USE_IRRKLANG then
 		include "ikpmp3"
 	end
