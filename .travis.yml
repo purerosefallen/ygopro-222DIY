@@ -60,7 +60,6 @@ before_install:
 - mv -f irrklang/plugins/ikpMP3 ikpmp3
 - cd ikpmp3
 - cp -rf ../premake/ikpmp3/* .
-- sed -i 's/\r//g' CIrrKlangAudioStreamMP3.cpp
 - sed -i 's/\r//g' ikpMP3.cpp
 - sed -i 's/\r//g' ikpMP3.patch
 - patch -p1 < ikpMP3.patch
