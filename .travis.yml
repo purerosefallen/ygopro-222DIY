@@ -46,6 +46,9 @@ before_install:
     unzip -q irrlicht-1.8.4.zip;
     cd irrlicht-1.8.4/;
     cp -rf ../premake/irrlicht/irrlicht-mac.patch .;
+    find . -name *.cpp | xargs -I {} dos2linux {};
+    find . -name *.h | xargs -I {} dos2linux {};
+    find . -name *.mm | xargs -I {} dos2linux {};
     dos2unix irrlicht-mac.patch;
     patch -p1 < irrlicht-mac.patch;
     cd source/Irrlicht/MacOSX/;
