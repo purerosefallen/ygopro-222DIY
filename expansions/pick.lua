@@ -113,6 +113,8 @@ end
 function Auxiliary.Load2PickRule()
 	Card.IsSetCard=Auxiliary.TRUE
 	Card.IsOriginalSetCard=Auxiliary.TRUE
+	Card.IsFusionSetCard=Auxiliary.TRUE
+	Card.IsLinkSetCard=Auxiliary.TRUE	
 
 	Auxiliary.LoadLFList()
 	Auxiliary.LoadDB()
