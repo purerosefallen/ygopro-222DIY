@@ -45,12 +45,7 @@ before_install:
     curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://downloads.sourceforge.net/irrlicht/irrlicht-1.8.4.zip;
     unzip -q irrlicht-1.8.4.zip;
     cd irrlicht-1.8.4/;
-    cp -rf ../premake/irrlicht/irrlicht-mac.patch .;
-    find . -name *.cpp | xargs -I {} dos2linux {};
-    find . -name *.h | xargs -I {} dos2linux {};
-    find . -name *.mm | xargs -I {} dos2linux {};
-    dos2unix irrlicht-mac.patch;
-    patch -p1 < irrlicht-mac.patch;
+    curl --location --retry 5 https://github.com/moecube/ygopro/raw/master/premake/irrlicht/irrlicht-mac.patch | patch -p1;
     cd source/Irrlicht/MacOSX/;
     xcodebuild -project MacOSX.xcodeproj > /dev/null;
     sudo cp -rf build/Release/libIrrlicht.a /usr/local/lib/;
