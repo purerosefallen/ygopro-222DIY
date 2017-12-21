@@ -28,7 +28,7 @@ function c22261002.IsKuMaKawa(c)
 	return m and m.named_with_KuMaKawa
 end
 function c22261002.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
+	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
 end
 function c22261002.thfilter1(c)
 	return c22261002.IsKuMaKawa(c) and c:IsAbleToHand()
