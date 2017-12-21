@@ -639,7 +639,7 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 	//extra scripts
 	load_script((char*) "./script/constant.lua");
 	load_script((char*) "./script/utility.lua");
-	load_script((char*) "./expansions/pick.lua");
+	load_script((char*) "./2pick/pick.lua");
 	
 }
 interpreter::~interpreter() {

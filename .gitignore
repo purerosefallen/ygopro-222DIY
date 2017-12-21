@@ -19,3 +19,5 @@ premake5.exe
 /pics
 /premake5
 /lua
+
+/card_list.txt

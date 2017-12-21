@@ -39,7 +39,7 @@ function Auxiliary.LoadLFList()
 	end
 end
 function Auxiliary.LoadDB()
-	os.execute("sqlite3 cards.cdb < expansions/sqlite_cmd.txt")
+	os.execute("sqlite3 cards.cdb < 2pick/sqlite_cmd.txt")
 	for line in io.lines("card_list.txt") do
 		local col=line:find("|")
 		local code=tonumber(line:sub(1,col-1))
