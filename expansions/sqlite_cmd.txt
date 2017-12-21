@@ -1,3 +1,0 @@
-.output card_list.txt
-select id,type from datas;
-.output stdout
