@@ -82,8 +82,8 @@ function Auxiliary.StartPick(e)
 	math.randomseed(os.time())
 	local g=Duel.GetFieldGroup(0,LOCATION_HAND | LOCATION_DECK | LOCATION_EXTRA, LOCATION_HAND | LOCATION_DECK | LOCATION_EXTRA)
 	Duel.Exile(g,REASON_RULE)
-	for i=1,10 do
-		--[[local list=main
+	for i=1,11 do
+		local list=main
 		local count=4
 		if i==9 then
 			list=semi_limited
@@ -93,9 +93,9 @@ function Auxiliary.StartPick(e)
 		elseif i==11 then
 			list=forbidden
 			count=1
-		end]]
+		end
 		for p=0,1 do
-			Auxiliary.SinglePick(p,main,4)
+			Auxiliary.SinglePick(p,list,count)
 		end
 	end
 	for i=1,5 do
@@ -111,15 +111,15 @@ function Auxiliary.StartPick(e)
 end
 
 function Auxiliary.Load2PickRule()
-	--[[Card.IsSetCard=Auxiliary.TRUE
+	Card.IsSetCard=Auxiliary.TRUE
 	Card.IsOriginalSetCard=Auxiliary.TRUE
 	Card.IsFusionSetCard=Auxiliary.TRUE
-	Card.IsLinkSetCard=Auxiliary.TRUE]]
+	Card.IsLinkSetCard=Auxiliary.TRUE	
 
 	Auxiliary.LoadLFList()
 	Auxiliary.LoadDB()
 
-	--[[local e2=Effect.GlobalEffect()
+	local e2=Effect.GlobalEffect()
 	e2:SetDescription(1264319*16)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -162,7 +162,7 @@ function Auxiliary.Load2PickRule()
 	e1:SetCode(EFFECT_ADD_ATTRIBUTE)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_RANGE | EFFECT_FLAG_IGNORE_IMMUNE | EFFECT_FLAG_SET_AVAILABLE)
 	e1:SetTargetRange(0xff,0xff)
-	e1:SetValue(0x7f)]]
+	e1:SetValue(0x7f)
 	Duel.RegisterEffect(e1,0)
 	local e1=Effect.GlobalEffect()
 	e1:SetType(EFFECT_TYPE_FIELD | EFFECT_TYPE_CONTINUOUS)
