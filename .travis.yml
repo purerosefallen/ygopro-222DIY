@@ -21,7 +21,7 @@ env:
 before_install:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     brew update > /dev/null;
-    brew install freetype libevent sqlite dylibbundler > /dev/null;
+    brew install freetype libevent sqlite dylibbundler dos2unix > /dev/null;
   fi
 
 - curl --location --retry 5 http://www.lua.org/ftp/lua-5.3.4.tar.gz | tar zfx -
@@ -45,9 +45,7 @@ before_install:
     curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://downloads.sourceforge.net/irrlicht/irrlicht-1.8.4.zip;
     unzip -q irrlicht-1.8.4.zip;
     cd irrlicht-1.8.4/;
-    cp -rf ../premake/irrlicht/irrlicht-mac.patch .;
-    sed -i 's/\r//g' irrlicht-mac.patch;
-    patch -p1 < irrlicht-mac.patch;
+    curl --location --retry 5 https://github.com/moecube/ygopro/raw/master/premake/irrlicht/irrlicht-mac.patch | patch -p1;
     cd source/Irrlicht/MacOSX/;
     xcodebuild -project MacOSX.xcodeproj > /dev/null;
     sudo cp -rf build/Release/libIrrlicht.a /usr/local/lib/;
@@ -60,8 +58,16 @@ before_install:
 - mv -f irrklang/plugins/ikpMP3 ikpmp3
 - cd ikpmp3
 - cp -rf ../premake/ikpmp3/* .
-- sed -i 's/\r//g' ikpMP3.cpp
-- sed -i 's/\r//g' ikpMP3.patch
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    dos2unix CIrrKlangAudioStreamMP3.cpp;
+    dos2unix ikpMP3.cpp;
+    dos2unix ikpMP3.patch;
+  fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    sed -i 's/\r//g' CIrrKlangAudioStreamMP3.cpp;
+    sed -i 's/\r//g' ikpMP3.cpp;
+    sed -i 's/\r//g' ikpMP3.patch;
+  fi
 - patch -p1 < ikpMP3.patch
 - cd ..
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
