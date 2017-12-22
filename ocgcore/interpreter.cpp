@@ -610,12 +610,14 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 	set_duel_info(lua_state, pd);
 	//Initial
 	luaL_openlibs(lua_state);
+	/*
 	lua_pushnil(lua_state);
 	lua_setglobal(lua_state, "file");
 	lua_pushnil(lua_state);
 	lua_setglobal(lua_state, "io");
 	lua_pushnil(lua_state);
 	lua_setglobal(lua_state, "os");
+	*/
 	lua_getglobal(lua_state, "bit32");
 	lua_setglobal(lua_state, "bit");
 	//open all libs
@@ -641,6 +643,17 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 	//extra scripts
 	load_script((char*) "./script/constant.lua");
 	load_script((char*) "./script/utility.lua");
+	//load kpro constant
+	lua_pushinteger(lua_state, EFFECT_CHANGE_LINK_MARKER_KOISHI);
+	lua_setglobal(lua_state, "EFFECT_CHANGE_LINK_MARKER_KOISHI");
+	lua_pushinteger(lua_state, EFFECT_ADD_LINK_MARKER_KOISHI);
+	lua_setglobal(lua_state, "EFFECT_ADD_LINK_MARKER_KOISHI");
+	lua_pushinteger(lua_state, EFFECT_REMOVE_LINK_MARKER_KOISHI);
+	lua_setglobal(lua_state, "EFFECT_REMOVE_LINK_MARKER_KOISHI");
+	lua_pushinteger(lua_state, EFFECT_CANNOT_LOSE_KOISHI);
+	lua_setglobal(lua_state, "EFFECT_CANNOT_LOSE_KOISHI");
+	//load init.lua by MLD
+	load_script((char*) "./expansions/script/init.lua");	
 }
 interpreter::~interpreter() {
 	lua_close(lua_state);
