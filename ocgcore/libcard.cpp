@@ -83,6 +83,23 @@ int32 scriptlib::card_set_card_data(lua_State *L) {
 	}
 	return 0;
 }
+int32 scriptlib::card_get_link_marker(lua_State *L) {
+	check_param_count(L, 1);
+	check_param(L, PARAM_TYPE_CARD, 1);
+	card* pcard = *(card**) lua_touserdata(L, 1);
+	lua_pushinteger(L, pcard->get_link_marker());
+	return 1;
+}
+int32 scriptlib::card_get_origin_link_marker(lua_State *L) {
+	check_param_count(L, 1);
+	check_param(L, PARAM_TYPE_CARD, 1);
+	card* pcard = *(card**) lua_touserdata(L, 1);
+	if(pcard->status & STATUS_NO_LEVEL)
+		lua_pushinteger(L, 0);
+	else
+		lua_pushinteger(L, pcard->data.link_marker);
+	return 1;
+}
 
 int32 scriptlib::card_get_code(lua_State *L) {
 	check_param_count(L, 1);

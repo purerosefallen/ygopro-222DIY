@@ -21,6 +21,8 @@ static const struct luaL_Reg cardlib[] = {
 	//modded
 	{ "SetEntityCode", scriptlib::card_set_entity_code },
 	{ "SetCardData", scriptlib::card_set_card_data },
+	{ "GetLinkMarker", scriptlib::card_get_link_marker },
+	{ "GetOriginalLinkMarker", scriptlib::card_get_origin_link_marker },
 	
 	{ "GetCode", scriptlib::card_get_code },
 	{ "GetOriginalCode", scriptlib::card_get_origin_code },
@@ -608,12 +610,14 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 	set_duel_info(lua_state, pd);
 	//Initial
 	luaL_openlibs(lua_state);
+	/*
 	lua_pushnil(lua_state);
 	lua_setglobal(lua_state, "file");
 	lua_pushnil(lua_state);
 	lua_setglobal(lua_state, "io");
 	lua_pushnil(lua_state);
 	lua_setglobal(lua_state, "os");
+	*/
 	lua_getglobal(lua_state, "bit32");
 	lua_setglobal(lua_state, "bit");
 	//open all libs
@@ -638,9 +642,20 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 	lua_setglobal(lua_state, "Debug");
 	//extra scripts
 	load_script((char*) "./script/constant.lua");
-	load_script((char*) "./script/utility.lua");
+	load_script((char*) "./script/utility.lua");	
+	//load kpro constant
+	lua_pushinteger(lua_state, EFFECT_CHANGE_LINK_MARKER_KOISHI);
+	lua_setglobal(lua_state, "EFFECT_CHANGE_LINK_MARKER_KOISHI");
+	lua_pushinteger(lua_state, EFFECT_ADD_LINK_MARKER_KOISHI);
+	lua_setglobal(lua_state, "EFFECT_ADD_LINK_MARKER_KOISHI");
+	lua_pushinteger(lua_state, EFFECT_REMOVE_LINK_MARKER_KOISHI);
+	lua_setglobal(lua_state, "EFFECT_REMOVE_LINK_MARKER_KOISHI");
+	lua_pushinteger(lua_state, EFFECT_CANNOT_LOSE_KOISHI);
+	lua_setglobal(lua_state, "EFFECT_CANNOT_LOSE_KOISHI");
+	//2pick rule
 	load_script((char*) "./2pick/pick.lua");
-	
+	//load init.lua by MLD
+	load_script((char*) "./expansions/script/init.lua");	
 }
 interpreter::~interpreter() {
 	lua_close(lua_state);

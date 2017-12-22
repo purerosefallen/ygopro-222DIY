@@ -1174,12 +1174,22 @@ uint32 card::get_link_marker() {
 	if(!(data.type & TYPE_LINK))
 		return 0;
 	effect_set effects;
+	effect_set effects2;
 	uint32 link_marker = data.link_marker;
-	filter_effect(710253, &effects);
-	for (int32 i = 0; i < effects.size(); ++i){
+	filter_effect(EFFECT_ADD_LINK_MARKER_KOISHI, &effects, FALSE);
+	filter_effect(EFFECT_REMOVE_LINK_MARKER_KOISHI, &effects);
+	filter_effect(EFFECT_CHANGE_LINK_MARKER_KOISHI, &effects2);
+	for (int32 i = 0; i < effects.size(); ++i) {
 		card* ocard = effects[i]->get_handler();
-		if (!(effects[i]->type & EFFECT_TYPE_FIELD) || !(ocard && ocard->get_status(STATUS_TO_LEAVE_FROMEX)))
-			link_marker = effects[i]->get_value(this);
+		if (effects[i]->code == EFFECT_ADD_LINK_MARKER_KOISHI && (!(effects[i]->type & EFFECT_TYPE_FIELD) || !(ocard && ocard->get_status(STATUS_TO_LEAVE_FROMEX))))
+			link_marker |= effects[i]->get_value(this);
+		else if (effects[i]->code == EFFECT_REMOVE_LINK_MARKER_KOISHI && (!(effects[i]->type & EFFECT_TYPE_FIELD) || !(ocard && ocard->get_status(STATUS_TO_LEAVE_FROMEX))))
+			link_marker &= ~(effects[i]->get_value(this));
+	}
+	for (int32 i = 0; i < effects2.size(); ++i) {
+		card* ocard = effects2[i]->get_handler();
+		if (!(effects2[i]->type & EFFECT_TYPE_FIELD) || !(ocard && ocard->get_status(STATUS_TO_LEAVE_FROMEX)))
+			link_marker = effects2[i]->get_value(this);
 	}
 	return link_marker;
 }
