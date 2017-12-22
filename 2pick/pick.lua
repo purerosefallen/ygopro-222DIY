@@ -4,6 +4,10 @@ io=require("io")
 local main={}
 local extra={}
 
+local main_monster={}
+local main_spell={}
+local main_trap={}
+
 local forbidden_check={}
 local limited_check={}
 local semi_limited_check={}
@@ -47,6 +51,13 @@ function Auxiliary.LoadDB()
 		if (cat & TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)>0 then
 			table.insert(extra,code)
 		elseif (cat & TYPE_TOKEN)==0 then
+			if (cat & TYPE_MONSTER)>0 then
+				table.insert(main_monster,code)
+			elseif (cat & TYPE_SPELL)>0 then
+				table.insert(main_spell,code)
+			elseif (cat & TYPE_TRAP)>0 then
+				table.insert(main_trap,code)
+			end
 			table.insert(main,code)
 			if forbidden_check[code] then
 				table.insert(forbidden,code)
@@ -94,9 +105,18 @@ function Auxiliary.StartPick(e)
 			list=forbidden
 			count=1
 		end]]
-		for p=0,1 do
+		
+		--[[for p=0,1 do
 			Auxiliary.SinglePick(p,main,4)
+		end]]
+		
+		local list=main_monster
+		if i==7 or i==8 then
+			list=main_spell
+		elseif i==9 or i==10 then
+			list=main_trap
 		end
+		Auxiliary.SinglePick(p,list,4)
 	end
 	for i=1,5 do
 		for p=0,1 do
