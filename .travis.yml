@@ -16,21 +16,22 @@ addons:
     - libirrlicht-dev
     - libgl1-mesa-dev
     - libglu-dev
+env:
+- USE_IRRKLANG=1
 before_install:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     brew update > /dev/null;
-    brew install freetype libevent sqlite dylibbundler > /dev/null;
+    brew install freetype libevent sqlite dylibbundler dos2unix > /dev/null;
   fi
 
 - curl --location --retry 5 http://www.lua.org/ftp/lua-5.3.4.tar.gz | tar zfx -
 - cd lua-5.3.4
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    make macosx test;
+    sudo make macosx test install > /dev/null;
   fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    make linux test;
+    sudo make linux test install > /dev/null;
   fi
-- sudo make install
 - cd ..
 
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
@@ -51,12 +52,38 @@ before_install:
     sudo cp -rf ../../../include /usr/local/include/irrlicht;
     cd ../../../../;
   fi
+- curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://www.ambiera.at/downloads/irrKlang-64bit-1.5.0.zip
+- unzip -q irrKlang-64bit-1.5.0.zip
+- mv -f irrKlang-64bit-1.5.0 irrklang
+- mv -f irrklang/plugins/ikpMP3 ikpmp3
+- cd ikpmp3
+- cp -rf ../premake/ikpmp3/* .
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    dos2unix CIrrKlangAudioStreamMP3.cpp;
+    dos2unix ikpMP3.cpp;
+    dos2unix ikpMP3.patch;
+  fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    sed -i 's/\r//g' CIrrKlangAudioStreamMP3.cpp;
+    sed -i 's/\r//g' ikpMP3.cpp;
+    sed -i 's/\r//g' ikpMP3.patch;
+  fi
+- patch -p1 < ikpMP3.patch
+- cd ..
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    mv -f irrklang/bin/macosx-gcc/libirrklang.dylib irrklang/bin/macosx-gcc/libirrKlang.dylib;
+    sudo cp -rf irrklang/bin/macosx-gcc/libirrKlang.dylib /usr/local/lib/;
+  fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    mv -f irrklang/bin/linux-gcc-64/libIrrKlang.so irrklang/bin/linux-gcc-64/libirrKlang.so;
+    cp -rf irrklang/bin/linux-gcc-64/libirrKlang.so .;
+  fi
 
 script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./premake5 gmake --cc=clang; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./premake5 gmake; fi
 - cd build
-- make config=release ygopro
+- make config=release ygopro -j4
 - cd ..
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mv -f bin/release/ygopro ./; strip ygopro;
   fi
@@ -77,17 +104,18 @@ script:
     fi
   fi
 
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro libirrKlang.so;
+  fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro.app;
-  fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro;
   fi
 
 deploy:
   provider: releases
   file: ygopro-koishi-$TRAVIS_OS_NAME.zip
   skip_cleanup: true
+  overwrite: true
   on:
     tags: true
   api-key: $NANAHIRA

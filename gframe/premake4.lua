@@ -1,4 +1,4 @@
-include "lzma"
+include "lzma/."
 
 project "ygopro"
     kind "WindowedApp"
@@ -9,10 +9,9 @@ project "ygopro"
     links { "ocgcore", "clzma", "Irrlicht", "freetype", "sqlite3", "lua" , "event" }
     if USE_IRRKLANG then
         defines { "YGOPRO_USE_IRRKLANG" }
-        links { "irrKlang" }
+        links { "irrKlang", "ikpmp3" }
         includedirs { "../irrklang/include" }
         if IRRKLANG_PRO then
-		    links { "ikpMP3" }
             defines { "IRRKLANG_STATIC" }
         end
     end
@@ -33,3 +32,8 @@ project "ygopro"
         includedirs { "/usr/include/lua", "/usr/include/lua5.3", "/usr/include/lua/5.3", "/usr/include/irrlicht", "/usr/include/freetype2" }
         excludes { "COSOperator.*" }
         links { "event_pthreads", "GL", "dl", "pthread" }
+    configuration "linux"
+        if USE_IRRKLANG then
+            linkoptions{ "-Wl,-rpath=./" }
+            libdirs { "../irrklang/bin/linux-gcc-64" }
+        end

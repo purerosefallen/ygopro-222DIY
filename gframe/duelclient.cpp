@@ -1010,7 +1010,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			break;
 		}
 		//modded
-		//playing music
+		//playing custom bgm
 		case 11: {
 			char BGMName[1024];
 			if (data) {
@@ -1022,6 +1022,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			}
 			break;
 		}
+		//playing custom sound effect
 		case 12: {
 			char SoundName[1024];
 			if (data) {
@@ -1030,6 +1031,18 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 				soundManager.PlayCustomSound(SoundName);
 			} else {
 				soundManager.StopSound();
+			}
+			break;
+		}
+		//playing custom bgm in ogg format
+		case 13: {
+			char BGMName[1024];
+			if (data) {
+				myswprintf(textBuffer, L"./sound/BGM/custom/%ls.ogg", dataManager.GetDesc(data));			
+				BufferIO::EncodeUTF8(textBuffer, BGMName);
+				soundManager.PlayCustomBGM(BGMName);
+			} else {
+				soundManager.StopBGM();
 			}
 			break;
 		}
