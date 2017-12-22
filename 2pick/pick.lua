@@ -162,8 +162,8 @@ function Auxiliary.Load2PickRule()
 	e1:SetCode(EFFECT_ADD_ATTRIBUTE)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_RANGE | EFFECT_FLAG_IGNORE_IMMUNE | EFFECT_FLAG_SET_AVAILABLE)
 	e1:SetTargetRange(0xff,0xff)
-	e1:SetValue(0x7f)]]
-	Duel.RegisterEffect(e1,0)
+	e1:SetValue(0x7f)
+	Duel.RegisterEffect(e1,0)]]
 	local e1=Effect.GlobalEffect()
 	e1:SetType(EFFECT_TYPE_FIELD | EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_ADJUST)
