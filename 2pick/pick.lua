@@ -106,17 +106,16 @@ function Auxiliary.StartPick(e)
 			count=1
 		end]]
 		
-		--[[for p=0,1 do
-			Auxiliary.SinglePick(p,main,4)
-		end]]
-		
 		local list=main_monster
 		if i==7 or i==8 then
 			list=main_spell
 		elseif i==9 or i==10 then
 			list=main_trap
 		end
-		Auxiliary.SinglePick(p,list,4)
+		for p=0,1 do
+			Auxiliary.SinglePick(p,list,4)
+			--Auxiliary.SinglePick(p,main,4)
+		end
 	end
 	for i=1,5 do
 		for p=0,1 do
