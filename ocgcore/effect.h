@@ -436,6 +436,9 @@ inline effect_flag operator|(effect_flag flag1, effect_flag flag2)
 #define EFFECT_ADD_LINK_ATTRIBUTE		356
 #define EFFECT_ADD_LINK_RACE				357
 
+// KoishiPro effects
+#define EFFECT_CHANGE_LINK_MARKER_KOISHI	710253	
+
 #define EVENT_STARTUP		1000
 #define EVENT_FLIP			1001
 #define EVENT_FREE_CHAIN	1002
