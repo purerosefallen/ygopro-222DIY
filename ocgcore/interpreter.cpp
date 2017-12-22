@@ -21,6 +21,8 @@ static const struct luaL_Reg cardlib[] = {
 	//modded
 	{ "SetEntityCode", scriptlib::card_set_entity_code },
 	{ "SetCardData", scriptlib::card_set_card_data },
+	{ "GetLinkMarker", scriptlib::card_get_link_marker },
+	{ "GetOriginalLinkMarker", scriptlib::card_get_origin_link_marker },
 	
 	{ "GetCode", scriptlib::card_get_code },
 	{ "GetOriginalCode", scriptlib::card_get_origin_code },
@@ -752,15 +754,11 @@ int32 interpreter::load_card_script(uint32 code) {
 		lua_pushvalue(current_state, -2);
 		lua_rawset(current_state, -3);
 		//load extra scripts
-		
-		sprintf(script_name, "./beta/script/c%d.lua", code);
+		sprintf(script_name, "./expansions/script/c%d.lua", code);
 		if (!load_script(script_name)) {
-			sprintf(script_name, "./expansions/script/c%d.lua", code);
+			sprintf(script_name, "./script/c%d.lua", code);
 	 		if (!load_script(script_name)) {
-				sprintf(script_name, "./script/c%d.lua", code);
-				if (!load_script(script_name)) {
-					return OPERATION_FAIL;
-				}
+	 			return OPERATION_FAIL;
  			}
   		}
 	}
