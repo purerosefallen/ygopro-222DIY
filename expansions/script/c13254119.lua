@@ -52,7 +52,7 @@ function c13254119.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:SetMaterial(mat)
 		if Duel.SendtoGrave(mat,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)~=0 then
 			Duel.BreakEffect()
-			if Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and Duel.GetMZoneCount(tp)>0 and tc:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,true,true) then
+			if Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,true,true) then
 				Duel.BreakEffect()
 				Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,true,true,POS_FACEUP)
 				tc:CompleteProcedure()
@@ -75,7 +75,7 @@ function c13254119.filter5a(c)
 end
 function c13254119.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local chkf=Duel.GetMZoneCount(tp)>0 and PLAYER_NONE or tp
+		local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
 		local mg1=Duel.GetFusionMaterial(tp):Filter(Card.IsOnField,nil)
 		local mg2=Duel.GetMatchingGroup(c13254119.filter4a,tp,0,LOCATION_MZONE,nil)
 		mg1:Merge(mg2)

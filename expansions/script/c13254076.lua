@@ -43,7 +43,8 @@ function c13254076.drcon1(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_FUSION 
 end
 function c13254076.drcon2(e,tp,eg,ep,ev,re,r,rp)
-	return true
+	local c=e:GetHandler()
+	return not (c:IsReason(REASON_SYNCHRO) or c:IsReason(REASON_FUSION))
 end
 function c13254076.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

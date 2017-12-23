@@ -102,7 +102,7 @@ function c13255213.tdfilter(c)
 end
 function c13255213.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c13255213.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetMZoneCount(tp)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c13255213.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.IsExistingMatchingCard(c13255213.tdfilter,tp,LOCATION_GRAVE,0,3,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c13255213.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
@@ -112,7 +112,7 @@ end
 function c13255213.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local tg=Duel.GetMatchingGroup(c13255213.tdfilter,tp,LOCATION_GRAVE,0,nil)
-	if tc:IsRelateToEffect(e) and Duel.GetMZoneCount(tp)>0 and tg:GetCount()>0 then
+	if tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tg:GetCount()>0 then
 		if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
 			Duel.SendtoDeck(tg,nil,2,REASON_EFFECT)
 		end

@@ -72,8 +72,9 @@ function c13254116.eqlimit(e,c)
 	return c:IsRace(RACE_FAIRY) and c:IsLevelBelow(1)
 end
 function c13254116.efilter(e,te)
+	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
-		and not te:IsHasProperty(EFFECT_FLAG_CARD_TARGET)
+		and (not g or not g:IsContains(c))
 end
 function c13254116.condition2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetEquipTarget()

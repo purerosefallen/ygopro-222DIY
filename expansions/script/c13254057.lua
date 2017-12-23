@@ -31,6 +31,14 @@ function c13254057.initial_effect(c)
 	e3:SetTarget(c13254057.destg)
 	e3:SetOperation(c13254057.desop)
 	c:RegisterEffect(e3)
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_FIELD)
+	e4:SetCode(EFFECT_REFLECT_DAMAGE)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e4:SetTargetRange(1,0)
+	e4:SetValue(c13254057.refcon)
+	c:RegisterEffect(e4)
 	
 end
 function c13254057.ffilter(c)
@@ -104,4 +112,7 @@ function c13254057.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(tg)
 		Duel.Destroy(tg,REASON_EFFECT)
 	end
+end
+function c13254057.refcon(e,re,val,r,rp,rc)
+	return bit.band(r,REASON_EFFECT)~=0 and rp~=e:GetHandler():GetControler()
 end

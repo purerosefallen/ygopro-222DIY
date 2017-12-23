@@ -34,13 +34,13 @@ function c13254037.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c13254037.spfilter,1,nil,tp)
 end
 function c13254037.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c13254037.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetMZoneCount(tp)<=0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)
 		--cannot release
@@ -84,12 +84,12 @@ function c13254037.filter(c,e,tp)
 	return (c:IsCode(13254039) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)) or (c:IsRace(RACE_ZOMBIE) and c:IsLevelBelow(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function c13254037.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c13254037.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c13254037.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetMZoneCount(tp)<=0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c13254037.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)

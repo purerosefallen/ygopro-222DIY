@@ -73,7 +73,7 @@ function c13254049.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.SendtoGrave(sg,REASON_COST)
 end
 function c13254049.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck() and c:IsSetCard(0x356)
+	return c:IsAbleToDeck() and c:IsSetCard(0x356)
 end
 function c13254049.sfilter(c,tp)
 	return c:IsLocation(LOCATION_DECK) and c:IsControler(tp)

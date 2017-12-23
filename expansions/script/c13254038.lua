@@ -7,7 +7,7 @@ function c13254038.initial_effect(c)
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(13254038,0))
+	e2:SetDescription(aux.Stringid(13254038,2))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -29,7 +29,7 @@ function c13254038.initial_effect(c)
 	c:RegisterEffect(e3)
 	--spsummon skull-maru
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(13254038,2))
+	e4:SetDescription(aux.Stringid(13254038,0))
 	e4:SetType(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_SZONE)
@@ -43,7 +43,7 @@ function c13254038.spfilter(c,e,tp)
 end
 function c13254038.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c13254038.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetMZoneCount(tp)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c13254038.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c13254038.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
@@ -69,12 +69,12 @@ function c13254038.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function c13254038.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp)>-2
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
 		and Duel.IsExistingMatchingCard(c13254038.spfilter1,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c13254038.spop1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetMZoneCount(tp)<=0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c13254038.spfilter1,tp,LOCATION_DECK,0,1,1,nil,e,tp)
@@ -88,12 +88,12 @@ function c13254038.spfilter2(c,e,tp)
 	return c:IsCode(13254037) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c13254038.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c13254038.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c13254038.spop2(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetMZoneCount(tp)<=0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c13254038.spfilter2,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then

@@ -88,7 +88,7 @@ function c13254058.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.SendtoGrave(sg,REASON_COST)
 end
 function c13254058.dfilter(c,tp)
-	return c:IsControler(tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsRace(RACE_FAIRY) and c:IsLevelBelow(1) and not c:IsCode(13254058)
+	return c:IsControler(tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsRace(RACE_FAIRY) and c:IsLevelBelow(1)
 end
 function c13254058.repfilter(c)
 	return (c:IsCode(13254032) or c:IsCode(13254035)) and c:IsAbleToDeck()

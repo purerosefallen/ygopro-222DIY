@@ -26,7 +26,7 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local mg=Duel.GetRitualMaterial(tp):Filter(Card.IsCanBeRitualMaterial,e:GetHandler(),tempc)
 		return Senya.CheckRitualMaterial(tempc,mg,tp,tempc:GetLevel(),nil,true)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

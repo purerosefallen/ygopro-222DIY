@@ -1,23 +1,27 @@
 --元始飞球
 function c13254059.initial_effect(c)
 	c:EnableReviveLimit()
+	--spsummon condition
 	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
+	--special summon rule
 	local e2=Effect.CreateEffect(c)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e2:SetValue(aux.FALSE)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_SPSUMMON_PROC)
+	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e2:SetRange(LOCATION_EXTRA)
+	e2:SetCondition(c13254059.sprcon)
+	e2:SetOperation(c13254059.sprop)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_TOGRAVE)
+	e3:SetCategory(CATEGORY_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetRange(LOCATION_EXTRA)
+	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,13254059)
-	e3:SetCost(c13254059.cost)
+	e3:SetTarget(c13254059.smtg)
 	e3:SetOperation(c13254059.smop)
 	c:RegisterEffect(e3)
 	local e4=Effect.CreateEffect(c)
@@ -28,6 +32,13 @@ function c13254059.initial_effect(c)
 	e4:SetTarget(c13254059.reptg)
 	e4:SetValue(c13254059.repval)
 	c:RegisterEffect(e4)
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_FIELD)
+	e5:SetCode(EFFECT_REMOVE_BRAINWASHING)
+	e5:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetTargetRange(LOCATION_MZONE,0)
+	c:RegisterEffect(e5)
 	local e10=Effect.CreateEffect(c)
 	e10:SetType(EFFECT_TYPE_SINGLE)
 	e10:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -37,27 +48,55 @@ function c13254059.initial_effect(c)
 	c:RegisterEffect(e10)
 	
 end
-function c13254059.cfilter(c)
-	return c:IsSetCard(0x3356) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+function c13254059.spfilter(c)
+	return c:IsSetCard(0x3356) and c:IsCanBeFusionMaterial() and c:IsAbleToGraveAsCost() and not c:IsCode(13254059) and c:IsType(TYPE_MONSTER)
 end
-function c13254059.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c13254059.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,c13254059.cfilter,1,1,REASON_COST+REASON_DISCARD)
+function c13254059.fselect(c,tp,mg,sg)
+	sg:AddCard(c)
+	local res=false
+	if sg:GetCount()<1 then
+		res=mg:IsExists(c13254059.fselect,1,sg,tp,mg,sg)
+	else
+		res=Duel.GetLocationCountFromEx(tp,tp,sg)>0
+	end
+	sg:RemoveCard(c)
+	return res
+end
+function c13254059.sprcon(e,c)
+	if c==nil then return true end 
+	local tp=c:GetControler()
+	local mg=Duel.GetMatchingGroup(c13254059.spfilter,tp,LOCATION_ONFIELD,0,nil)
+	local sg=Group.CreateGroup()
+	return mg:IsExists(c13254059.fselect,1,nil,tp,mg,sg)
+end
+function c13254059.sprop(e,tp,eg,ep,ev,re,r,rp,c)
+	local mg=Duel.GetMatchingGroup(c13254059.spfilter,tp,LOCATION_ONFIELD,0,nil)
+	local sg=Group.CreateGroup()
+	while sg:GetCount()<1 do
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+		local g=mg:FilterSelect(tp,c13254059.fselect,1,1,sg,tp,mg,sg)
+		sg:Merge(g)
+	end
+	local cg=sg:Filter(Card.IsFacedown,nil)
+	if cg:GetCount()>0 then
+		Duel.ConfirmCards(1-tp,cg)
+	end
+	Duel.SendtoGrave(sg,REASON_COST)
 end
 function c13254059.smfilter(c)
-	return c:IsSetCard(0x3356) and c:IsType(TYPE_MONSTER) and c:IsSummonable(true,nil)
+	return c:IsSetCard(0x3356) and c:IsSummonable(true,nil)
+end
+function c13254059.smtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c13254059.smfilter,tp,LOCATION_HAND,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
 end
 function c13254059.smop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SendtoGrave(c,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_GRAVE) then
-		sg=Duel.GetMatchingGroup(c13254059.smfilter,tp,LOCATION_HAND,0,nil)
-		if Duel.GetMZoneCount(tp)>0 and sg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(13254059,0)) then
-			local g=sg:Select(tp,1,1,nil)
-			local tc=g:GetFirst()
-			if tc then
-				Duel.Summon(tp,tc,true,nil)
-			end
-		end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
+	local g=Duel.SelectMatchingCard(tp,c13254059.smfilter,tp,LOCATION_HAND,0,1,1,nil)
+	local tc=g:GetFirst()
+	if tc then
+		Duel.Summon(tp,tc,true,nil)
 	end
 end
 function c13254059.repfilter(c,tp)

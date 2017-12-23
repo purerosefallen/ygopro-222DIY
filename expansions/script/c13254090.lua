@@ -50,7 +50,7 @@ function c13254090.regcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13254090.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetAttacker()
-	if chk==0 then return Duel.GetMZoneCount(tp)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and tg:IsOnField() and tg:IsAbleToRemove() end
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tg,1,0,0)
@@ -66,7 +66,7 @@ function c13254090.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsAttackable() and not tc:IsStatus(STATUS_ATTACK_CANCELED) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 then
-		if Duel.GetMZoneCount(tp)<1 or not c:IsRelateToEffect(e) then return end
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 or not c:IsRelateToEffect(e) then return end
 		Duel.BreakEffect()
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end

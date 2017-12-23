@@ -29,6 +29,13 @@ function c13254044.initial_effect(c)
 	e3:SetTarget(c13254044.target)
 	e3:SetOperation(c13254044.operation)
 	c:RegisterEffect(e3)
+	--change damage
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e4:SetCondition(c13254044.regcon)
+	e4:SetOperation(c13254044.regop)
+	c:RegisterEffect(e4)
 end
 function c13254044.ffilter(c)
 	return c:IsRace(RACE_FAIRY) and c:IsLevelBelow(1)
@@ -110,6 +117,21 @@ function c13254044.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(sg1)
 		Duel.Remove(sg1,POS_FACEUP,REASON_EFFECT)
 	end
+end
+function c13254044.regcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsPreviousLocation(LOCATION_EXTRA)
+end
+function c13254044.regop(e,tp,eg,ep,ev,re,r,rp)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CANNOT_SUMMON)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,0)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	Duel.RegisterEffect(e2,tp)
 end
 
 

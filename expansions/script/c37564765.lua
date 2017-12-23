@@ -588,8 +588,9 @@ end
 --copy effect c=getcard(nil=orcard) tc=sourcecard ht=showcard(bool) res=reset event(nil=no reset)
 --ctlm=extra count limit
 function cm.CopyStatusAndEffect(e,c,tc,ht,res,resct,ctlm)
-		c=c or e:GetHandler()
-		res=res or RESET_EVENT+0x1fe0000
+		local c=c or e:GetHandler()
+		local res=res or RESET_EVENT+0x1fe0000
+		local resct=resct or 1
 		local cid=nil
 		if tc and c:IsFaceup() and c:IsRelateToEffect(e) then
 			local code=tc:GetOriginalCode()
