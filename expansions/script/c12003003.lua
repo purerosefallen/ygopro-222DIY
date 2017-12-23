@@ -42,8 +42,7 @@ function c12003003.filter(c)
 end
 function c12003003.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12003003.filter,tp,LOCATION_HAND,0,1,nil) end
-	local tg=Duel.SelectTarget(tp,c12003003.filter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoGrave(tg,REASON_COST)
+	Duel.DiscardHand(tp,c12003003.filter,1,1,REASON_COST+REASON_DISCARD)
 end
 function c12003003.tgfilter(c)
 	return c:IsRace(RACE_SEASERPENT) and c:IsAbleToHand()
