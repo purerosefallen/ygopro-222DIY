@@ -35,13 +35,15 @@ function cm.ovfilter(c)
 	return c:IsFaceup() and Senya.check_set_elem(c) and c:IsXyzType(TYPE_XYZ) and c:GetOverlayCount()>=3
 end
 function cm.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	local tp=e:GetHandlerPlayer()
 	local c=e:GetHandler()
-	return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) and c:GetOverlayCount()>1 and c:IsFaceup() and not c:IsDisabled()
+	return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) and c:CheckRemoveOverlayCard(tp,1,REASON_COST)
+		and Duel.GetTurnPlayer()==tp
+		and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+		and Duel.GetCurrentChain()==0
 end
 function cm.rmop(e,tp,eg,ep,ev,re,r,rp)  
 	Duel.Hint(HINT_CARD,0,m)
-	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_EFFECT)
+	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.HintSelection(g)
@@ -53,5 +55,5 @@ function cm.adcon(e)
 end
 function cm.retop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsLocation(LOCATION_MZONE) or e:GetHandler():IsFacedown() then return end
-	Duel.SendtoDeck(e:GetHandler(),nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(e:GetHandler(),nil,0,REASON_EFFECT)
 end
