@@ -125,12 +125,12 @@ function c13254084.spfilter(c,e,tp)
 	return (c:IsCode(13254039) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)) or (c:IsRace(RACE_ZOMBIE) and c:IsLevelBelow(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function c13254084.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c13254084.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c13254084.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetMZoneCount(tp)<=0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c13254084.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)

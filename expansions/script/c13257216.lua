@@ -36,14 +36,6 @@ function c13257216.initial_effect(c)
 	e4:SetTarget(c13257216.thtg)
 	e4:SetOperation(c13257216.thop)
 	c:RegisterEffect(e4)
-	local e12=Effect.CreateEffect(c)
-	e12:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e12:SetCode(EVENT_SUMMON_SUCCESS)
-	e12:SetOperation(c13257216.bgmop)
-	c:RegisterEffect(e12)
-	local e13=e12:Clone()
-	e13:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e13)
 	
 end
 function c13257216.cfilter(c,tp)
@@ -87,7 +79,7 @@ function c13257216.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c13257216.thfilter(c)
-	return c:IsSetCard(0x353) and c:IsAbleToHand()
+	return c:IsSetCard(0x15) and c:IsAbleToHand()
 end
 function c13257216.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c13257216.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -100,7 +92,4 @@ function c13257216.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-end
-function c13257216.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257216,4))
 end

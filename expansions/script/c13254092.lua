@@ -56,7 +56,7 @@ function c13254092.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DRAW and eg:IsExists(c13254092.confilter,1,nil,1-tp)
 end
 function c13254092.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(c13254092.rmfilter,1,nil) and Duel.GetMZoneCount(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return eg:IsExists(c13254092.rmfilter,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 	Duel.SetChainLimit(c13254092.limit(eg))
@@ -72,7 +72,7 @@ function c13254092.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		local sg=g:RandomSelect(tp,1)
 		if Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)~=0 then
-			if Duel.GetMZoneCount(tp)<1 or not c:IsRelateToEffect(e) then return end
+			if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 or not c:IsRelateToEffect(e) then return end
 			Duel.BreakEffect()
 			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 		end

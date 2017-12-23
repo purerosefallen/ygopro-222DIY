@@ -41,14 +41,13 @@ function c13257210.initial_effect(c)
 	e4:SetTarget(c13257210.sptg)
 	e4:SetOperation(c13257210.spop)
 	c:RegisterEffect(e4)
+	--add code
 	local e12=Effect.CreateEffect(c)
-	e12:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e12:SetCode(EVENT_SUMMON_SUCCESS)
-	e12:SetOperation(c13257210.bgmop)
+	e12:SetType(EFFECT_TYPE_SINGLE)
+	e12:SetCode(EFFECT_ADD_SETCODE)
+	e12:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e12:SetValue(0x15)
 	c:RegisterEffect(e12)
-	local e13=e12:Clone()
-	e13:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e13)
 	
 end
 function c13257210.ntcon(e,c,minc)
@@ -79,13 +78,13 @@ function c13257210.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveCounter(ep,0x1f,1,REASON_EFFECT)
 end
 function c13257210.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x1f,2)
+	e:GetHandler():AddCounter(0x1f,3)
 end
 function c13257210.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst()==e:GetHandler()
 end
 function c13257210.spfilter(c,e,tp)
-	return c:IsLevelBelow(6) and c:IsSetCard(0x353) and not c:IsCode(13257210)
+	return c:IsLevelBelow(6) and c:IsSetCard(0x15) and not c:IsCode(12079734)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c13257210.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -101,7 +100,4 @@ function c13257210.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
-end
-function c13257210.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257210,4))
 end

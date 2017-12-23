@@ -35,13 +35,13 @@ function c13254080.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c13254080.spfilter,1,nil,tp)
 end
 function c13254080.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c13254080.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetMZoneCount(tp)<=0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	if c:IsRelateToEffect(e) then
 		if Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)~=1 then return end
 		--cannot release

@@ -1,14 +1,14 @@
 --巨大战舰 巨核Mk-3（D）
 function c13257206.initial_effect(c)
 	c:EnableCounterPermit(0x1f)
+	--special summon
 	local e11=Effect.CreateEffect(c)
-	e11:SetDescription(aux.Stringid(13257206,1))
-	e11:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e11:SetType(EFFECT_TYPE_SINGLE)
-	e11:SetCode(EFFECT_SUMMON_PROC)
-	e11:SetCondition(c13257206.otcon)
-	e11:SetOperation(c13257206.otop)
-	e11:SetValue(SUMMON_TYPE_ADVANCE)
+	e11:SetType(EFFECT_TYPE_FIELD)
+	e11:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SPSUM_PARAM)
+	e11:SetCode(EFFECT_SPSUMMON_PROC)
+	e11:SetTargetRange(POS_FACEUP_DEFENSE,0)
+	e11:SetRange(LOCATION_HAND)
+	e11:SetCondition(c13257206.sprcon)
 	c:RegisterEffect(e11)
 	--Destroy replace
 	local e1=Effect.CreateEffect(c)
@@ -44,45 +44,23 @@ function c13257206.initial_effect(c)
 	e5:SetCondition(c13257206.damcon)
 	e5:SetOperation(c13257206.damop)
 	c:RegisterEffect(e5)
-	--damage
+	--to deck
 	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e6:SetRange(LOCATION_MZONE)
-	e6:SetCode(EVENT_SUMMON_SUCCESS)
-	e6:SetCondition(c13257206.damcon1)
-	e6:SetOperation(c13257206.damop)
+	e6:SetCategory(CATEGORY_TODECK)
+	e6:SetType(EFFECT_TYPE_IGNITION)
+	e6:SetRange(LOCATION_GRAVE)
+	e6:SetCost(c13257206.tdcost)
+	e6:SetTarget(c13257206.tdtg)
+	e6:SetOperation(c13257206.tdop)
 	c:RegisterEffect(e6)
-	local e7=e6:Clone()
-	e6:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
-	c:RegisterEffect(e7)
-	local e8=e7:Clone()
-	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e8:SetCondition(c13257206.damcon2)
-	c:RegisterEffect(e8)
-	local e12=Effect.CreateEffect(c)
-	e12:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e12:SetCode(EVENT_SUMMON_SUCCESS)
-	e12:SetOperation(c13257206.bgmop)
-	c:RegisterEffect(e12)
-	local e13=e12:Clone()
-	e13:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e13)
 	
 end
-function c13257206.otfilter(c)
-	return c:IsSetCard(0x353) and c:IsType(TYPE_MONSTER) and (c:IsControler(tp) or c:IsFaceup())
-end
-function c13257206.otcon(e,c,minc)
+function c13257206.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local mg=Duel.GetMatchingGroup(c13257206.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	return c:GetLevel()>6 and minc<=1 and Duel.CheckTribute(c,1,1,mg)
-end
-function c13257206.otop(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg=Duel.GetMatchingGroup(c13257206.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	local sg=Duel.SelectTribute(tp,c,1,1,mg)
-	c:SetMaterial(sg)
-	Duel.Release(sg, REASON_SUMMON+REASON_MATERIAL)
+	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
+		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function c13257206.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT+REASON_BATTLE)
@@ -93,7 +71,7 @@ function c13257206.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveCounter(ep,0x1f,1,REASON_EFFECT)
 end
 function c13257206.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x1f,2)
+	e:GetHandler():AddCounter(0x1f,3)
 end
 function c13257206.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(13257206,RESET_EVENT+0x1fc0000+RESET_CHAIN,0,1)
@@ -104,17 +82,21 @@ function c13257206.damcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13257206.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,13257206)
-	Duel.Damage(1-tp,200,REASON_EFFECT)
+	Duel.Damage(1-tp,500,REASON_EFFECT)
 end
-function c13257206.cfilter(c,tp)
-	return c:GetSummonPlayer()==tp
+function c13257206.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
-function c13257206.damcon1(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c13257206.cfilter,1,nil,1-tp)
+function c13257206.tdfilter(c)
+	return c:IsSetCard(0x15) and c:IsAbleToDeck()
 end
-function c13257206.damcon2(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp
+function c13257206.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c13257206.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	local g=Duel.GetMatchingGroup(c13257206.tdfilter,tp,LOCATION_GRAVE,0,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 end
-function c13257206.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257206,4))
+function c13257206.tdop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(c13257206.tdfilter,tp,LOCATION_GRAVE,0,nil)
+	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 end

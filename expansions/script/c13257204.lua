@@ -29,14 +29,6 @@ function c13257204.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	local e12=Effect.CreateEffect(c)
-	e12:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e12:SetCode(EVENT_SUMMON_SUCCESS)
-	e12:SetOperation(c13257204.bgmop)
-	c:RegisterEffect(e12)
-	local e13=e12:Clone()
-	e13:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e13)
 	
 end
 function c13257204.otfilter(c,tp)
@@ -83,8 +75,5 @@ function c13257204.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257204.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x1f,1)
-end
-function c13257204.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257204,4))
+	e:GetHandler():AddCounter(0x1f,2)
 end

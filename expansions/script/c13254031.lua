@@ -23,7 +23,6 @@ function c13254031.initial_effect(c)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetRange(LOCATION_HAND)
 	e3:SetCountLimit(1,13254031)
-	e3:SetCondition(c13254031.condition)
 	e3:SetCost(c13254031.cost)
 	e3:SetTarget(c13254031.netg)
 	e3:SetOperation(c13254031.neop)
@@ -45,9 +44,6 @@ function c13254031.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
 	end
-end
-function c13254031.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsChainNegatable(ev)
 end
 function c13254031.cfilter(c)
 	return c:IsSetCard(0x356) and c:IsDiscardable()

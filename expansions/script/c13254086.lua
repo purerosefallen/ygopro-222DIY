@@ -99,7 +99,7 @@ function c13254086.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(sg,REASON_COST)
 end
 function c13254086.filter(c)
-	return c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
+	return c:IsSetCard(0x356) and c:IsAbleToRemove()
 end
 function c13254086.phtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c13254086.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,nil) end

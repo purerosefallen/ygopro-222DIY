@@ -1,6 +1,5 @@
 --BOSS来袭（D）
 function c13257211.initial_effect(c)
-	c:SetUniqueOnField(1,0,13257211)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -24,7 +23,7 @@ function c13257211.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetRange(LOCATION_SZONE)
-	e4:SetCode(EVENT_LEAVE_FIELD)
+	e4:SetCode(EVENT_TO_GRAVE)
 	e4:SetOperation(c13257211.checkop)
 	c:RegisterEffect(e4,0)
 	local e5=Effect.CreateEffect(c)
@@ -67,7 +66,7 @@ function c13257211.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257211.chkfilter(c,tp)
-	return c:IsSetCard(0x353) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsSetCard(0x15) and c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c13257211.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c13257211.chkfilter,1,nil,tp) then
@@ -78,7 +77,7 @@ function c13257211.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(13257211)~=0
 end
 function c13257211.filter(c,e,tp)
-	return c:IsSetCard(0x353) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x15) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c13257211.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -10,13 +10,6 @@ function c13257215.initial_effect(c)
 	e11:SetOperation(c13257215.otop)
 	e11:SetValue(SUMMON_TYPE_ADVANCE)
 	c:RegisterEffect(e11)
-	--cannot special summon
-	local e12=Effect.CreateEffect(c)
-	e12:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e12:SetType(EFFECT_TYPE_SINGLE)
-	e12:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e12:SetValue(aux.FALSE)
-	c:RegisterEffect(e12)
 	--Destroy replace
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
@@ -38,7 +31,7 @@ function c13257215.initial_effect(c)
 	c:RegisterEffect(e3)
 	--remove
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(13257215,2))
+	e4:SetDescription(aux.Stringid(13257203,1))
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)
@@ -58,14 +51,6 @@ function c13257215.initial_effect(c)
 	e5:SetTarget(c13257215.sptg)
 	e5:SetOperation(c13257215.spop)
 	c:RegisterEffect(e5)
-	local e13=Effect.CreateEffect(c)
-	e13:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e13:SetCode(EVENT_SUMMON_SUCCESS)
-	e13:SetOperation(c13257215.bgmop)
-	c:RegisterEffect(e13)
-	local e14=e13:Clone()
-	e14:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e14)
 	
 end
 function c13257215.otfilter(c,tp)
@@ -161,14 +146,14 @@ function c13257215.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257215.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
+	local c=s:GetHandler()
 	return c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp
 end
 function c13257215.spfilter(c,e,tp)
-	return c:IsLevelBelow(6) and c:IsSetCard(0x353) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(6) and c:IsSetCard(0x15) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c13257215.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c13257215.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(c13257215.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c13257215.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -178,7 +163,4 @@ function c13257215.spop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
-end
-function c13257215.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257215,4))
 end
