@@ -12,6 +12,7 @@ bool SoundManager::Init() {
 	bgm_scene = -1;
 	previous_bgm_scene = -1;
 	RefreshBGMList();
+	bgm_process = false;
 	engineSound = irrklang::createIrrKlangDevice();
 	engineMusic = irrklang::createIrrKlangDevice();
 	if(!engineSound || !engineMusic) {
@@ -240,7 +241,7 @@ void SoundManager::PlayMusic(char* song, bool loop) {
 }
 void SoundManager::PlayBGM(int scene) {
 #ifdef YGOPRO_USE_IRRKLANG
-	if(!mainGame->chkEnableMusic->isChecked())
+	if(!mainGame->chkEnableMusic->isChecked() || bgm_process)
 		return;
 	if(!mainGame->chkMusicMode->isChecked())
 		scene = BGM_ALL;
@@ -249,7 +250,6 @@ void SoundManager::PlayBGM(int scene) {
 		int count = BGMList[scene].size();
 		if(count <= 0)
 			return;
-		previous_bgm_scene = bgm_scene;
 		bgm_scene = scene;
 		int bgm = rand() % count;
 		auto name = BGMList[scene][bgm].c_str();
@@ -262,16 +262,17 @@ void SoundManager::PlayBGM(int scene) {
 }
 void SoundManager::PlayCustomBGM(char* BGMName) {
 #ifdef YGOPRO_USE_IRRKLANG
-	if(!mainGame->chkEnableMusic->isChecked() || !mainGame->chkMusicMode->isChecked())
+	if(!mainGame->chkEnableMusic->isChecked() || !mainGame->chkMusicMode->isChecked() || bgm_process)
 		return;
 	if(engineMusic->isCurrentlyPlaying(BGMName))
 		return;
+	bgm_process = true;
 	int pscene = bgm_scene;
 	if (pscene != BGM_CUSTOM)
 		previous_bgm_scene = pscene;
 	bgm_scene = BGM_CUSTOM;
-	PlayMusic("./test_yield.mp3", false);
 	PlayMusic(BGMName, false);
+	bgm_process = false;
 #endif
 }
 void SoundManager::PlayCustomSound(char* SoundName) {
