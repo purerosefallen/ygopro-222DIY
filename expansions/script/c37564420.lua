@@ -1,13 +1,14 @@
 --Taqumi
-xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 local m=37564420
 local cm=_G["c"..m]
+xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 function cm.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,m)
 	e1:SetCondition(cm.condition)
 	e1:SetCost(Senya.DiscardHandCost(1))
 	e1:SetTarget(cm.target)
