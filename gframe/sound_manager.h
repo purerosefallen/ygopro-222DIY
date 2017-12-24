@@ -17,6 +17,7 @@ private:
 	std::vector<std::wstring> BGMList[9];
 	int bgm_scene;
 	int previous_bgm_scene;
+	bool bgm_process;
 #ifdef YGOPRO_USE_IRRKLANG
 	irrklang::ISoundEngine* engineSound;
 	irrklang::ISoundEngine* engineMusic;
