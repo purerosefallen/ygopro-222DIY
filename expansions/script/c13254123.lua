@@ -31,7 +31,7 @@ function c13254123.initial_effect(c)
 	e4:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(1,0)
-	e4:SetCondition(c13073850.splimcon)
+	e4:SetCondition(c13254123.splimcon)
 	e4:SetTarget(c13254123.sumlimit)
 	c:RegisterEffect(e4)
 	--draw
