@@ -97,7 +97,7 @@ function c13254124.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCountLimit(1)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		e1:SetOperation(c13254124.tdop)
-		Duel.RegisterEffect(e1,p)
+		Duel.RegisterEffect(e1,tp)
 	end
 end
 function c13254124.tdop(e,tp,eg,ep,ev,re,r,rp)
