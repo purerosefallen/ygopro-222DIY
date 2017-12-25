@@ -21,6 +21,8 @@ public:
 	//modded
 	static int32 card_set_entity_code(lua_State *L);
 	static int32 card_set_card_data(lua_State *L);
+	static int32 card_get_link_marker(lua_State *L);
+	static int32 card_get_origin_link_marker(lua_State *L);	
 	static int32 effect_set_owner(lua_State *L);
 	static int32 effect_get_range(lua_State *L);
 	static int32 effect_get_count_limit(lua_State *L);

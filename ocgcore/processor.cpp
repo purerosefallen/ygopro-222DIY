@@ -5136,7 +5136,9 @@ int32 field::adjust_step(uint16 step) {
 	case 1: {
 		//win check(deck=0 or lp=0)
 		uint32 winp = 5, rea = 1;
-		if(player[0].lp <= 0 && player[1].lp > 0) {
+		bool lp_zero_0 = (player[0].lp <= 0 && !is_player_affected_by_effect(0, EFFECT_CANNOT_LOSE_KOISHI));
+		bool lp_zero_1 = (player[1].lp <= 0 && !is_player_affected_by_effect(1, EFFECT_CANNOT_LOSE_KOISHI));
+		if(lp_zero_0 && !lp_zero_1) {
 			winp = 1;
 			rea = 1;
 		}
@@ -5144,7 +5146,7 @@ int32 field::adjust_step(uint16 step) {
 			winp = 1;
 			rea = 2;
 		}
-		if(player[1].lp <= 0 && player[0].lp > 0) {
+		if(lp_zero_1 && !lp_zero_0) {
 			winp = 0;
 			rea = 1;
 		}
@@ -5152,7 +5154,7 @@ int32 field::adjust_step(uint16 step) {
 			winp = 0;
 			rea = 2;
 		}
-		if(player[1].lp <= 0 && player[0].lp <= 0) {
+		if(lp_zero_0 && lp_zero_1) {
 			winp = PLAYER_NONE;
 			rea = 1;
 		}
