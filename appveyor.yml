@@ -16,9 +16,9 @@ install:
   - tar xf lua-5.3.4.tar.gz
   - move lua-5.3.4\src lua
   
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.sqlite.org/2016/sqlite-amalgamation-3150200.zip ; exit 0"
-  - 7z x sqlite-amalgamation-3150200.zip
-  - move sqlite-amalgamation-3150200 sqlite3
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.sqlite.org/2016/sqlite-amalgamation-3210000.zip ; exit 0"
+  - 7z x sqlite-amalgamation-3210000.zip
+  - move sqlite-amalgamation-3210000 sqlite3
   
   - appveyor DownloadFile https://github.com/tronkko/dirent/raw/master/include/dirent.h
   - move dirent.h gframe\
@@ -124,9 +124,8 @@ cache:
   - freetype-2.8.tar.bz2
   - irrlicht-1.8.4.zip
   - lua-5.3.4.tar.gz
-  - sqlite-amalgamation-3200100.zip
+  - sqlite-amalgamation-3210000.zip
   - irrKlang-32bit-1.5.0.zip
-  - sqlite-amalgamation-3150200.zip
   - premake-5.0.0-alpha10-windows.zip
   - Redis-x64-3.2.100.zip
 
