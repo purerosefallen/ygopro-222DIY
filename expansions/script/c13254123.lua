@@ -62,6 +62,9 @@ function c13254123.initial_effect(c)
 	Duel.AddCustomActivityCounter(13254123,ACTIVITY_SPSUMMON,c13254123.counterfilter)
 	
 end
+function c13254123.counterfilter(c)
+	return c:IsSetCard(0x356)
+end
 function c13254123.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(13254123,tp,ACTIVITY_SPSUMMON)==0 end
 	local e1=Effect.CreateEffect(e:GetHandler())
