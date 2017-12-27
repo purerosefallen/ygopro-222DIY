@@ -12,10 +12,18 @@ function c13257218.initial_effect(c)
 	e11:SetCode(EFFECT_SPSUMMON_PROC)
 	e11:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SPSUM_PARAM)
 	e11:SetRange(LOCATION_HAND)
-	e11:SetTargetRange(POS_FACEUP,1)
+	e11:SetTargetRange(POS_FACEUP_ATTACK,1)
 	e11:SetCondition(c13257218.spcon)
 	e11:SetOperation(c13257218.spop)
 	c:RegisterEffect(e11)
+	--spsummon cost
+	local e12=Effect.CreateEffect(c)
+	e12:SetType(EFFECT_TYPE_SINGLE)
+	e12:SetCode(EFFECT_SPSUMMON_COST)
+	e12:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e12:SetCost(c13257218.spcost)
+	e12:SetOperation(c13257218.spcop)
+	c:RegisterEffect(e12)
 	--Destroy replace
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
@@ -60,7 +68,20 @@ function c13257218.initial_effect(c)
 	e5:SetTarget(c13257218.distg)
 	e5:SetOperation(c13257218.disop)
 	c:RegisterEffect(e5)
+	local e13=Effect.CreateEffect(c)
+	e13:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e13:SetCode(EVENT_SUMMON_SUCCESS)
+	e13:SetOperation(c13257218.bgmop)
+	c:RegisterEffect(e13)
+	local e14=e13:Clone()
+	e14:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e14)
+	Duel.AddCustomActivityCounter(13257218,ACTIVITY_SPSUMMON,c13257218.counterfilter)
+	Duel.AddCustomActivityCounter(13257218,ACTIVITY_NORMALSUMMON,c13257218.counterfilter)
 	
+end
+function c13257218.counterfilter(c)
+	return not c:IsSetCard(0x353)
 end
 function c13257218.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT+REASON_BATTLE)
@@ -144,7 +165,7 @@ function c13257218.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsChainNegatable(ev)
 end
 function c13257218.costfilter(c)
-	return c:IsSetCard(0x15) and c:IsDiscardable()
+	return c:IsSetCard(0x353) and c:IsDiscardable()
 end
 function c13257218.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c13257218.costfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -162,4 +183,29 @@ function c13257218.disop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
+end
+function c13257218.spcost(e,c,tp)
+	return Duel.GetActivityCount(tp,ACTIVITY_NORMALSUMMON)==0 and Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0
+end
+function c13257218.spcop(e,tp,eg,ep,ev,re,r,rp)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(c13257218.splimit)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_CANNOT_SUMMON)
+	Duel.RegisterEffect(e2,tp)
+	local e3=e1:Clone()
+	e3:SetCode(EFFECT_CANNOT_MSET)
+	Duel.RegisterEffect(e3,tp)
+end
+function c13257218.splimit(e,c,tp,sumtp,sumpos)
+	return not c:IsSetCard(0x356)
+end
+function c13257218.bgmop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(11,0,aux.Stringid(13257218,4))
 end

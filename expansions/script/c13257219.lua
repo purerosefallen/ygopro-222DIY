@@ -31,7 +31,19 @@ function c13257219.initial_effect(c)
 	e3:SetTarget(c13257219.sptg)
 	e3:SetOperation(c13257219.spop)
 	c:RegisterEffect(e3)
+	local e12=Effect.CreateEffect(c)
+	e12:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e12:SetCode(EVENT_SUMMON_SUCCESS)
+	e12:SetOperation(c13257219.bgmop)
+	c:RegisterEffect(e12)
+	local e13=e12:Clone()
+	e13:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e13)
+	Duel.AddCustomActivityCounter(13257219,ACTIVITY_SPSUMMON,c13257219.counterfilter)
 	
+end
+function c13257219.counterfilter(c)
+	return c:GetSummonLocation()~=LOCATION_EXTRA
 end
 function c13257219.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -39,7 +51,7 @@ function c13257219.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function c13257219.filter(c)
-	return c:IsCode(975299) and c:IsAbleToHand()
+	return c:IsCode(13257208) and c:IsAbleToHand()
 end
 function c13257219.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(c13257219.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -53,7 +65,7 @@ function c13257219.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c13257219.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsEnvironment(975299)
+	return Duel.IsEnvironment(13257208)
 end
 function c13257219.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGraveAsCost() 
@@ -66,7 +78,7 @@ function c13257219.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c13257219.thfilter(c)
-	return c:IsSetCard(0x15) and c:IsAbleToHand()
+	return c:IsSetCard(0x353) and c:IsAbleToHand()
 end
 function c13257219.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:GetLocation()==LOCATION_GRAVE and chkc:GetControler()==tp and c13257219.thfilter(chkc) end
@@ -83,7 +95,7 @@ function c13257219.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257219.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) and Duel.GetCustomActivityCount(13257219,tp,ACTIVITY_SPSUMMON)==0 end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
@@ -92,6 +104,9 @@ function c13257219.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	e1:SetTarget(c13257219.sumlimit)
 	Duel.RegisterEffect(e1,tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+	local cg=Duel.SelectMatchingCard(tp,Card.IsDiscardable,tp,LOCATION_HAND,0,1,1,nil)
+	Duel.SendtoGrave(cg,REASON_COST+REASON_DISCARD)
 end
 function c13257219.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA)
@@ -121,4 +136,7 @@ function c13257219.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummonComplete()
 		end
 	end
+end
+function c13257219.bgmop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(11,0,aux.Stringid(13257219,4))
 end

@@ -6,7 +6,7 @@ function c13257209.initial_effect(c)
 	e1:SetCategory(CATEGORY_COUNTER)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetTarget(c13257209.target)
 	e1:SetOperation(c13257209.operation)
 	c:RegisterEffect(e1)
@@ -24,7 +24,7 @@ function c13257209.initial_effect(c)
 	
 end
 function c13257209.filter(c)
-	return c:IsSetCard(0x15) and c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsCanAddCounter(0x1f,3)
+	return c:IsSetCard(0x353) and c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsCanAddCounter(0x1f,3)
 end
 function c13257209.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsOnField() and c13257209.filter(chkc) end 
@@ -48,7 +48,7 @@ end
 function c13257209.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		tc:AddCounter(0x1f,3)
+		tc:AddCounter(0x1f,1)
 	end
 end
 function c13257209.thcon(e,tp,eg,ep,ev,re,r,rp)
