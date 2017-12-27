@@ -44,13 +44,14 @@ end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
+	if Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
 		local tc=eg:GetFirst()
 		if tc and tc:IsType(TYPE_EFFECT) then
 			c:CreateEffectRelation(e)
 			Senya.CopyStatusAndEffect(e,c,tc,false,0x1fe1000,1,2)
 			c:ReleaseEffectRelation(e)
 		end
+		Duel.SpecialSummonComplete()
 		Duel.Hint(11,0,m*16+2)
 	end
 end
