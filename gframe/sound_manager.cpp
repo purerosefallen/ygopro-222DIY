@@ -2,7 +2,7 @@
 #ifndef _WIN32
 #include <dirent.h>
 #endif
-#ifdef IRRKLANG_STATIC
+#ifdef YGOPRO_USE_IRRKLANG
 #include "../ikpmp3/ikpMP3.h"
 #endif
 
