@@ -42,6 +42,14 @@ function c13257203.initial_effect(c)
 	e5:SetCost(c13257203.descost)
 	e5:SetOperation(c13257203.swop)
 	c:RegisterEffect(e5)
+	local e12=Effect.CreateEffect(c)
+	e12:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e12:SetCode(EVENT_SUMMON_SUCCESS)
+	e12:SetOperation(c13257203.bgmop)
+	c:RegisterEffect(e12)
+	local e13=e12:Clone()
+	e13:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e13)
 	
 end
 function c13257203.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -53,7 +61,7 @@ function c13257203.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveCounter(ep,0x1f,1,REASON_EFFECT)
 end
 function c13257203.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x1f,3)
+	e:GetHandler():AddCounter(0x1f,2)
 end
 function c13257203.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1f,1,REASON_COST) end
@@ -91,4 +99,7 @@ function c13257203.swop(e,tp,eg,ep,ev,re,r,rp)
 		e7:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e7)
 	end
+end
+function c13257203.bgmop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(11,0,aux.Stringid(13257203,4))
 end

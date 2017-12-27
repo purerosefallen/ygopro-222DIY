@@ -107,7 +107,7 @@ function c13254057.desop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)~=2 then return end
 	Duel.BreakEffect()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local tg=Duel.SelectMatchingCard(tp,c13254051.desfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local tg=Duel.SelectMatchingCard(tp,c13254057.desfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
 	if tg:GetCount()>0 then
 		Duel.HintSelection(tg)
 		Duel.Destroy(tg,REASON_EFFECT)
