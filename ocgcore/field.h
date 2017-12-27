@@ -783,6 +783,10 @@ public:
 #define HINT_CODE				8
 #define HINT_NUMBER				9
 #define HINT_CARD				10
+//custom hints in KoishiPro for custom sound
+#define HINT_MUSIC				11
+#define HINT_SOUND				12
+#define HINT_MUSIC_OGG			13
 //
 #define CHINT_TURN				1
 #define CHINT_CARD				2
