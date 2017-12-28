@@ -43,6 +43,7 @@
 /sound
 /update
 
+# others
 /.vscode
 /bak/
 /card_list.txt
