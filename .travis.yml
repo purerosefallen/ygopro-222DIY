@@ -130,10 +130,10 @@ before_deploy:
 - rm -rf pics/thumbnail pics/*.db
 - mkdir replay
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    zip -q -r ygopro-222DIY-$TRAVIS_OS_NAME.zip ygopro libirrKlang.so LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay expansions;
+    zip -q -r ygopro-222DIY-$TRAVIS_OS_NAME.zip ygopro libirrKlang.so LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound expansions;
   fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    zip -q -r ygopro-222DIY-$TRAVIS_OS_NAME.zip ygopro.app LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay expansions;
+    zip -q -r ygopro-222DIY-$TRAVIS_OS_NAME.zip ygopro.app LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound expansions;
   fi
 
 deploy:
