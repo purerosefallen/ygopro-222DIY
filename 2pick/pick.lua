@@ -89,11 +89,39 @@ function Auxiliary.SinglePick(p,list,count)
 	--Duel.SendtoDeck(tg,p,0,REASON_RULE)
 	Duel.Exile(rg,REASON_RULE)
 end
+
+function Auxiliary.SinglePickForMain(p,list,count)
+	local g1=Group.CreateGroup()
+	local g2=Group.CreateGroup()
+	for _,g in ipairs({g1,g2}) do
+		for i=1,count do
+			local code=list[math.random(#list)]
+			g:AddCard(Duel.CreateToken(p,code))
+		end
+		Duel.SendtoDeck(g,nil,0,REASON_RULE)
+	end
+	local sg=g1:Clone()
+	sg:Merge(g2)
+	--Duel.ConfirmCards(p,sg)
+	Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
+	local sc=sg:Select(p,1,1,nil):GetFirst()
+	local tg=g1:IsContains(sc) and g1 or g2
+	local rg=g1:IsContains(sc) and g2 or g1
+	--Duel.SendtoDeck(tg,p,0,REASON_RULE)
+	Duel.Exile(rg,REASON_RULE)
+	local g3=Group.CreateGroup()
+	for nc in aux.Next(g3) do
+		local copy_code=nc:GetOriginCode()
+		g3:AddCard(Duel.CreateToken(p,copy_code))
+	end
+	Duel.SendtoDeck(g,nil,0,REASON_RULE)
+end
+
 function Auxiliary.StartPick(e)
 	math.randomseed(os.time())
 	local g=Duel.GetFieldGroup(0,LOCATION_HAND | LOCATION_DECK | LOCATION_EXTRA, LOCATION_HAND | LOCATION_DECK | LOCATION_EXTRA)
 	Duel.Exile(g,REASON_RULE)
-	for i=1,10 do
+	for i=1,5 do
 		--[[local list=main
 		local count=4
 		if i==9 then
@@ -107,13 +135,13 @@ function Auxiliary.StartPick(e)
 		end]]
 		
 		local list=main_monster
-		if i==7 or i==8 then
+		if i==4 then
 			list=main_spell
-		elseif i==9 or i==10 then
+		elseif i==5 then
 			list=main_trap
 		end
 		for p=0,1 do
-			Auxiliary.SinglePick(p,list,4)
+			Auxiliary.SinglePickForMain(p,list,4)
 			--Auxiliary.SinglePick(p,main,4)
 		end
 	end
