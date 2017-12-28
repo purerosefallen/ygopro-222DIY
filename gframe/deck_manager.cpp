@@ -15,7 +15,7 @@ void DeckManager::LoadLFList() {
 	char linebuf[256];
 	wchar_t strBuffer[256];
 	if(fp_custom) {
-		while(fgets(linebuf, 256, fp)) {
+		while(fgets(linebuf, 256, fp_custom)) {
 			if(linebuf[0] == '#')
 				continue;
 			int p = 0, sa = 0, code, count;
@@ -47,7 +47,7 @@ void DeckManager::LoadLFList() {
 			(*cur->content)[code] = count;
 			cur->hash = cur->hash ^ ((code << 18) | (code >> 14)) ^ ((code << (27 + count)) | (code >> (5 - count)));
 		}
-		fclose(fp);
+		fclose(fp_custom);
 	}
 	if(fp) {
 		while(fgets(linebuf, 256, fp)) {
