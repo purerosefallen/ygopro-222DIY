@@ -662,7 +662,7 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 	lua_pushinteger(lua_state, HINT_MUSIC_OGG);
 	lua_setglobal(lua_state, "HINT_MUSIC_OGG");
 	//load init.lua by MLD
-	load_script((char*) "./expansions/script/init.lua");	
+	load_script((char*) "./expansions/script/init.lua");
 }
 interpreter::~interpreter() {
 	lua_close(lua_state);
