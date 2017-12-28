@@ -36,7 +36,6 @@
 /premake5.exe
 
 # ygopro folders
-
 /deck
 /fonts
 /replay
@@ -44,6 +43,7 @@
 /sound
 /update
 
+# others
 /.vscode
 /bak/
 /card_list.txt
