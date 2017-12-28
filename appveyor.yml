@@ -76,6 +76,7 @@ after_build:
 
   - cd ..
   - cp -rf data/expansions .
+  - cp -rf data/sound .
   - cp -rf data/update .
   - mv -f ygopro.exe ygopro_222.exe
 
