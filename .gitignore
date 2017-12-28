@@ -1,3 +1,4 @@
+/expansions/*
 /specials
 /obj
 /bin
@@ -15,9 +16,6 @@
 /gframe/dirent.h
 ygopro
 premake5.exe
-/expansions/pics
 /pics
 /premake5
-/lua
-
 /card_list.txt
