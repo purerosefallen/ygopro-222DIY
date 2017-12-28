@@ -59,7 +59,6 @@ build:
     parallel: true
 
 after_build:
-  - git checkout master
   - mv -f bin/release/ygopro.exe .
 
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/windbot/archive/master.zip ; exit 0"
