@@ -26,6 +26,9 @@ install:
   # let premake happy
   - xcopy /E premake\* .
   
+  # patch lua
+  # - patch -p0 < lua\lua.patch
+    
   # premake
   - premake5 vs2015
   
@@ -37,6 +40,7 @@ build:
 
 after_build:
   - ps: move bin\release\ygopro.exe .
+  - git clone https://github.com/Smile-DK/ygopro-svrelease
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/ygopro-server/archive/master.zip ; exit 0"
   - 7z x ygopro-server-master.zip
@@ -112,7 +116,7 @@ artifacts:
   - path: ygopro.exe
     name: ygopro
   - path: ygopro-server.7z
-    name: ygopro-server
+    name: ygopro-server	
 
 cache:
   - premake-5.0.0-alpha12-windows.zip
@@ -124,3 +128,4 @@ cache:
   - irrKlang-32bit-1.5.0.zip
   - premake-5.0.0-alpha10-windows.zip
   - Redis-x64-3.2.100.zip
+
