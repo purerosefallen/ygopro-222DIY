@@ -33,9 +33,9 @@ HostInfo game_info;
 
 void Game::MainServerLoop() {
 	deckManager.LoadLFList();
+	LoadBetaDB();
 	LoadExpansionDB();
 	dataManager.LoadDB("cards.cdb");
-	
 	aServerPort = NetServer::StartServer(aServerPort);
 	NetServer::InitDuel();
 	printf("%u\n", aServerPort);
@@ -48,6 +48,38 @@ void Game::MainServerLoop() {
 		usleep(200000);
 #endif
 	}
+}
+void Game::LoadBetaDB() {
+#ifdef _WIN32
+	char fpath[1000];
+	WIN32_FIND_DATAW fdataw;
+	HANDLE fh = FindFirstFileW(L"./beta/*.cdb", &fdataw);
+	if(fh != INVALID_HANDLE_VALUE) {
+		do {
+			if(!(fdataw.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+				char fname[780];
+				BufferIO::EncodeUTF8(fdataw.cFileName, fname);
+				sprintf(fpath, "./beta/%s", fname);
+				dataManager.LoadDB(fpath);
+			}
+		} while(FindNextFileW(fh, &fdataw));
+		FindClose(fh);
+	}
+#else
+	DIR * dir;
+	struct dirent * dirp;
+	if((dir = opendir("./beta/")) != NULL) {
+		while((dirp = readdir(dir)) != NULL) {
+			size_t len = strlen(dirp->d_name);
+			if(len < 5 || strcasecmp(dirp->d_name + len - 4, ".cdb") != 0)
+				continue;
+			char filepath[1000];
+			sprintf(filepath, "./beta/%s", dirp->d_name);
+			dataManager.LoadDB(filepath);
+		}
+		closedir(dir);
+	}
+#endif
 }
 #else //YGOPRO_SERVER_MODE
 bool Game::Initialize() {

@@ -1,3 +1,3 @@
-## YGOPro(Server)
-OCG server data for 222/7210
-[![Build Status](https://travis-ci.org/purerosefallen/ygopro-7210srv.svg?branch=master)](https://travis-ci.org/purerosefallen/ygopro-7210srv)
+## YGOPro-222DIY
+The server of YGOPRO 222DIY group
+[![Build Status](https://travis-ci.org/purerosefallen/ygopro-222DIY.svg?branch=master)](https://travis-ci.org/purerosefallen/ygopro-222DIY)
