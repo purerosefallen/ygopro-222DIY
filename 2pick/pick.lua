@@ -111,7 +111,7 @@ function Auxiliary.SinglePickForMain(p,list,count)
 	Duel.Exile(rg,REASON_RULE)
 	local g3=Group.CreateGroup()
 	for nc in aux.Next(tg) do
-		local copy_code=nc:GetOriginCode()
+		local copy_code=nc:GetOriginalCode()
 		g3:AddCard(Duel.CreateToken(p,copy_code))
 	end
 	Duel.SendtoDeck(g3,nil,0,REASON_RULE)
