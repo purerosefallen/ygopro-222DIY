@@ -110,11 +110,11 @@ function Auxiliary.SinglePickForMain(p,list,count)
 	--Duel.SendtoDeck(tg,p,0,REASON_RULE)
 	Duel.Exile(rg,REASON_RULE)
 	local g3=Group.CreateGroup()
-	for nc in aux.Next(g3) do
+	for nc in aux.Next(tg) do
 		local copy_code=nc:GetOriginCode()
 		g3:AddCard(Duel.CreateToken(p,copy_code))
 	end
-	Duel.SendtoDeck(g,nil,0,REASON_RULE)
+	Duel.SendtoDeck(g3,nil,0,REASON_RULE)
 end
 
 function Auxiliary.StartPick(e)
