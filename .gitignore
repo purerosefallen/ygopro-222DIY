@@ -26,14 +26,14 @@
 # git repos
 /pics
 /script
-/WindBot
 
-# ygopro main program
-/ygopro
-/ygopro.exe
-/ygopro_*.exe
-/premake5
-/premake5.exe
+# windbot related files
+/[Bb]ot.conf
+/[Bb]ot.exe
+/[Ww]ind[Bb]ot
+
+# ygopro config file
+/system_user.conf
 
 # ygopro folders
 /deck
@@ -43,9 +43,15 @@
 /sound
 /update
 
+# ygopro main program
+/ygopro
+/ygopro.exe
+/ygopro_*.exe
+/premake5
+/premake5.exe
+
 # others
 /.vscode
 /bak/
 /card_list.txt
 /ygopro_*.bat
-
