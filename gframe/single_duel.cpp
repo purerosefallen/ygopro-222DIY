@@ -741,7 +741,8 @@ int SingleDuel::Analyze(char* msgbuffer, unsigned int len) {
 			//modded
 			case 10:
 			case 11:
-			case 12: {
+			case 12:
+			case 13: {
 				NetServer::SendBufferToPlayer(players[0], STOC_GAME_MSG, offset, pbuf - offset);
 				NetServer::SendBufferToPlayer(players[1], STOC_GAME_MSG, offset, pbuf - offset);
 				for(auto oit = observers.begin(); oit != observers.end(); ++oit)
@@ -952,6 +953,19 @@ int SingleDuel::Analyze(char* msgbuffer, unsigned int len) {
 #endif
 			break;
 		}
+		case MSG_CONFIRM_EXTRATOP: {
+			player = BufferIO::ReadInt8(pbuf);
+			count = BufferIO::ReadInt8(pbuf);
+			pbuf += count * 7;
+			NetServer::SendBufferToPlayer(players[0], STOC_GAME_MSG, offset, pbuf - offset);
+			NetServer::ReSendToPlayer(players[1]);
+			for (auto oit = observers.begin(); oit != observers.end(); ++oit)
+				NetServer::ReSendToPlayer(*oit);
+#ifdef YGOPRO_SERVER_MODE
+			NetServer::ReSendToPlayers(cache_recorder, replay_recorder);
+#endif
+			break;
+		}
 		case MSG_CONFIRM_CARDS: {
 			player = BufferIO::ReadInt8(pbuf);
 			count = BufferIO::ReadInt8(pbuf);
@@ -997,6 +1011,24 @@ int SingleDuel::Analyze(char* msgbuffer, unsigned int len) {
 			NetServer::ReSendToPlayer(cache_recorder);
 #endif
 			RefreshHand(player, 0x781fff, 0);
+			break;
+		}
+		case MSG_SHUFFLE_EXTRA: {
+			player = BufferIO::ReadInt8(pbuf);
+			count = BufferIO::ReadInt8(pbuf);
+			NetServer::SendBufferToPlayer(players[player], STOC_GAME_MSG, offset, (pbuf - offset) + count * 4);
+#ifdef YGOPRO_SERVER_MODE
+			NetServer::ReSendToPlayer(replay_recorder);
+#endif
+			for (int i = 0; i < count; ++i)
+				BufferIO::WriteInt32(pbuf, 0);
+			NetServer::SendBufferToPlayer(players[1 - player], STOC_GAME_MSG, offset, pbuf - offset);
+			for (auto oit = observers.begin(); oit != observers.end(); ++oit)
+				NetServer::ReSendToPlayer(*oit);
+#ifdef YGOPRO_SERVER_MODE
+			NetServer::ReSendToPlayer(cache_recorder);
+#endif
+			RefreshExtra(player);
 			break;
 		}
 		case MSG_REFRESH_DECK: {
