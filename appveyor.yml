@@ -66,7 +66,7 @@ after_build:
   
   - rm -rf expansions
   
-  - git clone https://github.com/purerosefallen/ygopro-222DIY-data
+  - git clone --depth=1 https://github.com/purerosefallen/ygopro-222DIY-data
   - cd ygopro-222DIY-data
   
   - cp -rf ../ygopro_222.exe .
