@@ -116,7 +116,7 @@ after_build:
   - cp -rf ygopro-222DIY-data.7z ygopro-222DIY-full.7z
   - 7z a -mx9 -xr!.git* ygopro-222DIY-data-with-sound.7z sound
   - 7z a -mx9 -xr!.git* ygopro-222DIY-full.7z LICENSE README.md strings.conf system.conf cards.cdb script textures deck single pics replay WindBot Bot.exe bot.conf
-  - cp -rf ../ygopro-222DIY-full.7z ygopro-222DIY-full-with-sound.7z
+  - cp -rf ygopro-222DIY-full.7z ygopro-222DIY-full-with-sound.7z
   - 7z a -mx9 -xr!.git* ygopro-222DIY-full-with-sound.7z sound
 
 test: off
