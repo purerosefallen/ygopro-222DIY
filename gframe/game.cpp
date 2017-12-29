@@ -1015,8 +1015,7 @@ void Game::RefreshBot() {
 }
 void Game::LoadConfig() {
 	FILE* fp = fopen("system.conf", "r");
-	if(!fp)
-		return;
+	FILE* fp_user = fopen("system_user.conf", "r");
 	char linebuf[256];
 	char strbuf[32];
 	char valbuf[256];
@@ -1056,99 +1055,193 @@ void Game::LoadConfig() {
 	gameConf.enable_music = true;
 	gameConf.music_volume = 0.5;
 	gameConf.music_mode = 1;
-	while(fgets(linebuf, 256, fp)) {
-		sscanf(linebuf, "%s = %s", strbuf, valbuf);
-		if(!strcmp(strbuf, "antialias")) {
-			gameConf.antialias = atoi(valbuf);
-		} else if(!strcmp(strbuf, "use_d3d")) {
-			gameConf.use_d3d = atoi(valbuf) > 0;
-		} else if(!strcmp(strbuf, "use_image_scale")) {
-			gameConf.use_image_scale = atoi(valbuf) > 0;
-		} else if(!strcmp(strbuf, "pro_version")) {
-			PRO_VERSION = atoi(valbuf);
-		} else if(!strcmp(strbuf, "errorlog")) {
-			enable_log = atoi(valbuf);
-		} else if(!strcmp(strbuf, "textfont")) {
-			BufferIO::DecodeUTF8(valbuf, wstr);
-			int textfontsize;
-			sscanf(linebuf, "%s = %s %d", strbuf, valbuf, &textfontsize);
-			gameConf.textfontsize = textfontsize;
-			BufferIO::CopyWStr(wstr, gameConf.textfont, 256);
-		} else if(!strcmp(strbuf, "numfont")) {
-			BufferIO::DecodeUTF8(valbuf, wstr);
-			BufferIO::CopyWStr(wstr, gameConf.numfont, 256);
-		} else if(!strcmp(strbuf, "serverport")) {
-			gameConf.serverport = atoi(valbuf);
-		} else if(!strcmp(strbuf, "lasthost")) {
-			BufferIO::DecodeUTF8(valbuf, wstr);
-			BufferIO::CopyWStr(wstr, gameConf.lasthost, 100);
-		} else if(!strcmp(strbuf, "lastport")) {
-			BufferIO::DecodeUTF8(valbuf, wstr);
-			BufferIO::CopyWStr(wstr, gameConf.lastport, 20);
-		} else if(!strcmp(strbuf, "roompass")) {
-			BufferIO::DecodeUTF8(valbuf, wstr);
-			BufferIO::CopyWStr(wstr, gameConf.roompass, 20);
-		} else if(!strcmp(strbuf, "automonsterpos")) {
-			gameConf.chkMAutoPos = atoi(valbuf);
-		} else if(!strcmp(strbuf, "autospellpos")) {
-			gameConf.chkSTAutoPos = atoi(valbuf);
-		} else if(!strcmp(strbuf, "randompos")) {
-			gameConf.chkRandomPos = atoi(valbuf);
-		} else if(!strcmp(strbuf, "autochain")) {
-			gameConf.chkAutoChain = atoi(valbuf);
-		} else if(!strcmp(strbuf, "waitchain")) {
-			gameConf.chkWaitChain = atoi(valbuf);
-		} else if(!strcmp(strbuf, "mute_opponent")) {
-			gameConf.chkIgnore1 = atoi(valbuf);
-		} else if(!strcmp(strbuf, "mute_spectators")) {
-			gameConf.chkIgnore2 = atoi(valbuf);
-		} else if(!strcmp(strbuf, "hide_setname")) {
-			gameConf.chkHideSetname = atoi(valbuf);
-		} else if(!strcmp(strbuf, "hide_hint_button")) {
-			gameConf.chkHideHintButton = atoi(valbuf);
-		} else if(!strcmp(strbuf, "control_mode")) {
-			gameConf.control_mode = atoi(valbuf);
-		} else if(!strcmp(strbuf, "draw_field_spell")) {
-			gameConf.draw_field_spell = atoi(valbuf);
-		} else if(!strcmp(strbuf, "separate_clear_button")) {
-			gameConf.separate_clear_button = atoi(valbuf);
-		} else if(!strcmp(strbuf, "auto_search_limit")) {
-			gameConf.auto_search_limit = atoi(valbuf);
-		} else if(!strcmp(strbuf, "ignore_deck_changes")) {
-			gameConf.chkIgnoreDeckChanges = atoi(valbuf);
-		} else if(!strcmp(strbuf, "enable_sound")) {
-			gameConf.enable_sound = atoi(valbuf) > 0;
-		} else if(!strcmp(strbuf, "sound_volume")) {
-			gameConf.sound_volume = atof(valbuf) / 100;
-		} else if(!strcmp(strbuf, "enable_music")) {
-			gameConf.enable_music = atoi(valbuf) > 0;
-		} else if(!strcmp(strbuf, "music_volume")) {
-			gameConf.music_volume = atof(valbuf) / 100;
-		} else if(!strcmp(strbuf, "music_mode")) {
-			gameConf.music_mode = atoi(valbuf);
-		} else if(!strcmp(strbuf, "default_ot")) {
-			gameConf.defaultOT = atoi(valbuf);
-		} else if(!strcmp(strbuf, "enable_bot_mode")) {
-			gameConf.enable_bot_mode = atoi(valbuf);
-		} else {
-			// options allowing multiple words
-			sscanf(linebuf, "%s = %240[^\n]", strbuf, valbuf);
-			if (!strcmp(strbuf, "nickname")) {
+	if(fp) {
+		while(fgets(linebuf, 256, fp)) {
+			sscanf(linebuf, "%s = %s", strbuf, valbuf);
+			if(!strcmp(strbuf, "antialias")) {
+				gameConf.antialias = atoi(valbuf);
+			} else if(!strcmp(strbuf, "use_d3d")) {
+				gameConf.use_d3d = atoi(valbuf) > 0;
+			} else if(!strcmp(strbuf, "use_image_scale")) {
+				gameConf.use_image_scale = atoi(valbuf) > 0;
+			} else if(!strcmp(strbuf, "pro_version")) {
+				PRO_VERSION = atoi(valbuf);
+			} else if(!strcmp(strbuf, "errorlog")) {
+				enable_log = atoi(valbuf);
+			} else if(!strcmp(strbuf, "textfont")) {
 				BufferIO::DecodeUTF8(valbuf, wstr);
-				BufferIO::CopyWStr(wstr, gameConf.nickname, 20);
-			} else if (!strcmp(strbuf, "gamename")) {
+				int textfontsize;
+				sscanf(linebuf, "%s = %s %d", strbuf, valbuf, &textfontsize);
+				gameConf.textfontsize = textfontsize;
+				BufferIO::CopyWStr(wstr, gameConf.textfont, 256);
+			} else if(!strcmp(strbuf, "numfont")) {
 				BufferIO::DecodeUTF8(valbuf, wstr);
-				BufferIO::CopyWStr(wstr, gameConf.gamename, 20);
-			} else if (!strcmp(strbuf, "lastdeck")) {
+				BufferIO::CopyWStr(wstr, gameConf.numfont, 256);
+			} else if(!strcmp(strbuf, "serverport")) {
+				gameConf.serverport = atoi(valbuf);
+			} else if(!strcmp(strbuf, "lasthost")) {
 				BufferIO::DecodeUTF8(valbuf, wstr);
-				BufferIO::CopyWStr(wstr, gameConf.lastdeck, 64);
+				BufferIO::CopyWStr(wstr, gameConf.lasthost, 100);
+			} else if(!strcmp(strbuf, "lastport")) {
+				BufferIO::DecodeUTF8(valbuf, wstr);
+				BufferIO::CopyWStr(wstr, gameConf.lastport, 20);
+			} else if(!strcmp(strbuf, "roompass")) {
+				BufferIO::DecodeUTF8(valbuf, wstr);
+				BufferIO::CopyWStr(wstr, gameConf.roompass, 20);
+			} else if(!strcmp(strbuf, "automonsterpos")) {
+				gameConf.chkMAutoPos = atoi(valbuf);
+			} else if(!strcmp(strbuf, "autospellpos")) {
+				gameConf.chkSTAutoPos = atoi(valbuf);
+			} else if(!strcmp(strbuf, "randompos")) {
+				gameConf.chkRandomPos = atoi(valbuf);
+			} else if(!strcmp(strbuf, "autochain")) {
+				gameConf.chkAutoChain = atoi(valbuf);
+			} else if(!strcmp(strbuf, "waitchain")) {
+				gameConf.chkWaitChain = atoi(valbuf);
+			} else if(!strcmp(strbuf, "mute_opponent")) {
+				gameConf.chkIgnore1 = atoi(valbuf);
+			} else if(!strcmp(strbuf, "mute_spectators")) {
+				gameConf.chkIgnore2 = atoi(valbuf);
+			} else if(!strcmp(strbuf, "hide_setname")) {
+				gameConf.chkHideSetname = atoi(valbuf);
+			} else if(!strcmp(strbuf, "hide_hint_button")) {
+				gameConf.chkHideHintButton = atoi(valbuf);
+			} else if(!strcmp(strbuf, "control_mode")) {
+				gameConf.control_mode = atoi(valbuf);
+			} else if(!strcmp(strbuf, "draw_field_spell")) {
+				gameConf.draw_field_spell = atoi(valbuf);
+			} else if(!strcmp(strbuf, "separate_clear_button")) {
+				gameConf.separate_clear_button = atoi(valbuf);
+			} else if(!strcmp(strbuf, "auto_search_limit")) {
+				gameConf.auto_search_limit = atoi(valbuf);
+			} else if(!strcmp(strbuf, "ignore_deck_changes")) {
+				gameConf.chkIgnoreDeckChanges = atoi(valbuf);
+			} else if(!strcmp(strbuf, "enable_sound")) {
+				gameConf.enable_sound = atoi(valbuf) > 0;
+			} else if(!strcmp(strbuf, "sound_volume")) {
+				gameConf.sound_volume = atof(valbuf) / 100;
+			} else if(!strcmp(strbuf, "enable_music")) {
+				gameConf.enable_music = atoi(valbuf) > 0;
+			} else if(!strcmp(strbuf, "music_volume")) {
+				gameConf.music_volume = atof(valbuf) / 100;
+			} else if(!strcmp(strbuf, "music_mode")) {
+				gameConf.music_mode = atoi(valbuf);
+			} else if(!strcmp(strbuf, "default_ot")) {
+				gameConf.defaultOT = atoi(valbuf);
+			} else if(!strcmp(strbuf, "enable_bot_mode")) {
+				gameConf.enable_bot_mode = atoi(valbuf);
+			} else {
+				// options allowing multiple words
+				sscanf(linebuf, "%s = %240[^\n]", strbuf, valbuf);
+				if (!strcmp(strbuf, "nickname")) {
+					BufferIO::DecodeUTF8(valbuf, wstr);
+					BufferIO::CopyWStr(wstr, gameConf.nickname, 20);
+				} else if (!strcmp(strbuf, "gamename")) {
+					BufferIO::DecodeUTF8(valbuf, wstr);
+					BufferIO::CopyWStr(wstr, gameConf.gamename, 20);
+				} else if (!strcmp(strbuf, "lastdeck")) {
+					BufferIO::DecodeUTF8(valbuf, wstr);
+					BufferIO::CopyWStr(wstr, gameConf.lastdeck, 64);
+				}
 			}
 		}
+		fclose(fp);
 	}
-	fclose(fp);
+	if(fp_user) {
+		while(fgets(linebuf, 256, fp_user)) {
+			sscanf(linebuf, "%s = %s", strbuf, valbuf);
+			if(!strcmp(strbuf, "antialias")) {
+				gameConf.antialias = atoi(valbuf);
+			} else if(!strcmp(strbuf, "use_d3d")) {
+				gameConf.use_d3d = atoi(valbuf) > 0;
+			} else if(!strcmp(strbuf, "use_image_scale")) {
+				gameConf.use_image_scale = atoi(valbuf) > 0;
+			} else if(!strcmp(strbuf, "pro_version")) {
+				PRO_VERSION = atoi(valbuf);
+			} else if(!strcmp(strbuf, "errorlog")) {
+				enable_log = atoi(valbuf);
+			} else if(!strcmp(strbuf, "textfont")) {
+				BufferIO::DecodeUTF8(valbuf, wstr);
+				int textfontsize;
+				sscanf(linebuf, "%s = %s %d", strbuf, valbuf, &textfontsize);
+				gameConf.textfontsize = textfontsize;
+				BufferIO::CopyWStr(wstr, gameConf.textfont, 256);
+			} else if(!strcmp(strbuf, "numfont")) {
+				BufferIO::DecodeUTF8(valbuf, wstr);
+				BufferIO::CopyWStr(wstr, gameConf.numfont, 256);
+			} else if(!strcmp(strbuf, "serverport")) {
+				gameConf.serverport = atoi(valbuf);
+			} else if(!strcmp(strbuf, "lasthost")) {
+				BufferIO::DecodeUTF8(valbuf, wstr);
+				BufferIO::CopyWStr(wstr, gameConf.lasthost, 100);
+			} else if(!strcmp(strbuf, "lastport")) {
+				BufferIO::DecodeUTF8(valbuf, wstr);
+				BufferIO::CopyWStr(wstr, gameConf.lastport, 20);
+			} else if(!strcmp(strbuf, "roompass")) {
+				BufferIO::DecodeUTF8(valbuf, wstr);
+				BufferIO::CopyWStr(wstr, gameConf.roompass, 20);
+			} else if(!strcmp(strbuf, "automonsterpos")) {
+				gameConf.chkMAutoPos = atoi(valbuf);
+			} else if(!strcmp(strbuf, "autospellpos")) {
+				gameConf.chkSTAutoPos = atoi(valbuf);
+			} else if(!strcmp(strbuf, "randompos")) {
+				gameConf.chkRandomPos = atoi(valbuf);
+			} else if(!strcmp(strbuf, "autochain")) {
+				gameConf.chkAutoChain = atoi(valbuf);
+			} else if(!strcmp(strbuf, "waitchain")) {
+				gameConf.chkWaitChain = atoi(valbuf);
+			} else if(!strcmp(strbuf, "mute_opponent")) {
+				gameConf.chkIgnore1 = atoi(valbuf);
+			} else if(!strcmp(strbuf, "mute_spectators")) {
+				gameConf.chkIgnore2 = atoi(valbuf);
+			} else if(!strcmp(strbuf, "hide_setname")) {
+				gameConf.chkHideSetname = atoi(valbuf);
+			} else if(!strcmp(strbuf, "hide_hint_button")) {
+				gameConf.chkHideHintButton = atoi(valbuf);
+			} else if(!strcmp(strbuf, "control_mode")) {
+				gameConf.control_mode = atoi(valbuf);
+			} else if(!strcmp(strbuf, "draw_field_spell")) {
+				gameConf.draw_field_spell = atoi(valbuf);
+			} else if(!strcmp(strbuf, "separate_clear_button")) {
+				gameConf.separate_clear_button = atoi(valbuf);
+			} else if(!strcmp(strbuf, "auto_search_limit")) {
+				gameConf.auto_search_limit = atoi(valbuf);
+			} else if(!strcmp(strbuf, "ignore_deck_changes")) {
+				gameConf.chkIgnoreDeckChanges = atoi(valbuf);
+			} else if(!strcmp(strbuf, "enable_sound")) {
+				gameConf.enable_sound = atoi(valbuf) > 0;
+			} else if(!strcmp(strbuf, "sound_volume")) {
+				gameConf.sound_volume = atof(valbuf) / 100;
+			} else if(!strcmp(strbuf, "enable_music")) {
+				gameConf.enable_music = atoi(valbuf) > 0;
+			} else if(!strcmp(strbuf, "music_volume")) {
+				gameConf.music_volume = atof(valbuf) / 100;
+			} else if(!strcmp(strbuf, "music_mode")) {
+				gameConf.music_mode = atoi(valbuf);
+			} else if(!strcmp(strbuf, "default_ot")) {
+				gameConf.defaultOT = atoi(valbuf);
+			} else if(!strcmp(strbuf, "enable_bot_mode")) {
+				gameConf.enable_bot_mode = atoi(valbuf);
+			} else {
+				// options allowing multiple words
+				sscanf(linebuf, "%s = %240[^\n]", strbuf, valbuf);
+				if (!strcmp(strbuf, "nickname")) {
+					BufferIO::DecodeUTF8(valbuf, wstr);
+					BufferIO::CopyWStr(wstr, gameConf.nickname, 20);
+				} else if (!strcmp(strbuf, "gamename")) {
+					BufferIO::DecodeUTF8(valbuf, wstr);
+					BufferIO::CopyWStr(wstr, gameConf.gamename, 20);
+				} else if (!strcmp(strbuf, "lastdeck")) {
+					BufferIO::DecodeUTF8(valbuf, wstr);
+					BufferIO::CopyWStr(wstr, gameConf.lastdeck, 64);
+				}
+			}
+		}
+		fclose(fp_user);
+	}
 }
 void Game::SaveConfig() {
-	FILE* fp = fopen("system.conf", "w");
+	FILE* fp = fopen("system_user.conf", "w");
 	fprintf(fp, "#config file\n#nickname & gamename should be less than 20 characters\n");
 	char linebuf[256];
 	fprintf(fp, "use_d3d = %d\n", gameConf.use_d3d ? 1 : 0);
