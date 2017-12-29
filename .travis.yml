@@ -122,10 +122,11 @@ before_deploy:
 - unzip -q ygopro-starter-pack-master.zip
 - cp -rf ygopro-starter-pack-master/* .
 
-- bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/ygopro-222DIY/archive/data.zip ; exit 0"
-- unzip -q ygopro-222DIY-data.zip
-- cp -rf ygopro-222DIY-data/expansions .
-- cp -rf ygopro-222DIY-data/sound . 
+- bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/ygopro-222DIY-data/archive/master.zip ; exit 0"
+- unzip -q ygopro-222DIY-data-master.zip
+- rm -rf expansions
+- mv -f ygopro-222DIY-data/expansions .
+- mv -f ygopro-222DIY-data/sound . 
 
 - rm -rf pics/thumbnail pics/*.db
 - mkdir replay
