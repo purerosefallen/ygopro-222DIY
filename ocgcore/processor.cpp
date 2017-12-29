@@ -3379,7 +3379,7 @@ int32 field::process_battle_command(uint16 step) {
 				pduel->write_buffer32(indestructable_effect->owner->data.code);
 				if(indestructable_effect->description) {
 					pduel->write_buffer8(MSG_HINT);
-					pduel->write_buffer8(12);
+					pduel->write_buffer8(HINT_SOUND);
 					pduel->write_buffer8(0);
 					pduel->write_buffer32(indestructable_effect->description);
 				}
@@ -3396,7 +3396,7 @@ int32 field::process_battle_command(uint16 step) {
 				pduel->write_buffer32(indestructable_effect->owner->data.code);
 				if(indestructable_effect->description) {
 					pduel->write_buffer8(MSG_HINT);
-					pduel->write_buffer8(12);
+					pduel->write_buffer8(HINT_SOUND);
 					pduel->write_buffer8(0);
 					pduel->write_buffer32(indestructable_effect->description);
 				}

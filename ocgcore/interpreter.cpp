@@ -421,6 +421,7 @@ static const struct luaL_Reg duellib[] = {
 	{ "SetChainLimitTillChainEnd", scriptlib::duel_set_chain_limit_p },
 	{ "GetChainMaterial", scriptlib::duel_get_chain_material },
 	{ "ConfirmDecktop", scriptlib::duel_confirm_decktop },
+	{ "ConfirmExtratop", scriptlib::duel_confirm_extratop },
 	{ "ConfirmCards", scriptlib::duel_confirm_cards },
 	{ "SortDecktop", scriptlib::duel_sort_decktop },
 	{ "CheckEvent", scriptlib::duel_check_event },
@@ -444,6 +445,7 @@ static const struct luaL_Reg duellib[] = {
 	{ "DiscardHand", scriptlib::duel_discard_hand },
 	{ "DisableShuffleCheck", scriptlib::duel_disable_shuffle_check },
 	{ "ShuffleDeck", scriptlib::duel_shuffle_deck },
+	{ "ShuffleExtra", scriptlib::duel_shuffle_extra },
 	{ "ShuffleHand", scriptlib::duel_shuffle_hand },
 	{ "ShuffleSetCard", scriptlib::duel_shuffle_setcard },
 	{ "ChangeAttacker", scriptlib::duel_change_attacker },
@@ -487,6 +489,7 @@ static const struct luaL_Reg duellib[] = {
 	{ "GetFieldGroup", scriptlib::duel_get_field_group },
 	{ "GetFieldGroupCount", scriptlib::duel_get_field_group_count },
 	{ "GetDecktopGroup", scriptlib::duel_get_decktop_group },
+	{ "GetExtraTopGroup", scriptlib::duel_get_extratop_group },
 	{ "GetMatchingGroup", scriptlib::duel_get_matching_group },
 	{ "GetMatchingGroupCount", scriptlib::duel_get_matching_count },
 	{ "GetFirstMatchingCard", scriptlib::duel_get_first_matching_card },
@@ -652,8 +655,14 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 	lua_setglobal(lua_state, "EFFECT_REMOVE_LINK_MARKER_KOISHI");
 	lua_pushinteger(lua_state, EFFECT_CANNOT_LOSE_KOISHI);
 	lua_setglobal(lua_state, "EFFECT_CANNOT_LOSE_KOISHI");
+	lua_pushinteger(lua_state, HINT_MUSIC);
+	lua_setglobal(lua_state, "HINT_MUSIC");
+	lua_pushinteger(lua_state, HINT_SOUND);
+	lua_setglobal(lua_state, "HINT_SOUND");
+	lua_pushinteger(lua_state, HINT_MUSIC_OGG);
+	lua_setglobal(lua_state, "HINT_MUSIC_OGG");
 	//load init.lua by MLD
-	load_script((char*) "./expansions/script/init.lua");	
+	load_script((char*) "./expansions/script/init.lua");
 }
 interpreter::~interpreter() {
 	lua_close(lua_state);

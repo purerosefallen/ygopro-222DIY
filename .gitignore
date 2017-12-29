@@ -1,39 +1,51 @@
+# data files
+/expansions
 /specials
-/obj
+
+# build files
 /bin
 /build
+/obj
+
+# dependencies
 /event
-/lua
-/script
+/freetype
 /sqlite3
-/replay
-/deck
-/.vscode
-/gframe/ygopro.icns
+/ikpmp3
+/irrklang
+/irrlicht
+/lua
+
+# gframe additionals
 /gframe/ygopro.ico
 /gframe/ygopro.rc
 /gframe/ygopro.aps
+/gframe/ygopro.icns
 /gframe/dirent.h
-ygopro
-premake5.exe
 
-/ygopro-7210srv
-/temp
-*.tar.gz
-*.gz
-*.tar.bz2
-*.bz2
-*.zip
-
-/freetype
-/__MACOSX
-/irrklang
-/irrlicht-1.8.4
-/irrlicht
-/lua-5.3.4
-/expansions/pics
+# git repos
 /pics
-/premake5
-/lua
+/script
+/WindBot
 
-/data
+# ygopro main program
+/ygopro
+/ygopro.exe
+/ygopro_*.exe
+/premake5
+/premake5.exe
+
+# ygopro folders
+/deck
+/fonts
+/replay
+/single
+/sound
+/update
+
+# others
+/.vscode
+/bak/
+/card_list.txt
+/ygopro_*.bat
+
