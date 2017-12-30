@@ -73,13 +73,11 @@ after_build:
   - cp -rf cards.cdb WindBot
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Smile-DK/ygopro-scripts/archive/master.zip ; exit 0"
-  - 7z x ygopro-scripts-master.zip
-  - mv -f ygopro-scripts-master script
-  
+  - 7z x -y ygopro-scripts-master.zip
   - rm -rf ygopro-scripts-master.zip
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Fluorohydride/ygopro-scripts/archive/master.zip ; exit 0"
-  - 7z x ygopro-scripts-master.zip
-  - cp -rf ygopro-scripts-master/* script
+  - 7z x -y ygopro-scripts-master.zip
+  - mv -f ygopro-scripts-master script
 
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/HuangYuNan/ygopro222-images/archive/master.zip ; exit 0"
   - 7z x ygopro222-images-master.zip
