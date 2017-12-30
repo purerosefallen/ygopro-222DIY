@@ -1,4 +1,5 @@
 # data files
+/beta
 /expansions
 /specials
 
@@ -54,4 +55,6 @@
 /.vscode
 /bak/
 /card_list.txt
+*.log
+/PrinterData.txt
 /ygopro_*.bat
