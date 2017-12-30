@@ -105,24 +105,28 @@ script:
   fi
 
 before_deploy:
-- bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Smile-DK/ygopro-scripts/archive/master.zip ; exit 0"
+- curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Smile-DK/ygopro-scripts/archive/master.zip
 - unzip -q ygopro-scripts-master.zip
 - mv -f ygopro-scripts-master script
 
 - rm -rf ygopro-scripts-master.zip
-- bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Fluorohydride/ygopro-scripts/archive/master.zip ; exit 0"
-- unzip -q ygopro-scripts-master.zip
-- cp -rf ygopro-scripts-master/* script
 
-- bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/HuangYuNan/ygopro222-images/archive/master.zip ; exit 0"
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Fluorohydride/ygopro-scripts/archive/master.zip;
+    unzip -q ygopro-scripts-master.zip;
+    cp -rf ygopro-scripts-master/* script;
+  fi
+
+
+- curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/HuangYuNan/ygopro222-images/archive/master.zip
 - unzip -q ygopro222-images-master.zip
 - mv -f ygopro222-images-master pics
 
-- bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/moecube/ygopro-starter-pack/archive/master.zip ; exit 0"
+- curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/moecube/ygopro-starter-pack/archive/master.zip
 - unzip -q ygopro-starter-pack-master.zip
 - cp -rf ygopro-starter-pack-master/* .
 
-- bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/ygopro-222DIY-data/archive/master.zip ; exit 0"
+- curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/ygopro-222DIY-data/archive/master.zip
 - unzip -q ygopro-222DIY-data-master.zip
 - mv -f ygopro-222DIY-data-master/sound .
 - rm -rf sound/custom sound/BGM/custom
