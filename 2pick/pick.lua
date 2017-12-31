@@ -81,6 +81,10 @@ function Auxiliary.LoadDB()
 		end
 	end
 end
+
+function Auxiliary.SaveDeck()
+end
+
 function Auxiliary.SinglePick(p,list,count)
 	local g1=Group.CreateGroup()
 	local g2=Group.CreateGroup()
@@ -132,8 +136,11 @@ end
 function Auxiliary.StartPick(e)
 	math.randomseed(os.time())
 	local g=Duel.GetFieldGroup(0,LOCATION_HAND | LOCATION_DECK | LOCATION_EXTRA, LOCATION_HAND | LOCATION_DECK | LOCATION_EXTRA)
-	if g:GetCount()>80 then
+	if g:GetCount()>=80 then
 		--already picked
+		Auxiliary.SaveDeck()
+		Duel.Draw(0,5,REASON_RULE)
+		Duel.Draw(1,5,REASON_RULE)
 		e:Reset()
 		return
 	end
@@ -172,6 +179,7 @@ function Auxiliary.StartPick(e)
 			Auxiliary.SinglePick(p,extra,4)
 		end
 	end
+	Auxiliary.SaveDeck()
 	Duel.ShuffleDeck(0)
 	Duel.ShuffleDeck(1)	
 	Duel.Draw(0,5,REASON_RULE)
