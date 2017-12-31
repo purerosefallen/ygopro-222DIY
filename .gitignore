@@ -34,6 +34,11 @@
 /ygopro-*
 /*-Cards
 
+# libs
+/*.dll
+/*.so
+/*.dylib
+
 # windbot related files
 /[Bb]ot.conf
 /[Bb]ot.exe
@@ -52,15 +57,19 @@
 
 # ygopro main program
 /ygopro
+/ygopro_*
 /ygopro.exe
 /ygopro_*.exe
+/ygopro.app
+/ygopro_*.app
 /premake5
 /premake5.exe
 
 # others
+*.log
 /.vscode
 /bak/
 /card_list.txt
-*.log
+/temp
 /PrinterData.txt
 /ygopro_*.bat
