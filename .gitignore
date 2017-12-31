@@ -58,15 +58,18 @@
 # ygopro main program
 /ygopro
 /ygopro_*
-/ygopro.*
-/ygopro_*.*
+/ygopro.exe
+/ygopro_*.exe
+/ygopro.app
+/ygopro_*.app
 /premake5
 /premake5.exe
 
 # others
+*.log
 /.vscode
 /bak/
 /card_list.txt
-*.log
+/temp
 /PrinterData.txt
 /ygopro_*.bat
