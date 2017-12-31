@@ -30,6 +30,7 @@ int32 scriptlib::duel_save_pick_deck(lua_State * L) {
 	for(auto cit = pgroup->container.begin(); cit != pgroup->container.end(); ++cit) {
 		pduel->write_buffer32((*cit)->data.code);
 	}
+	return 0;
 }
 //modded
 int32 scriptlib::duel_select_field(lua_State * L) {

@@ -731,6 +731,7 @@ int SingleDuel::Analyze(char* msgbuffer, unsigned int len) {
 			}
 			deckManager.LoadDeck(tdeck, cardlist, count, 0);
 			pick_deck[player] = tdeck;
+			pick_deck_saved[player] = true;
 			break;			
 		}
 		case MSG_RETRY: {
