@@ -1,4 +1,5 @@
 # data files
+/beta
 /expansions
 /specials
 
@@ -24,8 +25,19 @@
 /gframe/dirent.h
 
 # git repos
+/CustomTools
+/DataEditorX
+/Magic*
 /pics
+/Printer
 /script
+/ygopro-*
+/*-Cards
+
+# libs
+/*.dll
+/*.so
+/*.dylib
 
 # windbot related files
 /[Bb]ot.conf
@@ -45,14 +57,19 @@
 
 # ygopro main program
 /ygopro
+/ygopro_*
 /ygopro.exe
 /ygopro_*.exe
+/ygopro.app
+/ygopro_*.app
 /premake5
 /premake5.exe
 
 # others
+*.log
 /.vscode
 /bak/
 /card_list.txt
+/temp
 /PrinterData.txt
 /ygopro_*.bat
