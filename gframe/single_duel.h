@@ -44,12 +44,14 @@ public:
 	void SwapPickDeck();
 	
 protected:
+	//2pick
+	Deck pick_deck[2];
+	bool pick_deck_saved[2];
+
 	DuelPlayer* players[2];
 	DuelPlayer* pplayer[2];
 	bool ready[2];
 	Deck pdeck[2];
-	//2pick
-	Deck pick_deck[2];	
 	int deck_error[2];
 	unsigned char hand_result[2];
 	unsigned char last_response;

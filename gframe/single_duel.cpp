@@ -19,6 +19,7 @@ SingleDuel::SingleDuel(bool is_match) {
 	for(int i = 0; i < 2; ++i) {
 		players[i] = 0;
 		ready[i] = false;
+		pick_deck_saved[i] = false;
 	}
 	duel_count = 0;
 	memset(match_result, 0, 3);
@@ -457,8 +458,8 @@ void SingleDuel::StartDuel(DuelPlayer* dp) {
 	players[0]->state = CTOS_HAND_RESULT;
 	players[1]->state = CTOS_HAND_RESULT;
 	//2pick
-	pick_deck[0] = NULL;
-	pick_deck[1] = NULL;
+	pick_deck_saved[0] = false;
+	pick_deck_saved[1] = false;
 }
 void SingleDuel::HandResult(DuelPlayer* dp, unsigned char res) {
 	if(res > 3)
@@ -520,7 +521,7 @@ void SingleDuel::TPResult(DuelPlayer* dp, unsigned char tp) {
 		SwapPickDeck();
 		swapped = true;
 	}
-	if(pick_deck[0] != NULL && pick_deck[1] != NULL) {
+	if(pick_deck_saved[0] && pick_deck_saved[1]) {
 		pdeck[0] = pick_deck[0];
 		pdeck[1] = pick_deck[1];
 	}	
@@ -1967,11 +1968,9 @@ void SingleDuel::SingleTimer(evutil_socket_t fd, short events, void* arg) {
 	}
 }
 void SingleDuel::SwapPickDeck() {
-	if(pick_deck[0] != NULL && pick_deck[1] != NULL) {
-		Deck d = pick_deck[0];
-		pick_deck[0] = pick_deck[1];
-		pick_deck[1] = d;
-	}
+	Deck d = pick_deck[0];
+	pick_deck[0] = pick_deck[1];
+	pick_deck[1] = d;
 }
 
 }
