@@ -128,8 +128,8 @@ before_deploy:
 
 - curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/ygopro-222DIY-data/archive/master.zip
 - unzip -q ygopro-222DIY-data-master.zip
-- mv -f ygopro-222DIY-data/expansions .
-- mv -f ygopro-222DIY-data/sound . 
+- mv -f ygopro-222DIY-data-master/expansions .
+- mv -f ygopro-222DIY-data-master/sound . 
 
 - rm -rf pics/thumbnail pics/*.db
 - mkdir replay
