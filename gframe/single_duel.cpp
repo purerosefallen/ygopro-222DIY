@@ -456,6 +456,9 @@ void SingleDuel::StartDuel(DuelPlayer* dp) {
 	hand_result[1] = 0;
 	players[0]->state = CTOS_HAND_RESULT;
 	players[1]->state = CTOS_HAND_RESULT;
+	//2pick
+	pick_deck[0] = 0;
+	pick_deck[1] = 0;
 }
 void SingleDuel::HandResult(DuelPlayer* dp, unsigned char res) {
 	if(res > 3)
@@ -514,8 +517,13 @@ void SingleDuel::TPResult(DuelPlayer* dp, unsigned char tp) {
 		Deck d = pdeck[0];
 		pdeck[0] = pdeck[1];
 		pdeck[1] = d;
+		SwapPickDeck();
 		swapped = true;
 	}
+	if(pick_deck[0] && pick_deck[1]) {
+		pdeck[0] = pick_deck[0];
+		pdeck[1] = pick_deck[1];
+	}	
 	dp->state = CTOS_RESPONSE;
 	ReplayHeader rh;
 	rh.id = 0x31707279;
@@ -657,6 +665,7 @@ void SingleDuel::DuelEndProc() {
 				Deck d = pdeck[0];
 				pdeck[0] = pdeck[1];
 				pdeck[1] = d;
+				SwapPickDeck();
 			}
 			ready[0] = false;
 			ready[1] = false;
@@ -708,6 +717,21 @@ int SingleDuel::Analyze(char* msgbuffer, unsigned int len) {
 		offset = pbuf;
 		unsigned char engType = BufferIO::ReadUInt8(pbuf);
 		switch (engType) {
+		//2pick
+		case MSG_SAVE_PICK_DECK: {
+			player = BufferIO::ReadInt8(pbuf);
+			count = BufferIO::ReadInt8(pbuf);
+			int cardlist[128];
+			int counter = 0;
+			Deck tdeck;
+			for(int i = 0; i < count; i++) {
+				int code = BufferIO::ReadInt32(pbuf);
+				cardlist[counter++] = code;
+			}
+			deckManager.LoadDeck(tdeck, cardlist, count, 0);
+			pick_deck[player] = tdeck;
+			break;			
+		}
 		case MSG_RETRY: {
 			WaitforResponse(last_response);
 			NetServer::SendBufferToPlayer(players[last_response], STOC_GAME_MSG, offset, pbuf - offset);
@@ -1940,6 +1964,13 @@ void SingleDuel::SingleTimer(evutil_socket_t fd, short events, void* arg) {
 		sd->EndDuel();
 		sd->DuelEndProc();
 		event_del(sd->etimer);
+	}
+}
+void SingleDuel::SwapPickDeck() {
+	if(pick_deck[0] && pick_deck[0]) {
+		Deck d = pick_deck[0];
+		pick_deck[0] = pick_deck[1];
+		pick_deck[1] = d;
 	}
 }
 

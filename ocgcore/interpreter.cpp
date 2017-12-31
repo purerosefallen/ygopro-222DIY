@@ -369,6 +369,8 @@ static const struct luaL_Reg grouplib[] = {
 };
 
 static const struct luaL_Reg duellib[] = {
+	//2pick
+	{ "SavePickDeck", scriptlib::duel_save_pick_deck },	
 	//modded
 	{ "SelectField", scriptlib::duel_select_field },
 	{ "GetMasterRule", scriptlib::duel_get_master_rule },

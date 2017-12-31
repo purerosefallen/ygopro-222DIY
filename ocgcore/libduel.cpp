@@ -13,6 +13,24 @@
 #include "group.h"
 #include "ocgapi.h"
 
+//2pick
+int32 scriptlib::duel_save_pick_deck(lua_State * L) {
+	check_param_count(L, 2);
+	check_param(L, PARAM_TYPE_GROUP, 2)
+	int32 playerid = lua_tonumberint(L, 1);
+	if(playerid != 0 && playerid != 1)
+		return 0;
+	group* pgroup =  *(group**) lua_touserdata(L, 2);
+	duel* pduel = pgroup->pduel;
+	if(pgroup->container.size() == 0)
+		luaL_error(L, "Deck empty.", 2);
+	pduel->write_buffer8(MSG_SAVE_PICK_DECK);
+	pduel->write_buffer8(playerid);
+	pduel->write_buffer8(pgroup->container.size());
+	for(auto cit = pgroup->container.begin(); cit != pgroup->container.end(); ++cit) {
+		pduel->write_buffer32((*cit)->data.code);
+	}
+}
 //modded
 int32 scriptlib::duel_select_field(lua_State * L) {
 	check_action_permission(L);

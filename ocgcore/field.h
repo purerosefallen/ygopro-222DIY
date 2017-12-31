@@ -912,4 +912,6 @@ public:
 #define MSG_CUSTOM_MSG			180
 
 #define MSG_SELECT_UNSELECT_CARD	190
+//2pick
+#define MSG_SAVE_PICK_DECK		222
 #endif /* FIELD_H_ */

@@ -40,12 +40,16 @@ public:
 	
 	static int MessageHandler(long fduel, int type);
 	static void SingleTimer(evutil_socket_t fd, short events, void* arg);
+	//2pick
+	void SwapPickDeck();
 	
 protected:
 	DuelPlayer* players[2];
 	DuelPlayer* pplayer[2];
 	bool ready[2];
 	Deck pdeck[2];
+	//2pick
+	Deck pick_deck[2];	
 	int deck_error[2];
 	unsigned char hand_result[2];
 	unsigned char last_response;
