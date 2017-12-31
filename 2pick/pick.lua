@@ -175,7 +175,7 @@ function Auxiliary.StartPick(e)
 			Auxiliary.SinglePick(p,list,4)
 		end
 	end
-	for i=1,2 do
+	for i=1,1 do
 		for p=0,1 do
 			Auxiliary.SinglePick(p,extra,4)
 		end
