@@ -132,6 +132,11 @@ end
 function Auxiliary.StartPick(e)
 	math.randomseed(os.time())
 	local g=Duel.GetFieldGroup(0,LOCATION_HAND | LOCATION_DECK | LOCATION_EXTRA, LOCATION_HAND | LOCATION_DECK | LOCATION_EXTRA)
+	if g:GetCount()>80 then
+		--already picked
+		e:Reset()
+		return
+	end
 	Duel.Exile(g,REASON_RULE)
 	for i=1,5 do
 		--[[local list=main
