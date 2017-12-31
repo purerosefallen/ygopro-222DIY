@@ -16,7 +16,7 @@
 //2pick
 int32 scriptlib::duel_save_pick_deck(lua_State * L) {
 	check_param_count(L, 2);
-	check_param(L, PARAM_TYPE_GROUP, 2)
+	check_param(L, PARAM_TYPE_GROUP, 2);
 	int32 playerid = lua_tonumberint(L, 1);
 	if(playerid != 0 && playerid != 1)
 		return 0;
