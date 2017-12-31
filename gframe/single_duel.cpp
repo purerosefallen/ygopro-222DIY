@@ -457,9 +457,6 @@ void SingleDuel::StartDuel(DuelPlayer* dp) {
 	hand_result[1] = 0;
 	players[0]->state = CTOS_HAND_RESULT;
 	players[1]->state = CTOS_HAND_RESULT;
-	//2pick
-	pick_deck_saved[0] = false;
-	pick_deck_saved[1] = false;
 }
 void SingleDuel::HandResult(DuelPlayer* dp, unsigned char res) {
 	if(res > 3)
@@ -521,10 +518,13 @@ void SingleDuel::TPResult(DuelPlayer* dp, unsigned char tp) {
 		SwapPickDeck();
 		swapped = true;
 	}
-	if(pick_deck_saved[0] && pick_deck_saved[1]) {
+	//2pick deck check
+	if(pick_deck_saved[0])
 		pdeck[0] = pick_deck[0];
+	if(pick_deck_saved[1])
 		pdeck[1] = pick_deck[1];
-	}	
+	pick_deck_saved[0] = false;
+	pick_deck_saved[1] = false;
 	dp->state = CTOS_RESPONSE;
 	ReplayHeader rh;
 	rh.id = 0x31707279;
