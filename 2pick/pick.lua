@@ -8,6 +8,13 @@ local main_monster={}
 local main_spell={}
 local main_trap={}
 
+local extra_sp={
+	[TYPE_FUSION]={},
+	[TYPE_SYNCHRO]={},
+	[TYPE_XYZ]={},
+	[TYPE_LINK]={},
+}
+
 local forbidden_check={}
 local limited_check={}
 local semi_limited_check={}
@@ -50,6 +57,11 @@ function Auxiliary.LoadDB()
 		local cat=tonumber(line:sub(col+1,#line))
 		if (cat & TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)>0 then
 			table.insert(extra,code)
+			for tp,list in pairs(extra_sp) do
+				if (cat & tp)>0 then
+					table.insert(list,code)
+				end
+			end
 		elseif (cat & TYPE_TOKEN)==0 then
 			if (cat & TYPE_MONSTER)>0 then
 				table.insert(main_monster,code)
