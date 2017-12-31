@@ -87,7 +87,6 @@ after_build:
   - mv -f BotWrapper/bin/Release/Bot.exe ./..
   - mv -f BotWrapper/bin/Release/Bot.conf ./..
   - cd ..
-  - cp -rf cards.cdb WindBot
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Smile-DK/ygopro-scripts/archive/master.zip ; exit 0"
   - 7z x -y ygopro-scripts-master.zip
