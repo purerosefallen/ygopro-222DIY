@@ -157,7 +157,12 @@ function Auxiliary.StartPick(e)
 			--Auxiliary.SinglePick(p,main,4)
 		end
 	end
-	for i=1,5 do
+	for tp,list in pairs(extra_sp) do
+		for p=0,1 do
+			Auxiliary.SinglePick(p,list,4)
+		end
+	end
+	for i=1,2 do
 		for p=0,1 do
 			Auxiliary.SinglePick(p,extra,4)
 		end
