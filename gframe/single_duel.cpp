@@ -457,6 +457,9 @@ void SingleDuel::StartDuel(DuelPlayer* dp) {
 	hand_result[1] = 0;
 	players[0]->state = CTOS_HAND_RESULT;
 	players[1]->state = CTOS_HAND_RESULT;
+	//reset 2pick deck
+	pick_deck_saved[0] = false;
+	pick_deck_saved[1] = false;
 }
 void SingleDuel::HandResult(DuelPlayer* dp, unsigned char res) {
 	if(res > 3)
