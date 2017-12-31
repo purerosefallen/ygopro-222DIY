@@ -171,8 +171,10 @@ function Auxiliary.StartPick(e)
 		end
 	end
 	for tp,list in pairs(extra_sp) do
-		for p=0,1 do
-			Auxiliary.SinglePick(p,list,4)
+		if tp~=TYPE_FUSION then
+			for p=0,1 do
+				Auxiliary.SinglePick(p,list,4)
+			end
 		end
 	end
 	for i=1,1 do
