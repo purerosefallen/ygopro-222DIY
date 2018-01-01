@@ -78,10 +78,12 @@ extern "C" DECL_DLLEXPORT void start_duel(ptr pduel, int options) {
 	pd->game_field->core.shuffle_hand_check[1] = FALSE;
 	pd->game_field->core.shuffle_deck_check[0] = FALSE;
 	pd->game_field->core.shuffle_deck_check[1] = FALSE;
+	/*
 	if(pd->game_field->player[0].start_count > 0)
 		pd->game_field->draw(0, REASON_RULE, PLAYER_NONE, 0, pd->game_field->player[0].start_count);
 	if(pd->game_field->player[1].start_count > 0)
 		pd->game_field->draw(0, REASON_RULE, PLAYER_NONE, 1, pd->game_field->player[1].start_count);
+	*/
 	if(options & DUEL_TAG_MODE) {
 		for(int i = 0; i < pd->game_field->player[0].start_count && pd->game_field->player[0].tag_list_main.size(); ++i) {
 			card* pcard = pd->game_field->player[0].tag_list_main.back();

@@ -175,8 +175,9 @@ function Auxiliary.StartPick(e)
 			Duel.ShuffleDeck(p)
 		end
 	end
-	Duel.Draw(0,5,REASON_RULE)
-	Duel.Draw(1,5,REASON_RULE)
+	for p=0,1 do
+		Duel.Draw(p,Duel.GetStartCount(p),REASON_RULE)
+	end
 	e:Reset()
 end
 
