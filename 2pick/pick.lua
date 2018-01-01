@@ -101,12 +101,9 @@ function Auxiliary.SinglePick(p,list,count)
 	end
 	local sg=g1:Clone()
 	sg:Merge(g2)
-	--Duel.ConfirmCards(p,sg)
 	Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 	local sc=sg:Select(p,1,1,nil):GetFirst()
-	--local tg=g1:IsContains(sc) and g1 or g2
 	local rg=g1:IsContains(sc) and g2 or g1
-	--Duel.SendtoDeck(tg,p,0,REASON_RULE)
 	Duel.Exile(rg,REASON_RULE)
 end
 
@@ -123,12 +120,10 @@ function Auxiliary.SinglePickForMain(p,list,count)
 	end
 	local sg=g1:Clone()
 	sg:Merge(g2)
-	--Duel.ConfirmCards(p,sg)
 	Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 	local sc=sg:Select(p,1,1,nil):GetFirst()
 	local tg=g1:IsContains(sc) and g1 or g2
 	local rg=g1:IsContains(sc) and g2 or g1
-	--Duel.SendtoDeck(tg,p,0,REASON_RULE)
 	Duel.Exile(rg,REASON_RULE)
 	local g3=Group.CreateGroup()
 	for nc in aux.Next(tg) do
@@ -183,75 +178,12 @@ function Auxiliary.StartPick(e)
 end
 
 function Auxiliary.Load2PickRule()
-	--[[Card.IsSetCard=Auxiliary.TRUE
-	Card.IsOriginalSetCard=Auxiliary.TRUE
-	Card.IsFusionSetCard=Auxiliary.TRUE
-	Card.IsLinkSetCard=Auxiliary.TRUE]]
-
 	Auxiliary.LoadLFList()
 	Auxiliary.LoadDB()
-
-	--[[local e2=Effect.GlobalEffect()
-	e2:SetDescription(1264319*16)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_SPSUMMON_PROC)
-	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e2:SetRange(LOCATION_EXTRA)
-	e2:SetValue(SUMMON_TYPE_FUSION)
-	e2:SetCondition(Auxiliary.FusionSummonCondition)
-	e2:SetOperation(Auxiliary.FusionSummonOperation)
-	local e1=Effect.GlobalEffect()
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE | EFFECT_FLAG_SET_AVAILABLE)
-	e1:SetTargetRange(LOCATION_EXTRA,LOCATION_EXTRA)
-	e1:SetLabelObject(e2)
-	e1:SetTarget(function(e,c) return c:IsType(TYPE_FUSION) end)
-	Duel.RegisterEffect(e1,0)
-	local e1=Effect.GlobalEffect()
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_ADD_TYPE)
-	e1:SetProperty(EFFECT_FLAG_IGNORE_RANGE | EFFECT_FLAG_IGNORE_IMMUNE | EFFECT_FLAG_SET_AVAILABLE)
-	e1:SetTargetRange(0xff,0xff)
-	e1:SetValue(TYPE_TUNER)
-	e1:SetTarget(function(e,c) return c:IsType(TYPE_MONSTER) end)
-	Duel.RegisterEffect(e1,0)
-	local e1=Effect.GlobalEffect()
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_NONTUNER)
-	e1:SetProperty(EFFECT_FLAG_IGNORE_RANGE | EFFECT_FLAG_IGNORE_IMMUNE | EFFECT_FLAG_SET_AVAILABLE)
-	e1:SetTargetRange(0xff,0xff)
-	e1:SetValue(1)
-	Duel.RegisterEffect(e1,0)
-	local e1=Effect.GlobalEffect()
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_ADD_RACE)
-	e1:SetProperty(EFFECT_FLAG_IGNORE_RANGE | EFFECT_FLAG_IGNORE_IMMUNE | EFFECT_FLAG_SET_AVAILABLE)
-	e1:SetTargetRange(0xff,0xff)
-	e1:SetValue(RACE_ALL)
-	Duel.RegisterEffect(e1,0)
-	local e1=Effect.GlobalEffect()
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_ADD_ATTRIBUTE)
-	e1:SetProperty(EFFECT_FLAG_IGNORE_RANGE | EFFECT_FLAG_IGNORE_IMMUNE | EFFECT_FLAG_SET_AVAILABLE)
-	e1:SetTargetRange(0xff,0xff)
-	e1:SetValue(0x7f)
-	Duel.RegisterEffect(e1,0)]]
 	local e1=Effect.GlobalEffect()
 	e1:SetType(EFFECT_TYPE_FIELD | EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_ADJUST)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetOperation(Auxiliary.StartPick)
 	Duel.RegisterEffect(e1,0)
-end
-function Auxiliary.FusionSummonCondition(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local mg=Duel.GetFusionMaterial(tp):Filter(Card.IsOnField,nil)
-	return c:CheckFusionMaterial(mg,nil,tp)
-end
-function Auxiliary.FusionSummonOperation(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg=Duel.GetFusionMaterial(tp):Filter(Card.IsOnField,nil)
-	local g=Duel.SelectFusionMaterial(tp,c,mg,nil,tp)
-	c:SetMaterial(g)
-	Duel.SendtoGrave(g,REASON_MATERIAL+REASON_FUSION)
 end
