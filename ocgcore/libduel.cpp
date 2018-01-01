@@ -19,7 +19,7 @@ int32 scriptlib::duel_save_pick_deck(lua_State * L) {
 	check_param(L, PARAM_TYPE_GROUP, 2);
 	int32 playerid = lua_tonumberint(L, 1);
 	if(playerid != 0 && playerid != 1)
-		return 0;
+		luaL_error(L, "Parameter 1 should be 0 or 1.", 2);
 	group* pgroup =  *(group**) lua_touserdata(L, 2);
 	duel* pduel = pgroup->pduel;
 	if(pgroup->container.size() == 0)
@@ -49,6 +49,16 @@ int32 scriptlib::duel_get_start_count(lua_State * L) {
 	duel* pduel = interpreter::get_duel_info(L);
 	lua_pushinteger(L, pduel->game_field->player[p].start_count);
 	return 1;
+}
+int32 scriptlib::duel_reset_time_limit(lua_State * L) {
+	check_param_count(L, 1);
+	int32 p = lua_tonumberint(L, 1);
+	if(p != 0 && p != 1)
+		luaL_error(L, "Parameter 1 should be 0 or 1.", 2);
+	duel* pduel = interpreter::get_duel_info(L);
+	pduel->write_buffer8(MSG_RESET_TIME);
+	pduel->write_buffer8(p);
+	return 0;
 }
 //modded
 int32 scriptlib::duel_select_field(lua_State * L) {

@@ -914,5 +914,6 @@ public:
 
 #define MSG_SELECT_UNSELECT_CARD	190
 //2pick
-#define MSG_SAVE_PICK_DECK		222
+#define MSG_SAVE_PICK_DECK		220
+#define MSG_RESET_TIME			221
 #endif /* FIELD_H_ */

@@ -173,6 +173,7 @@ function Auxiliary.StartPick(e)
 	for p=0,1 do
 		if Duel.IsPlayerNeedToPickDeck(p) then
 			Duel.ShuffleDeck(p)
+			Duel.ResetTimeLimit(p)
 		end
 	end
 	for p=0,1 do

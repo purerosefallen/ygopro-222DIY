@@ -743,6 +743,11 @@ int SingleDuel::Analyze(char* msgbuffer, unsigned int len) {
 			pick_deck_saved[player] = true;
 			break;			
 		}
+		case MSG_RESET_TIME: {
+			player = BufferIO::ReadInt8(pbuf);
+			time_limit[player] = host_info.time_limit;
+			break;			
+		}
 		case MSG_RETRY: {
 			WaitforResponse(last_response);
 			NetServer::SendBufferToPlayer(players[last_response], STOC_GAME_MSG, offset, pbuf - offset);
