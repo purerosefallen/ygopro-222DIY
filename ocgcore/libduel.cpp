@@ -53,11 +53,15 @@ int32 scriptlib::duel_get_start_count(lua_State * L) {
 int32 scriptlib::duel_reset_time_limit(lua_State * L) {
 	check_param_count(L, 1);
 	int32 p = lua_tonumberint(L, 1);
+	int32 time = 0;
 	if(p != 0 && p != 1)
 		luaL_error(L, "Parameter 1 should be 0 or 1.", 2);
+	if(lua_gettop(L) >= 2)
+		time = lua_tonumberint(L, 2);
 	duel* pduel = interpreter::get_duel_info(L);
 	pduel->write_buffer8(MSG_RESET_TIME);
 	pduel->write_buffer8(p);
+	pduel->write_buffer8(time);	
 	return 0;
 }
 //modded

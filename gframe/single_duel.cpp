@@ -745,7 +745,13 @@ int SingleDuel::Analyze(char* msgbuffer, unsigned int len) {
 		}
 		case MSG_RESET_TIME: {
 			player = BufferIO::ReadInt8(pbuf);
-			time_limit[player] = host_info.time_limit;
+			int time = BufferIO::ReadInt8(pbuf);
+			if(host_info.time_limit) {
+				if(time)
+					time_limit[player] = time;
+				else
+					time_limit[player] = host_info.time_limit;				
+			}
 			break;			
 		}
 		case MSG_RETRY: {
