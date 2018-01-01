@@ -45,6 +45,7 @@ public:
 	
 protected:
 	//2pick
+	Deck default_deck;
 	Deck pick_deck[2];
 	bool pick_deck_saved[2];
 

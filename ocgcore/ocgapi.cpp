@@ -111,7 +111,7 @@ extern "C" DECL_DLLEXPORT void end_duel(ptr pduel) {
 		delete pd;
 	}
 }
-extern "C" DECL_DLLEXPORT void set_player_info(ptr pduel, int32 playerid, int32 lp, int32 startcount, int32 drawcount) {
+extern "C" DECL_DLLEXPORT void set_player_info(ptr pduel, int32 playerid, int32 lp, int32 startcount, int32 drawcount, bool pick_needed) {
 	duel* pd = (duel*)pduel;
 	if(lp > 0)
 		pd->game_field->player[playerid].lp = lp;
@@ -119,6 +119,11 @@ extern "C" DECL_DLLEXPORT void set_player_info(ptr pduel, int32 playerid, int32 
 		pd->game_field->player[playerid].start_count = startcount;
 	if(drawcount >= 0)
 		pd->game_field->player[playerid].draw_count = drawcount;
+	//2pick
+	if(pick_needed)
+		pd->game_field->player[playerid].pick_needed = TRUE;
+	else
+		pd->game_field->player[playerid].pick_needed = FALSE;		
 }
 extern "C" DECL_DLLEXPORT void get_log_message(ptr pduel, byte* buf) {
 	strcpy((char*)buf, ((duel*)pduel)->strbuffer);

@@ -88,8 +88,8 @@ function Auxiliary.SaveDeck()
 		Duel.SavePickDeck(p,g)
 	end
 end
-
 function Auxiliary.SinglePick(p,list,count)
+	if not Duel.IsPlayerNeedToPickDeck(p) then return end
 	local g1=Group.CreateGroup()
 	local g2=Group.CreateGroup()
 	for _,g in ipairs({g1,g2}) do
@@ -111,6 +111,7 @@ function Auxiliary.SinglePick(p,list,count)
 end
 
 function Auxiliary.SinglePickForMain(p,list,count)
+	if not Duel.IsPlayerNeedToPickDeck(p) then return end
 	local g1=Group.CreateGroup()
 	local g2=Group.CreateGroup()
 	for _,g in ipairs({g1,g2}) do
@@ -139,29 +140,13 @@ end
 
 function Auxiliary.StartPick(e)
 	math.randomseed(os.time())
-	local g=Duel.GetFieldGroup(0,LOCATION_HAND | LOCATION_DECK | LOCATION_EXTRA, LOCATION_HAND | LOCATION_DECK | LOCATION_EXTRA)
-	if g:GetCount()>=80 then
-		--already picked
-		Auxiliary.SaveDeck()
-		Duel.Draw(0,5,REASON_RULE)
-		Duel.Draw(1,5,REASON_RULE)
-		e:Reset()
-		return
+	for p=0,1 do
+		if Duel.IsPlayerNeedToPickDeck(p) then
+			local g=Duel.GetFieldGroup(p,0xff,0)
+			Duel.Exile(g,REASON_RULE)
+		end
 	end
-	Duel.Exile(g,REASON_RULE)
 	for i=1,5 do
-		--[[local list=main
-		local count=4
-		if i==9 then
-			list=semi_limited
-		elseif i==10 then
-			list=limited
-			count=3
-		elseif i==11 then
-			list=forbidden
-			count=1
-		end]]
-		
 		local list=main_monster
 		if i==4 then
 			list=main_spell
@@ -170,7 +155,6 @@ function Auxiliary.StartPick(e)
 		end
 		for p=0,1 do
 			Auxiliary.SinglePickForMain(p,list,4)
-			--Auxiliary.SinglePick(p,main,4)
 		end
 	end
 	for tp,list in pairs(extra_sp) do
@@ -180,14 +164,17 @@ function Auxiliary.StartPick(e)
 			end
 		end
 	end
-	for i=1,1 do
+	for i=1,2 do
 		for p=0,1 do
 			Auxiliary.SinglePick(p,extra,4)
 		end
 	end
 	Auxiliary.SaveDeck()
-	Duel.ShuffleDeck(0)
-	Duel.ShuffleDeck(1)	
+	for p=0,1 do
+		if Duel.IsPlayerNeedToPickDeck(p) then
+			Duel.ShuffleDeck(p)
+		end
+	end
 	Duel.Draw(0,5,REASON_RULE)
 	Duel.Draw(1,5,REASON_RULE)
 	e:Reset()

@@ -71,6 +71,7 @@ struct player_info {
 	int32 lp;
 	int32 start_count;
 	int32 draw_count;
+	int32 pick_needed;
 	uint32 used_location;
 	uint32 disabled_location;
 	uint32 extra_p_count;

@@ -32,6 +32,15 @@ int32 scriptlib::duel_save_pick_deck(lua_State * L) {
 	}
 	return 0;
 }
+int32 scriptlib::duel_is_player_need_to_pick_deck(lua_State * L) {
+	check_param_count(L, 1);
+	int32 p = lua_tonumberint(L, 1);
+	if(p != 0 && p != 1)
+		luaL_error(L, "Parameter 1 should be 0 or 1.", 2);;
+	duel* pduel = interpreter::get_duel_info(L);
+	lua_pushboolean(L, pduel->game_field->player[p].pick_needed);
+	return 1;
+}
 //modded
 int32 scriptlib::duel_select_field(lua_State * L) {
 	check_action_permission(L);

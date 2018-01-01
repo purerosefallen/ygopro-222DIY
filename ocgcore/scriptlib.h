@@ -18,6 +18,7 @@ public:
 	static int32 check_action_permission(lua_State* L);
 	//2pick
 	static int32 duel_save_pick_deck(lua_State *L);
+	static int32 duel_is_player_need_to_pick_deck(lua_State *L);
 	//millux
 	static int32 card_is_ritual_type(lua_State *L);
 	//modded

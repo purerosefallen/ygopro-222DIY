@@ -27,6 +27,10 @@ SingleDuel::SingleDuel(bool is_match) {
 	cache_recorder = 0;
 	replay_recorder = 0;
 #endif
+	//2pick
+	int cardlist[128];
+	cardlist[0] = 89631139;
+	deckManager.LoadDeck(default_deck, cardlist, 1, 0);
 }
 SingleDuel::~SingleDuel() {
 }
@@ -365,7 +369,7 @@ void SingleDuel::PlayerReady(DuelPlayer* dp, bool is_ready) {
 		return;
 	if(is_ready) {
 		unsigned int deckerror = 0;
-		if(!host_info.no_check_deck) {
+		/*if(!host_info.no_check_deck) {
 			if(deck_error[dp->type]) {
 				deckerror = (DECKERROR_UNKNOWNCARD << 28) + deck_error[dp->type];
 			} else {
@@ -373,7 +377,7 @@ void SingleDuel::PlayerReady(DuelPlayer* dp, bool is_ready) {
 				bool allow_tcg = host_info.rule == 1 || host_info.rule == 2;
 				deckerror = deckManager.CheckDeck(pdeck[dp->type], host_info.lflist, allow_ocg, allow_tcg);
 			}
-		}
+		}*/
 		if(deckerror) {
 			STOC_HS_PlayerChange scpc;
 			scpc.status = (dp->type << 4) | PLAYERCHANGE_NOTREADY;
@@ -522,12 +526,12 @@ void SingleDuel::TPResult(DuelPlayer* dp, unsigned char tp) {
 		swapped = true;
 	}
 	//2pick deck check
-	if(pick_deck_saved[0])
-		pdeck[0] = pick_deck[0];
-	if(pick_deck_saved[1])
-		pdeck[1] = pick_deck[1];
-	pick_deck_saved[0] = false;
-	pick_deck_saved[1] = false;
+	for(int i = 0; i < 2; i++) {
+		if(pick_deck_saved[i])
+			pdeck[i] = pick_deck[i];
+		else
+			pdeck[i] = default_deck;
+	}
 	dp->state = CTOS_RESPONSE;
 	ReplayHeader rh;
 	rh.id = 0x31707279;
@@ -557,8 +561,10 @@ void SingleDuel::TPResult(DuelPlayer* dp, unsigned char tp) {
 	set_message_handler((message_handler)SingleDuel::MessageHandler);
 	rnd.reset(seed);
 	pduel = create_duel(rnd.rand());
-	set_player_info(pduel, 0, host_info.start_lp, host_info.start_hand, host_info.draw_count);
-	set_player_info(pduel, 1, host_info.start_lp, host_info.start_hand, host_info.draw_count);
+	set_player_info(pduel, 0, host_info.start_lp, host_info.start_hand, host_info.draw_count, !pick_deck_saved[0]);
+	set_player_info(pduel, 1, host_info.start_lp, host_info.start_hand, host_info.draw_count, !pick_deck_saved[1]);
+	pick_deck_saved[0] = false;
+	pick_deck_saved[1] = false;
 	int opt = (int)host_info.duel_rule << 16;
 	if(host_info.no_shuffle_deck)
 		opt |= DUEL_PSEUDO_SHUFFLE;
