@@ -1986,6 +1986,9 @@ void SingleDuel::SwapPickDeck() {
 	Deck d = pick_deck[0];
 	pick_deck[0] = pick_deck[1];
 	pick_deck[1] = d;
+	bool pick_deck_saved_temp = pick_deck_saved[0];
+	pick_deck_saved[0] = pick_deck_saved[1];
+	pick_deck_saved[1] = pick_deck_saved_temp;
 }
 
 }
