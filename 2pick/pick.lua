@@ -18,15 +18,20 @@ local extra_sp={
 	[TYPE_LINK]={},
 }
 
+function Auxiliary.SplitData(inputstr)
+	local t={}
+	for str in string.gmatch(inputstr, "([^|]+)") do
+		table.insert(t,tonumber(str))
+	end
+	return t
+end
 function Auxiliary.LoadDB()
 	os.execute("sqlite3 2pick/2pick.cdb < 2pick/sqlite_cmd.txt")
 	for line in io.lines("card_list.txt") do
-		local col=line:find("|")
-		local code=tonumber(line:sub(1,col-1))
-		local rest_line=line:sub(col+1,#line)
-		local rest_col=rest_line:find("|")
-		local cat=tonumber(rest_line:sub(1,col-1))
-		local lv=tonumber(rest_line:sub(col+1,#line))
+		local data=Auxiliary.SplitData(line)
+		local code=data[1]
+		local cat=data[5]
+		local lv=data[8]
 		if (cat & TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)>0 then
 			table.insert(extra,code)
 			for tp,list in pairs(extra_sp) do
