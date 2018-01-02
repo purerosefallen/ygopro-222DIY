@@ -75,35 +75,7 @@ function Auxiliary.SaveDeck()
 		Duel.SavePickDeck(p,g)
 	end
 end
-function Auxiliary.SinglePick(p,list,count,ex_list,ex_count)
-	if not Duel.IsPlayerNeedToPickDeck(p) then return end
-	local g1=Group.CreateGroup()
-	local g2=Group.CreateGroup()
-	local plist=list[p]
-	for _,g in ipairs({g1,g2}) do
-		for i=1,count do
-			local code=plist[math.random(#plist)]
-			g:AddCard(Duel.CreateToken(p,code))
-		end
-		if ex_list and ex_count then
-			local ex_plist=ex_list[p]
-			for i=1,ex_count do
-				local code=ex_plist[math.random(#ex_plist)]
-				g:AddCard(Duel.CreateToken(p,code))
-			end
-		end
-		Duel.SendtoDeck(g,nil,0,REASON_RULE)
-	end
-	local sg=g1:Clone()
-	sg:Merge(g2)
-	Duel.ResetTimeLimit(p,60)
-	Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
-	local sc=sg:Select(p,1,1,nil):GetFirst()
-	local rg=g1:IsContains(sc) and g2 or g1
-	Duel.Exile(rg,REASON_RULE)
-end
-
-function Auxiliary.SinglePickForMain(p,list,count,ex_list,ex_count)
+function Auxiliary.SinglePick(p,list,count,ex_list,ex_count,copy)
 	if not Duel.IsPlayerNeedToPickDeck(p) then return end
 	local g1=Group.CreateGroup()
 	local g2=Group.CreateGroup()
@@ -130,12 +102,14 @@ function Auxiliary.SinglePickForMain(p,list,count,ex_list,ex_count)
 	local tg=g1:IsContains(sc) and g1 or g2
 	local rg=g1:IsContains(sc) and g2 or g1
 	Duel.Exile(rg,REASON_RULE)
-	local g3=Group.CreateGroup()
-	for nc in aux.Next(tg) do
-		local copy_code=nc:GetOriginalCode()
-		g3:AddCard(Duel.CreateToken(p,copy_code))
+	if copy then
+		local g3=Group.CreateGroup()
+		for nc in aux.Next(tg) do
+			local copy_code=nc:GetOriginalCode()
+			g3:AddCard(Duel.CreateToken(p,copy_code))
+		end
+		Duel.SendtoDeck(g3,nil,0,REASON_RULE)
 	end
-	Duel.SendtoDeck(g3,nil,0,REASON_RULE)
 end
 
 function Auxiliary.StartPick(e)
@@ -160,19 +134,19 @@ function Auxiliary.StartPick(e)
 			list=main_trap
 		end
 		for p=0,1 do
-			Auxiliary.SinglePickForMain(p,list,count,ex_list,ex_count)
+			Auxiliary.SinglePickForMain(p,list,count,ex_list,ex_count,true)
 		end
 	end
 	for tp,list in pairs(extra_sp) do
 		if tp~=TYPE_FUSION then
 			for p=0,1 do
-				Auxiliary.SinglePick(p,list,4)
+				Auxiliary.SinglePick(p,list,4,nil,nil,false)
 			end
 		end
 	end
 	for i=1,2 do
 		for p=0,1 do
-			Auxiliary.SinglePick(p,extra,4)
+			Auxiliary.SinglePick(p,extra,4,nil,nil,false)
 		end
 	end
 	Auxiliary.SaveDeck()
