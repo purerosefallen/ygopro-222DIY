@@ -30,7 +30,7 @@ function Auxiliary.LoadDB(p,pool)
 		local data=Auxiliary.SplitData(line)
 		local code=data[1]
 		local cat=data[5]
-		local lv=data[8]
+		local lv=data[8] & 0xff
 		if (cat & TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)>0 then
 			table.insert(extra[p],code)
 			for tp,list in pairs(extra_sp) do
@@ -41,7 +41,7 @@ function Auxiliary.LoadDB(p,pool)
 		elseif (cat & TYPE_TOKEN)==0 then
 			if (cat & TYPE_MONSTER)>0 then
 				table.insert(main_monster[p],code)
-				if lv>5 then
+				if lv>4 then
 					table.insert(main_adv[p],code)
 				else
 					table.insert(main_plain[p],code)				
