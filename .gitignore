@@ -65,6 +65,10 @@
 /premake5
 /premake5.exe
 
+# 2pick related temp files
+/card_list.txt
+/2pick/temp/
+
 # others
 *.log
 /.vscode
