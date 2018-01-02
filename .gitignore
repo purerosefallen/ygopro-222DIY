@@ -67,13 +67,12 @@
 
 # 2pick related temp files
 /card_list.txt
-/2pick/temp/
+/2pick/temp
 
 # others
 *.log
 /.vscode
 /bak/
-/card_list.txt
 /temp
 /PrinterData.txt
 /ygopro_*.bat
