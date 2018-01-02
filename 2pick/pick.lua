@@ -1,21 +1,21 @@
 os=require("os")
 io=require("io")
 --globals
-local main={}
-local extra={}
+local main={[0]={},[1]={}}
+local extra={[0]={},[1]={}}
 
-local main_monster={}
-local main_spell={}
-local main_trap={}
+local main_monster={[0]={},[1]={}}
+local main_spell={[0]={},[1]={}}
+local main_trap={[0]={},[1]={}}
 
-local main_plain={}
-local main_adv={}
+local main_plain={[0]={},[1]={}}
+local main_adv={[0]={},[1]={}}
 
 local extra_sp={
-	[TYPE_FUSION]={},
-	[TYPE_SYNCHRO]={},
-	[TYPE_XYZ]={},
-	[TYPE_LINK]={},
+	[TYPE_FUSION]={[0]={},[1]={}},
+	[TYPE_SYNCHRO]={[0]={},[1]={}},
+	[TYPE_XYZ]={[0]={},[1]={}},
+	[TYPE_LINK]={[0]={},[1]={}},
 }
 
 function Auxiliary.SplitData(inputstr)
@@ -25,35 +25,41 @@ function Auxiliary.SplitData(inputstr)
 	end
 	return t
 end
-function Auxiliary.LoadDB()
-	os.execute("sqlite3 2pick/2pick.cdb < 2pick/sqlite_cmd.txt")
-	for line in io.lines("card_list.txt") do
+function Auxiliary.LoadDB(p,pool)
+	os.execute("sqlite3 2pick/"..pool.."/card_pool.cdb < 2pick/"..pool.."/sqlite_cmd.txt")
+	for line in io.lines("card_list_"..pool..".txt") do
 		local data=Auxiliary.SplitData(line)
 		local code=data[1]
 		local cat=data[5]
 		local lv=data[8]
 		if (cat & TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)>0 then
-			table.insert(extra,code)
-			for tp,list in pairs(extra_sp) do
+			table.insert(extra[p],code)
+			for tp,list in pairs(extra_sp[p]) do
 				if (cat & tp)>0 then
 					table.insert(list,code)
 				end
 			end
 		elseif (cat & TYPE_TOKEN)==0 then
 			if (cat & TYPE_MONSTER)>0 then
-				table.insert(main_monster,code)
+				table.insert(main_monster[p],code)
 				if lv>5 then
-					table.insert(main_adv,code)
+					table.insert(main_adv[p],code)
 				else
-					table.insert(main_plain,code)				
+					table.insert(main_plain[p],code)				
 				end
 			elseif (cat & TYPE_SPELL)>0 then
-				table.insert(main_spell,code)
+				table.insert(main_spell[p],code)
 			elseif (cat & TYPE_TRAP)>0 then
-				table.insert(main_trap,code)
+				table.insert(main_trap[p],code)
 			end
-			table.insert(main,code)
+			table.insert(main[p],code)
 		end
+	end
+end
+--to do: multi card pools
+function Auxiliary.LoadCardPools()
+	for p=0,1 do
+		Auxiliary.LoadDB(p,"default")
 	end
 end
 
@@ -93,14 +99,16 @@ function Auxiliary.SinglePickForMain(p,list,count,ex_list,ex_count)
 	if not Duel.IsPlayerNeedToPickDeck(p) then return end
 	local g1=Group.CreateGroup()
 	local g2=Group.CreateGroup()
+	local plist=list[p]
 	for _,g in ipairs({g1,g2}) do
 		for i=1,count do
-			local code=list[math.random(#list)]
+			local code=plist[math.random(#plist)]
 			g:AddCard(Duel.CreateToken(p,code))
 		end
 		if ex_list and ex_count then
+			local ex_plist=ex_list[p]
 			for i=1,ex_count do
-				local code=ex_list[math.random(#ex_list)]
+				local code=ex_plist[math.random(#ex_plist)]
 				g:AddCard(Duel.CreateToken(p,code))
 			end
 		end
@@ -174,7 +182,7 @@ function Auxiliary.StartPick(e)
 end
 
 function Auxiliary.Load2PickRule()
-	Auxiliary.LoadDB()
+	Auxiliary.LoadCardPools()
 	local e1=Effect.GlobalEffect()
 	e1:SetType(EFFECT_TYPE_FIELD | EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_ADJUST)
