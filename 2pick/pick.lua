@@ -134,7 +134,7 @@ function Auxiliary.StartPick(e)
 			list=main_trap
 		end
 		for p=0,1 do
-			Auxiliary.SinglePickForMain(p,list,count,ex_list,ex_count,true)
+			Auxiliary.SinglePick(p,list,count,ex_list,ex_count,true)
 		end
 	end
 	for tp,list in pairs(extra_sp) do
