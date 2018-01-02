@@ -154,7 +154,7 @@ deploy:
   file:
   - ygopro-koishi-$TRAVIS_OS_NAME.zip
   - ygopro-koishi-$TRAVIS_OS_NAME-full.zip
-  - ygopro-koishi-$TRAVIS_OS_NAME-with-sound.zip
+  - ygopro-koishi-$TRAVIS_OS_NAME-full-with-sound.zip
   skip_cleanup: true
   overwrite: true
   on:
