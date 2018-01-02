@@ -131,14 +131,23 @@ function Auxiliary.StartPick(e)
 		end
 	end
 	for i=1,5 do
-		local list=main_monster
-		if i==4 then
+		local list=main_plain
+		local count=4
+		local ex_list=nil
+		local ex_count=nil
+		if i==3 then
+			list=main_monster
+		elseif i==4 then
 			list=main_spell
 		elseif i==5 then
 			list=main_trap
+		else
+			count=3
+			ex_list=main_adv
+			ex_count=1
 		end
 		for p=0,1 do
-			Auxiliary.SinglePickForMain(p,list,4)
+			Auxiliary.SinglePickForMain(p,list,count,ex_list,ex_count)
 		end
 	end
 	for tp,list in pairs(extra_sp) do
