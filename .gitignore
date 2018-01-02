@@ -67,7 +67,7 @@
 
 # 2pick related temp files
 /card_list.txt
-/2pick/temp
+/card_list_*.txt
 
 # others
 *.log
