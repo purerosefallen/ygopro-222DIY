@@ -65,11 +65,14 @@
 /premake5
 /premake5.exe
 
+# 2pick related temp files
+/card_list.txt
+/card_list_*.txt
+
 # others
 *.log
 /.vscode
 /bak/
-/card_list.txt
 /temp
 /PrinterData.txt
 /ygopro_*.bat
