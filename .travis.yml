@@ -145,8 +145,8 @@ before_deploy:
     zip -q -r ygopro-222DIY-$TRAVIS_OS_NAME-full-with-sound.zip ygopro libirrKlang.so LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound expansions;
   fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    zip -q -r ygopro-222DIY-$TRAVIS_OS_NAME-full.zip ygopro.app LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound expansions;
-    zip -q -r ygopro-222DIY-$TRAVIS_OS_NAME-full-with-sound.zip ygopro.app LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay expansions;
+    zip -q -r ygopro-222DIY-$TRAVIS_OS_NAME-full.zip ygopro.app LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay expansions;
+    zip -q -r ygopro-222DIY-$TRAVIS_OS_NAME-full-with-sound.zip ygopro.app LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound expansions;
   fi
 
 deploy:
