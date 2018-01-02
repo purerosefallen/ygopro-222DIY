@@ -26,7 +26,6 @@ function Auxiliary.SplitData(inputstr)
 	return t
 end
 function Auxiliary.LoadDB(p,pool)
-	os.execute("sqlite3 2pick/card_pools/"..pool.."/card_pool.cdb < 2pick/card_pools/"..pool.."/sqlite_cmd.txt")
 	for line in io.lines("card_list_"..pool..".txt") do
 		local data=Auxiliary.SplitData(line)
 		local code=data[1]
@@ -58,14 +57,15 @@ function Auxiliary.LoadDB(p,pool)
 end
 --to do: multi card pools
 function Auxiliary.LoadCardPools()
-	local pools={}
+	local pool_list={}
 	local file=io.popen("ls 2pick/card_pools")
-	for dirname in file:lines() do
-		table.insert(pools,dirname)
+	for pool in file:lines() do
+		table.insert(pool_list,pool)
+		os.execute("sqlite3 2pick/card_pools/"..pool.."/card_pool.cdb < 2pick/card_pools/"..pool.."/sqlite_cmd.txt")
 	end
 	file:close()
 	for p=0,1 do
-		Auxiliary.LoadDB(p,pools[math.random(#pools)])
+		Auxiliary.LoadDB(p,pool_list[math.random(#pools)])
 	end
 end
 
