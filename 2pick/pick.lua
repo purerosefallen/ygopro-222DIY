@@ -79,14 +79,16 @@ function Auxiliary.SinglePick(p,list,count,ex_list,ex_count)
 	if not Duel.IsPlayerNeedToPickDeck(p) then return end
 	local g1=Group.CreateGroup()
 	local g2=Group.CreateGroup()
+	local plist=list[p]
 	for _,g in ipairs({g1,g2}) do
 		for i=1,count do
-			local code=list[math.random(#list)]
+			local code=plist[math.random(#plist)]
 			g:AddCard(Duel.CreateToken(p,code))
 		end
 		if ex_list and ex_count then
+			local ex_plist=ex_list[p]
 			for i=1,ex_count do
-				local code=ex_list[math.random(#ex_list)]
+				local code=ex_plist[math.random(#ex_plist)]
 				g:AddCard(Duel.CreateToken(p,code))
 			end
 		end
