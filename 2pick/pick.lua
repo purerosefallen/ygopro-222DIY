@@ -8,6 +8,9 @@ local main_monster={}
 local main_spell={}
 local main_trap={}
 
+local main_plain={}
+local main_adv={}
+
 local extra_sp={
 	[TYPE_FUSION]={},
 	[TYPE_SYNCHRO]={},
@@ -34,6 +37,11 @@ function Auxiliary.LoadDB()
 		elseif (cat & TYPE_TOKEN)==0 then
 			if (cat & TYPE_MONSTER)>0 then
 				table.insert(main_monster,code)
+				if lv>5 then
+					table.insert(main_plain,code)
+				else
+					table.insert(main_adv,code)				
+				end
 			elseif (cat & TYPE_SPELL)>0 then
 				table.insert(main_spell,code)
 			elseif (cat & TYPE_TRAP)>0 then
