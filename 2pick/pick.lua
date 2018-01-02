@@ -15,46 +15,15 @@ local extra_sp={
 	[TYPE_LINK]={},
 }
 
-local forbidden_check={}
-local limited_check={}
-local semi_limited_check={}
-
-local forbidden={}
-local limited={}
-local semi_limited={}
-
-function Auxiliary.LoadLFList()
-	local started=false
-	for line in io.lines("lflist.conf") do
-		if line:find("!") then
-			if started then
-				break
-			else
-				started=true
-			end
-		elseif started then
-			local fstart=line:find(" 0")
-			local lstart=line:find(" 1")
-			local sstart=line:find(" 2")
-			if fstart then
-				local code=tonumber(line:sub(1,fstart-1))
-				if code then forbidden_check[code]=true end
-			elseif lstart then
-				local code=tonumber(line:sub(1,lstart-1))
-				if code then limited_check[code]=true end
-			elseif sstart then
-				local code=tonumber(line:sub(1,sstart-1))
-				if code then semi_limited_check[code]=true end
-			end
-		end
-	end
-end
 function Auxiliary.LoadDB()
 	os.execute("sqlite3 2pick/2pick.cdb < 2pick/sqlite_cmd.txt")
 	for line in io.lines("card_list.txt") do
 		local col=line:find("|")
 		local code=tonumber(line:sub(1,col-1))
-		local cat=tonumber(line:sub(col+1,#line))
+		local rest_line=line:sub(col+1,#line)
+		local rest_col=rest_line:find("|")
+		local cat=tonumber(rest_line:sub(1,col-1))
+		local lv=tonumber(rest_line:sub(col+1,#line))
 		if (cat & TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)>0 then
 			table.insert(extra,code)
 			for tp,list in pairs(extra_sp) do
@@ -71,13 +40,6 @@ function Auxiliary.LoadDB()
 				table.insert(main_trap,code)
 			end
 			table.insert(main,code)
-			if forbidden_check[code] then
-				table.insert(forbidden,code)
-			elseif limited_check[code] then
-				table.insert(limited,code)
-			elseif semi_limited_check[code] then
-				table.insert(semi_limited,code)			
-			end
 		end
 	end
 end
@@ -180,7 +142,6 @@ function Auxiliary.StartPick(e)
 end
 
 function Auxiliary.Load2PickRule()
-	Auxiliary.LoadLFList()
 	Auxiliary.LoadDB()
 	local e1=Effect.GlobalEffect()
 	e1:SetType(EFFECT_TYPE_FIELD | EFFECT_TYPE_CONTINUOUS)
