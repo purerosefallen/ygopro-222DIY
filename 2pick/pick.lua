@@ -65,7 +65,7 @@ function Auxiliary.LoadCardPools()
 	end
 	file:close()
 	for p=0,1 do
-		Auxiliary.LoadDB(p,pool_list[math.random(#pools)])
+		Auxiliary.LoadDB(p,pool_list[math.random(#pool_list)])
 	end
 end
 
