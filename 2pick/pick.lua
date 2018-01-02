@@ -34,9 +34,9 @@ function Auxiliary.LoadDB(p,pool)
 		local lv=data[8]
 		if (cat & TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)>0 then
 			table.insert(extra[p],code)
-			for tp,list in pairs(extra_sp[p]) do
+			for tp,list in pairs(extra_sp) do
 				if (cat & tp)>0 then
-					table.insert(list,code)
+					table.insert(list[p],code)
 				end
 			end
 		elseif (cat & TYPE_TOKEN)==0 then
