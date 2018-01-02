@@ -43,9 +43,9 @@ function Auxiliary.LoadDB()
 			if (cat & TYPE_MONSTER)>0 then
 				table.insert(main_monster,code)
 				if lv>5 then
-					table.insert(main_plain,code)
+					table.insert(main_adv,code)
 				else
-					table.insert(main_adv,code)				
+					table.insert(main_plain,code)				
 				end
 			elseif (cat & TYPE_SPELL)>0 then
 				table.insert(main_spell,code)
@@ -63,7 +63,7 @@ function Auxiliary.SaveDeck()
 		Duel.SavePickDeck(p,g)
 	end
 end
-function Auxiliary.SinglePick(p,list,count)
+function Auxiliary.SinglePick(p,list,count,ex_list,ex_count)
 	if not Duel.IsPlayerNeedToPickDeck(p) then return end
 	local g1=Group.CreateGroup()
 	local g2=Group.CreateGroup()
@@ -71,6 +71,12 @@ function Auxiliary.SinglePick(p,list,count)
 		for i=1,count do
 			local code=list[math.random(#list)]
 			g:AddCard(Duel.CreateToken(p,code))
+		end
+		if ex_list and ex_count then
+			for i=1,ex_count do
+				local code=ex_list[math.random(#ex_list)]
+				g:AddCard(Duel.CreateToken(p,code))
+			end
 		end
 		Duel.SendtoDeck(g,nil,0,REASON_RULE)
 	end
@@ -83,7 +89,7 @@ function Auxiliary.SinglePick(p,list,count)
 	Duel.Exile(rg,REASON_RULE)
 end
 
-function Auxiliary.SinglePickForMain(p,list,count)
+function Auxiliary.SinglePickForMain(p,list,count,ex_list,ex_count)
 	if not Duel.IsPlayerNeedToPickDeck(p) then return end
 	local g1=Group.CreateGroup()
 	local g2=Group.CreateGroup()
@@ -91,6 +97,12 @@ function Auxiliary.SinglePickForMain(p,list,count)
 		for i=1,count do
 			local code=list[math.random(#list)]
 			g:AddCard(Duel.CreateToken(p,code))
+		end
+		if ex_list and ex_count then
+			for i=1,ex_count do
+				local code=ex_list[math.random(#ex_list)]
+				g:AddCard(Duel.CreateToken(p,code))
+			end
 		end
 		Duel.SendtoDeck(g,nil,0,REASON_RULE)
 	end
