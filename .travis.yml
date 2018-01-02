@@ -105,6 +105,13 @@ script:
   fi
 
 before_deploy:
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro libirrKlang.so;
+  fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    zip -q -r ygopro-koishi-$TRAVIS_OS_NAME.zip ygopro.app;
+  fi
+
 - curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Smile-DK/ygopro-scripts/archive/master.zip
 - unzip -q ygopro-scripts-master.zip
 - mv -f ygopro-scripts-master script
@@ -134,15 +141,20 @@ before_deploy:
 - rm -rf pics/thumbnail pics/*.db
 - mkdir replay
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    zip -q -r ygopro-222DIY-$TRAVIS_OS_NAME.zip ygopro libirrKlang.so LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound expansions;
+    zip -q -r ygopro-222DIY-$TRAVIS_OS_NAME-full.zip ygopro libirrKlang.so LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay expansions;
+    zip -q -r ygopro-222DIY-$TRAVIS_OS_NAME-full-with-sound.zip ygopro libirrKlang.so LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound expansions;
   fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    zip -q -r ygopro-222DIY-$TRAVIS_OS_NAME.zip ygopro.app LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound expansions;
+    zip -q -r ygopro-222DIY-$TRAVIS_OS_NAME-full.zip ygopro.app LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound expansions;
+    zip -q -r ygopro-222DIY-$TRAVIS_OS_NAME-full-with-sound.zip ygopro.app LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay expansions;
   fi
 
 deploy:
   provider: releases
-  file: ygopro-222DIY-$TRAVIS_OS_NAME.zip
+  file:
+  - ygopro-koishi-$TRAVIS_OS_NAME.zip
+  - ygopro-222DIY-$TRAVIS_OS_NAME-full.zip
+  - ygopro-222DIY-$TRAVIS_OS_NAME-full-with-sound.zip
   skip_cleanup: true
   overwrite: true
   on:
