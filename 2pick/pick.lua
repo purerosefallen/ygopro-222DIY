@@ -26,7 +26,7 @@ function Auxiliary.SplitData(inputstr)
 	return t
 end
 function Auxiliary.LoadDB(p,pool)
-	os.execute("sqlite3 2pick/"..pool.."/card_pool.cdb < 2pick/"..pool.."/sqlite_cmd.txt")
+	os.execute("sqlite3 2pick/card_pools/"..pool.."/card_pool.cdb < 2pick/card_pools/"..pool.."/sqlite_cmd.txt")
 	for line in io.lines("card_list_"..pool..".txt") do
 		local data=Auxiliary.SplitData(line)
 		local code=data[1]
@@ -58,8 +58,14 @@ function Auxiliary.LoadDB(p,pool)
 end
 --to do: multi card pools
 function Auxiliary.LoadCardPools()
+	local pools={}
+	local file=io.popen("ls 2pick/card_pools")
+	for dirname in file:lines() do
+		table.insert(pools,dirname)
+	end
+	file:close()
 	for p=0,1 do
-		Auxiliary.LoadDB(p,"default")
+		Auxiliary.LoadDB(p,pools[math.random(#pools)])
 	end
 end
 
@@ -131,7 +137,6 @@ function Auxiliary.SinglePickForMain(p,list,count,ex_list,ex_count)
 end
 
 function Auxiliary.StartPick(e)
-	math.randomseed(os.time())
 	for p=0,1 do
 		if Duel.IsPlayerNeedToPickDeck(p) then
 			local g=Duel.GetFieldGroup(p,0xff,0)
@@ -182,6 +187,7 @@ function Auxiliary.StartPick(e)
 end
 
 function Auxiliary.Load2PickRule()
+	math.randomseed(os.time())
 	Auxiliary.LoadCardPools()
 	local e1=Effect.GlobalEffect()
 	e1:SetType(EFFECT_TYPE_FIELD | EFFECT_TYPE_CONTINUOUS)
