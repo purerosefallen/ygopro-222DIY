@@ -42,7 +42,7 @@ function Auxiliary.LoadDB()
 		elseif (cat & TYPE_TOKEN)==0 then
 			if (cat & TYPE_MONSTER)>0 then
 				table.insert(main_monster,code)
-				if lv>5 then
+				if lv>4 then
 					table.insert(main_adv,code)
 				else
 					table.insert(main_plain,code)				
