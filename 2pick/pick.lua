@@ -31,7 +31,7 @@ function Auxiliary.LoadDB()
 		local data=Auxiliary.SplitData(line)
 		local code=data[1]
 		local cat=data[5]
-		local lv=data[8]
+		local lv=data[8] & 0xff
 		if (cat & TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)>0 then
 			table.insert(extra,code)
 			for tp,list in pairs(extra_sp) do
