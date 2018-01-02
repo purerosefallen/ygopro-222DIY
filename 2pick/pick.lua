@@ -20,7 +20,7 @@ local extra_sp={
 
 function Auxiliary.SplitData(inputstr)
 	local t={}
-	for str in string.gmatch(inputstr, "([^|]+)") do
+	for str in string.gmatch(inputstr,"([^|]+)") do
 		table.insert(t,tonumber(str))
 	end
 	return t
