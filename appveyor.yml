@@ -59,17 +59,13 @@ after_build:
   - cd ygopro
 
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Smile-DK/ygopro-scripts/archive/master.zip ; exit 0"
-  - 7z x ygopro-scripts-master.zip
-  - mv -f ygopro-scripts-master script
-
+  - 7z x -y ygopro-scripts-master.zip
   - rm -rf ygopro-scripts-master.zip
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Fluorohydride/ygopro-scripts/archive/master.zip ; exit 0"
-  - 7z x ygopro-scripts-master.zip
-  - cp -rf ygopro-scripts-master/* script
-  - rm -rf ygopro-scripts-master ygopro-scripts-master.zip
+  - 7z x -y ygopro-scripts-master.zip
+  - mv -f ygopro-scripts-master script
 
   - mkdir replay
-  - mv -f ../../expansions .
   - mv -f ../../gframe .
   - mv -f ../../ocgcore .
   - mv -f ../../premake .
@@ -85,7 +81,6 @@ after_build:
   - mv -f ../../system.conf .
   - cp -rf ../../ygopro.exe .
   - mv -f ../../premake5.exe .
-  - mv -f ../../bats/build.bat .
   - cd ..
   
   - mkdir redis
@@ -106,9 +101,9 @@ after_build:
   - npm install pm2@latest -g
   - npm install ws
   - npm install redis
+  - 7z a -mx9 -xr!.git* ../ygopro-server.7z ./*
   - cd ..
-  - mv -f bats/start.bat .
-  - 7z a -mx9 -xr!.git* ygopro-server.7z ygopro-server start.bat
+
 
 test: off
 

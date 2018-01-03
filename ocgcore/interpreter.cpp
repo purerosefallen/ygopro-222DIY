@@ -369,6 +369,11 @@ static const struct luaL_Reg grouplib[] = {
 };
 
 static const struct luaL_Reg duellib[] = {
+	//2pick
+	{ "SavePickDeck", scriptlib::duel_save_pick_deck },
+	{ "IsPlayerNeedToPickDeck", scriptlib::duel_is_player_need_to_pick_deck },
+	{ "GetStartCount", scriptlib::duel_get_start_count },
+	{ "ResetTimeLimit", scriptlib::duel_reset_time_limit },
 	//modded
 	{ "SelectField", scriptlib::duel_select_field },
 	{ "GetMasterRule", scriptlib::duel_get_master_rule },
