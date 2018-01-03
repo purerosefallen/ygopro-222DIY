@@ -1,3 +1,0 @@
-.output card_list_default.txt
-select * from datas;
-.output stdout

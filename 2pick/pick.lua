@@ -26,7 +26,8 @@ function Auxiliary.SplitData(inputstr)
 	return t
 end
 function Auxiliary.LoadDB(p,pool)
-	for line in io.lines("card_list_"..pool..".txt") do
+	local file=io.popen("echo .exit | sqlite3 "..pool..".cdb -cmd \"select * from datas\"")
+	for line in file:lines() do
 		local data=Auxiliary.SplitData(line)
 		local code=data[1]
 		local cat=data[5]
@@ -54,14 +55,14 @@ function Auxiliary.LoadDB(p,pool)
 			table.insert(main[p],code)
 		end
 	end
+	file:close()
 end
 --to do: multi card pools
 function Auxiliary.LoadCardPools()
 	local pool_list={}
-	local file=io.popen("ls 2pick/card_pools")
+	local file=io.popen("ls 2pick/*.cdb")
 	for pool in file:lines() do
 		table.insert(pool_list,pool)
-		os.execute("sqlite3 2pick/card_pools/"..pool.."/card_pool.cdb < 2pick/card_pools/"..pool.."/sqlite_cmd.txt")
 	end
 	file:close()
 	for p=0,1 do
