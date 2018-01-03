@@ -26,7 +26,7 @@ function Auxiliary.SplitData(inputstr)
 	return t
 end
 function Auxiliary.LoadDB(p,pool)
-	local file=io.popen("echo .exit | sqlite3 2pick/"..pool..".cdb -cmd 'select * from datas'")
+	local file=io.popen('echo .exit | sqlite3 2pick/'..pool..'.cdb -cmd "select * from datas"')
 	for line in file:lines() do
 		local data=Auxiliary.SplitData(line)
 		local code=data[1]
