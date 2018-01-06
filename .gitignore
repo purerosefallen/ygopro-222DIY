@@ -40,8 +40,10 @@
 /*.dylib
 
 # windbot related files
+/[Bb]ot
 /[Bb]ot.conf
 /[Bb]ot.exe
+/[Bb]ot.sh
 /[Ww]ind[Bb]ot
 
 # ygopro config file
@@ -62,12 +64,10 @@
 /ygopro_*.exe
 /ygopro.app
 /ygopro_*.app
+/premake4
+/premake4.exe
 /premake5
 /premake5.exe
-
-# 2pick related temp files
-/card_list.txt
-/card_list_*.txt
 
 # others
 *.log
@@ -76,3 +76,4 @@
 /temp
 /PrinterData.txt
 /ygopro_*.bat
+/ygopro_*.sh
