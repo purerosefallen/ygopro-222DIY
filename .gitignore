@@ -40,8 +40,10 @@
 /*.dylib
 
 # windbot related files
+/[Bb]ot
 /[Bb]ot.conf
 /[Bb]ot.exe
+/[Bb]ot.sh
 /[Ww]ind[Bb]ot
 
 # ygopro config file
@@ -58,13 +60,10 @@
 # ygopro main program
 /ygopro
 /ygopro_*
-/ygopro-*
 /ygopro.exe
 /ygopro_*.exe
-/ygopro-*.exe
 /ygopro.app
 /ygopro_*.app
-/ygopro-*.app
 /premake4
 /premake4.exe
 /premake5
