@@ -58,16 +58,17 @@
 # ygopro main program
 /ygopro
 /ygopro_*
+/ygopro-*
 /ygopro.exe
 /ygopro_*.exe
+/ygopro-*.exe
 /ygopro.app
 /ygopro_*.app
+/ygopro-*.app
+/premake4
+/premake4.exe
 /premake5
 /premake5.exe
-
-# 2pick related temp files
-/card_list.txt
-/card_list_*.txt
 
 # others
 *.log
@@ -76,3 +77,4 @@
 /temp
 /PrinterData.txt
 /ygopro_*.bat
+/ygopro_*.sh
