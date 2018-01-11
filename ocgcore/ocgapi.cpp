@@ -61,6 +61,7 @@ extern "C" DECL_DLLEXPORT ptr create_duel(uint32 seed) {
 	duel* pduel = new duel();
 	duel_set.insert(pduel);
 	pduel->random.reset(seed);
+	pduel->lua->call_code_function(0, (char*) "Load2PickRule", 0, 0);
 	return (ptr)pduel;
 }
 extern "C" DECL_DLLEXPORT void start_duel(ptr pduel, int options) {
@@ -77,10 +78,12 @@ extern "C" DECL_DLLEXPORT void start_duel(ptr pduel, int options) {
 	pd->game_field->core.shuffle_hand_check[1] = FALSE;
 	pd->game_field->core.shuffle_deck_check[0] = FALSE;
 	pd->game_field->core.shuffle_deck_check[1] = FALSE;
+	/*
 	if(pd->game_field->player[0].start_count > 0)
 		pd->game_field->draw(0, REASON_RULE, PLAYER_NONE, 0, pd->game_field->player[0].start_count);
 	if(pd->game_field->player[1].start_count > 0)
 		pd->game_field->draw(0, REASON_RULE, PLAYER_NONE, 1, pd->game_field->player[1].start_count);
+	*/
 	if(options & DUEL_TAG_MODE) {
 		for(int i = 0; i < pd->game_field->player[0].start_count && pd->game_field->player[0].tag_list_main.size(); ++i) {
 			card* pcard = pd->game_field->player[0].tag_list_main.back();
@@ -110,7 +113,7 @@ extern "C" DECL_DLLEXPORT void end_duel(ptr pduel) {
 		delete pd;
 	}
 }
-extern "C" DECL_DLLEXPORT void set_player_info(ptr pduel, int32 playerid, int32 lp, int32 startcount, int32 drawcount) {
+extern "C" DECL_DLLEXPORT void set_player_info(ptr pduel, int32 playerid, int32 lp, int32 startcount, int32 drawcount, bool pick_needed) {
 	duel* pd = (duel*)pduel;
 	if(lp > 0)
 		pd->game_field->player[playerid].lp = lp;
@@ -118,6 +121,11 @@ extern "C" DECL_DLLEXPORT void set_player_info(ptr pduel, int32 playerid, int32 
 		pd->game_field->player[playerid].start_count = startcount;
 	if(drawcount >= 0)
 		pd->game_field->player[playerid].draw_count = drawcount;
+	//2pick
+	if(pick_needed)
+		pd->game_field->player[playerid].pick_needed = TRUE;
+	else
+		pd->game_field->player[playerid].pick_needed = FALSE;		
 }
 extern "C" DECL_DLLEXPORT void get_log_message(ptr pduel, byte* buf) {
 	strcpy((char*)buf, ((duel*)pduel)->strbuffer);
@@ -185,20 +193,22 @@ extern "C" DECL_DLLEXPORT int32 query_card(ptr pduel, uint8 playerid, uint8 loca
 		pcard = ptduel->game_field->get_field_card(playerid, location, sequence);
 	else {
 		field::card_vector* lst = 0;
-		if(location == LOCATION_HAND)
+		if(location == LOCATION_HAND )
 			lst = &ptduel->game_field->player[playerid].list_hand;
-		else if(location == LOCATION_GRAVE)
+		else if(location == LOCATION_GRAVE )
 			lst = &ptduel->game_field->player[playerid].list_grave;
-		else if(location == LOCATION_REMOVED)
+		else if(location == LOCATION_REMOVED )
 			lst = &ptduel->game_field->player[playerid].list_remove;
-		else if(location == LOCATION_EXTRA)
+		else if(location == LOCATION_EXTRA )
 			lst = &ptduel->game_field->player[playerid].list_extra;
-		else if(location == LOCATION_DECK)
+		else if(location == LOCATION_DECK )
 			lst = &ptduel->game_field->player[playerid].list_main;
-		if(!lst || sequence >= lst->size())
+		if(!lst || sequence > lst->size())
 			pcard = 0;
 		else {
-			pcard = (*lst)[sequence];
+			auto cit = lst->begin();
+			for(uint32 i = 0; i < sequence; ++i, ++cit);
+			pcard = *cit;
 		}
 	}
 	if(pcard)

@@ -1,3 +1,3 @@
-## KoishiPro
-The server for KoishiPro custom version. Used in 222 Custom Card Server and YGOCC.
+## YGOPro 2Pick test
+A ygopro server for testing 2pick mode
 

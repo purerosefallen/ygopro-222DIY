@@ -49,9 +49,9 @@ after_build:
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://nodejs.org/dist/v9.1.0/node-v9.1.0-win-x64.zip ; exit 0"
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/MicrosoftArchive/redis/releases/download/win-3.2.100/Redis-x64-3.2.100.zip ; exit 0"
 
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/windbot/archive/master.zip ; exit 0"
-  - 7z x windbot-master.zip
-  - cd windbot-master
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/windbot/archive/pick.zip ; exit 0"
+  - 7z x windbot-pick.zip
+  - cd windbot-pick
   - msbuild /property:Configuration=Release /property:OutDir=../ygopro-server/windbot
 
   - cd ../ygopro-server

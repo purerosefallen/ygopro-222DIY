@@ -199,6 +199,7 @@ int DeckManager::LoadDeck(Deck& deck, int* dbuf, int mainc, int sidec) {
 	return errorcode;
 }
 bool DeckManager::LoadSide(Deck& deck, int* dbuf, int mainc, int sidec) {
+	/*
 	std::unordered_map<int, int> pcount;
 	std::unordered_map<int, int> ncount;
 	for(size_t i = 0; i < deck.main.size(); ++i)
@@ -221,6 +222,7 @@ bool DeckManager::LoadSide(Deck& deck, int* dbuf, int mainc, int sidec) {
 		if(cdit->second != pcount[cdit->first])
 			return false;
 	deck = ndeck;
+	*/
 	return true;
 }
 FILE* DeckManager::OpenDeckFile(const wchar_t* file, const char* mode) {

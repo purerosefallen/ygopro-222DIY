@@ -71,6 +71,7 @@ struct player_info {
 	int32 lp;
 	int32 start_count;
 	int32 draw_count;
+	int32 pick_needed;
 	uint32 used_location;
 	uint32 disabled_location;
 	uint32 extra_p_count;
@@ -912,4 +913,7 @@ public:
 #define MSG_CUSTOM_MSG			180
 
 #define MSG_SELECT_UNSELECT_CARD	190
+//2pick
+#define MSG_SAVE_PICK_DECK		220
+#define MSG_RESET_TIME			221
 #endif /* FIELD_H_ */
