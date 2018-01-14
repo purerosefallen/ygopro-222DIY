@@ -76,21 +76,47 @@ function Auxiliary.SaveDeck()
 		Duel.SavePickDeck(p,g)
 	end
 end
+
+function Group.CheckGroup(g,card_id)
+	return g:IsExists(Card.IsCode,1,nil,card_id)
+end
+
 function Auxiliary.SinglePick(p,list,count,ex_list,ex_count,copy)
 	if not Duel.IsPlayerNeedToPickDeck(p) then return end
 	local g1=Group.CreateGroup()
 	local g2=Group.CreateGroup()
+	local ag=Group.CreateGroup()
 	local plist=list[p]
 	for _,g in ipairs({g1,g2}) do
-		for i=1,count do
+		--for i=1,count do
+		--	local code=plist[math.random(#plist)]
+		--	g:AddCard(Duel.CreateToken(p,code))
+		--end
+		local pick_count=0
+		while pick_count<count do
 			local code=plist[math.random(#plist)]
-			g:AddCard(Duel.CreateToken(p,code))
+			if not ag:CheckGroup(code) then
+				local card=Duel.CreateToken(p,code)
+				g:AddCard(card)
+				ag:AddCard(card)
+				pick_count=pick_count+1
+			end
 		end
 		if ex_list and ex_count then
+			--for i=1,ex_count do
+			--	local code=ex_plist[math.random(#ex_plist)]
+			--	g:AddCard(Duel.CreateToken(p,code))
+			--end
 			local ex_plist=ex_list[p]
-			for i=1,ex_count do
+			local ex_pick_count=0
+			while ex_pick_count<ex_count do
 				local code=ex_plist[math.random(#ex_plist)]
-				g:AddCard(Duel.CreateToken(p,code))
+				if not ag:CheckGroup(code) then
+					local card=Duel.CreateToken(p,code)
+					g:AddCard(card)
+					ag:AddCard(card)
+					ex_pick_count=ex_pick_count+1
+				end
 			end
 		end
 		Duel.SendtoDeck(g,nil,0,REASON_RULE)
