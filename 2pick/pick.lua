@@ -76,11 +76,12 @@ function Auxiliary.SaveDeck()
 		Duel.SavePickDeck(p,g)
 	end
 end
-
-function Group.CheckGroup(g,card_id)
-	return g:IsExists(Card.IsCode,1,nil,card_id)
+function Auxiliary.SaveDeck()
+	for p=0,1 do
+		local g=Duel.GetFieldGroup(p,0xff,0)
+		Duel.SavePickDeck(p,g)
+	end
 end
-
 function Auxiliary.SinglePick(p,list,count,ex_list,ex_count,copy)
 	if not Duel.IsPlayerNeedToPickDeck(p) then return end
 	local g1=Group.CreateGroup()
@@ -95,7 +96,7 @@ function Auxiliary.SinglePick(p,list,count,ex_list,ex_count,copy)
 		local pick_count=0
 		while pick_count<count do
 			local code=plist[math.random(#plist)]
-			if not ag:CheckGroup(code) then
+			if not ag:IsExists(Card.IsCode,1,nil,code) then
 				local card=Duel.CreateToken(p,code)
 				g:AddCard(card)
 				ag:AddCard(card)
@@ -111,7 +112,7 @@ function Auxiliary.SinglePick(p,list,count,ex_list,ex_count,copy)
 			local ex_pick_count=0
 			while ex_pick_count<ex_count do
 				local code=ex_plist[math.random(#ex_plist)]
-				if not ag:CheckGroup(code) then
+				if not ag:IsExists(Card.IsCode,1,nil,code) then
 					local card=Duel.CreateToken(p,code)
 					g:AddCard(card)
 					ag:AddCard(card)
@@ -138,7 +139,6 @@ function Auxiliary.SinglePick(p,list,count,ex_list,ex_count,copy)
 		Duel.SendtoDeck(g3,nil,0,REASON_RULE)
 	end
 end
-
 function Auxiliary.StartPick(e)
 	for p=0,1 do
 		if Duel.IsPlayerNeedToPickDeck(p) then
