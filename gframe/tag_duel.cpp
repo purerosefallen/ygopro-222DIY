@@ -48,6 +48,7 @@ void TagDuel::JoinGame(DuelPlayer* dp, void* pdata, bool is_creater) {
 			return;
 		}
 		CTOS_JoinGame* pkt = (CTOS_JoinGame*)pdata;
+		/* disabled version check
 		if(pkt->version != PRO_VERSION) {
 			STOC_ErrorMsg scem;
 			scem.msg = ERRMSG_VERERROR;
@@ -56,6 +57,7 @@ void TagDuel::JoinGame(DuelPlayer* dp, void* pdata, bool is_creater) {
 			NetServer::DisconnectPlayer(dp);
 			return;
 		}
+		*/
 		wchar_t jpass[20];
 		BufferIO::CopyWStr(pkt->pass, jpass, 20);
 #ifdef YGOPRO_SERVER_MODE
@@ -667,7 +669,8 @@ int TagDuel::Analyze(char* msgbuffer, unsigned int len) {
 			}
 			//modded
 			case 11:
-			case 12: {
+			case 12:
+			case 13: {
 				for(int i = 0; i < 4; ++i)
 					NetServer::SendBufferToPlayer(players[i], STOC_GAME_MSG, offset, pbuf - offset);
 				for(auto oit = observers.begin(); oit != observers.end(); ++oit)

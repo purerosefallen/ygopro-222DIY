@@ -71,6 +71,7 @@ struct player_info {
 	int32 lp;
 	int32 start_count;
 	int32 draw_count;
+	int32 pick_needed;
 	uint32 used_location;
 	uint32 disabled_location;
 	uint32 extra_p_count;
@@ -783,6 +784,10 @@ public:
 #define HINT_CODE				8
 #define HINT_NUMBER				9
 #define HINT_CARD				10
+//custom hints in KoishiPro for custom sound
+#define HINT_MUSIC				11
+#define HINT_SOUND				12
+#define HINT_MUSIC_OGG			13
 //
 #define CHINT_TURN				1
 #define CHINT_CARD				2
@@ -908,4 +913,7 @@ public:
 #define MSG_CUSTOM_MSG			180
 
 #define MSG_SELECT_UNSELECT_CARD	190
+//2pick
+#define MSG_SAVE_PICK_DECK		220
+#define MSG_RESET_TIME			221
 #endif /* FIELD_H_ */

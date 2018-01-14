@@ -1,21 +1,79 @@
-/expansions/*
+# data files
+/beta
+/expansions
 /specials
-/obj
+
+# build files
 /bin
 /build
+/obj
+
+# dependencies
 /event
-/lua
-/script
+/freetype
 /sqlite3
-/replay
-/deck
-/.vscode
+/ikpmp3
+/irrklang
+/irrlicht
+/lua
+
+# gframe additionals
 /gframe/ygopro.ico
 /gframe/ygopro.rc
 /gframe/ygopro.aps
+/gframe/ygopro.icns
 /gframe/dirent.h
-ygopro
-premake5.exe
+
+# git repos
+/CustomTools
+/DataEditorX
+/Magic*
 /pics
+/Printer
+/script
+/ygopro-*
+/*-Cards
+
+# libs
+/*.dll
+/*.so
+/*.dylib
+
+# windbot related files
+/[Bb]ot
+/[Bb]ot.conf
+/[Bb]ot.exe
+/[Bb]ot.sh
+/[Ww]ind[Bb]ot
+
+# ygopro config file
+/system_user.conf
+
+# ygopro folders
+/deck
+/fonts
+/replay
+/single
+/sound
+/update
+
+# ygopro main program
+/ygopro
+/ygopro_*
+/ygopro.exe
+/ygopro_*.exe
+/ygopro.app
+/ygopro_*.app
+/premake4
+/premake4.exe
 /premake5
-/card_list.txt
+/premake5.exe
+
+# others
+*.log
+/.vscode
+/bak/
+/temp
+/PrinterData.txt
+/ygopro_*.bat
+/ygopro_*.sh

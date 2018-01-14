@@ -102,6 +102,7 @@ public:
 #ifdef YGOPRO_SERVER_MODE
 	void MainServerLoop();
 	void LoadExpansionDB();
+	void LoadBetaDB();
 	void AddDebugMsg(char* msgbuf);
 #else
 	void MainLoop();

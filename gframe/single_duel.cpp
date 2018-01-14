@@ -19,6 +19,7 @@ SingleDuel::SingleDuel(bool is_match) {
 	for(int i = 0; i < 2; ++i) {
 		players[i] = 0;
 		ready[i] = false;
+		pick_deck_saved[i] = false;
 	}
 	duel_count = 0;
 	memset(match_result, 0, 3);
@@ -26,6 +27,10 @@ SingleDuel::SingleDuel(bool is_match) {
 	cache_recorder = 0;
 	replay_recorder = 0;
 #endif
+	//2pick
+	int cardlist[128];
+	cardlist[0] = 89631139;
+	deckManager.LoadDeck(default_deck, cardlist, 1, 0);
 }
 SingleDuel::~SingleDuel() {
 }
@@ -68,6 +73,7 @@ void SingleDuel::JoinGame(DuelPlayer* dp, void* pdata, bool is_creater) {
 			return;
 		}
 		CTOS_JoinGame* pkt = (CTOS_JoinGame*)pdata;
+		/* disabled version check
 		if(pkt->version != PRO_VERSION) {
 			STOC_ErrorMsg scem;
 			scem.msg = ERRMSG_VERERROR;
@@ -76,6 +82,7 @@ void SingleDuel::JoinGame(DuelPlayer* dp, void* pdata, bool is_creater) {
 			NetServer::DisconnectPlayer(dp);
 			return;
 		}
+		*/
 		wchar_t jpass[20];
 		BufferIO::CopyWStr(pkt->pass, jpass, 20);
 #ifdef YGOPRO_SERVER_MODE
@@ -364,7 +371,7 @@ void SingleDuel::PlayerReady(DuelPlayer* dp, bool is_ready) {
 		return;
 	if(is_ready) {
 		unsigned int deckerror = 0;
-		if(!host_info.no_check_deck) {
+		/*if(!host_info.no_check_deck) {
 			if(deck_error[dp->type]) {
 				deckerror = (DECKERROR_UNKNOWNCARD << 28) + deck_error[dp->type];
 			} else {
@@ -372,7 +379,7 @@ void SingleDuel::PlayerReady(DuelPlayer* dp, bool is_ready) {
 				bool allow_tcg = host_info.rule == 1 || host_info.rule == 2;
 				deckerror = deckManager.CheckDeck(pdeck[dp->type], host_info.lflist, allow_ocg, allow_tcg);
 			}
-		}
+		}*/
 		if(deckerror) {
 			STOC_HS_PlayerChange scpc;
 			scpc.status = (dp->type << 4) | PLAYERCHANGE_NOTREADY;
@@ -456,6 +463,9 @@ void SingleDuel::StartDuel(DuelPlayer* dp) {
 	hand_result[1] = 0;
 	players[0]->state = CTOS_HAND_RESULT;
 	players[1]->state = CTOS_HAND_RESULT;
+	//reset 2pick deck
+	pick_deck_saved[0] = false;
+	pick_deck_saved[1] = false;
 }
 void SingleDuel::HandResult(DuelPlayer* dp, unsigned char res) {
 	if(res > 3)
@@ -514,7 +524,15 @@ void SingleDuel::TPResult(DuelPlayer* dp, unsigned char tp) {
 		Deck d = pdeck[0];
 		pdeck[0] = pdeck[1];
 		pdeck[1] = d;
+		SwapPickDeck();
 		swapped = true;
+	}
+	//2pick deck check
+	for(int i = 0; i < 2; i++) {
+		if(pick_deck_saved[i])
+			pdeck[i] = pick_deck[i];
+		else
+			pdeck[i] = default_deck;
 	}
 	dp->state = CTOS_RESPONSE;
 	ReplayHeader rh;
@@ -545,8 +563,10 @@ void SingleDuel::TPResult(DuelPlayer* dp, unsigned char tp) {
 	set_message_handler((message_handler)SingleDuel::MessageHandler);
 	rnd.reset(seed);
 	pduel = create_duel(rnd.rand());
-	set_player_info(pduel, 0, host_info.start_lp, host_info.start_hand, host_info.draw_count);
-	set_player_info(pduel, 1, host_info.start_lp, host_info.start_hand, host_info.draw_count);
+	set_player_info(pduel, 0, host_info.start_lp, host_info.start_hand, host_info.draw_count, !pick_deck_saved[0]);
+	set_player_info(pduel, 1, host_info.start_lp, host_info.start_hand, host_info.draw_count, !pick_deck_saved[1]);
+	pick_deck_saved[0] = false;
+	pick_deck_saved[1] = false;
 	int opt = (int)host_info.duel_rule << 16;
 	if(host_info.no_shuffle_deck)
 		opt |= DUEL_PSEUDO_SHUFFLE;
@@ -657,6 +677,7 @@ void SingleDuel::DuelEndProc() {
 				Deck d = pdeck[0];
 				pdeck[0] = pdeck[1];
 				pdeck[1] = d;
+				SwapPickDeck();
 			}
 			ready[0] = false;
 			ready[1] = false;
@@ -708,6 +729,33 @@ int SingleDuel::Analyze(char* msgbuffer, unsigned int len) {
 		offset = pbuf;
 		unsigned char engType = BufferIO::ReadUInt8(pbuf);
 		switch (engType) {
+		//2pick
+		case MSG_SAVE_PICK_DECK: {
+			player = BufferIO::ReadInt8(pbuf);
+			count = BufferIO::ReadInt8(pbuf);
+			int cardlist[128];
+			int counter = 0;
+			Deck tdeck;
+			for(int i = 0; i < count; i++) {
+				int code = BufferIO::ReadInt32(pbuf);
+				cardlist[counter++] = code;
+			}
+			deckManager.LoadDeck(tdeck, cardlist, count, 0);
+			pick_deck[player] = tdeck;
+			pick_deck_saved[player] = true;
+			break;			
+		}
+		case MSG_RESET_TIME: {
+			player = BufferIO::ReadInt8(pbuf);
+			int time = BufferIO::ReadInt8(pbuf);
+			if(host_info.time_limit) {
+				if(time)
+					time_limit[player] = time;
+				else
+					time_limit[player] = host_info.time_limit;				
+			}
+			break;			
+		}
 		case MSG_RETRY: {
 			WaitforResponse(last_response);
 			NetServer::SendBufferToPlayer(players[last_response], STOC_GAME_MSG, offset, pbuf - offset);
@@ -741,7 +789,8 @@ int SingleDuel::Analyze(char* msgbuffer, unsigned int len) {
 			//modded
 			case 10:
 			case 11:
-			case 12: {
+			case 12:
+			case 13: {
 				NetServer::SendBufferToPlayer(players[0], STOC_GAME_MSG, offset, pbuf - offset);
 				NetServer::SendBufferToPlayer(players[1], STOC_GAME_MSG, offset, pbuf - offset);
 				for(auto oit = observers.begin(); oit != observers.end(); ++oit)
@@ -1940,6 +1989,14 @@ void SingleDuel::SingleTimer(evutil_socket_t fd, short events, void* arg) {
 		sd->DuelEndProc();
 		event_del(sd->etimer);
 	}
+}
+void SingleDuel::SwapPickDeck() {
+	Deck d = pick_deck[0];
+	pick_deck[0] = pick_deck[1];
+	pick_deck[1] = d;
+	bool pick_deck_saved_temp = pick_deck_saved[0];
+	pick_deck_saved[0] = pick_deck_saved[1];
+	pick_deck_saved[1] = pick_deck_saved_temp;
 }
 
 }

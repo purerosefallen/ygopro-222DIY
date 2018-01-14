@@ -110,11 +110,11 @@ int DeckManager::CheckDeck(Deck& deck, int lfhash, bool allow_ocg, bool allow_tc
 	if(!list)
 		return 0;
 	int dc = 0;
-	if(deck.main.size() > 1)
+	if(deck.main.size() < 40 || deck.main.size() > 60)
 		return (DECKERROR_MAINCOUNT << 28) + deck.main.size();
-	if(deck.extra.size() > 0)
+	if(deck.extra.size() > 15)
 		return (DECKERROR_EXTRACOUNT << 28) + deck.extra.size();
-	if(deck.side.size() > 0)
+	if(deck.side.size() > 15)
 		return (DECKERROR_SIDECOUNT << 28) + deck.side.size();
 
 	for(size_t i = 0; i < deck.main.size(); ++i) {
@@ -199,6 +199,7 @@ int DeckManager::LoadDeck(Deck& deck, int* dbuf, int mainc, int sidec) {
 	return errorcode;
 }
 bool DeckManager::LoadSide(Deck& deck, int* dbuf, int mainc, int sidec) {
+	/*
 	std::unordered_map<int, int> pcount;
 	std::unordered_map<int, int> ncount;
 	for(size_t i = 0; i < deck.main.size(); ++i)
@@ -221,6 +222,7 @@ bool DeckManager::LoadSide(Deck& deck, int* dbuf, int mainc, int sidec) {
 		if(cdit->second != pcount[cdit->first])
 			return false;
 	deck = ndeck;
+	*/
 	return true;
 }
 FILE* DeckManager::OpenDeckFile(const wchar_t* file, const char* mode) {
