@@ -76,12 +76,6 @@ function Auxiliary.SaveDeck()
 		Duel.SavePickDeck(p,g)
 	end
 end
-function Auxiliary.SaveDeck()
-	for p=0,1 do
-		local g=Duel.GetFieldGroup(p,0xff,0)
-		Duel.SavePickDeck(p,g)
-	end
-end
 function Auxiliary.SinglePick(p,list,count,ex_list,ex_count,copy)
 	if not Duel.IsPlayerNeedToPickDeck(p) then return end
 	local g1=Group.CreateGroup()
