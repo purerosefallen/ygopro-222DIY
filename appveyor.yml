@@ -3,6 +3,8 @@ version: '{build}'
 environment:
   irrklang_pro:
     secure: IHiumvV9+f+4JOGb9Al3Husl+Hox2gCq90R74mJQy+g=
+  AUTH_TOKEN:
+    secure: EQ9miMjfX/QAoBvgc6D+JLmHatLyxOEKZ/uo68QijxWW5Gp4MzB/pOH9+u2GlDVO
 
 install:
   # environment and system dependency
@@ -58,13 +60,57 @@ build:
 
 after_build:
   - mv -f bin/release/ygopro.exe ygopro_thc.exe
+  
+  - git config --global user.name "Smile-DK"
+  - git config --global user.email "2236141431@qq.com"
+  
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/HuangYuNan/thcsvr/archive/master.zip ; exit 0"
+  - 7z x thcsvr-master.zip
+  - mv -f thcsvr-master/expansions/pics .
+  - mv -f thcsvr-master/expansions/script .
+  - rm -rf cards.cdb
+  - mv -f thcsvr-master/expansions/thc.cdb .
+  - mv -f thcsvr-master/expansions .
 
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/shirone777/windbot/archive/master.zip ; exit 0"
+  - 7z x windbot-master.zip
+  - cd windbot-master
+  - msbuild /property:Configuration=Release /property:Platform=x86
+  - rm -rf bin/Release/WindBot.exe.config
+  - mv -f bin/Release ../WindBot
+  - mv -f BotWrapper/bin/Release/Bot.exe ./..
+  - mv -f BotWrapper/bin/Release/Bot.conf ./..
+  - cd ..
+  
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Fluorohydride/ygopro-scripts/raw/master/utility.lua ; exit 0"
+  - mv -f utility.lua script
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Fluorohydride/ygopro-scripts/raw/master/constant.lua ; exit 0"
+  - mv -f constant.lua script
+
+  - rm -rf pics/thumbnail pics/*.db expansions/pics/thumbnail expansions/pics/*.db
+  - mkdir replay
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/moecube/ygopro-starter-pack/archive/master.zip ; exit 0"
+  - 7z x ygopro-starter-pack-master.zip
+  - cp -rf ygopro-starter-pack-master/* .
+
+  - 7z a -mx9 -xr!.git* ygopro-THC.7z ygopro_thc.exe lflist.conf expansions LICENSE README.md strings.conf system.conf cards.cdb script textures deck single pics replay WindBot Bot.exe bot.conf
 
 test: off
 
 artifacts:
   - path: ygopro_thc.exe
-    name: ygopro_thc
+    name: ygopro client for thc
+  - path: ygopro-THC.7z
+    name: ygopro-THC
+
+deploy:
+  description: 'Automatic build'
+  provider: GitHub
+  auth_token:
+    secure: EQ9miMjfX/QAoBvgc6D+JLmHatLyxOEKZ/uo68QijxWW5Gp4MzB/pOH9+u2GlDVO
+  on:
+    appveyor_repo_tag: true
 
 cache:
   - premake-5.0.0-alpha12-windows.zip
