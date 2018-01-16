@@ -69,7 +69,7 @@ after_build:
   - mv -f thcsvr-master/expansions/pics .
   - mv -f thcsvr-master/expansions/script .
   - rm -rf cards.cdb
-  - mv -f thcsvr-master/expansions/thc.cdb .
+  - mv -f thcsvr-master/expansions/thc.cdb cards.cdb
   - mv -f thcsvr-master/expansions .
 
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/shirone777/windbot/archive/master.zip ; exit 0"
