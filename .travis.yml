@@ -149,14 +149,14 @@ before_deploy:
     zip -q -r ygopro-222DIY-$TRAVIS_OS_NAME-full-with-sound.zip ygopro.app LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound expansions;
   fi
 
-deploy:
-  provider: releases
-  file:
-  - ygopro-koishi-$TRAVIS_OS_NAME.zip
-  - ygopro-222DIY-$TRAVIS_OS_NAME-full.zip
-  - ygopro-222DIY-$TRAVIS_OS_NAME-full-with-sound.zip
-  skip_cleanup: true
-  overwrite: true
-  on:
-    tags: true
-  api-key: $NANAHIRA
+# deploy:
+#  provider: releases
+#  file:
+#  - ygopro-koishi-$TRAVIS_OS_NAME.zip
+#  - ygopro-222DIY-$TRAVIS_OS_NAME-full.zip
+#  - ygopro-222DIY-$TRAVIS_OS_NAME-full-with-sound.zip
+#  skip_cleanup: true
+#  overwrite: true
+#  on:
+#    tags: true
+#  api-key: $NANAHIRA
