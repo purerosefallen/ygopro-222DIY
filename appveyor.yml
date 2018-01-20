@@ -67,11 +67,11 @@ after_build:
   - git clone --depth=1 https://github.com/purerosefallen/ygopro-222DIY-data
   - cd ygopro-222DIY-data
   
-  - cp -rf ../ygopro_222.exe .
+  # - cp -rf ../ygopro_222.exe .
 
-  - git add . -A
-  - git commit -m "Builded by Appveyor"
-  - git push https://%AUTH_TOKEN%@github.com/purerosefallen/ygopro-222DIY-data master
+  # - git add . -A
+  # - git commit -m "Builded by Appveyor"
+  # - git push https://%AUTH_TOKEN%@github.com/purerosefallen/ygopro-222DIY-data master
   
   - mv -f expansions ..
   - mv -f sound ..
