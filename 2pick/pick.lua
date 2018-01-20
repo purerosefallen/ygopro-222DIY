@@ -123,6 +123,9 @@ function Auxiliary.SinglePick(p,list,count,ex_list,ex_count,copy)
 	local sc=sg:Select(p,1,1,nil):GetFirst()
 	local tg=g1:IsContains(sc) and g1 or g2
 	local rg=g1:IsContains(sc) and g2 or g1
+	if sc:IsLocation(LOCATION_DECK) then
+		Duel.ConfirmCards(p,tg)
+	end
 	Duel.Exile(rg,REASON_RULE)
 	if copy then
 		local g3=Group.CreateGroup()
@@ -158,13 +161,13 @@ function Auxiliary.StartPick(e)
 			Auxiliary.SinglePick(p,list,count,ex_list,ex_count,true)
 		end
 	end
-	for p=0,1 do
-		if Duel.IsPlayerNeedToPickDeck(p) then
-			Duel.ResetTimeLimit(p,70)
-			local cg=Duel.GetFieldGroup(p,LOCATION_DECK,0)
-			Duel.ConfirmCards(p,cg)
-		end
-	end
+	--for p=0,1 do
+	--	if Duel.IsPlayerNeedToPickDeck(p) then
+	--		Duel.ResetTimeLimit(p,70)
+	--		local cg=Duel.GetFieldGroup(p,LOCATION_DECK,0)
+	--		Duel.ConfirmCards(p,cg)
+	--	end
+	--end
 	for tp,list in pairs(extra_sp) do
 		if tp~=TYPE_FUSION then
 			for p=0,1 do
