@@ -1060,7 +1060,6 @@ int TagDuel::Analyze(char* msgbuffer, unsigned int len) {
 				}
 				turn_count++;
 			}
-			turn_count++;
 			break;
 		}
 		case MSG_NEW_PHASE: {
