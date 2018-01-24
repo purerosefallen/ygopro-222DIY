@@ -144,6 +144,15 @@ int32 scriptlib::duel_setmetatable(lua_State *L) {
 	lua_setmetatable(L, 1);	
 	return 0;
 }
+int32 scriptlib::duel_move_turn_count(lua_State *L) {
+	duel* pduel = interpreter::get_duel_info(L);
+	int32 turn_player = pduel->game_field->infos.turn_player;
+	pduel->game_field->infos.turn_id++;
+	pduel->game_field->infos.turn_id_by_player[turn_player]++;
+	pduel->write_buffer8(MSG_NEW_TURN);
+	pduel->write_buffer8(turn_player | 0x2);
+	return 0;
+}
 
 int32 scriptlib::duel_enable_global_flag(lua_State *L) {
 	check_param_count(L, 1);

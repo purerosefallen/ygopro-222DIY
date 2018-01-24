@@ -32,6 +32,7 @@ public:
 	static int32 duel_exile(lua_State *L);
 	static int32 duel_disable_action_check(lua_State *L);
 	static int32 duel_setmetatable(lua_State *L);
+	static int32 duel_move_turn_count(lua_State *L);
 
 	//card lib
 	static int32 card_get_code(lua_State *L);
