@@ -2300,9 +2300,11 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 	case MSG_NEW_TURN: {
 		int r_player = BufferIO::ReadInt8(pbuf);
 		int player = mainGame->LocalPlayer(r_player & 0x1);
-		if(r_player & 0x2)
-			mainGame->dInfo.is_swapped = !mainGame->dInfo.is_swapped;
 		mainGame->dInfo.turn++;
+		if(r_player & 0x2) {
+			mainGame->dInfo.is_swapped = !mainGame->dInfo.is_swapped;
+			return true;
+		}
 		if(!mainGame->dInfo.isTag && !mainGame->dInfo.isReplay && mainGame->dInfo.player_type < 7) {
 			mainGame->btnLeaveGame->setText(dataManager.GetSysString(1351));
 			mainGame->btnLeaveGame->setVisible(true);
