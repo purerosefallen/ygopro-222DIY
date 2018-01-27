@@ -27,7 +27,7 @@ function Auxiliary.SplitData(inputstr)
 end
 function Auxiliary.LoadDB(p,pool)
 	local file=nil
-	if HOSTED_ON_WINDOWS then
+	if _WIN32 then
 		file=io.popen("bash echo \"select * from datas;\" | sqlite3 "..pool)
 	else
 		file=io.popen("echo \"select * from datas;\" | sqlite3 "..pool)
