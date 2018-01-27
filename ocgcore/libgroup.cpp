@@ -11,6 +11,63 @@
 #include "effect.h"
 #include "duel.h"
 
+//metatables
+//metatable functions
+int32 scriptlib::group_meta_add(lua_State* L) {
+	check_param_count(L, 2);
+	if(!check_param(L, PARAM_TYPE_CARD, 1, TRUE) && !check_param(L, PARAM_TYPE_GROUP, 1, TRUE))
+		luaL_error(L, "Parameter %d should be \"Card\" or \"Group\".", 1);
+	if(!check_param(L, PARAM_TYPE_CARD, 2, TRUE) && !check_param(L, PARAM_TYPE_GROUP, 2, TRUE))
+		luaL_error(L, "Parameter %d should be \"Card\" or \"Group\".", 2);		
+	duel* pduel = interpreter::get_duel_info(L);
+	group* pgroup=pduel->new_group();
+	if(check_param(L, PARAM_TYPE_CARD, 1, TRUE)) {
+		card* ccard = *(card**) lua_touserdata(L, 1);
+		pgroup->container.insert(ccard);
+	} else if(check_param(L, PARAM_TYPE_GROUP, 1, TRUE)) {
+		group* cgroup = *(group**) lua_touserdata(L, 1);
+		for(auto cit = cgroup->container.begin(); cit != cgroup->container.end(); ++cit)
+			pgroup->container.insert(*cit);
+	}
+	if(check_param(L, PARAM_TYPE_CARD, 2, TRUE)) {
+		card* ccard = *(card**) lua_touserdata(L, 2);
+		pgroup->container.insert(ccard);
+	} else if(check_param(L, PARAM_TYPE_GROUP, 2, TRUE)) {
+		group* cgroup = *(group**) lua_touserdata(L, 2);
+		for(auto cit = cgroup->container.begin(); cit != cgroup->container.end(); ++cit)
+			pgroup->container.insert(*cit);
+	}
+	interpreter::group2value(L, pgroup);
+	return 1;
+}
+int32 scriptlib::group_meta_sub(lua_State* L) {
+	check_param_count(L, 2);
+	if(!check_param(L, PARAM_TYPE_CARD, 1, TRUE) && !check_param(L, PARAM_TYPE_GROUP, 1, TRUE))
+		luaL_error(L, "Parameter %d should be \"Card\" or \"Group\".", 1);
+	if(!check_param(L, PARAM_TYPE_CARD, 2, TRUE) && !check_param(L, PARAM_TYPE_GROUP, 2, TRUE))
+		luaL_error(L, "Parameter %d should be \"Card\" or \"Group\".", 2);		
+	duel* pduel = interpreter::get_duel_info(L);
+	group* pgroup=pduel->new_group();
+	if(check_param(L, PARAM_TYPE_CARD, 1, TRUE)) {
+		card* ccard = *(card**) lua_touserdata(L, 1);
+		pgroup->container.insert(ccard);
+	} else if(check_param(L, PARAM_TYPE_GROUP, 1, TRUE)) {
+		group* cgroup = *(group**) lua_touserdata(L, 1);
+		for(auto cit = cgroup->container.begin(); cit != cgroup->container.end(); ++cit)
+			pgroup->container.insert(*cit);
+	}
+	if(check_param(L, PARAM_TYPE_CARD, 2, TRUE)) {
+		card* ccard = *(card**) lua_touserdata(L, 2);
+		pgroup->container.erase(ccard);
+	} else if(check_param(L, PARAM_TYPE_GROUP, 2, TRUE)) {
+		group* cgroup = *(group**) lua_touserdata(L, 2);
+		for(auto cit = cgroup->container.begin(); cit != cgroup->container.end(); ++cit)
+			pgroup->container.erase(*cit);
+	}
+	interpreter::group2value(L, pgroup);
+	return 1;
+}
+
 int32 scriptlib::group_new(lua_State *L) {
 	duel* pduel = interpreter::get_duel_info(L);
 	group* pgroup = pduel->new_group();
