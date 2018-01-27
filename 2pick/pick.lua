@@ -26,7 +26,12 @@ function Auxiliary.SplitData(inputstr)
 	return t
 end
 function Auxiliary.LoadDB(p,pool)
-	local file=io.popen("echo \"select * from datas;\" | sqlite3 "..pool)
+	local file=nil
+	if HOSTED_ON_WINDOWS then
+		file=io.popen("bash echo \"select * from datas;\" | sqlite3 "..pool)
+	else
+		file=io.popen("echo \"select * from datas;\" | sqlite3 "..pool)
+	end
 	for line in file:lines() do
 		local data=Auxiliary.SplitData(line)
 		local code=data[1]
