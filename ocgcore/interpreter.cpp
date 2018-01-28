@@ -336,7 +336,6 @@ static const struct luaL_Reg grouplib[] = {
 	//metatable
 	{ "__add", scriptlib::group_meta_add },
 	{ "__sub", scriptlib::group_meta_sub },
-	{ "__len", scriptlib::group_get_count },	
 
 	{ "CreateGroup", scriptlib::group_new },
 	{ "KeepAlive", scriptlib::group_keep_alive },
