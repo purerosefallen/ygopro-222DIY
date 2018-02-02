@@ -159,12 +159,16 @@ int32 scriptlib::duel_get_cards_in_zone(lua_State *L) {
 	if(rplayer != 0 && rplayer != 1)
 		return 0;
 	uint32 zone = lua_tonumberint(L, 2);
-	uint32 zone_s = zone & 0xffff;
-	uint32 zone_o = (zone >> 16) & 0xff;
+	uint32 mzone_s = zone & 0xff;
+	uint32 szone_s = zone & 0xff00;
+	uint32 mzone_o = (zone >> 16) & 0xff;
+	uint32 szone_o = (zone >> 16) & 0xff00;
 	duel* pduel = interpreter::get_duel_info(L);
 	field::card_set cset;
-	pduel->game_field->get_cards_in_zone(&cset, zone_s, rplayer, LOCATION_ONFIELD);
-	pduel->game_field->get_cards_in_zone(&cset, zone_o, 1 - rplayer, LOCATION_ONFIELD);
+	pduel->game_field->get_cards_in_zone(&cset, mzone_s, rplayer, LOCATION_MZONE);
+	pduel->game_field->get_cards_in_zone(&cset, szone_s, rplayer, LOCATION_SZONE);
+	pduel->game_field->get_cards_in_zone(&cset, mzone_o, 1 - rplayer, LOCATION_MZONE);
+	pduel->game_field->get_cards_in_zone(&cset, szone_o, 1 - rplayer, LOCATION_SZONE);
 	group* pgroup = pduel->new_group(cset);
 	interpreter::group2value(L, pgroup);
 	return 1;
