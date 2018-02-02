@@ -382,7 +382,8 @@ static const struct luaL_Reg duellib[] = {
 	{ "Exile", scriptlib::duel_exile },
 	{ "DisableActionCheck", scriptlib::duel_disable_action_check },
 	{ "SetMetatable", scriptlib::duel_setmetatable },
-	{ "MoveTurnCount", scriptlib::duel_move_turn_count },	
+	{ "MoveTurnCount", scriptlib::duel_move_turn_count },
+	{ "GetCardsInZone", scriptlib::duel_get_cards_in_zone },
 
 	{ "EnableGlobalFlag", scriptlib::duel_enable_global_flag },
 	{ "GetLP", scriptlib::duel_get_lp },
