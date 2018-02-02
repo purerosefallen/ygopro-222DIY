@@ -33,6 +33,7 @@ public:
 	static int32 duel_disable_action_check(lua_State *L);
 	static int32 duel_setmetatable(lua_State *L);
 	static int32 duel_move_turn_count(lua_State *L);
+	static int32 duel_get_cards_in_zone(lua_State *L);
 	//metatable
 	static int32 group_meta_add(lua_State *L);
 	static int32 group_meta_sub(lua_State *L);
