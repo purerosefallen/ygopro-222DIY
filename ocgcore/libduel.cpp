@@ -169,6 +169,29 @@ int32 scriptlib::duel_get_cards_in_zone(lua_State *L) {
 	interpreter::group2value(L, pgroup);
 	return 1;
 }
+int32 scriptlib::duel_xyz_summon_by_rose(lua_State *L) {
+	check_action_permission(L);
+	check_param_count(L, 4);
+	check_param(L, PARAM_TYPE_CARD, 2);
+	check_param(L, PARAM_TYPE_CARD, 3);
+	check_param(L, PARAM_TYPE_CARD, 4);
+	uint32 playerid = lua_tonumberint(L, 1);
+	if(playerid != 0 && playerid != 1)
+		return 0;
+	card* pcard = *(card**)lua_touserdata(L, 2);
+	card* rcard = *(card**) lua_touserdata(L, 3);
+	card* mcard = *(card**) lua_touserdata(L, 4);
+	duel* pduel = pcard->pduel;
+	group* materials = pduel->new_group(rcard);
+	materials->container.insert(mcard);
+	pduel->game_field->core.limit_xyz = materials;
+	pduel->game_field->core.limit_xyz_minc = 0;
+	pduel->game_field->core.limit_xyz_maxc = 0;
+	pduel->game_field->core.summon_cancelable = FALSE;
+	pcard->pduel->game_field->rose_card = rcard;
+	pduel->game_field->special_summon_rule(playerid, pcard, SUMMON_TYPE_XYZ);
+	return lua_yield(L, 0);
+}
 
 int32 scriptlib::duel_enable_global_flag(lua_State *L) {
 	check_param_count(L, 1);
