@@ -23,6 +23,7 @@ static const struct luaL_Reg cardlib[] = {
 	{ "SetCardData", scriptlib::card_set_card_data },
 	{ "GetLinkMarker", scriptlib::card_get_link_marker },
 	{ "GetOriginalLinkMarker", scriptlib::card_get_origin_link_marker },
+	{ "IsXyzSummonableByRose", scriptlib::card_is_xyz_summonable_by_rose },	
 	
 	{ "GetCode", scriptlib::card_get_code },
 	{ "GetOriginalCode", scriptlib::card_get_origin_code },
@@ -384,6 +385,7 @@ static const struct luaL_Reg duellib[] = {
 	{ "SetMetatable", scriptlib::duel_setmetatable },
 	{ "MoveTurnCount", scriptlib::duel_move_turn_count },
 	{ "GetCardsInZone", scriptlib::duel_get_cards_in_zone },
+	{ "XyzSummonByRose", scriptlib::duel_xyz_summon_by_rose },
 
 	{ "EnableGlobalFlag", scriptlib::duel_enable_global_flag },
 	{ "GetLP", scriptlib::duel_get_lp },
