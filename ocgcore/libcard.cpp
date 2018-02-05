@@ -100,6 +100,28 @@ int32 scriptlib::card_get_origin_link_marker(lua_State *L) {
 		lua_pushinteger(L, pcard->data.link_marker);
 	return 1;
 }
+int32 scriptlib::card_is_xyz_summonable_by_rose(lua_State *L) {
+	check_param_count(L, 3);
+	check_param(L, PARAM_TYPE_CARD, 1);
+	check_param(L, PARAM_TYPE_CARD, 2);
+	check_param(L, PARAM_TYPE_CARD, 3);
+	card* pcard = *(card**) lua_touserdata(L, 1);
+	if(!(pcard->data.type & TYPE_XYZ))
+		return 0;
+	card* rcard = *(card**) lua_touserdata(L, 2);
+	card* mcard = *(card**) lua_touserdata(L, 3);
+	group* materials = pcard->pduel->new_group(rcard);
+	materials->container.insert(mcard);
+	uint32 p = pcard->pduel->game_field->core.reason_player;
+	pcard->pduel->game_field->core.limit_xyz = materials;
+	pcard->pduel->game_field->core.limit_xyz_minc = 2;
+	pcard->pduel->game_field->core.limit_xyz_maxc = 2;
+	pcard->pduel->game_field->rose_card = rcard;
+	int32 result = pcard->is_special_summonable(p, SUMMON_TYPE_XYZ);
+	pcard->pduel->game_field->rose_card = 0;
+	lua_pushboolean(L, result);
+	return 1;
+}
 
 int32 scriptlib::card_get_code(lua_State *L) {
 	check_param_count(L, 1);
