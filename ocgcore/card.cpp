@@ -1007,6 +1007,11 @@ uint32 card::get_ritual_level(card* pcard) {
 uint32 card::check_xyz_level(card* pcard, uint32 lv) {
 	if(status & STATUS_NO_LEVEL)
 		return 0;
+	//modded - rose xyz summon
+	card* rcard = pduel->game_field->rose_card;
+	uint32 rlv = pduel->game_field->rose_level;
+	if(rcard == this && rlv == lv)
+		return rlv;
 	uint32 lev;
 	effect_set eset;
 	filter_effect(EFFECT_XYZ_LEVEL, &eset);

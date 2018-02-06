@@ -44,40 +44,40 @@ int32 scriptlib::card_set_card_data(lua_State *L) {
 	card* pcard = *(card**) lua_touserdata(L, 1);
 	int32 stype = lua_tonumberint(L, 2);
 	switch(stype) {
-	case ASSUME_CODE:
+	case CARDDATA_CODE:
 		pcard->data.code = lua_tonumberint(L, 3);
 		break;
-	case ASSUME_TYPE:
-		pcard->data.type = lua_tonumberint(L, 3);
-		break;
-	case ASSUME_LEVEL:
-		pcard->data.level = lua_tonumberint(L, 3);
-		break;
-	case ASSUME_RANK:
-		pcard->data.level = lua_tonumberint(L, 3);
-		break;
-	case ASSUME_ATTRIBUTE:
-		pcard->data.attribute = lua_tonumberint(L, 3);
-		break;
-	case ASSUME_RACE:
-		pcard->data.race = lua_tonumberint(L, 3);
-		break;
-	case ASSUME_ATTACK:
-		pcard->data.attack = lua_tonumberint(L, 3);
-		break;
-	case ASSUME_DEFENSE:
-		pcard->data.defense = lua_tonumberint(L, 3);
-		break;		
-	case 9:
+	case CARDDATA_ALIAS:
 		pcard->data.alias = lua_tonumberint(L, 3);
 		break;
-	case 10:
+	case CARDDATA_SETCODE:
+		pcard->data.setcode = lua_tonumberint(L, 3);
+		break;
+	case CARDDATA_TYPE:
+		pcard->data.type = lua_tonumberint(L, 3);
+		break;
+	case CARDDATA_LEVEL:
+		pcard->data.level = lua_tonumberint(L, 3);
+		break;
+	case CARDDATA_ATTRIBUTE:
+		pcard->data.attribute = lua_tonumberint(L, 3);
+		break;
+	case CARDDATA_RACE:
+		pcard->data.race = lua_tonumberint(L, 3);
+		break;
+	case CARDDATA_ATTACK:
+		pcard->data.attack = lua_tonumberint(L, 3);
+		break;
+	case CARDDATA_DEFENSE:
+		pcard->data.defense = lua_tonumberint(L, 3);
+		break;
+	case CARDDATA_LSCALE:
 		pcard->data.lscale = lua_tonumberint(L, 3);
 		break;
-	case 11:
+	case CARDDATA_RSCALE:
 		pcard->data.rscale = lua_tonumberint(L, 3);
 		break;
-	case 12:
+	case CARDDATA_LINK_MARKER:
 		pcard->data.link_marker = lua_tonumberint(L, 3);
 		break;
 	}
@@ -98,6 +98,30 @@ int32 scriptlib::card_get_origin_link_marker(lua_State *L) {
 		lua_pushinteger(L, 0);
 	else
 		lua_pushinteger(L, pcard->data.link_marker);
+	return 1;
+}
+int32 scriptlib::card_is_xyz_summonable_by_rose(lua_State *L) {
+	check_param_count(L, 3);
+	check_param(L, PARAM_TYPE_CARD, 1);
+	check_param(L, PARAM_TYPE_CARD, 2);
+	check_param(L, PARAM_TYPE_CARD, 3);
+	card* pcard = *(card**) lua_touserdata(L, 1);
+	if(!(pcard->data.type & TYPE_XYZ))
+		return 0;
+	card* rcard = *(card**) lua_touserdata(L, 2);
+	card* mcard = *(card**) lua_touserdata(L, 3);
+	group* materials = pcard->pduel->new_group(rcard);
+	materials->container.insert(mcard);
+	uint32 p = pcard->pduel->game_field->core.reason_player;
+	pcard->pduel->game_field->core.limit_xyz = materials;
+	pcard->pduel->game_field->core.limit_xyz_minc = 2;
+	pcard->pduel->game_field->core.limit_xyz_maxc = 2;
+	pcard->pduel->game_field->rose_card = rcard;
+	pcard->pduel->game_field->rose_level = mcard->get_level();
+	int32 result = pcard->is_special_summonable(p, SUMMON_TYPE_XYZ);
+	pcard->pduel->game_field->rose_card = 0;
+	pcard->pduel->game_field->rose_level = 0;
+	lua_pushboolean(L, result);
 	return 1;
 }
 

@@ -62,40 +62,40 @@ int32 scriptlib::duel_read_card(lua_State *L) {
 	for(uint32 i = 0; i < args; ++i) {
 		int32 flag = lua_tonumberint(L, 2 + i);
 		switch(flag) {
-		case 1:
+		case CARDDATA_CODE:
 			lua_pushinteger(L, dat.code);
 			break;
-		case 2:
+		case CARDDATA_ALIAS:
 			lua_pushinteger(L, dat.alias);
 			break;
-		case 3:
+		case CARDDATA_SETCODE:
 			lua_pushinteger(L, dat.setcode);
 			break;
-		case 4:
+		case CARDDATA_TYPE:
 			lua_pushinteger(L, dat.type);
 			break;
-		case 5:
+		case CARDDATA_LEVEL:
 			lua_pushinteger(L, dat.level);
 			break;
-		case 6:
+		case CARDDATA_ATTRIBUTE:
 			lua_pushinteger(L, dat.attribute);
 			break;
-		case 7:
+		case CARDDATA_RACE:
 			lua_pushinteger(L, dat.race);
 			break;
-		case 8:
+		case CARDDATA_ATTACK:
 			lua_pushinteger(L, dat.attack);
 			break;
-		case 9:
+		case CARDDATA_DEFENSE:
 			lua_pushinteger(L, dat.defense);
 			break;
-		case 10:
+		case CARDDATA_LSCALE:
 			lua_pushinteger(L, dat.lscale);
 			break;
-		case 11:
+		case CARDDATA_RSCALE:
 			lua_pushinteger(L, dat.rscale);
 			break;
-		case 12:
+		case CARDDATA_LINK_MARKER:
 			lua_pushinteger(L, dat.link_marker);
 			break;
 		default:
@@ -152,6 +152,46 @@ int32 scriptlib::duel_move_turn_count(lua_State *L) {
 	pduel->write_buffer8(MSG_NEW_TURN);
 	pduel->write_buffer8(turn_player | 0x2);
 	return 0;
+}
+int32 scriptlib::duel_get_cards_in_zone(lua_State *L) {
+	check_param_count(L, 2);
+	uint32 rplayer = lua_tonumberint(L, 1);
+	if(rplayer != 0 && rplayer != 1)
+		return 0;
+	uint32 zone = lua_tonumberint(L, 2);
+	duel* pduel = interpreter::get_duel_info(L);
+	field::card_set cset;
+	pduel->game_field->get_cards_in_zone(&cset, zone, rplayer, LOCATION_MZONE);
+	pduel->game_field->get_cards_in_zone(&cset, zone, rplayer, LOCATION_SZONE);
+	pduel->game_field->get_cards_in_zone(&cset, zone >> 16, 1 - rplayer, LOCATION_MZONE);
+	pduel->game_field->get_cards_in_zone(&cset, zone >> 16, 1 - rplayer, LOCATION_SZONE);
+	group* pgroup = pduel->new_group(cset);
+	interpreter::group2value(L, pgroup);
+	return 1;
+}
+int32 scriptlib::duel_xyz_summon_by_rose(lua_State *L) {
+	check_action_permission(L);
+	check_param_count(L, 4);
+	check_param(L, PARAM_TYPE_CARD, 2);
+	check_param(L, PARAM_TYPE_CARD, 3);
+	check_param(L, PARAM_TYPE_CARD, 4);
+	uint32 playerid = lua_tonumberint(L, 1);
+	if(playerid != 0 && playerid != 1)
+		return 0;
+	card* pcard = *(card**)lua_touserdata(L, 2);
+	card* rcard = *(card**) lua_touserdata(L, 3);
+	card* mcard = *(card**) lua_touserdata(L, 4);
+	duel* pduel = pcard->pduel;
+	group* materials = pduel->new_group(rcard);
+	materials->container.insert(mcard);
+	pduel->game_field->core.limit_xyz = materials;
+	pduel->game_field->core.limit_xyz_minc = 0;
+	pduel->game_field->core.limit_xyz_maxc = 0;
+	pduel->game_field->core.summon_cancelable = FALSE;
+	pduel->game_field->rose_card = rcard;
+	pduel->game_field->rose_level = mcard->get_level();
+	pduel->game_field->special_summon_rule(playerid, pcard, SUMMON_TYPE_XYZ);
+	return lua_yield(L, 0);
 }
 
 int32 scriptlib::duel_enable_global_flag(lua_State *L) {
