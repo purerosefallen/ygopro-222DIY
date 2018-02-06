@@ -44,40 +44,40 @@ int32 scriptlib::card_set_card_data(lua_State *L) {
 	card* pcard = *(card**) lua_touserdata(L, 1);
 	int32 stype = lua_tonumberint(L, 2);
 	switch(stype) {
-	case ASSUME_CODE:
+	case CARDDATA_CODE:
 		pcard->data.code = lua_tonumberint(L, 3);
 		break;
-	case ASSUME_TYPE:
-		pcard->data.type = lua_tonumberint(L, 3);
-		break;
-	case ASSUME_LEVEL:
-		pcard->data.level = lua_tonumberint(L, 3);
-		break;
-	case ASSUME_RANK:
-		pcard->data.level = lua_tonumberint(L, 3);
-		break;
-	case ASSUME_ATTRIBUTE:
-		pcard->data.attribute = lua_tonumberint(L, 3);
-		break;
-	case ASSUME_RACE:
-		pcard->data.race = lua_tonumberint(L, 3);
-		break;
-	case ASSUME_ATTACK:
-		pcard->data.attack = lua_tonumberint(L, 3);
-		break;
-	case ASSUME_DEFENSE:
-		pcard->data.defense = lua_tonumberint(L, 3);
-		break;		
-	case 9:
+	case CARDDATA_ALIAS:
 		pcard->data.alias = lua_tonumberint(L, 3);
 		break;
-	case 10:
+	case CARDDATA_SETCODE:
+		pcard->data.setcode = lua_tonumberint(L, 3);
+		break;
+	case CARDDATA_TYPE:
+		pcard->data.type = lua_tonumberint(L, 3);
+		break;
+	case CARDDATA_LEVEL:
+		pcard->data.level = lua_tonumberint(L, 3);
+		break;
+	case CARDDATA_ATTRIBUTE:
+		pcard->data.attribute = lua_tonumberint(L, 3);
+		break;
+	case CARDDATA_RACE:
+		pcard->data.race = lua_tonumberint(L, 3);
+		break;
+	case CARDDATA_ATTACK:
+		pcard->data.attack = lua_tonumberint(L, 3);
+		break;
+	case CARDDATA_DEFENSE:
+		pcard->data.defense = lua_tonumberint(L, 3);
+		break;
+	case CARDDATA_LSCALE:
 		pcard->data.lscale = lua_tonumberint(L, 3);
 		break;
-	case 11:
+	case CARDDATA_RSCALE:
 		pcard->data.rscale = lua_tonumberint(L, 3);
 		break;
-	case 12:
+	case CARDDATA_LINK_MARKER:
 		pcard->data.link_marker = lua_tonumberint(L, 3);
 		break;
 	}
