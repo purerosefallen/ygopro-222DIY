@@ -28,6 +28,7 @@ public:
 	static int32 card_set_card_data(lua_State *L);
 	static int32 card_get_link_marker(lua_State *L);
 	static int32 card_get_origin_link_marker(lua_State *L);	
+	static int32 card_is_xyz_summonable_by_rose(lua_State *L);	
 	static int32 effect_set_owner(lua_State *L);
 	static int32 effect_get_range(lua_State *L);
 	static int32 effect_get_count_limit(lua_State *L);
@@ -38,6 +39,8 @@ public:
 	static int32 duel_disable_action_check(lua_State *L);
 	static int32 duel_setmetatable(lua_State *L);
 	static int32 duel_move_turn_count(lua_State *L);
+	static int32 duel_get_cards_in_zone(lua_State *L);
+	static int32 duel_xyz_summon_by_rose(lua_State *L);
 	//metatable
 	static int32 group_meta_add(lua_State *L);
 	static int32 group_meta_sub(lua_State *L);
