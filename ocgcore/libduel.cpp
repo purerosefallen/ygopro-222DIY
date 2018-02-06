@@ -188,7 +188,8 @@ int32 scriptlib::duel_xyz_summon_by_rose(lua_State *L) {
 	pduel->game_field->core.limit_xyz_minc = 0;
 	pduel->game_field->core.limit_xyz_maxc = 0;
 	pduel->game_field->core.summon_cancelable = FALSE;
-	pcard->pduel->game_field->rose_card = rcard;
+	pduel->game_field->rose_card = rcard;
+	pduel->game_field->rose_level = mcard->get_level();
 	pduel->game_field->special_summon_rule(playerid, pcard, SUMMON_TYPE_XYZ);
 	return lua_yield(L, 0);
 }
