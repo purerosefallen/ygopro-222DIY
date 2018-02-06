@@ -915,4 +915,19 @@ public:
 #define MSG_CUSTOM_MSG			180
 
 #define MSG_SELECT_UNSELECT_CARD	190
+
+//card datas for Duel.ReadCard / Card.SetCardData, arranged by database format
+#define CARDDATA_CODE			1
+#define CARDDATA_ALIAS			2
+#define CARDDATA_SETCODE		3
+#define CARDDATA_TYPE			4
+#define CARDDATA_LEVEL			5
+#define CARDDATA_ATTRIBUTE		6
+#define CARDDATA_RACE			7
+#define CARDDATA_ATTACK			8
+#define CARDDATA_DEFENSE		9
+#define CARDDATA_LSCALE			10
+#define CARDDATA_RSCALE			11
+#define CARDDATA_LINK_MARKER	12
+
 #endif /* FIELD_H_ */
