@@ -2574,6 +2574,7 @@ int32 field::special_summon_rule(uint16 step, uint8 sumplayer, card* target, uin
 			matreason = REASON_XYZ;
 			//modded - rose xyz summon
 			pduel->game_field->rose_card = 0;
+			pduel->game_field->rose_level = 0;
 		}
 		else if(proc->value == SUMMON_TYPE_LINK)
 			matreason = REASON_LINK;

@@ -117,8 +117,10 @@ int32 scriptlib::card_is_xyz_summonable_by_rose(lua_State *L) {
 	pcard->pduel->game_field->core.limit_xyz_minc = 2;
 	pcard->pduel->game_field->core.limit_xyz_maxc = 2;
 	pcard->pduel->game_field->rose_card = rcard;
+	pcard->pduel->game_field->rose_level = mcard->get_level();
 	int32 result = pcard->is_special_summonable(p, SUMMON_TYPE_XYZ);
 	pcard->pduel->game_field->rose_card = 0;
+	pcard->pduel->game_field->rose_level = 0;
 	lua_pushboolean(L, result);
 	return 1;
 }
