@@ -62,40 +62,40 @@ int32 scriptlib::duel_read_card(lua_State *L) {
 	for(uint32 i = 0; i < args; ++i) {
 		int32 flag = lua_tonumberint(L, 2 + i);
 		switch(flag) {
-		case 1:
+		case CARDDATA_CODE:
 			lua_pushinteger(L, dat.code);
 			break;
-		case 2:
+		case CARDDATA_ALIAS:
 			lua_pushinteger(L, dat.alias);
 			break;
-		case 3:
+		case CARDDATA_SETCODE:
 			lua_pushinteger(L, dat.setcode);
 			break;
-		case 4:
+		case CARDDATA_TYPE:
 			lua_pushinteger(L, dat.type);
 			break;
-		case 5:
+		case CARDDATA_LEVEL:
 			lua_pushinteger(L, dat.level);
 			break;
-		case 6:
+		case CARDDATA_ATTRIBUTE:
 			lua_pushinteger(L, dat.attribute);
 			break;
-		case 7:
+		case CARDDATA_RACE:
 			lua_pushinteger(L, dat.race);
 			break;
-		case 8:
+		case CARDDATA_ATTACK:
 			lua_pushinteger(L, dat.attack);
 			break;
-		case 9:
+		case CARDDATA_DEFENSE:
 			lua_pushinteger(L, dat.defense);
 			break;
-		case 10:
+		case CARDDATA_LSCALE:
 			lua_pushinteger(L, dat.lscale);
 			break;
-		case 11:
+		case CARDDATA_RSCALE:
 			lua_pushinteger(L, dat.rscale);
 			break;
-		case 12:
+		case CARDDATA_LINK_MARKER:
 			lua_pushinteger(L, dat.link_marker);
 			break;
 		default:
