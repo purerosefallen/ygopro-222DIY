@@ -21,8 +21,7 @@ local extra_sp={
 local xyz_plain={[0]={},[1]={}}
 local xyz_adv={[0]={},[1]={}}
 
-local extra_fix={62709239,95169481}
-local extra_fixpool={[0]=extra_fix,[1]=extra_fix}
+local extra_fixed={62709239,95169481}
 
 function Auxiliary.SplitData(inputstr)
 	local t={}
@@ -94,7 +93,7 @@ function Auxiliary.SaveDeck()
 		Duel.SavePickDeck(p,g)
 	end
 end
-function Auxiliary.SinglePick(p,list,count,ex_list,ex_count,copy,lv_diff)
+function Auxiliary.SinglePick(p,list,count,ex_list,ex_count,copy,lv_diff,fixed)
 	if not Duel.IsPlayerNeedToPickDeck(p) then return end
 	local g1=Group.CreateGroup()
 	local g2=Group.CreateGroup()
@@ -132,6 +131,12 @@ function Auxiliary.SinglePick(p,list,count,ex_list,ex_count,copy,lv_diff)
 					ag:AddCard(card)
 					ex_pick_count=ex_pick_count+1
 				end
+			end
+		end
+		if fixed then
+			for _,code in ipairs(fixed) do
+				local card=Duel.CreateToken(p,code)
+				g:AddCard(card)
 			end
 		end
 		Duel.SendtoDeck(g,nil,0,REASON_RULE)
@@ -205,7 +210,7 @@ function Auxiliary.StartPick(e)
 			if i==1 then
 				Auxiliary.SinglePick(p,extra,4,nil,nil,false)
 			else
-				Auxiliary.SinglePick(p,extra,2,extra_fixpool,2,false)
+				Auxiliary.SinglePick(p,extra,2,nil,nil,false,false,extra_fixed)
 			end
 		end
 	end
