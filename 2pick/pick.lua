@@ -91,7 +91,7 @@ function Auxiliary.SaveDeck()
 		Duel.SavePickDeck(p,g)
 	end
 end
-function Auxiliary.SinglePick(p,list,count,ex_list,ex_count,copy)
+function Auxiliary.SinglePick(p,list,count,ex_list,ex_count,copy,lv_diff)
 	if not Duel.IsPlayerNeedToPickDeck(p) then return end
 	local g1=Group.CreateGroup()
 	local g2=Group.CreateGroup()
@@ -105,7 +105,7 @@ function Auxiliary.SinglePick(p,list,count,ex_list,ex_count,copy)
 		local pick_count=0
 		while pick_count<count do
 			local code=plist[math.random(#plist)]
-			if not ag:IsExists(Card.IsCode,1,nil,code) then
+			if not ag:IsExists(Card.IsCode,1,nil,code) and not (lv_diff and g:IsExists(Card.IsLevel,1,nil,lv)) then
 				local card=Duel.CreateToken(p,code)
 				g:AddCard(card)
 				ag:AddCard(card)
@@ -121,7 +121,7 @@ function Auxiliary.SinglePick(p,list,count,ex_list,ex_count,copy)
 			local ex_pick_count=0
 			while ex_pick_count<ex_count do
 				local code=ex_plist[math.random(#ex_plist)]
-				if not ag:IsExists(Card.IsCode,1,nil,code) then
+				if not ag:IsExists(Card.IsCode,1,nil,code) and not (lv_diff and g:IsExists(Card.IsLevel,1,nil,lv)) then
 					local card=Duel.CreateToken(p,code)
 					g:AddCard(card)
 					ag:AddCard(card)
@@ -189,7 +189,8 @@ function Auxiliary.StartPick(e)
 				if tp==TYPE_XYZ then
 					Auxiliary.SinglePick(p,xyz_plain,3,xyz_adv,1,false)
 				else
-					Auxiliary.SinglePick(p,list,4,nil,nil,false)
+					local lv_diff=(tp==TYPE_SYNCHRO)
+					Auxiliary.SinglePick(p,list,4,nil,nil,false,lv_diff)
 				end
 			end
 		end
