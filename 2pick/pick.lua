@@ -21,6 +21,9 @@ local extra_sp={
 local xyz_plain={[0]={},[1]={}}
 local xyz_adv={[0]={},[1]={}}
 
+local extra_fix={62709239,95169481}
+local extra_fixpool={[0]=extra_fix,[1]=extra_fix}
+
 function Auxiliary.SplitData(inputstr)
 	local t={}
 	for str in string.gmatch(inputstr,"([^|]+)") do
@@ -199,7 +202,11 @@ function Auxiliary.StartPick(e)
 	end
 	for i=1,2 do
 		for p=0,1 do
-			Auxiliary.SinglePick(p,extra,4,nil,nil,false)
+			if i==1 then
+				Auxiliary.SinglePick(p,extra,4,nil,nil,false)
+			else
+				Auxiliary.SinglePick(p,extra,2,extra_fixpool,2,false)
+			end
 		end
 	end
 	Auxiliary.SaveDeck()
