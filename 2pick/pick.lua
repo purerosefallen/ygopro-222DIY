@@ -18,6 +18,9 @@ local extra_sp={
 	[TYPE_LINK]={[0]={},[1]={}},
 }
 
+local xyz_plain={[0]={},[1]={}}
+local xyz_adv={[0]={},[1]={}}
+
 function Auxiliary.SplitData(inputstr)
 	local t={}
 	for str in string.gmatch(inputstr,"([^|]+)") do
@@ -42,6 +45,13 @@ function Auxiliary.LoadDB(p,pool)
 			for tp,list in pairs(extra_sp) do
 				if (cat & tp)>0 then
 					table.insert(list[p],code)
+				end
+			end
+			if (cat & TYPE_XYZ)>0 then
+				if lv>4 then
+					table.insert(xyz_adv[p],code)
+				else
+					table.insert(xyz_plain[p],code)				
 				end
 			end
 		elseif (cat & TYPE_TOKEN)==0 then
@@ -176,7 +186,11 @@ function Auxiliary.StartPick(e)
 	for tp,list in pairs(extra_sp) do
 		if tp~=TYPE_FUSION then
 			for p=0,1 do
-				Auxiliary.SinglePick(p,list,4,nil,nil,false)
+				if tp==TYPE_XYZ then
+					Auxiliary.SinglePick(p,xyz_plain,3,xyz_adv,1,false)
+				else
+					Auxiliary.SinglePick(p,list,4,nil,nil,false)
+				end
 			end
 		end
 	end
