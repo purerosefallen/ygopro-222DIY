@@ -552,14 +552,6 @@ void SingleDuel::DuelEndProc() {
 */
 			for(auto oit = observers.begin(); oit != observers.end(); ++oit)
 				NetServer::SendPacketToPlayer(*oit, STOC_WAITING_SIDE);
-<<<<<<< HEAD
-=======
-#ifdef YGOPRO_SERVER_MODE
-			if(cache_recorder)
-				NetServer::SendPacketToPlayer(cache_recorder, STOC_WAITING_SIDE);
-			if(replay_recorder)
-				NetServer::SendPacketToPlayer(replay_recorder, STOC_WAITING_SIDE);
-#endif
 //duel start
 
 			NetServer::SendPacketToPlayer(players[0], STOC_DUEL_START);
@@ -567,15 +559,11 @@ void SingleDuel::DuelEndProc() {
 /*
 			for(auto oit = observers.begin(); oit != observers.end(); ++oit) 
 				NetServer::ReSendToPlayer(*oit);
-#ifdef YGOPRO_SERVER_MODE
-			NetServer::ReSendToPlayers(cache_recorder, replay_recorder);
-#endif
 */
 //choose tp
 			NetServer::SendPacketToPlayer(players[tp_player], STOC_SELECT_TP);
 			players[1 - tp_player]->state = 0xff;
 			players[tp_player]->state = CTOS_TP_RESULT;
->>>>>>> 4098ec72d5fca26093820f8dcaf4336317b7a035
 		}
 	}
 }
