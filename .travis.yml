@@ -129,14 +129,15 @@ before_deploy:
 - unzip -q ygopro222-images-master.zip
 - mv -f ygopro222-images-master pics
 
+- curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/ygopro-222DIY-data/archive/master.zip
+- unzip -q ygopro-222DIY-data-master.zip
+- mv -f ygopro-222DIY-data-master/deck .
+- mv -f ygopro-222DIY-data-master/expansions .
+- mv -f ygopro-222DIY-data-master/sound .
+
 - curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/moecube/ygopro-starter-pack/archive/master.zip
 - unzip -q ygopro-starter-pack-master.zip
 - cp -rf ygopro-starter-pack-master/* .
-
-- curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/ygopro-222DIY-data/archive/master.zip
-- unzip -q ygopro-222DIY-data-master.zip
-- mv -f ygopro-222DIY-data-master/expansions .
-- mv -f ygopro-222DIY-data-master/sound . 
 
 - rm -rf pics/thumbnail pics/*.db
 - mkdir replay

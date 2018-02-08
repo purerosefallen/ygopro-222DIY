@@ -73,6 +73,7 @@ after_build:
   # - git commit -m "Builded by Appveyor"
   # - git push https://%AUTH_TOKEN%@github.com/purerosefallen/ygopro-222DIY-data master
   
+  - mv -f deck ..
   - mv -f expansions ..
   - mv -f sound ..
   - mv -f update ..
