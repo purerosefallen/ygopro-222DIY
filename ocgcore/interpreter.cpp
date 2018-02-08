@@ -700,6 +700,11 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 	lua_setglobal(lua_state, "HINT_SOUND");
 	lua_pushinteger(lua_state, HINT_MUSIC_OGG);
 	lua_setglobal(lua_state, "HINT_MUSIC_OGG");
+	//detect operating system
+#ifdef _WIN32
+	lua_pushboolean(lua_state, 1);
+	lua_setglobal(lua_state, "_WIN32");
+#endif
 	//load init.lua by MLD
 	load_script((char*) "./expansions/script/init.lua");
 	//nef
