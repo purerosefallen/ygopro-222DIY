@@ -105,6 +105,7 @@ function Auxiliary.SinglePick(p,list,count,ex_list,ex_count,copy,lv_diff)
 		local pick_count=0
 		while pick_count<count do
 			local code=plist[math.random(#plist)]
+			local lv=Duel.ReadCard(code,CARDDATA_LEVEL)
 			if not ag:IsExists(Card.IsCode,1,nil,code) and not (lv_diff and g:IsExists(Card.IsLevel,1,nil,lv)) then
 				local card=Duel.CreateToken(p,code)
 				g:AddCard(card)
@@ -121,6 +122,7 @@ function Auxiliary.SinglePick(p,list,count,ex_list,ex_count,copy,lv_diff)
 			local ex_pick_count=0
 			while ex_pick_count<ex_count do
 				local code=ex_plist[math.random(#ex_plist)]
+				local lv=Duel.ReadCard(code,CARDDATA_LEVEL)
 				if not ag:IsExists(Card.IsCode,1,nil,code) and not (lv_diff and g:IsExists(Card.IsLevel,1,nil,lv)) then
 					local card=Duel.CreateToken(p,code)
 					g:AddCard(card)
