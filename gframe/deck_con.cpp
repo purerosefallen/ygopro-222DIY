@@ -226,7 +226,7 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 			}
 			case BUTTON_SIDE_OK: {
 				if(deckManager.current_deck.main.size() != pre_mainc || deckManager.current_deck.extra.size() != pre_extrac
-				        || deckManager.current_deck.side.size() != pre_sidec) {
+						|| deckManager.current_deck.side.size() != pre_sidec) {
 					mainGame->env->addMessageBox(L"", dataManager.GetSysString(1410));
 					break;
 				}
@@ -819,9 +819,9 @@ void DeckBuilder::FilterCards() {
 			}
 			if(filter_deftype) {
 				if((filter_deftype == 1 && data.defense != filter_def) || (filter_deftype == 2 && data.defense < filter_def)
-				        || (filter_deftype == 3 && data.defense <= filter_def) || (filter_deftype == 4 && (data.defense > filter_def || data.defense < 0))
-				        || (filter_deftype == 5 && (data.defense >= filter_def || data.defense < 0)) || (filter_deftype == 6 && data.defense != -2)
-				        || (data.type & TYPE_LINK))
+						|| (filter_deftype == 3 && data.defense <= filter_def) || (filter_deftype == 4 && (data.defense > filter_def || data.defense < 0))
+						|| (filter_deftype == 5 && (data.defense >= filter_def || data.defense < 0)) || (filter_deftype == 6 && data.defense != -2)
+						|| (data.type & TYPE_LINK))
 					continue;
 			}
 			if (filter_lvtype) {
@@ -833,9 +833,9 @@ void DeckBuilder::FilterCards() {
 
 			if(filter_scltype) {
 				if((filter_scltype == 1 && data.lscale != filter_scl) || (filter_scltype == 2 && data.lscale < filter_scl)
-				        || (filter_scltype == 3 && data.lscale <= filter_scl) || (filter_scltype == 4 && (data.lscale > filter_scl || data.lscale == 0))
-				        || (filter_scltype == 5 && (data.lscale >= filter_scl || data.lscale == 0)) || filter_scltype == 6
-				        || !(data.type & TYPE_PENDULUM))
+						|| (filter_scltype == 3 && data.lscale <= filter_scl) || (filter_scltype == 4 && (data.lscale > filter_scl || data.lscale == 0))
+						|| (filter_scltype == 5 && (data.lscale >= filter_scl || data.lscale == 0)) || filter_scltype == 6
+						|| !(data.type & TYPE_PENDULUM))
 					continue;
 			}
 			break;
