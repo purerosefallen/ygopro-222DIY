@@ -881,7 +881,10 @@ void DeckBuilder::FilterCards() {
 				}
 			}
 			else if (element_pointer[0] == L'@' && set_code_map[*elements_iterator]) {
-				if(!check_set_code(data, set_code_map[*elements_iterator])) break;
+				if(!check_set_code(data, set_code_map[*elements_iterator])) {
+					is_target = false;
+					break;
+				}
 			} else {
 				if (!CardNameContains(text.name, elements_iterator->c_str()) && wcsstr(text.text, elements_iterator->c_str()) == 0
 					&& (!set_code_map[*elements_iterator] || !check_set_code(data, set_code_map[*elements_iterator]))) {
