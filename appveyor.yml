@@ -87,7 +87,7 @@ after_build:
   - cd ..
 
   - cp -rf ygopro/cards.cdb windbot
-  - cp -rf config.json config.user.json  
+  - cp -rf config-build config
   - cp -rf ../node-v9.1.0-win-x64.zip .
   - 7z x node-v9.1.0-win-x64.zip
   - rm -rf node-v9.1.0-win-x64.zip
