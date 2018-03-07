@@ -122,12 +122,14 @@ artifacts:
     name: ygopro-222DIY-full-with-sound
 
 deploy:
-  description: 'Automatic build'
+  release: latest
+  description: 'Automatic build commit $(APPVEYOR_REPO_COMMIT) $(APPVEYOR_REPO_COMMIT_TIMESTAMP)'
   provider: GitHub
+  force_update: true
   auth_token:
     secure: EQ9miMjfX/QAoBvgc6D+JLmHatLyxOEKZ/uo68QijxWW5Gp4MzB/pOH9+u2GlDVO
   on:
-    appveyor_repo_tag: true
+    branch: koishibuild
 
 cache:
   - premake-5.0.0-alpha12-windows.zip
