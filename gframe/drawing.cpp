@@ -461,12 +461,16 @@ void Game::DrawMisc() {
 	}
 	driver->draw2DImage(imageManager.tLPFrame, recti(330, 10, 629, 30), recti(0, 0, 200, 20), 0, 0, true);
 	driver->draw2DImage(imageManager.tLPFrame, recti(691, 10, 990, 30), recti(0, 0, 200, 20), 0, 0, true);
-	if(dInfo.lp[0] >= 8000)
+	if(!dInfo.start_lp[0])
+		driver->draw2DImage(imageManager.tLPBar, recti(335, 12, 335, 28), recti(0, 0, 16, 16), 0, 0, true);
+	else if(dInfo.lp[0] >= dInfo.start_lp[0])
 		driver->draw2DImage(imageManager.tLPBar, recti(335, 12, 625, 28), recti(0, 0, 16, 16), 0, 0, true);
-	else driver->draw2DImage(imageManager.tLPBar, recti(335, 12, 335 + 290 * dInfo.lp[0] / 8000, 28), recti(0, 0, 16, 16), 0, 0, true);
-	if(dInfo.lp[1] >= 8000)
+	else driver->draw2DImage(imageManager.tLPBar, recti(335, 12, 335 + 290 * dInfo.lp[0] / dInfo.start_lp[0], 28), recti(0, 0, 16, 16), 0, 0, true);
+	if(!dInfo.start_lp[1])
+		driver->draw2DImage(imageManager.tLPBar, recti(986, 12, 986, 28), recti(0, 0, 16, 16), 0, 0, true);
+	else if(dInfo.lp[1] >= dInfo.start_lp[1])
 		driver->draw2DImage(imageManager.tLPBar, recti(696, 12, 986, 28), recti(0, 0, 16, 16), 0, 0, true);
-	else driver->draw2DImage(imageManager.tLPBar, recti(986 - 290 * dInfo.lp[1] / 8000, 12, 986, 28), recti(0, 0, 16, 16), 0, 0, true);
+	else driver->draw2DImage(imageManager.tLPBar, recti(986 - 290 * dInfo.lp[1] / dInfo.start_lp[1], 12, 986, 28), recti(0, 0, 16, 16), 0, 0, true);
 	if(lpframe) {
 		dInfo.lp[lpplayer] -= lpd;
 		myswprintf(dInfo.strLP[lpplayer], L"%d", dInfo.lp[lpplayer]);
@@ -483,6 +487,12 @@ void Game::DrawMisc() {
 		}
 	}
 	if(!dInfo.isReplay && dInfo.player_type < 7 && dInfo.time_limit) {
+		numFont->draw(L"/", recti(455, 31, 525, 50), 0xffffffff, true, false, 0);
+		numFont->draw(L"/", recti(795, 31, 865, 50), 0xffffffff, true, false, 0);
+		numFont->draw(dInfo.str_time_left[0], recti(455, 31, 490, 50), 0xffffffff, true, false, 0);
+		numFont->draw(dInfo.str_time_limit, recti(490, 31, 525, 50), 0xffffffff, true, false, 0);
+		numFont->draw(dInfo.str_time_left[1], recti(795, 31, 830, 50), 0xffffffff, true, false, 0);
+		numFont->draw(dInfo.str_time_limit, recti(830, 31, 865, 50), 0xffffffff, true, false, 0);
 		driver->draw2DRectangle(recti(525, 34, 525 + dInfo.time_left[0] * 100 / dInfo.time_limit, 44), 0xa0e0e0e0, 0xa0e0e0e0, 0xa0c0c0c0, 0xa0c0c0c0);
 		driver->draw2DRectangleOutline(recti(525, 34, 625, 44), 0xffffffff);
 		driver->draw2DRectangle(recti(795 - dInfo.time_left[1] * 100 / dInfo.time_limit, 34, 795, 44), 0xa0e0e0e0, 0xa0e0e0e0, 0xa0c0c0c0, 0xa0c0c0c0);
