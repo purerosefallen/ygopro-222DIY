@@ -60,6 +60,7 @@ struct DuelInfo {
 	bool is_shuffling;
 	bool tag_player[2];
 	int lp[2];
+	int start_lp[2];
 	int duel_rule;
 	int turn;
 	short curMsg;
