@@ -487,6 +487,12 @@ void Game::DrawMisc() {
 		}
 	}
 	if(!dInfo.isReplay && dInfo.player_type < 7 && dInfo.time_limit) {
+		numFont->draw(L"/", recti(455, 31, 525, 50), 0xffffffff, true, false, 0);
+		numFont->draw(L"/", recti(795, 31, 865, 50), 0xffffffff, true, false, 0);
+		numFont->draw(dInfo.str_time_left[0], recti(455, 31, 490, 50), 0xffffffff, true, false, 0);
+		numFont->draw(dInfo.str_time_limit, recti(490, 31, 525, 50), 0xffffffff, true, false, 0);
+		numFont->draw(dInfo.str_time_left[1], recti(795, 31, 830, 50), 0xffffffff, true, false, 0);
+		numFont->draw(dInfo.str_time_limit, recti(830, 31, 865, 50), 0xffffffff, true, false, 0);
 		driver->draw2DRectangle(recti(525, 34, 525 + dInfo.time_left[0] * 100 / dInfo.time_limit, 44), 0xa0e0e0e0, 0xa0e0e0e0, 0xa0c0c0c0, 0xa0c0c0c0);
 		driver->draw2DRectangleOutline(recti(525, 34, 625, 44), 0xffffffff);
 		driver->draw2DRectangle(recti(795 - dInfo.time_left[1] * 100 / dInfo.time_limit, 34, 795, 44), 0xa0e0e0e0, 0xa0e0e0e0, 0xa0c0c0c0, 0xa0c0c0c0);
