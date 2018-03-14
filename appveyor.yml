@@ -60,9 +60,6 @@ after_build:
 
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Smile-DK/ygopro-scripts/archive/master.zip ; exit 0"
   - 7z x -y ygopro-scripts-master.zip
-  - rm -rf ygopro-scripts-master.zip
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Fluorohydride/ygopro-scripts/archive/master.zip ; exit 0"
-  - 7z x -y ygopro-scripts-master.zip
   - mv -f ygopro-scripts-master script
 
   - mkdir replay
