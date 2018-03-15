@@ -779,13 +779,19 @@ void DeckBuilder::FilterCards() {
 	std::vector<std::wstring> query_elements;
 	std::vector<std::vector<std::wstring>::iterator> query_elements_track;
 	size_t element_start = 0;
+	bool space_checked = false;
 	while (1) {
 		size_t element_end = str.find_first_of(L' ', element_start);
 		if (element_end == std::wstring::npos) {
 			break;
 		}
-		query_elements.push_back(str.substr(element_start, element_end - element_start));
-		element_start = element_end + 1;
+		size_t length = element_end - element_start;
+		if(length > 0) {
+			query_elements.push_back(str.substr(element_start, length));
+			element_start = element_end + 1;
+		} else {
+			element_start++;
+		}
 	}
 	query_elements.push_back(str.substr(element_start));
 	std::unordered_map<std::wstring, unsigned int> set_code_map;
