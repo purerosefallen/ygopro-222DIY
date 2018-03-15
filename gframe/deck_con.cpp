@@ -779,7 +779,6 @@ void DeckBuilder::FilterCards() {
 	std::vector<std::wstring> query_elements;
 	std::vector<std::vector<std::wstring>::iterator> query_elements_track;
 	size_t element_start = 0;
-	bool space_checked = false;
 	while (1) {
 		size_t element_end = str.find_first_of(L' ', element_start);
 		if (element_end == std::wstring::npos) {
