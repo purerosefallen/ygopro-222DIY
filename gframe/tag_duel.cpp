@@ -509,8 +509,8 @@ void TagDuel::TPResult(DuelPlayer* dp, unsigned char tp) {
 	rnd.reset(seed);
 	pduel = create_duel(rnd.rand());
 	if(swapped) {
-		set_player_info(pduel, 0, host_info.start_lp, host_info.start_hand, host_info.draw_count);
-		set_player_info(pduel, 1, host_info.start_lp_1, host_info.start_hand, host_info.draw_count);
+		set_player_info(pduel, 0, host_info.start_lp_1, host_info.start_hand, host_info.draw_count);
+		set_player_info(pduel, 1, host_info.start_lp, host_info.start_hand, host_info.draw_count);
 	} else {
 		set_player_info(pduel, 0, host_info.start_lp, host_info.start_hand, host_info.draw_count);
 		set_player_info(pduel, 1, host_info.start_lp_1, host_info.start_hand, host_info.draw_count);
