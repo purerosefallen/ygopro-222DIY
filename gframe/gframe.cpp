@@ -79,6 +79,7 @@ int main(int argc, char* argv[]) {
 	ygo::game_info.mode = 0;
 	ygo::game_info.start_hand = 5;
 	ygo::game_info.start_lp = 8000;
+	ygo::game_info.start_lp_1 = 8000;	
 	ygo::game_info.draw_count = 1;
 	ygo::game_info.no_check_deck = false;
 	ygo::game_info.no_shuffle_deck = false;
@@ -112,6 +113,7 @@ int main(int argc, char* argv[]) {
 		ygo::game_info.draw_count = atoi(argv[10]);
 		ygo::game_info.time_limit = atoi(argv[11]);
 		ygo::replay_mode = atoi(argv[12]);
+		ygo::start_lp_1 = atoi(argv[13]);
 	}
 	ygo::mainGame = &_game;
 	ygo::mainGame->MainServerLoop();
