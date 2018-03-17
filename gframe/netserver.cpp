@@ -35,7 +35,7 @@ void NetServer::InitDuel()
 	pkt->info.mode = game_info.mode;
 	pkt->info.start_hand = game_info.start_hand;
 	pkt->info.start_lp = game_info.start_lp;
-	//pkt->info.start_lp_1 = game_info.start_lp_1;
+	pkt->info.start_lp_1 = game_info.start_lp_1;
 	pkt->info.draw_count = game_info.draw_count;
 	pkt->info.no_check_deck = game_info.no_check_deck;
 	pkt->info.no_shuffle_deck = game_info.no_shuffle_deck;
