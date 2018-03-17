@@ -113,7 +113,7 @@ int main(int argc, char* argv[]) {
 		ygo::game_info.draw_count = atoi(argv[10]);
 		ygo::game_info.time_limit = atoi(argv[11]);
 		ygo::replay_mode = atoi(argv[12]);
-		ygo::start_lp_1 = atoi(argv[13]);
+		ygo::game_info.start_lp_1 = atoi(argv[13]);
 	}
 	ygo::mainGame = &_game;
 	ygo::mainGame->MainServerLoop();
