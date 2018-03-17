@@ -455,6 +455,10 @@ void TagDuel::TPResult(DuelPlayer* dp, unsigned char tp) {
 	pplayer[1] = players[1];
 	pplayer[2] = players[2];
 	pplayer[3] = players[3];
+	pplayer[0].slp = host_info.start_lp;
+	pplayer[1].slp = host_info.start_lp;
+	pplayer[2].slp = host_info.start_lp_1;
+	pplayer[3].slp = host_info.start_lp_1;
 	if((tp && dp->type == 2) || (!tp && dp->type == 0)) {
 		std::swap(players[0], players[2]);
 		std::swap(players[1], players[3]);
@@ -508,13 +512,8 @@ void TagDuel::TPResult(DuelPlayer* dp, unsigned char tp) {
 	set_message_handler((message_handler)TagDuel::MessageHandler);
 	rnd.reset(seed);
 	pduel = create_duel(rnd.rand());
-	if(swapped) {
-		set_player_info(pduel, 0, host_info.start_lp_1, host_info.start_hand, host_info.draw_count);
-		set_player_info(pduel, 1, host_info.start_lp, host_info.start_hand, host_info.draw_count);
-	} else {
-		set_player_info(pduel, 0, host_info.start_lp, host_info.start_hand, host_info.draw_count);
-		set_player_info(pduel, 1, host_info.start_lp_1, host_info.start_hand, host_info.draw_count);
-	}
+	set_player_info(pduel, 0, players[0].slp, host_info.start_hand, host_info.draw_count);
+	set_player_info(pduel, 1, players[2].slp, host_info.start_hand, host_info.draw_count);
 	int opt = (int)host_info.duel_rule << 16;
 	if(host_info.no_shuffle_deck)
 		opt |= DUEL_PSEUDO_SHUFFLE;
