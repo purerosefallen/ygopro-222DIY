@@ -707,6 +707,23 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 #endif
 	//load init.lua by MLD
 	load_script((char*) "./expansions/script/init.lua");
+	//nef
+	if(!load_script((char*) "./expansions/script/nef/afi.lua"))
+		load_script((char*) "./script/nef/afi.lua");
+	if(!load_script((char*) "./expansions/script/nef/cardList.lua"))
+		load_script((char*) "./script/nef/cardList.lua");
+	if(!load_script((char*) "./expansions/script/nef/nef.lua"))
+		load_script((char*) "./script/nef/nef.lua");
+	if(!load_script((char*) "./expansions/script/nef/elf.lua"))
+		load_script((char*) "./script/nef/elf.lua");
+	if(!load_script((char*) "./expansions/script/nef/ets.lua"))
+		load_script((char*) "./script/nef/ets.lua");
+	if(!load_script((char*) "./expansions/script/nef/fus.lua"))
+		load_script((char*) "./script/nef/fus.lua");
+	if(!load_script((char*) "./expansions/script/nef/msc.lua"))
+		load_script((char*) "./script/nef/msc.lua");
+	if(!load_script((char*) "./expansions/script/nef/uds.lua"))
+		load_script((char*) "./script/nef/uds.lua");
 }
 interpreter::~interpreter() {
 	lua_close(lua_state);
@@ -994,7 +1011,12 @@ int32 interpreter::call_code_function(uint32 code, char* f, uint32 param_count, 
 		params.clear();
 		return OPERATION_FAIL;
 	}
-	load_card_script(code);
+	//modded
+	if (code > 0) {
+		load_card_script(code);
+	} else {
+		lua_getglobal(current_state, "Auxiliary");
+	}
 	lua_getfield(current_state, -1, f);
 	if (!lua_isfunction(current_state, -1)) {
 		sprintf(pduel->strbuffer, "\"CallCodeFunction\": attempt to call an error function");
