@@ -150,6 +150,7 @@ public:
 
 	void SetWindowsIcon();
 	void FlashWindow();
+	void SetCursor(ECURSOR_ICON icon);
 
 	Mutex gMutex;
 	Mutex gBuffer;
