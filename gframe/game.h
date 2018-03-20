@@ -47,6 +47,9 @@ struct Config {
 	int music_mode;
 	int defaultOT;
 	int enable_bot_mode;
+	bool window_maximized;
+	int window_width;
+	int window_height;
 };
 
 struct DuelInfo {
