@@ -210,6 +210,8 @@ bool Game::Initialize() {
 	wCardImg->setVisible(false);
 	imgCard = env->addImage(rect<s32>(10, 9, 10 + CARD_IMG_WIDTH, 9 + CARD_IMG_HEIGHT), wCardImg);
 	imgCard->setImage(imageManager.tCover[0]);
+	showingcode = 0;
+	imgCard->setScaleImage(true);
 	imgCard->setUseAlphaChannel(true);
 	//phase
 	wPhase = env->addStaticText(L"", rect<s32>(480, 310, 855, 330));
@@ -1342,7 +1344,9 @@ void Game::SaveConfig() {
 	fprintf(fp, "music_mode = %d\n", (chkMusicMode->isChecked() ? 1 : 0));
 	fclose(fp);
 }
-void Game::ShowCardInfo(int code) {
+void Game::ShowCardInfo(int code, bool resize) {
+	if(showingcode == code && !resize)
+		return;
 	CardData cd;
 	wchar_t formatBuffer[256];
 	if(!dataManager.GetData(code, &cd))
@@ -1423,6 +1427,7 @@ void Game::ShowCardInfo(int code) {
 		stText->setRelativePosition(rect<s32>(15, 60 + offset, 287 * xScale, 324 * yScale));
 		scrCardText->setRelativePosition(rect<s32>(287 * xScale - 20, 60 + offset, 287 * xScale, 324 * yScale));
 	}
+	showingcode = code;
 	showingtext = dataManager.GetText(code);
 	const auto& tsize = stText->getRelativePosition();
 	InitStaticText(stText, tsize.getWidth(), tsize.getHeight(), textFont, showingtext);
@@ -1495,6 +1500,8 @@ void Game::AddDebugMsg(char* msg)
 void Game::ClearTextures() {
 	matManager.mCard.setTexture(0, 0);
 	imgCard->setImage(imageManager.tCover[0]);
+	scrCardText->setVisible(false);
+	imgCard->setScaleImage(true);
 	btnPSAU->setImage();
 	btnPSDU->setImage();
 	for(int i=0; i<=4; ++i) {
@@ -1668,8 +1675,8 @@ void Game::OnResize() {
 	stName->setRelativePosition(recti(10, 10, 287 * xScale, 32));
 	lstLog->setRelativePosition(Resize(10, 10, 290, 290));
 	//const auto& tsize = stText->getRelativePosition();
-	//if(showingcard)
-	//	ShowCardInfo(showingcard, true);
+	if(showingcode)
+		ShowCardInfo(showingcode, true);
 	btnClearLog->setRelativePosition(Resize(160, 300, 260, 325));
 
 	wPhase->setRelativePosition(Resize(480, 310, 855, 330));
