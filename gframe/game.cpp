@@ -30,7 +30,7 @@ bool Game::Initialize() {
 		params.DriverType = irr::video::EDT_DIRECT3D9;
 	else
 		params.DriverType = irr::video::EDT_OPENGL;
-	params.WindowSize = irr::core::dimension2d<u32>(1024, 640);
+	params.WindowSize = irr::core::dimension2d<u32>(gameConf.window_width, gameConf.window_height);
 	device = irr::createDeviceEx(params);
 	if(!device)
 		return false;
@@ -72,6 +72,8 @@ bool Game::Initialize() {
 	//modded
 	device->setWindowCaption(L"YGOPro 222DIY");
 	device->setResizable(true);
+	if(gameConf.window_maximized)
+		device->maximizeWindow();
 #ifdef _WIN32
 	irr::video::SExposedVideoData exposedData = driver->getExposedVideoData();
 	if(gameConf.use_d3d)
@@ -1070,6 +1072,9 @@ void Game::LoadConfig() {
 	gameConf.chkIgnoreDeckChanges = 0;
 	gameConf.defaultOT = 1;
 	gameConf.enable_bot_mode = 1;
+	gameConf.window_maximized = false;
+	gameConf.window_width = 1024;
+	gameConf.window_height = 640;
 	gameConf.enable_sound = true;
 	gameConf.sound_volume = 0.5;
 	gameConf.enable_music = true;
@@ -1136,6 +1141,16 @@ void Game::LoadConfig() {
 				gameConf.auto_search_limit = atoi(valbuf);
 			} else if(!strcmp(strbuf, "ignore_deck_changes")) {
 				gameConf.chkIgnoreDeckChanges = atoi(valbuf);
+			} else if(!strcmp(strbuf, "default_ot")) {
+				gameConf.defaultOT = atoi(valbuf);
+			} else if(!strcmp(strbuf, "enable_bot_mode")) {
+				gameConf.enable_bot_mode = atoi(valbuf);
+			} else if(!strcmp(strbuf, "window_maximized")) {
+				gameConf.window_maximized = atoi(valbuf) > 0;
+			} else if(!strcmp(strbuf, "window_width")) {
+				gameConf.window_width = atoi(valbuf);
+			} else if(!strcmp(strbuf, "window_height")) {
+				gameConf.window_height = atoi(valbuf);
 			} else if(!strcmp(strbuf, "enable_sound")) {
 				gameConf.enable_sound = atoi(valbuf) > 0;
 			} else if(!strcmp(strbuf, "sound_volume")) {
@@ -1146,10 +1161,6 @@ void Game::LoadConfig() {
 				gameConf.music_volume = atof(valbuf) / 100;
 			} else if(!strcmp(strbuf, "music_mode")) {
 				gameConf.music_mode = atoi(valbuf);
-			} else if(!strcmp(strbuf, "default_ot")) {
-				gameConf.defaultOT = atoi(valbuf);
-			} else if(!strcmp(strbuf, "enable_bot_mode")) {
-				gameConf.enable_bot_mode = atoi(valbuf);
 			} else {
 				// options allowing multiple words
 				sscanf(linebuf, "%s = %240[^\n]", strbuf, valbuf);
@@ -1228,6 +1239,16 @@ void Game::LoadConfig() {
 				gameConf.auto_search_limit = atoi(valbuf);
 			} else if(!strcmp(strbuf, "ignore_deck_changes")) {
 				gameConf.chkIgnoreDeckChanges = atoi(valbuf);
+			} else if(!strcmp(strbuf, "default_ot")) {
+				gameConf.defaultOT = atoi(valbuf);
+			} else if(!strcmp(strbuf, "enable_bot_mode")) {
+				gameConf.enable_bot_mode = atoi(valbuf);
+			} else if(!strcmp(strbuf, "window_maximized")) {
+				gameConf.window_maximized = atoi(valbuf) > 0;
+			} else if(!strcmp(strbuf, "window_width")) {
+				gameConf.window_width = atoi(valbuf);
+			} else if(!strcmp(strbuf, "window_height")) {
+				gameConf.window_height = atoi(valbuf);
 			} else if(!strcmp(strbuf, "enable_sound")) {
 				gameConf.enable_sound = atoi(valbuf) > 0;
 			} else if(!strcmp(strbuf, "sound_volume")) {
@@ -1238,10 +1259,6 @@ void Game::LoadConfig() {
 				gameConf.music_volume = atof(valbuf) / 100;
 			} else if(!strcmp(strbuf, "music_mode")) {
 				gameConf.music_mode = atoi(valbuf);
-			} else if(!strcmp(strbuf, "default_ot")) {
-				gameConf.defaultOT = atoi(valbuf);
-			} else if(!strcmp(strbuf, "enable_bot_mode")) {
-				gameConf.enable_bot_mode = atoi(valbuf);
 			} else {
 				// options allowing multiple words
 				sscanf(linebuf, "%s = %240[^\n]", strbuf, valbuf);
@@ -1304,6 +1321,9 @@ void Game::SaveConfig() {
 	fprintf(fp, "ignore_deck_changes = %d\n", (chkIgnoreDeckChanges->isChecked() ? 1 : 0));
 	fprintf(fp, "default_ot = %d\n", gameConf.defaultOT);
 	fprintf(fp, "enable_bot_mode = %d\n", gameConf.enable_bot_mode);
+	fprintf(fp, "window_maximized = %d\n", (gameConf.window_maximized ? 1 : 0));
+	fprintf(fp, "window_width = %d\n", gameConf.window_width);
+	fprintf(fp, "window_height = %d\n", gameConf.window_height);
 	fprintf(fp, "enable_sound = %d\n", (chkEnableSound->isChecked() ? 1 : 0));
 	fprintf(fp, "enable_music = %d\n", (chkEnableMusic->isChecked() ? 1 : 0));
 	fprintf(fp, "#Volume of sound and music, between 0 and 100\n");
@@ -1380,22 +1400,22 @@ void Game::ShowCardInfo(int code) {
 		//modded
 		if ((cd.type & TYPE_LINK) && (cd.level > 5)) {
 			stDataInfo->setRelativePosition(rect<s32>(15, 60, 296, 98));
-			stSetName->setRelativePosition(Resize(15, 98, 296, 121));
-			stText->setRelativePosition(Resize(15, 98 + offset, 287, 324));
-			scrCardText->setRelativePosition(Resize(267, 98 + offset, 287, 324));
+			stSetName->setRelativePosition(rect<s32>(15, 98, 296 * xScale, 121));
+			stText->setRelativePosition(rect<s32>(15, 98 + offset, 287 * xScale, 324 * yScale));
+			scrCardText->setRelativePosition(rect<s32>(287 * xScale - 20, 98 + offset, 287 * xScale, 324 * yScale));
 		} else {
 			stDataInfo->setRelativePosition(rect<s32>(15, 60, 296, 83));		
-			stSetName->setRelativePosition(Resize(15, 83, 296, 106));
-			stText->setRelativePosition(Resize(15, 83 + offset, 287, 324));
-			scrCardText->setRelativePosition(Resize(267, 83 + offset, 287, 324));
+			stSetName->setRelativePosition(rect<s32>(15, 83, 296 * xScale, 106));
+			stText->setRelativePosition(rect<s32>(15, 83 + offset, 287 * xScale, 324 * yScale));
+			scrCardText->setRelativePosition(rect<s32>(287 * xScale - 20, 83 + offset, 287 * xScale, 324 * yScale));
 		}
 	} else {
 		myswprintf(formatBuffer, L"[%ls]", dataManager.FormatType(cd.type));
 		stInfo->setText(formatBuffer);
 		stDataInfo->setText(L"");
-		stSetName->setRelativePosition(Resize(15, 60, 296, 83));
-		stText->setRelativePosition(Resize(15, 60 + offset, 287, 324));
-		scrCardText->setRelativePosition(Resize(267, 60 + offset, 287, 324));
+		stSetName->setRelativePosition(rect<s32>(15, 60, 296 * xScale, 83));
+		stText->setRelativePosition(rect<s32>(15, 60 + offset, 287 * xScale, 324 * yScale));
+		scrCardText->setRelativePosition(rect<s32>(287 * xScale - 20, 60 + offset, 287 * xScale, 324 * yScale));
 	}
 	showingtext = dataManager.GetText(code);
 	const auto& tsize = stText->getRelativePosition();
@@ -1525,6 +1545,29 @@ const wchar_t* Game::LocalName(int local_player) {
 	return local_player == 0 ? dInfo.hostname : dInfo.clientname;
 }
 void Game::OnResize() {
+#ifdef _WIN32
+	WINDOWPLACEMENT plc;
+	plc.length = sizeof(WINDOWPLACEMENT);
+	if(GetWindowPlacement(hWnd, &plc))
+		gameConf.window_maximized = (plc.showCmd == SW_SHOWMAXIMIZED);
+#endif // _WIN32
+	if(!gameConf.window_maximized) {
+		gameConf.window_width = window_size.Width;
+		gameConf.window_height = window_size.Height;
+	}
+
+	irr::gui::CGUITTFont* old_numFont = numFont;
+	irr::gui::CGUITTFont* old_adFont = adFont;
+	irr::gui::CGUITTFont* old_lpcFont = lpcFont;
+	numFont = irr::gui::CGUITTFont::createTTFont(env, gameConf.numfont, (yScale > 0.5 ? 16 * yScale : 8));
+	adFont = irr::gui::CGUITTFont::createTTFont(env, gameConf.numfont, (yScale > 0.75 ? 12 * yScale : 9));
+	lpcFont = irr::gui::CGUITTFont::createTTFont(env, gameConf.numfont, 48 * yScale);
+	old_numFont->drop();
+	old_adFont->drop();
+	old_lpcFont->drop();
+	//guiFont = irr::gui::CGUITTFont::createTTFont(env, gameConf.textfont, gameConf.textfontsize * yScale);
+	//env->getSkin()->setFont(guiFont);
+
 	wMainMenu->setRelativePosition(ResizeWin(370, 200, 650, 415));
 	wDeckEdit->setRelativePosition(Resize(309, 8, 605, 130));
 	cbDBLFList->setRelativePosition(Resize(80, 5, 220, 30));
