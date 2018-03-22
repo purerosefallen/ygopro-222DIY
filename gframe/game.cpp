@@ -1295,7 +1295,7 @@ void Game::SaveConfig() {
 	FILE* fp = fopen("system.conf", "w");
 #else
 	FILE* fp = fopen("system_user.conf", "w");
-#end //YGOPRO_COMPAT_MYCARD
+#endif //YGOPRO_COMPAT_MYCARD
 	fprintf(fp, "#config file\n#nickname & gamename should be less than 20 characters\n");
 	char linebuf[256];
 	fprintf(fp, "use_d3d = %d\n", gameConf.use_d3d ? 1 : 0);
