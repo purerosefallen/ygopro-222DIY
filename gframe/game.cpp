@@ -211,6 +211,8 @@ bool Game::Initialize() {
 	wCardImg->setVisible(false);
 	imgCard = env->addImage(rect<s32>(10, 9, 10 + CARD_IMG_WIDTH, 9 + CARD_IMG_HEIGHT), wCardImg);
 	imgCard->setImage(imageManager.tCover[0]);
+	showingcode = 0;
+	imgCard->setScaleImage(true);
 	imgCard->setUseAlphaChannel(true);
 	//phase
 	wPhase = env->addStaticText(L"", rect<s32>(480, 310, 855, 330));
@@ -720,7 +722,7 @@ void Game::MainLoop() {
 		atkdy = (float)sin(atkframe);
 		driver->beginScene(true, true, SColor(0, 0, 0, 0));
 		gMutex.Lock();
-		if(dInfo.isStarted) {
+		if(dInfo.isStarted || dInfo.isReplaySkiping) {
 			if(dInfo.isFinished && showcardcode == 1)
 				soundManager.PlayBGM(BGM_WIN);
 			else if(dInfo.isFinished && (showcardcode == 2 || showcardcode == 3))
@@ -825,6 +827,8 @@ void Game::InitStaticText(irr::gui::IGUIStaticText* pControl, u32 cWidth, u32 cH
 	SetStaticText(pControl, cWidth, font, text);
 	if(font->getDimension(dataManager.strBuffer).Height <= cHeight) {
 		scrCardText->setVisible(false);
+		if(env->hasFocus(scrCardText))
+			env->removeFocus(scrCardText);
 		return;
 	}
 	SetStaticText(pControl, cWidth-25, font, text);
@@ -1037,7 +1041,9 @@ void Game::RefreshBot() {
 }
 void Game::LoadConfig() {
 	FILE* fp = fopen("system.conf", "r");
+#ifndef YGOPRO_COMPAT_MYCARD
 	FILE* fp_user = fopen("system_user.conf", "r");
+#endif //YGOPRO_COMPAT_MYCARD
 	char linebuf[256];
 	char strbuf[32];
 	char valbuf[256];
@@ -1075,6 +1081,7 @@ void Game::LoadConfig() {
 	gameConf.window_maximized = false;
 	gameConf.window_width = 1024;
 	gameConf.window_height = 640;
+	gameConf.resize_popup_menu = false;
 	gameConf.enable_sound = true;
 	gameConf.sound_volume = 0.5;
 	gameConf.enable_music = true;
@@ -1151,6 +1158,8 @@ void Game::LoadConfig() {
 				gameConf.window_width = atoi(valbuf);
 			} else if(!strcmp(strbuf, "window_height")) {
 				gameConf.window_height = atoi(valbuf);
+			} else if(!strcmp(strbuf, "resize_popup_menu")) {
+				gameConf.resize_popup_menu = atoi(valbuf) > 0;
 			} else if(!strcmp(strbuf, "enable_sound")) {
 				gameConf.enable_sound = atoi(valbuf) > 0;
 			} else if(!strcmp(strbuf, "sound_volume")) {
@@ -1178,6 +1187,7 @@ void Game::LoadConfig() {
 		}
 		fclose(fp);
 	}
+#ifndef YGOPRO_COMPAT_MYCARD
 	if(fp_user) {
 		while(fgets(linebuf, 256, fp_user)) {
 			sscanf(linebuf, "%s = %s", strbuf, valbuf);
@@ -1249,6 +1259,8 @@ void Game::LoadConfig() {
 				gameConf.window_width = atoi(valbuf);
 			} else if(!strcmp(strbuf, "window_height")) {
 				gameConf.window_height = atoi(valbuf);
+			} else if(!strcmp(strbuf, "resize_popup_menu")) {
+				gameConf.resize_popup_menu = atoi(valbuf) > 0;
 			} else if(!strcmp(strbuf, "enable_sound")) {
 				gameConf.enable_sound = atoi(valbuf) > 0;
 			} else if(!strcmp(strbuf, "sound_volume")) {
@@ -1275,10 +1287,17 @@ void Game::LoadConfig() {
 			}
 		}
 		fclose(fp_user);
+	} else {
+		SaveConfig();
 	}
+#endif //YGOPRO_COMPAT_MYCARD
 }
 void Game::SaveConfig() {
+#ifdef YGOPRO_COMPAT_MYCARD
+	FILE* fp = fopen("system.conf", "w");
+#else
 	FILE* fp = fopen("system_user.conf", "w");
+#endif //YGOPRO_COMPAT_MYCARD
 	fprintf(fp, "#config file\n#nickname & gamename should be less than 20 characters\n");
 	char linebuf[256];
 	fprintf(fp, "use_d3d = %d\n", gameConf.use_d3d ? 1 : 0);
@@ -1324,6 +1343,7 @@ void Game::SaveConfig() {
 	fprintf(fp, "window_maximized = %d\n", (gameConf.window_maximized ? 1 : 0));
 	fprintf(fp, "window_width = %d\n", gameConf.window_width);
 	fprintf(fp, "window_height = %d\n", gameConf.window_height);
+	fprintf(fp, "resize_popup_menu = %d\n", gameConf.resize_popup_menu ? 1 : 0);
 	fprintf(fp, "enable_sound = %d\n", (chkEnableSound->isChecked() ? 1 : 0));
 	fprintf(fp, "enable_music = %d\n", (chkEnableMusic->isChecked() ? 1 : 0));
 	fprintf(fp, "#Volume of sound and music, between 0 and 100\n");
@@ -1336,7 +1356,9 @@ void Game::SaveConfig() {
 	fprintf(fp, "music_mode = %d\n", (chkMusicMode->isChecked() ? 1 : 0));
 	fclose(fp);
 }
-void Game::ShowCardInfo(int code) {
+void Game::ShowCardInfo(int code, bool resize) {
+	if(showingcode == code && !resize)
+		return;
 	CardData cd;
 	wchar_t formatBuffer[256];
 	if(!dataManager.GetData(code, &cd))
@@ -1417,6 +1439,7 @@ void Game::ShowCardInfo(int code) {
 		stText->setRelativePosition(rect<s32>(15, 60 + offset, 287 * xScale, 324 * yScale));
 		scrCardText->setRelativePosition(rect<s32>(287 * xScale - 20, 60 + offset, 287 * xScale, 324 * yScale));
 	}
+	showingcode = code;
 	showingtext = dataManager.GetText(code);
 	const auto& tsize = stText->getRelativePosition();
 	InitStaticText(stText, tsize.getWidth(), tsize.getHeight(), textFont, showingtext);
@@ -1489,6 +1512,8 @@ void Game::AddDebugMsg(char* msg)
 void Game::ClearTextures() {
 	matManager.mCard.setTexture(0, 0);
 	imgCard->setImage(imageManager.tCover[0]);
+	scrCardText->setVisible(false);
+	imgCard->setScaleImage(true);
 	btnPSAU->setImage();
 	btnPSDU->setImage();
 	for(int i=0; i<=4; ++i) {
@@ -1639,14 +1664,31 @@ void Game::OnResize() {
 	wReplaySave->setRelativePosition(ResizeWin(510, 200, 820, 320));
 	stHintMsg->setRelativePosition(ResizeWin(500, 60, 820, 90));
 
+	if(gameConf.resize_popup_menu) {
+		int width = 100 * mainGame->xScale;
+		int height = (mainGame->yScale >= 0.666) ? 21 * mainGame->yScale : 14;
+		wCmdMenu->setRelativePosition(recti(1, 1, width + 1, 1));
+		btnActivate->setRelativePosition(recti(1, 1, width, height));
+		btnSummon->setRelativePosition(recti(1, 1, width, height));
+		btnSPSummon->setRelativePosition(recti(1, 1, width, height));
+		btnMSet->setRelativePosition(recti(1, 1, width, height));
+		btnSSet->setRelativePosition(recti(1, 1, width, height));
+		btnRepos->setRelativePosition(recti(1, 1, width, height));
+		btnAttack->setRelativePosition(recti(1, 1, width, height));
+		btnActivate->setRelativePosition(recti(1, 1, width, height));
+		btnShowList->setRelativePosition(recti(1, 1, width, height));
+		btnOperation->setRelativePosition(recti(1, 1, width, height));
+		btnReset->setRelativePosition(recti(1, 1, width, height));
+	}
+
 	wCardImg->setRelativePosition(Resize(1, 1, 1 + CARD_IMG_WIDTH + 20, 1 + CARD_IMG_HEIGHT + 18));
 	imgCard->setRelativePosition(Resize(10, 9, 10 + CARD_IMG_WIDTH, 9 + CARD_IMG_HEIGHT));
 	wInfos->setRelativePosition(Resize(1, 275, 301, 639));
 	stName->setRelativePosition(recti(10, 10, 287 * xScale, 32));
 	lstLog->setRelativePosition(Resize(10, 10, 290, 290));
 	//const auto& tsize = stText->getRelativePosition();
-	//if(showingcard)
-	//	ShowCardInfo(showingcard, true);
+	if(showingcode)
+		ShowCardInfo(showingcode, true);
 	btnClearLog->setRelativePosition(Resize(160, 300, 260, 325));
 
 	wPhase->setRelativePosition(Resize(480, 310, 855, 330));
