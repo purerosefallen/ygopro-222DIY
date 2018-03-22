@@ -1282,6 +1282,8 @@ void Game::LoadConfig() {
 			}
 		}
 		fclose(fp_user);
+	} else {
+		SaveConfig();
 	}
 }
 void Game::SaveConfig() {
