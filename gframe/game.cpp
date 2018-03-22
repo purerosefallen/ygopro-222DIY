@@ -1039,7 +1039,9 @@ void Game::RefreshBot() {
 }
 void Game::LoadConfig() {
 	FILE* fp = fopen("system.conf", "r");
+#ifndef YGOPRO_COMPAT_MYCARD
 	FILE* fp_user = fopen("system_user.conf", "r");
+#endif //YGOPRO_COMPAT_MYCARD
 	char linebuf[256];
 	char strbuf[32];
 	char valbuf[256];
@@ -1183,6 +1185,7 @@ void Game::LoadConfig() {
 		}
 		fclose(fp);
 	}
+#ifndef YGOPRO_COMPAT_MYCARD
 	if(fp_user) {
 		while(fgets(linebuf, 256, fp_user)) {
 			sscanf(linebuf, "%s = %s", strbuf, valbuf);
@@ -1285,9 +1288,14 @@ void Game::LoadConfig() {
 	} else {
 		SaveConfig();
 	}
+#endif //YGOPRO_COMPAT_MYCARD
 }
 void Game::SaveConfig() {
+#ifdef YGOPRO_COMPAT_MYCARD
+	FILE* fp = fopen("system.conf", "w");
+#else
 	FILE* fp = fopen("system_user.conf", "w");
+#end //YGOPRO_COMPAT_MYCARD
 	fprintf(fp, "#config file\n#nickname & gamename should be less than 20 characters\n");
 	char linebuf[256];
 	fprintf(fp, "use_d3d = %d\n", gameConf.use_d3d ? 1 : 0);
