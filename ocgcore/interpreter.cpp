@@ -693,6 +693,8 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 	lua_setglobal(lua_state, "EFFECT_REMOVE_LINK_MARKER_KOISHI");
 	lua_pushinteger(lua_state, EFFECT_CANNOT_LOSE_KOISHI);
 	lua_setglobal(lua_state, "EFFECT_CANNOT_LOSE_KOISHI");
+	lua_pushinteger(lua_state, EFFECT_EXTRA_TOMAIN_KOISHI);
+	lua_setglobal(lua_state, "EFFECT_EXTRA_TOMAIN_KOISHI");
 	//music hints
 	lua_pushinteger(lua_state, HINT_MUSIC);
 	lua_setglobal(lua_state, "HINT_MUSIC");
