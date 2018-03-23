@@ -552,7 +552,7 @@ void SingleDuel::TPResult(DuelPlayer* dp, unsigned char tp) {
 	rnd.reset(seed);
 	pduel = create_duel(rnd.rand());
 	set_player_info(pduel, 0, host_info.start_lp, host_info.start_hand, host_info.draw_count, players[0]->is_bot);
-	set_player_info(pduel, 1, host_info.start_lp, host_info.start_hand, host_info.draw_count, players[0]->is_bot);
+	set_player_info(pduel, 1, host_info.start_lp, host_info.start_hand, host_info.draw_count, players[1]->is_bot);
 	int opt = (int)host_info.duel_rule << 16;
 	if(host_info.no_shuffle_deck)
 		opt |= DUEL_PSEUDO_SHUFFLE;
