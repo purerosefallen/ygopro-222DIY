@@ -452,6 +452,10 @@ void SingleDuel::StartDuel(DuelPlayer* dp) {
 		replay_recorder->state = CTOS_LEAVE_GAME;
 	NetServer::ReSendToPlayers(cache_recorder, replay_recorder);
 #endif
+
+	players[0]->is_bot = false;
+	players[1]->is_bot = true;
+
 	NetServer::SendPacketToPlayer(players[0], STOC_SELECT_HAND);
 	NetServer::ReSendToPlayer(players[1]);
 	hand_result[0] = 0;
@@ -547,8 +551,8 @@ void SingleDuel::TPResult(DuelPlayer* dp, unsigned char tp) {
 	set_message_handler((message_handler)SingleDuel::MessageHandler);
 	rnd.reset(seed);
 	pduel = create_duel(rnd.rand());
-	set_player_info(pduel, 0, host_info.start_lp, host_info.start_hand, host_info.draw_count);
-	set_player_info(pduel, 1, host_info.start_lp, host_info.start_hand, host_info.draw_count);
+	set_player_info(pduel, 0, host_info.start_lp, host_info.start_hand, host_info.draw_count, players[0]->is_bot);
+	set_player_info(pduel, 1, host_info.start_lp, host_info.start_hand, host_info.draw_count, players[0]->is_bot);
 	int opt = (int)host_info.duel_rule << 16;
 	if(host_info.no_shuffle_deck)
 		opt |= DUEL_PSEUDO_SHUFFLE;

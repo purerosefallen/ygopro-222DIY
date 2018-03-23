@@ -202,6 +202,16 @@ int32 scriptlib::duel_enable_global_flag(lua_State *L) {
 	return 0;
 }
 
+int32 scriptlib::duel_is_ai(lua_State *L) {
+	check_param_count(L, 1);
+	int32 p = lua_tonumberint(L, 1);
+	if(p != 0 && p != 1)
+		return 0;
+	duel* pduel = interpreter::get_duel_info(L);
+	lua_pushboolean(L, pduel->game_field->player[p].is_bot);
+	return 1;
+}
+
 int32 scriptlib::duel_get_lp(lua_State *L) {
 	check_param_count(L, 1);
 	int32 p = lua_tonumberint(L, 1);

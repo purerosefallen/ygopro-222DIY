@@ -102,6 +102,7 @@ struct DuelPlayer {
 	unsigned short name[20];
 	DuelMode* game;
 	unsigned char type;
+	bool is_bot;
 	unsigned char state;
 	bufferevent* bev;
 	DuelPlayer() {

@@ -39,6 +39,9 @@ public:
 	//metatable
 	static int32 group_meta_add(lua_State *L);
 	static int32 group_meta_sub(lua_State *L);
+	
+	//ai
+	static int32 duel_is_ai(lua_State *L);	
 
 	//card lib
 	static int32 card_get_code(lua_State *L);

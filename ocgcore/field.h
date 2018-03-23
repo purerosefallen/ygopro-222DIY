@@ -85,6 +85,7 @@ struct player_info {
 	card_vector tag_list_main;
 	card_vector tag_list_hand;
 	card_vector tag_list_extra;
+	int32 is_bot;
 };
 struct field_effect {
 	typedef std::multimap<uint32, effect*> effect_container;

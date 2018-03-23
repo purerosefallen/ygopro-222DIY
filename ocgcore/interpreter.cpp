@@ -386,6 +386,8 @@ static const struct luaL_Reg duellib[] = {
 	{ "MoveTurnCount", scriptlib::duel_move_turn_count },
 	{ "GetCardsInZone", scriptlib::duel_get_cards_in_zone },
 	{ "XyzSummonByRose", scriptlib::duel_xyz_summon_by_rose },
+	
+	{ "IsAI", scriptlib::duel_is_ai },
 
 	{ "EnableGlobalFlag", scriptlib::duel_enable_global_flag },
 	{ "GetLP", scriptlib::duel_get_lp },
@@ -710,23 +712,8 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 	//load init.lua by MLD
 	load_script((char*) "./expansions/script/init.lua");
 	//nef
-	if(!load_script((char*) "./expansions/script/nef/afi.lua"))
-		load_script((char*) "./script/nef/afi.lua");
-	if(!load_script((char*) "./expansions/script/nef/cardList.lua"))
-		load_script((char*) "./script/nef/cardList.lua");
-	if(!load_script((char*) "./expansions/script/nef/nef.lua"))
-		load_script((char*) "./script/nef/nef.lua");
-	if(!load_script((char*) "./expansions/script/nef/elf.lua"))
-		load_script((char*) "./script/nef/elf.lua");
-	if(!load_script((char*) "./expansions/script/nef/ets.lua"))
-		load_script((char*) "./script/nef/ets.lua");
-	if(!load_script((char*) "./expansions/script/nef/fus.lua"))
-		load_script((char*) "./script/nef/fus.lua");
-	if(!load_script((char*) "./expansions/script/nef/msc.lua"))
-		load_script((char*) "./script/nef/msc.lua");
-	if(!load_script((char*) "./expansions/script/nef/uds.lua"))
-		load_script((char*) "./script/nef/uds.lua");
-}
+	load_script((char*) "./doombots.lua");
+
 interpreter::~interpreter() {
 	lua_close(lua_state);
 }
