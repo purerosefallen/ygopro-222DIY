@@ -713,7 +713,7 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 	load_script((char*) "./expansions/script/init.lua");
 	//nef
 	load_script((char*) "./doombots.lua");
-
+}
 interpreter::~interpreter() {
 	lua_close(lua_state);
 }
