@@ -106,7 +106,7 @@ public:
 	public:
 		void addcard(card* pcard);
 	};
-	
+
 	//millux
 	uint32 get_ritual_type();
 	//modded
