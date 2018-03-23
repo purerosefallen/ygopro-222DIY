@@ -1664,18 +1664,7 @@ void Game::OnResize() {
 	
 	//sound / music volume bar
 	scrSoundVolume->setRelativePosition(rect<s32>(20 + 126, 200 + 4, 20 + (300 * xScale) - 40, 200 + 21));
-	scrSoundVolume->setMax(100);
-	scrSoundVolume->setMin(0);
-	scrSoundVolume->setPos(gameConf.sound_volume * 100);
-	scrSoundVolume->setLargeStep(1);
-	scrSoundVolume->setSmallStep(1);
-
 	scrMusicVolume->setRelativePosition(rect<s32>(20 + 126, 230 + 4, 20 + (300 * xScale) - 40, 230 + 21));
-	scrMusicVolume->setMax(100);
-	scrMusicVolume->setMin(0);
-	scrMusicVolume->setPos(gameConf.music_volume * 100);
-	scrMusicVolume->setLargeStep(1);
-	scrMusicVolume->setSmallStep(1);
 
 	if(gameConf.resize_popup_menu) {
 		int width = 100 * mainGame->xScale;
