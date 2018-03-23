@@ -119,7 +119,7 @@ extern "C" DECL_DLLEXPORT void set_player_info(ptr pduel, int32 playerid, int32 
 		pd->game_field->player[playerid].start_count = startcount;
 	if(drawcount >= 0)
 		pd->game_field->player[playerid].draw_count = drawcount;
-	if(is_bot)
+	if(isbot)
 		pd->game_field->player[playerid].is_bot = TRUE;
 	else
 		pd->game_field->player[playerid].is_bot = FALSE;		
