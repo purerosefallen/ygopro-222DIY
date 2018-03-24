@@ -89,7 +89,7 @@ function Auxiliary.StartDoom(tp)
 		e1:SetCode(EFFECT_SET_SUMMON_COUNT_LIMIT)
 		e1:SetTargetRange(1,0)
 		e1:SetReset(RESET_PHASE+PHASE_END)
-		e1:SetValue(ct)
+		e1:SetValue(sct)
 		Duel.RegisterEffect(e1,player_ai)
 		if Auxiliary.GetRandomResult(1) then
 			local e1=Effect.GlobalEffect()
