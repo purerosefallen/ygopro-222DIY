@@ -114,7 +114,7 @@ function Auxiliary.StartDoom(tp)
 	e2:SetCode(EFFECT_SEND_REPLACE)
 	e2:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
 		if chk==0 then return true end
-		return Auxiliary.GetRandomResult(0.5)
+		return Auxiliary.GetRandomResult(0.3)
 	end)
 	e2:SetOperation(aux.TRUE)
 	e2:SetValue(function(e,c)
