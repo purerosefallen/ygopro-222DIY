@@ -34,6 +34,10 @@ void TagDuel::Chat(DuelPlayer* dp, void* pdata, int len) {
 		NetServer::SendBufferToPlayer(players[i], STOC_CHAT, &scc, 4 + msglen * 2);
 	for(auto pit = observers.begin(); pit != observers.end(); ++pit)
 		NetServer::ReSendToPlayer(*pit);
+#ifdef YGOPRO_SERVER_MODE
+	if(cache_recorder)
+		NetServer::ReSendToPlayer(cache_recorder);
+#endif
 }
 void TagDuel::JoinGame(DuelPlayer* dp, void* pdata, bool is_creater) {
 #ifdef YGOPRO_SERVER_MODE
