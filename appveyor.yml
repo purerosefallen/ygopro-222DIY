@@ -1,14 +1,8 @@
 version: '{build}'
 
 environment:
-<<<<<<< HEAD
-  irrklang_pro:
-    secure: IHiumvV9+f+4JOGb9Al3Husl+Hox2gCq90R74mJQy+g=
-  AUTH_TOKEN:
-=======
   irrklang_pro: 1
-  auth_token:
->>>>>>> 06c34197531c12cdb035842e413c086d1e1c7bd4
+  access_token:
     secure: EQ9miMjfX/QAoBvgc6D+JLmHatLyxOEKZ/uo68QijxWW5Gp4MzB/pOH9+u2GlDVO
 
 install:
@@ -39,7 +33,7 @@ install:
   - 7z x sqlite-amalgamation-3210000.zip
   - move sqlite-amalgamation-3210000 sqlite3
   
-  - git clone --depth=1 https://%auth_token%@github.com/purerosefallen/irrklang
+  - git clone --depth=1 https://%access_token%@github.com/purerosefallen/irrklang
   - mv -f irrklang/plugins/ikpmp3 .
 
   # let premake happy
