@@ -130,6 +130,7 @@ before_deploy:
 - mv -f ygopro222-images-master pics
 
 - curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/ygopro-222DIY-data/archive/master.zip
+- rm -rf sound
 - unzip -q ygopro-222DIY-data-master.zip
 - mv -f ygopro-222DIY-data-master/deck .
 - mv -f ygopro-222DIY-data-master/expansions .
