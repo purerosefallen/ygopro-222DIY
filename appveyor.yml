@@ -1,8 +1,9 @@
 version: '{build}'
 
 environment:
-  irrklang_pro:
-    secure: IHiumvV9+f+4JOGb9Al3Husl+Hox2gCq90R74mJQy+g=
+  irrklang_pro: 1
+  auth_token:
+    secure: EQ9miMjfX/QAoBvgc6D+JLmHatLyxOEKZ/uo68QijxWW5Gp4MzB/pOH9+u2GlDVO
 
 install:
   - git submodule update --init --recursive
@@ -34,20 +35,14 @@ install:
   - 7z x sqlite-amalgamation-3210000.zip
   - move sqlite-amalgamation-3210000 sqlite3
   
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://www.ambiera.at/downloads/irrKlang-32bit-1.5.0.zip ; exit 0"
-  - 7z x irrKlang-32bit-1.5.0.zip
-  - move irrKlang-1.5.0 irrklang
-  - move irrklang\plugins\ikpMP3 ikpmp3
+  - git clone --depth=1 https://%auth_token%@github.com/purerosefallen/irrklang
+  - mv -f irrklang/plugins/ikpmp3 .
 
   # let premake happy
   - cp -rf premake/* .
-
-  #irrklang pro
-  - 7z x -oirrklang/lib/Win32-visualStudio -p%irrklang_pro% -y irrklang/irrKlang.7z
   
   # patch irrlicht & ikpmp3
   - patch -p0 < irrlicht\irrlicht.patch
-  - patch -p0 < ikpmp3\ikpmp3.patch
 
   # premake
   - premake5 vs2015
@@ -105,8 +100,7 @@ deploy:
   description: 'Automatic build commit $(APPVEYOR_REPO_COMMIT) $(APPVEYOR_REPO_COMMIT_TIMESTAMP)'
   provider: GitHub
   force_update: true
-  auth_token:
-    secure: EQ9miMjfX/QAoBvgc6D+JLmHatLyxOEKZ/uo68QijxWW5Gp4MzB/pOH9+u2GlDVO
+  auth_token: $(access_token)
   on:
     appveyor_repo_tag: true
 
