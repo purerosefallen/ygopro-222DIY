@@ -1089,15 +1089,15 @@ void Game::LoadConfig() {
 	gameConf.chkIgnoreDeckChanges = 0;
 	gameConf.defaultOT = 1;
 	gameConf.enable_bot_mode = 1;
-	gameConf.window_maximized = false;
-	gameConf.window_width = 1024;
-	gameConf.window_height = 640;
-	gameConf.resize_popup_menu = false;
 	gameConf.enable_sound = true;
 	gameConf.sound_volume = 0.5;
 	gameConf.enable_music = true;
 	gameConf.music_volume = 0.5;
 	gameConf.music_mode = 1;
+	gameConf.window_maximized = false;
+	gameConf.window_width = 1024;
+	gameConf.window_height = 640;
+	gameConf.resize_popup_menu = false;
 	if(fp) {
 		while(fgets(linebuf, 256, fp)) {
 			sscanf(linebuf, "%s = %s", strbuf, valbuf);
@@ -1163,14 +1163,6 @@ void Game::LoadConfig() {
 				gameConf.defaultOT = atoi(valbuf);
 			} else if(!strcmp(strbuf, "enable_bot_mode")) {
 				gameConf.enable_bot_mode = atoi(valbuf);
-			} else if(!strcmp(strbuf, "window_maximized")) {
-				gameConf.window_maximized = atoi(valbuf) > 0;
-			} else if(!strcmp(strbuf, "window_width")) {
-				gameConf.window_width = atoi(valbuf);
-			} else if(!strcmp(strbuf, "window_height")) {
-				gameConf.window_height = atoi(valbuf);
-			} else if(!strcmp(strbuf, "resize_popup_menu")) {
-				gameConf.resize_popup_menu = atoi(valbuf) > 0;
 			} else if(!strcmp(strbuf, "enable_sound")) {
 				gameConf.enable_sound = atoi(valbuf) > 0;
 			} else if(!strcmp(strbuf, "sound_volume")) {
@@ -1181,6 +1173,14 @@ void Game::LoadConfig() {
 				gameConf.music_volume = atof(valbuf) / 100;
 			} else if(!strcmp(strbuf, "music_mode")) {
 				gameConf.music_mode = atoi(valbuf);
+			} else if(!strcmp(strbuf, "window_maximized")) {
+				gameConf.window_maximized = atoi(valbuf) > 0;
+			} else if(!strcmp(strbuf, "window_width")) {
+				gameConf.window_width = atoi(valbuf);
+			} else if(!strcmp(strbuf, "window_height")) {
+				gameConf.window_height = atoi(valbuf);
+			} else if(!strcmp(strbuf, "resize_popup_menu")) {
+				gameConf.resize_popup_menu = atoi(valbuf) > 0;
 			} else {
 				// options allowing multiple words
 				sscanf(linebuf, "%s = %240[^\n]", strbuf, valbuf);
@@ -1264,14 +1264,6 @@ void Game::LoadConfig() {
 				gameConf.defaultOT = atoi(valbuf);
 			} else if(!strcmp(strbuf, "enable_bot_mode")) {
 				gameConf.enable_bot_mode = atoi(valbuf);
-			} else if(!strcmp(strbuf, "window_maximized")) {
-				gameConf.window_maximized = atoi(valbuf) > 0;
-			} else if(!strcmp(strbuf, "window_width")) {
-				gameConf.window_width = atoi(valbuf);
-			} else if(!strcmp(strbuf, "window_height")) {
-				gameConf.window_height = atoi(valbuf);
-			} else if(!strcmp(strbuf, "resize_popup_menu")) {
-				gameConf.resize_popup_menu = atoi(valbuf) > 0;
 			} else if(!strcmp(strbuf, "enable_sound")) {
 				gameConf.enable_sound = atoi(valbuf) > 0;
 			} else if(!strcmp(strbuf, "sound_volume")) {
@@ -1282,6 +1274,14 @@ void Game::LoadConfig() {
 				gameConf.music_volume = atof(valbuf) / 100;
 			} else if(!strcmp(strbuf, "music_mode")) {
 				gameConf.music_mode = atoi(valbuf);
+			} else if(!strcmp(strbuf, "window_maximized")) {
+				gameConf.window_maximized = atoi(valbuf) > 0;
+			} else if(!strcmp(strbuf, "window_width")) {
+				gameConf.window_width = atoi(valbuf);
+			} else if(!strcmp(strbuf, "window_height")) {
+				gameConf.window_height = atoi(valbuf);
+			} else if(!strcmp(strbuf, "resize_popup_menu")) {
+				gameConf.resize_popup_menu = atoi(valbuf) > 0;
 			} else {
 				// options allowing multiple words
 				sscanf(linebuf, "%s = %240[^\n]", strbuf, valbuf);
@@ -1351,10 +1351,6 @@ void Game::SaveConfig() {
 	fprintf(fp, "ignore_deck_changes = %d\n", (chkIgnoreDeckChanges->isChecked() ? 1 : 0));
 	fprintf(fp, "default_ot = %d\n", gameConf.defaultOT);
 	fprintf(fp, "enable_bot_mode = %d\n", gameConf.enable_bot_mode);
-	fprintf(fp, "window_maximized = %d\n", (gameConf.window_maximized ? 1 : 0));
-	fprintf(fp, "window_width = %d\n", gameConf.window_width);
-	fprintf(fp, "window_height = %d\n", gameConf.window_height);
-	fprintf(fp, "resize_popup_menu = %d\n", gameConf.resize_popup_menu ? 1 : 0);
 	fprintf(fp, "enable_sound = %d\n", (chkEnableSound->isChecked() ? 1 : 0));
 	fprintf(fp, "enable_music = %d\n", (chkEnableMusic->isChecked() ? 1 : 0));
 	fprintf(fp, "#Volume of sound and music, between 0 and 100\n");
@@ -1365,6 +1361,10 @@ void Game::SaveConfig() {
 	if(vol < 0) vol = 0; else if(vol > 100) vol = 100;
 	fprintf(fp, "music_volume = %d\n", vol);
 	fprintf(fp, "music_mode = %d\n", (chkMusicMode->isChecked() ? 1 : 0));
+	fprintf(fp, "window_maximized = %d\n", (gameConf.window_maximized ? 1 : 0));
+	fprintf(fp, "window_width = %d\n", gameConf.window_width);
+	fprintf(fp, "window_height = %d\n", gameConf.window_height);
+	fprintf(fp, "resize_popup_menu = %d\n", gameConf.resize_popup_menu ? 1 : 0);
 	fclose(fp);
 }
 void Game::ShowCardInfo(int code, bool resize) {
