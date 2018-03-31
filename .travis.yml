@@ -134,6 +134,7 @@ before_deploy:
 - cp -rf ygopro-starter-pack-master/* .
 
 - curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/ygopro-222DIY-data/archive/master.zip
+- rm -rf sound
 - unzip -q ygopro-222DIY-data-master.zip
 - mv -f ygopro-222DIY-data-master/sound .
 - rm -rf sound/custom sound/BGM/custom
