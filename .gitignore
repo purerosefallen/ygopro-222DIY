@@ -54,7 +54,8 @@
 /fonts
 /replay
 /single
-/sound
+/sound/*.wav
+/sound/BGM
 /update
 /update*
 
