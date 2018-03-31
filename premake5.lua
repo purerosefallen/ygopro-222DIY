@@ -60,7 +60,7 @@ solution "ygo"
 
     include "ocgcore"
     include "gframe"
-    if os.is("windows") then
+    if os.ishost("windows") then
     include "event"
     include "lua"
     include "sqlite3"
