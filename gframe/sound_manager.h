@@ -6,7 +6,6 @@
 #include <irrKlang.h>
 #endif
 
-
 namespace ygo {
 
 class SoundManager {
